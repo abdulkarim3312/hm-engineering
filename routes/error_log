@@ -1,0 +1,4 @@
+[16-Feb-2023 02:05:07 America/Chicago] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home1/twoaitlt/mukta-homes.2aitltd.com/routes/console.php:18
+Stack trace:
+#0 {main}
+  thrown in /home1/twoaitlt/mukta-homes.2aitltd.com/routes/console.php on line 18

