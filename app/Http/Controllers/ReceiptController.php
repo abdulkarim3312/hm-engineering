@@ -142,6 +142,9 @@ class ReceiptController extends Controller
             ->editColumn('net_amount', function(ReceiptPayment $receiptPayment) {
                 return number_format($receiptPayment->net_amount,2);
             })
+            ->editColumn('notes', function(ReceiptPayment $receiptPayment) {
+                return $receiptPayment->notes ?? '';
+            })
             ->editColumn('date', function(ReceiptPayment $receiptPayment) {
                 return $receiptPayment->date->format('d-m-Y');
             })

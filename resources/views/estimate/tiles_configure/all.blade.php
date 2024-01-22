@@ -9,7 +9,7 @@
 @endsection
 
 @section('title')
-    Grill Configure
+    Tiles Configure
 @endsection
 
 @section('content')
@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    <a class="btn btn-primary" href="{{ route('grill_glass_tiles_configure.add') }}">Add Grill Configure</a>
+                    <a class="btn btn-primary" href="{{ route('tiles_configure.add') }}">Add Tiles Configure</a>
                     <hr>
 
                     <table id="table" class="table table-bordered table-striped">
@@ -65,7 +65,7 @@
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('grill_glass_tiles_configure.datatable') }}',
+                ajax: '{{ route('tiles_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
                     {data: 'grill_glass_tiles_configure_no', name: 'grill_glass_tiles_configure_no'},

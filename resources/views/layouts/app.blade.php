@@ -108,10 +108,10 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- Notifications: style can be found in dropdown.less -->
-                  
+
 
                     <!-- User Account: style can be found in dropdown.less -->
-                   
+
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{ asset('img/avatar.png') }}" class="user-image" alt="Avatar">
@@ -229,7 +229,7 @@
                     'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details',
                     'batch','batch.add','batch.edit','grade_of_concrete','grade_of_concrete.add','grade_of_concrete.edit',
                     'costing_report','estimation_costing_summary','mobilization_work','mobilization_work.add','mobilization_work.details','mobilization_work_product',
-                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product'];
+                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'glass_configure', 'tiles_configure'];
                 ?>
 
                 @can('estimation_and_costing')
@@ -279,11 +279,11 @@
                                  <a href="{{ route('batch') }}"><i class="fa fa-circle-o"></i>Footing Type</a>
                              </li>
                              @endcan
-                            
+
                             <li class="{{ Route::currentRouteName() == 'footing_configure' ? 'active' : '' }}">
                                 <a href="{{ route('footing_configure') }}"><i class="fa fa-circle-o"></i>Footing Type Configure</a>
                             </li>
-                             
+
                               @can('grade_of_concrete_type')
                              <li class="{{ Route::currentRouteName() == 'grade_of_concrete_type' ? 'active' : '' }}">
                                 <a href="{{ route('grade_of_concrete_type') }}"><i class="fa fa-circle-o"></i>Grade Beam Type</a>
@@ -334,9 +334,19 @@
                                 @endcan
                                 @can('grill_glass_tiles_configure')
                             <li class="{{ Route::currentRouteName() == 'grill_glass_tiles_configure' ? 'active' : '' }}">
-                                <a href="{{ route('grill_glass_tiles_configure') }}"><i class="fa fa-circle-o"></i>Grill/Glass/Tiles Configure</a>
+                                <a href="{{ route('grill_glass_tiles_configure') }}"><i class="fa fa-circle-o"></i>Grill Configure</a>
                             </li>
                                 @endcan
+                                {{-- @can('grill_glass_tiles_configure') --}}
+                            <li class="{{ Route::currentRouteName() == 'glass_configure' ? 'active' : '' }}">
+                                <a href="{{ route('glass_configure') }}"><i class="fa fa-circle-o"></i>Glass Configure</a>
+                            </li>
+                                {{-- @endcan --}}
+                                {{-- @can('grill_glass_tiles_configure') --}}
+                            <li class="{{ Route::currentRouteName() == 'tiles_configure' ? 'active' : '' }}">
+                                <a href="{{ route('tiles_configure') }}"><i class="fa fa-circle-o"></i>Tiles Configure</a>
+                            </li>
+                                {{-- @endcan --}}
                                 @can('paint_configure')
                             <li class="{{ Route::currentRouteName() == 'paint_configure' ? 'active' : '' }}">
                                 <a href="{{ route('paint_configure') }}"><i class="fa fa-circle-o"></i>Paint Configure</a>
@@ -621,7 +631,7 @@
                                         <a href="{{ route('purchase_product') }}"><i class="fa fa-circle-o"></i> Product</a>
                                     </li>
                                 @endcan
-                                
+
                                 <li class="treeview" style="height: auto;">
                                     <a href="#"><i class="fa fa-circle-o"></i>Real Estate Purchase
                                         <span class="pull-right-container">

@@ -361,6 +361,7 @@
 
             $('body').on('change', '#floor', function () {
                 var floorId = $(this).val();
+                // alert(floorId);
                 $('#flat').html('<option value="">Select Flat/Shop</option>');
                 if (floorId != '') {
                     $.ajax({
@@ -368,6 +369,7 @@
                         url: "{{ route('sale.get_flat') }}",
                         data: {floorId: floorId}
                     }).done(function (response) {
+                        console.log(response);
                         $.each(response, function( index, item ) {
                             if (flatSelected == item.id)
                             $('#flat').append('<option value="'+item.id+'" selected >'+item.name+'-'+item.size+'</option>');

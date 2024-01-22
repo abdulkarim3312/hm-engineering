@@ -80,8 +80,8 @@
                                <tr>
                                    <th width="24%">Mobile No</th>
                                    <th width="2%" class="text-center">:</th>
-                                   <td width="">{{ $receiptPayment->mobile_no }}</td>
-                                   <td width=""><b>Email:</b> {{ $receiptPayment->email }}</td>
+                                   <td width="">{{ $receiptPayment->client->mobile_no ?? ''}}</td>
+                                   <td width=""><b>Email:</b> {{ $receiptPayment->client->email ?? ''}}</td>
                                </tr>
                            </table>
                        </div>

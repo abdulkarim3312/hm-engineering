@@ -5,7 +5,7 @@
      @can('dashboard')
 
     <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-shopping-cart"></i></span>
 
@@ -20,7 +20,7 @@
         <!-- /.col -->
 
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-star-half"></i></span>
 
@@ -32,7 +32,7 @@
             </div>
             <!-- /.info-box -->
         </div>
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
 
@@ -46,7 +46,7 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-dollar"></i></span>
 
@@ -60,7 +60,7 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
 

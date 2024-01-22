@@ -8,7 +8,7 @@
 @endsection
 
 @section('title')
-    Grill  Configure
+Tiles Configure
 @endsection
 
 @section('content')
@@ -16,11 +16,11 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Grill  Configure Information</h3>
+                    <h3 class="box-title"> Tiles Configure Information</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form method="POST" action="{{ route('grill_glass_tiles_configure.add') }}">
+                <form method="POST" action="{{ route('tiles_configure.add') }}">
                     @csrf
 
                     <div class="box-body">
@@ -31,9 +31,9 @@
                                     <select class="form-control select2" style="width: 100%;" name="configure_type" id="configure_type"
                                             data-placeholder="Select Configure Type">
                                         <option value="">Select Configure Type</option>
-                                        <option value="1" {{ old('configure_type') == 1 ? 'selected' : '' }}>Grill</option>
+                                        {{-- <option value="1" {{ old('configure_type') == 1 ? 'selected' : '' }}>Grill</option> --}}
                                         {{-- <option value="2" {{ old('configure_type') == 2 ? 'selected' : '' }}>Glass</option> --}}
-                                        {{-- <option value="3" {{ old('configure_type') == 3 ? 'selected' : '' }}>Tiles</option> --}}
+                                        <option value="3" {{ old('configure_type') == 3 ? 'selected' : '' }}>Tiles</option>
                                     </select>
 
                                     @error('configure_type')
@@ -165,7 +165,7 @@
                             <div id="grill_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('grill_costing') ? 'has-error' :'' }}">
-                                        <label>Grill Cost(Per Kg)</label>
+                                        <label>Tiles Cost(Per Kg)</label>
 
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->grill_costing??0 }}"
@@ -183,7 +183,7 @@
                             <div id="tiles_glass_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('tiles_glass_costing') ? 'has-error' :'' }}">
-                                        <label>Grill Costing(Per Sft)</label>
+                                        <label>Tiles Costing(Per Sft)</label>
 
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->tiles_glass_costing??0 }}"

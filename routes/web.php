@@ -11,6 +11,8 @@ use App\Http\Controllers\EstimateTypeController;
 use App\Http\Controllers\ExtraCostingController;
 use App\Http\Controllers\GradeOfConcreteTypeController;
 use App\Http\Controllers\GrillGlassTilesConfigureController;
+use App\Http\Controllers\GlassConfigureController;
+use App\Http\Controllers\TilesConfigureController;
 use App\Http\Controllers\JournalVoucherController;
 use App\Http\Controllers\TradingSaleController;
 use App\Http\Controllers\PaintConfigureController;
@@ -681,6 +683,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('grill-glass-tiles-configure/add', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('grill-glass-tiles-configure-details/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureDetails'])->name('grill_glass_tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('grill-glass-tiles-configure-print/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigurePrint'])->name('grill_glass_tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
+
+     //Glass Configure
+    Route::get('glass-configure', [GlassConfigureController::class, 'glassConfigure'])->name('glass_configure')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('glass-configure/add', [GlassConfigureController::class, 'glassConfigureAdd'])->name('glass_configure.add')->middleware('permission:grill_glass_tiles_configure');
+    Route::post('glass-configure/add', [GlassConfigureController::class, 'glassConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
+    Route::get('glass-configure-details/{glassConfigure}', [GlassConfigureController::class, 'glassConfigureDetails'])->name('glass_configure.details')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('glass-configure-print/{glassConfigure}', [GlassConfigureController::class, 'glassConfigurePrint'])->name('glass.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('glass-configure-datatable', [GlassConfigureController::class, 'glassConfigureDatatable'])->name('glass_configure.datatable');
+
+    //Tiles Configure
+    Route::get('tiles-configure', [TilesConfigureController::class, 'tilesConfigure'])->name('tiles_configure')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('tiles-configure/add', [TilesConfigureController::class, 'tilesConfigureAdd'])->name('tiles_configure.add')->middleware('permission:grill_glass_tiles_configure');
+    Route::post('tiles-configure/add', [TilesConfigureController::class, 'tilesConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
+    Route::get('tiles-configure-details/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigureDetails'])->name('tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('tiles-configure-print/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigurePrint'])->name('tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('tiles-configure-datatable', [TilesConfigureController::class, 'tilesConfigureDatatable'])->name('tiles_configure.datatable');
 
     //Paint Configure
     Route::get('paint-configure', [PaintConfigureController::class, 'paintConfigure'])->name('paint_configure')->middleware('permission:paint_configure');
