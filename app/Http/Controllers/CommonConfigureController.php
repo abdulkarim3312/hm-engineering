@@ -289,7 +289,7 @@ class CommonConfigureController extends Controller
         ]);
 
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
-       
+
         $totalCement = ($request->total_dry_volume * $request->first_ratio/$totalRatio);
         $totalCementBag = ($totalCement/1.25);
         $totalSands = ($request->total_dry_volume * $request->second_ratio/$totalRatio);

@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr>
                                     <th>Mobile</th>
-                                    <td>{{ $order->client->mobile_no }}</td>
+                                    <td>{{ $order->client->mobile }}</td>
                                 </tr>
                                 <tr>
                                     <th>Address</th>

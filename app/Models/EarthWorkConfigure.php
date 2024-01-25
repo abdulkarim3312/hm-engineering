@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class EarthWorkConfigure extends Model
 {
     use HasFactory;
-
+    protected $table = 'earth_work_configures';
     protected $guarded = [];
 
     public function project(){

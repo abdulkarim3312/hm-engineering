@@ -183,7 +183,7 @@
                             <div id="tiles_glass_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('tiles_glass_costing') ? 'has-error' :'' }}">
-                                        <label>Grill Costing(Per Sft)</label>
+                                        <label>Tiles/Glass Costing(Per Sft)</label>
 
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->tiles_glass_costing??0 }}"

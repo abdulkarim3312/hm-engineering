@@ -70,7 +70,6 @@
                                         <th>Client name</th>
                                         <th>Income Code</th>
                                         <th>Net Amount</th>
-                                        <th>Installment</th>
                                         <th width="14%">Action</th>
                                     </tr>
                                     </thead>
@@ -239,7 +238,6 @@
                     {data: 'client_name', name: 'client.name'},
                     {data: 'expenses_code', name: 'expenses_code',searchable: false},
                     {data: 'net_amount', name: 'net_amount'},
-                    {data: 'notes', name: 'notes'},
                     {data: 'action', name: 'action', orderable: false},
                 ],
                 order: [[0, 'asc']],

@@ -63,7 +63,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a target="_blank" href="{{ route('glass.print', ['glassConfigure' => $glassConfigure->id]) }}" class="btn btn-primary">Print</a>
+                            <a target="_blank" href="{{ route('grill_glass_tiles_configure.print', ['glassConfigure' => $glassConfigure->id]) }}" class="btn btn-primary">Print</a>
                         </div>
                     </div>
                     <div id="prinarea">

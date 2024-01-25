@@ -229,7 +229,7 @@
                     'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details',
                     'batch','batch.add','batch.edit','grade_of_concrete','grade_of_concrete.add','grade_of_concrete.edit',
                     'costing_report','estimation_costing_summary','mobilization_work','mobilization_work.add','mobilization_work.details','mobilization_work_product',
-                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'glass_configure', 'tiles_configure'];
+                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure'];
                 ?>
 
                 @can('estimation_and_costing')
@@ -322,6 +322,21 @@
                                 <a href="{{ route('common_configure') }}"><i class="fa fa-circle-o"></i>Slab/P.Cap/Mat/R.wall Configure</a>
                             </li>
                                 @endcan
+                             @can('slab_cap_wall_configure')
+                            <li class="{{ Route::currentRouteName() == 'pile_cap_configure' ? 'active' : '' }}">
+                                <a href="{{ route('pile_cap_configure') }}"><i class="fa fa-circle-o"></i>Pile Cap Configure</a>
+                            </li>
+                            @endcan
+                             @can('slab_cap_wall_configure')
+                            <li class="{{ Route::currentRouteName() == 'mat_configure' ? 'active' : '' }}">
+                                <a href="{{ route('mat_configure') }}"><i class="fa fa-circle-o"></i>Mat Configure</a>
+                            </li>
+                            @endcan
+                             @can('slab_cap_wall_configure')
+                            <li class="{{ Route::currentRouteName() == 'returning_wall_configure' ? 'active' : '' }}">
+                                <a href="{{ route('returning_wall_configure') }}"><i class="fa fa-circle-o"></i>Returning Wall Configure</a>
+                            </li>
+                                @endcan
                                 @can('bricks_configure')
                             <li class="{{ Route::currentRouteName() == 'bricks_configure' ? 'active' : '' }}">
                                 <a href="{{ route('bricks_configure') }}"><i class="fa fa-circle-o"></i>Bricks Configure</a>
@@ -355,6 +370,16 @@
                                 @can('earth_work_configure')
                             <li class="{{ Route::currentRouteName() == 'earth_work_configure' ? 'active' : '' }}">
                                 <a href="{{ route('earth_work_configure') }}"><i class="fa fa-circle-o"></i>Earth Work Configure</a>
+                            </li>
+                                @endcan
+                                @can('earth_work_configure')
+                            <li class="{{ Route::currentRouteName() == 'sand_filling_configure' ? 'active' : '' }}">
+                                <a href="{{ route('sand_filling_configure') }}"><i class="fa fa-circle-o"></i>Sand Filling Configure</a>
+                            </li>
+                                @endcan
+                                @can('earth_work_configure')
+                            <li class="{{ Route::currentRouteName() == 'bricks_soling_configure' ? 'active' : '' }}">
+                                <a href="{{ route('bricks_soling_configure') }}"><i class="fa fa-circle-o"></i>Bricks Soling Configure</a>
                             </li>
                                 @endcan
                                 @can('extra_costing')

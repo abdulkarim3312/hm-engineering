@@ -37,9 +37,10 @@ class EarthWorkConfigureController extends Controller
                 'length' => $request->length[$counter],
                 'width' => $request->width[$counter],
                 'height' => $request->height[$counter],
+                'quantity' => $request->quantity[$counter],
                 'unit_price' => $request->unit_price[$counter],
-                'total_area' => (($request->length[$counter] * $request->width[$counter]) * $request->height[$counter]),
-                'total_price' => ((($request->length[$counter] * $request->width[$counter]) * $request->height[$counter]) * $request->unit_price[$counter]),
+                'total_area' => (($request->length[$counter] * $request->width[$counter]) * $request->height[$counter] * $request->quantity[$counter]),
+                'total_price' => ((($request->length[$counter] * $request->width[$counter]) * $request->height[$counter]) * $request->unit_price[$counter] * $request->quantity[$counter]),
             ]);
             $counter++;
         }

@@ -13,6 +13,9 @@ use App\Http\Controllers\GradeOfConcreteTypeController;
 use App\Http\Controllers\GrillGlassTilesConfigureController;
 use App\Http\Controllers\GlassConfigureController;
 use App\Http\Controllers\TilesConfigureController;
+use App\Http\Controllers\PileCapConfigureController;
+use App\Http\Controllers\MatConfigureController;
+use App\Http\Controllers\ReturningWallConfigureController;
 use App\Http\Controllers\JournalVoucherController;
 use App\Http\Controllers\TradingSaleController;
 use App\Http\Controllers\PaintConfigureController;
@@ -34,7 +37,8 @@ use App\Http\Controllers\ColumnConfigureController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MobilizationWorkController;
 use App\Http\Controllers\MobilizationWorkProductController;
-
+use App\Http\Controllers\SandFillingConfigureController;
+use App\Http\Controllers\BricksSolingConfigureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -684,13 +688,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('grill-glass-tiles-configure-details/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureDetails'])->name('grill_glass_tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('grill-glass-tiles-configure-print/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigurePrint'])->name('grill_glass_tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
 
-     //Glass Configure
     Route::get('glass-configure', [GlassConfigureController::class, 'glassConfigure'])->name('glass_configure')->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure/add', [GlassConfigureController::class, 'glassConfigureAdd'])->name('glass_configure.add')->middleware('permission:grill_glass_tiles_configure');
     Route::post('glass-configure/add', [GlassConfigureController::class, 'glassConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure-details/{glassConfigure}', [GlassConfigureController::class, 'glassConfigureDetails'])->name('glass_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure-print/{glassConfigure}', [GlassConfigureController::class, 'glassConfigurePrint'])->name('glass.print')->middleware('permission:grill_glass_tiles_configure');
-    Route::get('glass-configure-datatable', [GlassConfigureController::class, 'glassConfigureDatatable'])->name('glass_configure.datatable');
+    Route::get('glass-configure-datatable', [GlassConfigureController::class, 'glassConfigureDatatable'])->name('grill_glass_tiles_configure.datatable');
 
     //Tiles Configure
     Route::get('tiles-configure', [TilesConfigureController::class, 'tilesConfigure'])->name('tiles_configure')->middleware('permission:grill_glass_tiles_configure');
@@ -698,7 +701,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('tiles-configure/add', [TilesConfigureController::class, 'tilesConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('tiles-configure-details/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigureDetails'])->name('tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('tiles-configure-print/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigurePrint'])->name('tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
-    Route::get('tiles-configure-datatable', [TilesConfigureController::class, 'tilesConfigureDatatable'])->name('tiles_configure.datatable');
+    Route::get('tiles-configure-datatable', [TilesConfigureController::class, 'tilesConfigureDatatable'])->name('grill_glass_tiles_configure.datatable');
 
     //Paint Configure
     Route::get('paint-configure', [PaintConfigureController::class, 'paintConfigure'])->name('paint_configure')->middleware('permission:paint_configure');
@@ -723,6 +726,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('earth-work-configure/add', [EarthWorkConfigureController::class, 'earthWorkConfigureAddPost'])->middleware('permission:earth_work_configure');
     Route::get('earth-work-configure-details/{earthWorkConfigure}', [EarthWorkConfigureController::class, 'earthWorkConfigureDetails'])->name('earth_work_configure.details')->middleware('permission:earth_work_configure');
     Route::get('earth-work-configure-print/{earthWorkConfigure}', [EarthWorkConfigureController::class, 'earthWorkConfigurePrint'])->name('earth_work_configure.print')->middleware('permission:earth_work_configure');
+
+    //Sand Filling Configure
+    Route::get('sand-filling-configure', [SandFillingConfigureController::class, 'sandFillingConfigure'])->name('sand_filling_configure')->middleware('permission:earth_work_configure');
+    Route::get('sand-filling-configure-datatable', [SandFillingConfigureController::class, 'sandFillingConfigureDatatable'])->name('sand_filling_configure.datatable');
+    Route::get('sand-filling-configure/add', [SandFillingConfigureController::class, 'sandFillingConfigureAdd'])->name('sand_filling_configure.add')->middleware('permission:earth_work_configure');
+    Route::post('sand-filling-configure/add', [SandFillingConfigureController::class, 'sandFillingConfigureAddPost'])->middleware('permission:earth_work_configure');
+    Route::get('sand-filling-configure-details/{earthWorkConfigure}', [SandFillingConfigureController::class, 'earthWorkConfigureDetails'])->name('sand_filling_configure.details')->middleware('permission:earth_work_configure');
+    Route::get('sand-filling-configure-print/{earthWorkConfigure}', [SandFillingConfigureController::class, 'earthWorkConfigurePrint'])->name('sand_filling_configure.print')->middleware('permission:earth_work_configure');
+
+    //Bricks Soling Configure
+    Route::get('bricks-soling-configure', [BricksSolingConfigureController::class, 'brickSolingConfigure'])->name('bricks_soling_configure')->middleware('permission:earth_work_configure');
+    Route::get('bricks-soling-configure-datatable', [BricksSolingConfigureController::class, 'brickSolingConfigureDatatable'])->name('bricks_soling_configure.datatable');
+    Route::get('bricks-soling-configure/add', [BricksSolingConfigureController::class, 'brickSolingConfigureAdd'])->name('bricks_soling_configure.add')->middleware('permission:earth_work_configure');
+    Route::post('bricks-soling-configure/add', [BricksSolingConfigureController::class, 'brickSolingConfigureAddPost'])->middleware('permission:earth_work_configure');
+    Route::get('bricks-soling-configure-details/{earthWorkConfigure}', [BricksSolingConfigureController::class, 'brickSolingConfigureDetails'])->name('sand_filling_configure.details')->middleware('permission:earth_work_configure');
+    Route::get('bricks-soling-configure-print/{earthWorkConfigure}', [BricksSolingConfigureController::class, 'brickSolingConfigurePrint'])->name('sand_filling_configure.print')->middleware('permission:earth_work_configure');
 
     //Pile Configure
     Route::get('pile-configure', [SegmentConfigureController::class, 'pileConfigure'])->name('pile_configure')->middleware('permission:pile_configure');
@@ -755,6 +774,30 @@ Route::middleware(['auth'])->group(function () {
     Route::post('common-configure/add', [CommonConfigureController::class, 'commonConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
     Route::get('common-configure-details/{commonConfigure}', [CommonConfigureController::class, 'commonConfigureDetails'])->name('common_configure.details')->middleware('permission:slab_cap_wall_configure');
     Route::get('common-configure-print/{commonConfigure}', [CommonConfigureController::class, 'commonConfigurePrint'])->name('common_configure.print')->middleware('permission:slab_cap_wall_configure');
+
+    //Pile Cap Configure
+    Route::get('pile-cap-configure', [PileCapConfigureController::class, 'pileCapConfigureAll'])->name('pile_cap_configure')->middleware('permission:slab_cap_wall_configure');
+    Route::get('pile-cap-configure-datatable', [PileCapConfigureController::class, 'pileCapConfigureDatatable'])->name('pile_cap_configure.datatable');
+    Route::get('pile-cap-configure/add', [PileCapConfigureController::class, 'pileCapConfigureAdd'])->name('pile_cap_configure.add')->middleware('permission:slab_cap_wall_configure');
+    Route::post('pile-cap-configure/add', [PileCapConfigureController::class, 'pileCapConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
+    Route::get('pile-cap-configure-details/{commonConfigure}', [PileCapConfigureController::class, 'pileCapConfigureDetails'])->name('pile_cap_configure.details')->middleware('permission:slab_cap_wall_configure');
+    Route::get('pile-cap-configure-print/{commonConfigure}', [PileCapConfigureController::class, 'pileCapConfigurePrint'])->name('pile_cap_configure.print')->middleware('permission:slab_cap_wall_configure');
+
+    //Mat Configure
+    Route::get('mat-configure', [MatConfigureController::class, 'matConfigureAll'])->name('mat_configure')->middleware('permission:slab_cap_wall_configure');
+    Route::get('mat-configure-datatable', [MatConfigureController::class, 'matConfigureDatatable'])->name('mat_configure.datatable');
+    Route::get('mat-configure/add', [MatConfigureController::class, 'matConfigureAdd'])->name('mat_configure.add')->middleware('permission:slab_cap_wall_configure');
+    Route::post('mat-configure/add', [MatConfigureController::class, 'matConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
+    Route::get('mat-configure-details/{commonConfigure}', [MatConfigureController::class, 'matConfigureDetails'])->name('mat_configure.details')->middleware('permission:slab_cap_wall_configure');
+    Route::get('mat-configure-print/{commonConfigure}', [MatConfigureController::class, 'matConfigurePrint'])->name('mat_configure.print')->middleware('permission:slab_cap_wall_configure');
+
+    //Returning Wall Configure
+    Route::get('returning-wall-configure', [ReturningWallConfigureController::class, 'returningWallConfigureAll'])->name('returning_wall_configure')->middleware('permission:slab_cap_wall_configure');
+    Route::get('returning-wall-configure-datatable', [ReturningWallConfigureController::class, 'returningWallConfigureDatatable'])->name('returning_wall_configure.datatable');
+    Route::get('returning-wall-configure/add', [ReturningWallConfigureController::class, 'returningWallConfigureAdd'])->name('returning_wall_configure.add')->middleware('permission:slab_cap_wall_configure');
+    Route::post('returning-wall-configure/add', [ReturningWallConfigureController::class, 'returningWallConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
+    Route::get('returning-wall-configure-details/{commonConfigure}', [ReturningWallConfigureController::class, 'returningWallConfigureDetails'])->name('returning_wall_configure.details')->middleware('permission:slab_cap_wall_configure');
+    Route::get('returning-wall-configure-print/{commonConfigure}', [ReturningWallConfigureController::class, 'returningWallConfigurePrint'])->name('returning_wall_configure.print')->middleware('permission:slab_cap_wall_configure');
 
     //Assign Segment
     Route::get('assign-segment', [AssignSegmentController::class, 'assignSegment'])->name('assign_segment.all');

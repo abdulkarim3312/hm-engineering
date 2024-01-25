@@ -34,9 +34,11 @@
                             <th>Length</th>
                             <th>Width</th>
                             <th>Height</th>
+                            <th>Quantity</th>
                             <th>Unit Price</th>
                             <th>Total Volume</th>
                             <th>Total Price</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,9 +48,13 @@
                             <td>{{$earthWorkConfigure->length}}</td>
                             <td>{{$earthWorkConfigure->width}}</td>
                             <td>{{$earthWorkConfigure->height}}</td>
+                            <td>{{$earthWorkConfigure->quantity}}</td>
                             <td>৳ {{number_format($earthWorkConfigure->unit_price,2)}} Taka</td>
                             <td>{{$earthWorkConfigure->total_area}} Cft</td>
                             <td>৳ {{number_format($earthWorkConfigure->total_price,2)}} Taka</td>
+                            <td>
+                                <a href="" class="btn btn-primary btn-sm">Details</a>
+                            </td>
                         </tr>
                         @endforeach
                         </tbody>

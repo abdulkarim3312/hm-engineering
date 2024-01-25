@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-    Tiles Configure Details
+   Glass Configure Details
 @endsection
 
 @section('content')

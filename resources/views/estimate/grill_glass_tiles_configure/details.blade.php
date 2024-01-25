@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Grill Configure Details
+   Grill/Glass/Tiles Configure Details
 @endsection
 
 @section('content')
@@ -76,7 +76,7 @@
                                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                                 </div>
                             </div>
-                            <div class="col-xs-8 text-center" style="margin-left: -128px;">
+                            <div class="col-xs-8 text-center">
                                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>

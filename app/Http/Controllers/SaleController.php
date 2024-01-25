@@ -638,19 +638,13 @@ class SaleController extends Controller
     public function getFlat(Request $request) {
 
         $availableIds = SaleInventory::where('status', 1)->pluck('id')->toArray();
-        // dd($availableIds);
-        // $item = Flat::where('floor_id', $request->floorId)->get();
-        // dd($item);
-        // $flats = Flat::whereIn('id', $availableIds)
-        //         ->where('floor_id', $request->floorId)
-        //         ->orderBy('name')
-        //         ->get()
-        //         ->toArray();
-        $flats = Flat::where('floor_id', $request->floorId)
+
+        $flats = Flat::whereIn('id', $availableIds)
+                ->where('floor_id', $request->floorId)
                 ->orderBy('name')
                 ->get()
                 ->toArray();
-            // dd($flats);
+
         return response()->json($flats);
     }
 

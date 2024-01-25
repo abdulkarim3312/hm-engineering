@@ -30,9 +30,10 @@
                                 <thead>
                                 <tr>
                                     <th width="25%">Estimate Project</th>
-                                    <th width="15%">Length</th>
-                                    <th width="15%">Width</th>
-                                    <th width="15%">Height</th>
+                                    <th width="15%">Length(ft)</th>
+                                    <th width="15%">Width(ft)</th>
+                                    <th width="15%">Height(ft)</th>
+                                    <th width="10%">Quantity</th>
                                     <th width="15%">Unit Price(Per Cft)</th>
                                     <th width="15%">Total Area</th>
                                     <th></th>
@@ -68,6 +69,11 @@
                                             <td>
                                                 <div class="form-group {{ $errors->has('height.'.$loop->index) ? 'has-error' :'' }}">
                                                     <input type="number" step="any" class="form-control height" name="height[]" value="{{ old('height.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('quantity.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" step="any" class="form-control height" id="quantity" name="quantity[]" value="{{ old('quantity.'.$loop->index) }}">
                                                 </div>
                                             </td>
 
@@ -110,6 +116,11 @@
                                         <td>
                                             <div class="form-group">
                                                 <input type="number" step="any" class="form-control height" name="height[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any" class="form-control height" id="quantity" name="quantity[]">
                                             </div>
                                         </td>
 
@@ -177,6 +188,11 @@
             <td>
                 <div class="form-group">
                     <input type="number" step="any" class="form-control height" name="height[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" step="any" class="form-control height" id="quantity" name="quantity[]">
                 </div>
             </td>
 
@@ -297,6 +313,7 @@
                 var length = $('.length:eq('+i+')').val();
                 var width = $('.width:eq('+i+')').val();
                 var height = $('.height:eq('+i+')').val();
+                var quantity = $('#quantity:eq('+i+')').val();
 
                 if (length == '' || length < 0 || !$.isNumeric(length))
                     length = 0;
@@ -307,9 +324,12 @@
                 if (height == '' || height < 0 || !$.isNumeric(height))
                     height = 0;
 
-                $('.sub-total:eq('+i+')').html(parseFloat(((length * width) * height).toFixed(2)));
+                if (quantity == '' || quantity < 0 || !$.isNumeric(quantity))
+                    quantity = 0;
 
-                totalArea += parseFloat(((length * width) * height).toFixed(2));
+                $('.sub-total:eq('+i+')').html(parseFloat((((length * width) * height) * quantity).toFixed(2)));
+
+                totalArea += parseFloat((((length * width) * height) * quantity).toFixed(2));
             });
 
             $('#total-area').html(totalArea.toFixed(2) +' '+'Cft');
