@@ -96,6 +96,17 @@
                         </div>
 
                         <div id="modal-order-info" style="background-color: lightgrey; padding: 10px; border-radius: 3px;"></div>
+
+                        <div id="payment_step_area" style="display: none" class="form-group">
+                            <label>Payment Step</label>
+                            <input type="hidden" id="payment_step_no" name="payment_step_no">
+                            <input type="text" readonly class="form-control" id="payment_step" name="payment_step">
+                         </div>
+                        <div id="installment_area" style="display: none" class="form-group">
+                            <label>Per Installment Amount</label>
+                            <input type="text" class="form-control" id="per_installment_amount" name="per_installment_amount">
+                        </div>
+
                         <div class="form-group">
                             <label>Payment Type</label>
                             <select class="form-control" id="payment_type" name="payment_type">

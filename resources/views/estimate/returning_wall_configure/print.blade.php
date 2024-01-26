@@ -68,11 +68,11 @@
             <div class="col-xs-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th>Common Configure No.</th>
+                        <th>Returning Wall Configure No.</th>
                         <td>{{ $commonConfigure->common_configure_no }}</td>
                     </tr>
                     <tr>
-                        <th>Common Configure Date</th>
+                        <th>Returning Wall Configure Date</th>
                         <td>{{ $commonConfigure->date }}</td>
                     </tr>
                     <tr>
