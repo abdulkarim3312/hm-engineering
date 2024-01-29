@@ -97,11 +97,20 @@
 
                         <div id="modal-order-info" style="background-color: lightgrey; padding: 10px; border-radius: 3px;"></div>
 
-                        <div id="payment_step_area" style="display: none" class="form-group">
+                        <div id="payment_step_area" style="display: none" class="form-group mt-3">
                             <label>Payment Step</label>
-                            <input type="hidden" id="payment_step_no" name="payment_step_no">
-                            <input type="text" readonly class="form-control" id="payment_step" name="payment_step">
-                         </div>
+                            <select id="payment_step_show" name="payment_step"  class="form-control">
+                                <option value="">Select Payment Step</option>
+                                <option value="2">Down Payment</option>
+                                <option value="3">Installment</option>
+                            </select>
+                            {{-- <input type="hidden" id="payment_step_no" name="payment_step_no">
+                            <input type="text" readonly class="form-control" id="payment_step" name="payment_step"> --}}
+                        </div>
+                        <div class="form-group payment-step-show" style="display: none">
+                            <label>Installment Step</label>
+                            <input class="form-control" type="text" name="installment_name" placeholder="installment step name">
+                        </div>
                         <div id="installment_area" style="display: none" class="form-group">
                             <label>Per Installment Amount</label>
                             <input type="text" class="form-control" id="per_installment_amount" name="per_installment_amount">
@@ -231,6 +240,7 @@
                                 <option value="2">Cash</option>
                             </select>
                         </div>
+                        
                         <div class="form-group">
                             <label> Account </label>
                             <select class="form-control select2" style="width: 100%" id="refund_account" name="account">
@@ -490,12 +500,25 @@
 
             $("#payment_type").change(function (){
                 var payType = $(this).val();
+                // alert(payType);
 
                 if(payType != ''){
                     if(payType == 1){
                         $(".bank-area").show();
                     }else{
                         $(".bank-area").hide();
+                    }
+                }
+            })
+
+            $("#payment_step_show").change(function (){
+                var payType = $(this).val();
+
+                if(payType != ''){
+                    if(payType == 3){
+                        $(".payment-step-show").show();
+                    }else{
+                        $(".payment-step-show").hide();
                     }
                 }
             })

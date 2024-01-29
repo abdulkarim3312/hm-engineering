@@ -129,6 +129,18 @@ class ReceiptController extends Controller
             ->addColumn('client_name', function(ReceiptPayment $receiptPayment) {
                 return $receiptPayment->client->name ?? '';
             })
+            ->addColumn('payment_step', function(ReceiptPayment $receiptPayment) {
+                    $btn = '';
+                    if ($receiptPayment->payment_step == 1){
+                        $btn .= 'Booking Money';
+                    }else if($receiptPayment->payment_step == 2){
+                        $btn .= 'Down Payment';
+                    }else{
+                        $btn .= $receiptPayment->installment_name;
+                    }
+                    return $btn;
+
+            })
             ->addColumn('expenses_code', function(ReceiptPayment $receiptPayment) {
 
                 $codes = '<ul style="text-align: left;">';
@@ -682,6 +694,7 @@ class ReceiptController extends Controller
     }
     public function details(ReceiptPayment $receiptPayment)
     {
+        // dd($receiptPayment);
         $receiptPayment->amount_in_word = DecimalToWords::convert($receiptPayment->net_amount,'Taka',
             'Poisa');
 
@@ -787,6 +800,8 @@ class ReceiptController extends Controller
 //            $order->save();
 //        }
 
+
+
         //create dynamic voucher no process start
         $transactionType = 1;
         $financialYear = $request->financial_year;
@@ -800,8 +815,16 @@ class ReceiptController extends Controller
         $receiptPayment = new ReceiptPayment();
 
         $receiptPayment->project_id = $order->project_id;
-        $receiptPayment->payment_step = $order->payment_step;
+        $receiptPayment->floor_id = $order->floor_id;
+        $receiptPayment->flat_id = $order->flat_id;
+        if($order->payment_step == 1){
+            $receiptPayment->payment_step = 3;
+        }else{
+            $receiptPayment->payment_step = 2;
+        }
+        $receiptPayment->installment_name = $request->installment_name;
         $receiptPayment->installment_no = $order->payment_step == 4 ? $order->last_installment : null;
+
 
         $receiptPayment->receipt_payment_no = $voucherNo;
         $receiptPayment->financial_year = financialYear($request->financial_year);
@@ -825,32 +848,32 @@ class ReceiptController extends Controller
         $receiptPayment->save();
 
         //Bank/Cash Debit
-        $log = new TransactionLog();
-        $log->notes = $request->note;
-        $log->project_id = $order->project_id;
-        $log->receipt_payment_no = $receiptPayment->receipt_payment_no;
-        $log->receipt_payment_sl = $receiptPaymentNoSl;
-        $log->financial_year = $receiptPayment->financial_year;
-        $log->client_id = $receiptPayment->client_id;
-        $log->date = $receiptPayment->date;
-        $log->receipt_payment_id = $receiptPayment->id;
-        if($request->payment_type == 1){
-            $log->cheque_no = $request->cheque_no;
-            $log->cheque_date = Carbon::parse($request->cheque_date)->format('Y-m-d');
+        // $log = new TransactionLog();
+        // $log->notes = $request->note;
+        // $log->project_id = $order->project_id;
+        // $log->receipt_payment_no = $receiptPayment->receipt_payment_no;
+        // $log->receipt_payment_sl = $receiptPaymentNoSl;
+        // $log->financial_year = $receiptPayment->financial_year;
+        // $log->client_id = $receiptPayment->client_id;
+        // $log->date = $receiptPayment->date;
+        // $log->receipt_payment_id = $receiptPayment->id;
+        // if($request->payment_type == 1){
+        //     $log->cheque_no = $request->cheque_no;
+        //     $log->cheque_date = Carbon::parse($request->cheque_date)->format('Y-m-d');
 
-        }
-        $log->transaction_type = 1;//Bank debit,Cash debit
+        // }
+        // $log->transaction_type = 1;//Bank debit,Cash debit
 
-        $log->payment_type = $request->payment_type;
-        $log->account_head_id = $request->account;
-        $log->amount = $receiptPayment->net_amount;
-        $log->notes = $receiptPayment->notes;
-        $log->sales_order_id = $order->id;
-        $log->save();
+        // $log->payment_type = $request->payment_type;
+        // $log->account_head_id = $request->account;
+        // $log->amount = $receiptPayment->net_amount;
+        // $log->notes = $receiptPayment->notes;
+        // $log->sales_order_id = $order->id;
+        // $log->save();
 
         $receiptPaymentDetail = new ReceiptPaymentDetail();
         $receiptPaymentDetail->receipt_payment_id = $receiptPayment->id;
-        $receiptPaymentDetail->account_head_id = 9;
+        $receiptPaymentDetail->account_head_id = $request->account;
         $receiptPaymentDetail->amount = $payAmount;
         $receiptPaymentDetail->net_amount = $payAmount;
         $receiptPaymentDetail->save();

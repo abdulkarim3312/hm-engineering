@@ -144,11 +144,11 @@
                                     </tr>
                                     <tr>
                                         <th>Total Paint Area(Single Floor)</th>
-                                        <td>{{ $paintConfigure->total_area_without_floor }} Cft</td>
+                                        <td>{{ $paintConfigure->total_area_without_floor }} Sft</td>
                                     </tr>
                                     <tr>
                                         <th>Total Paint Area(All Floor)</th>
-                                        <td>{{ $paintConfigure->total_area_with_floor }} Cft</td>
+                                        <td>{{ $paintConfigure->total_area_with_floor }} Sft</td>
                                     </tr>
                                 </table>
                             </div>
@@ -201,8 +201,8 @@
                                             <td> {{ $product->height }}</td>
                                             <td> {{ $product->side }}</td>
                                             <td> {{ $product->code_nos }}</td>
-                                            <td> {{ number_format($product->sub_total_deduction, 2) }} Cft</td>
-                                            <td> {{ number_format($product->sub_total_area, 2) }} Cft</td>
+                                            <td> {{ number_format($product->sub_total_deduction, 2) }} Sft</td>
+                                            <td> {{ number_format($product->sub_total_area, 2) }} Sft</td>
                                             <td> {{ number_format($product->sub_total_paint_liter, 2) }} Liter</td>
                                             <td> {{ number_format($product->sub_total_seller_liter, 2) }} Liter</td>
                                         </tr>
@@ -210,13 +210,13 @@
                                     </tbody>
                                     <tr>
                                         <th class="text-right" colspan="8">Single Floor Total</th>
-                                        <td> {{ number_format($paintConfigure->total_area_without_floor, 2) }} Cft</td>
+                                        <td> {{ number_format($paintConfigure->total_area_without_floor, 2) }} Sft</td>
                                         <td> {{ number_format($paintConfigure->total_paint_liter_without_floor, 2) }} Liter</td>
                                         <td> {{ number_format($paintConfigure->total_seller_liter_without_floor, 2) }} Liter</td>
                                     </tr>
                                     <tr>
                                         <th class="text-right" colspan="8">All Floor Total</th>
-                                        <td> {{ number_format($paintConfigure->total_area_with_floor, 2) }} Cft</td>
+                                        <td> {{ number_format($paintConfigure->total_area_with_floor, 2) }} Sft</td>
                                         <td> {{ number_format($paintConfigure->total_paint_liter_with_floor, 2) }} Liter</td>
                                         <td> {{ number_format($paintConfigure->total_seller_liter_with_floor, 2) }} Liter</td>
                                     </tr>

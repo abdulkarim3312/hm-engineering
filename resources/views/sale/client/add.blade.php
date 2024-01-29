@@ -32,6 +32,18 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group {{ $errors->has('client_id') ? 'has-error' :'' }}">
+                            <label class="col-sm-2 control-label">Client ID *</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Name"
+                                       name="client_id" value="{{ old('id_no') }}">
+
+                                @error('client_id')
+                                <span class="help-block">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group {{ $errors->has('company_name') ? 'has-error' :'' }}">
                             <label class="col-sm-2 control-label">Profession</label>

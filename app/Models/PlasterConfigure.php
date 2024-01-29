@@ -14,4 +14,8 @@ class PlasterConfigure extends Model
     public function plasterConfigureProducts() {
         return $this->hasMany(PlasterConfigureProduct::class,'plaster_configure_id','id');
     }
+
+    public function plasterConfigureProduct() {
+        return $this->belongsTo(PlasterConfigureProduct::class,'plaster_configure_id','id');
+    }
 }

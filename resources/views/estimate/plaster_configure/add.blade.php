@@ -40,6 +40,94 @@
 
                         <div class="row">
 
+
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('estimate_project') ? 'has-error' :'' }}">
+                                    <label>Estimate Projects</label>
+
+                                    <select class="form-control select2" style="width: 100%;" id="estimate_project" name="estimate_project" data-placeholder="Select Estimating Project">
+                                        <option value="">Select Estimate Project</option>
+
+                                        @foreach($estimateProjects as $estimateProject)
+                                            <option value="{{ $estimateProject->id }}" {{ old('estimate_project') == $estimateProject->id ? 'selected' : '' }}>{{ $estimateProject->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('estimate_project')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
+                                    <label>Estimate Floor</label>
+
+                                    <select class="form-control select2" style="width: 100%;" name="estimate_floor" id="estimate_floor" data-placeholder="Select Estimate Floor">
+                                        <option value="">Select Estimate Floor</option>
+                                    </select>
+
+                                    @error('estimate_floor')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
+                                    <label>Estimate Floor Unit</label>
+
+                                    <select class="form-control select2" style="width: 100%;" name="estimate_floor_unit" data-placeholder="Select Estimate Floor Unit">
+                                        <option value="">Select Estimate Floor Unit</option>
+                                        @foreach($estimateFloorUnits as $estimateFloorUnit)
+                                            <option value="{{ $estimateFloorUnit->id }}" {{ old('estimate_floor_unit') == $estimateFloorUnit->id ? 'selected' : '' }}>{{ $estimateFloorUnit->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('estimate_floor_unit')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            {{-- <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('color_paint_per_cft') ? 'has-error' :'' }}">
+                                    <label>Color Paint Per Cft</label>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="color_paint_per_cft" step="any"
+                                               name="color_paint_per_cft" value="{{ old('color_paint_per_cft',0.01111) }}" readonly>
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('color_paint_per_cft')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('seller_paint_per_cft') ? 'has-error' :'' }}">
+                                    <label>Seller Paint Per Cft</label>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="seller_paint_per_cft" step="any"
+                                               name="seller_paint_per_cft" value="{{ old('seller_paint_per_cft',0.01111) }}" readonly>
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('seller_paint_per_cft')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div> --}}
+                            
+                        </div>
+
+
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('first_ratio') ? 'has-error' :'' }}">
                                     <label>First Ratio</label>
@@ -178,7 +266,10 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Bricks Wall Direction</th>
+                                    <th width="10%">Bricks Wall Direction</th>
+                                    <th>Length</th>
+                                    <th>Height</th>
+                                    <th>Wall Nos</th>
                                     <th>Plaster Area</th>
                                     <th>Deduction Length(1)</th>
                                     <th>Deduction Height/Width(1)</th>
@@ -199,7 +290,24 @@
                                                 <div class="form-group {{ $errors->has('product.'.$loop->index) ? 'has-error' :'' }}">
                                                     <select class="form-control select2 product" name="product[]" data-placeholder="Select WAll Direction" required>
                                                         <option>Select Wall Direction</option>
-                                                        @foreach($brickConfigureProducts as $brickConfigureProduct)
+                                                        <option value="1" {{ old('wall_direction') == 1 ? 'selected' : '' }}>East</option>
+                                                        <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
+                                                        <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
+                                                        <option value="4" {{ old('wall_direction') == 4 ? 'selected' : '' }}>South</option>
+                                                        {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
+                                                            <option value="{{ $brickConfigureProduct->id }}" {{ old('product.'.$loop->parent->index) == $brickConfigureProduct->id ? 'selected' : '' }}>
+                                                                @if($brickConfigureProduct->wall_direction == 1)
+                                                                    East
+                                                                @elseif($brickConfigureProduct->wall_direction == 2)
+                                                                    West
+                                                                @elseif($brickConfigureProduct->wall_direction == 3)
+                                                                    North
+                                                                @else
+                                                                    South
+                                                                @endif
+                                                            </option>
+                                                        @endforeach --}}
+                                                        {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
                                                             <option value="{{ $brickConfigureProduct->id }}" {{ old('product.'.$loop->parent->index) == $brickConfigureProduct->id ? 'selected' : '' }}>
                                                                 @if($brickConfigureProduct->wall_direction == 1)
                                                                     {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-East
@@ -211,13 +319,28 @@
                                                                     {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-South
                                                                 @endif
                                                             </option>
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                             </td>
                                             <td>
+                                                <div class="form-group">
+                                                    <input type="number" step="any" id="length"  name="length[]" class="form-control length">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="number" step="any" id="height" name="height[]" class="form-control height">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="number" step="any" id="wall_nos"  name="wall_nos[]" class="form-control wall_nos">
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <div class="form-group {{ $errors->has('.plaster_area'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" step="any"  name="plaster_area[]" readonly class="form-control plaster_area" value="{{ old('plaster_area.'.$loop->index) }}">
+                                                    <input type="number" step="any" id="plaster_area" readonly name="plaster_area[]"  class="form-control plaster_area" value="{{ old('plaster_area.'.$loop->index) }}">
                                                 </div>
                                             </td>
 
@@ -269,7 +392,24 @@
                                             <div class="form-group">
                                                 <select class="form-control select2 product" name="product[]" data-placeholder="Select WAll Direction" required>
                                                     <option>Select Wall Direction</option>
-                                                    @foreach($brickConfigureProducts as $brickConfigureProduct)
+                                                    <option value="1" {{ old('wall_direction') == 1 ? 'selected' : '' }}>East</option>
+                                                    <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
+                                                    <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
+                                                    <option value="4" {{ old('wall_direction') == 4 ? 'selected' : '' }}>South</option>
+                                                    {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
+                                                        <option value="{{ $brickConfigureProduct->id }}">
+                                                            @if($brickConfigureProduct->wall_direction == 1)
+                                                                East
+                                                            @elseif($brickConfigureProduct->wall_direction == 2)
+                                                                West
+                                                            @elseif($brickConfigureProduct->wall_direction == 3)
+                                                                North
+                                                            @else
+                                                                South
+                                                            @endif
+                                                        </option>
+                                                    @endforeach --}}
+                                                    {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
                                                         <option value="{{ $brickConfigureProduct->id }}">
                                                             @if($brickConfigureProduct->wall_direction == 1)
                                                                 {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-East
@@ -281,13 +421,28 @@
                                                                 {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-South
                                                             @endif
                                                         </option>
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="number" step="any"  name="plaster_area[]" readonly class="form-control plaster_area">
+                                                <input type="number" step="any" id="length"  name="length[]" class="form-control length">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any" id="height"  name="height[]" class="form-control height">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any" id="wall_nos"  name="wall_nos[]" class="form-control wall_nos">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any" id="plaster_area"  name="plaster_area[]" readonly  class="form-control plaster_area">
                                             </div>
                                         </td>
                                         <td>
@@ -363,7 +518,11 @@
                 <div class="form-group">
                     <select class="form-control select2 product" name="product[]" data-placeholder="Select WAll Direction" required>
                         <option>Select Wall Direction</option>
-                        @foreach($brickConfigureProducts as $brickConfigureProduct)
+                        <option value="1" {{ old('wall_direction') == 1 ? 'selected' : '' }}>East</option>
+                        <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
+                        <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
+                        <option value="4" {{ old('wall_direction') == 4 ? 'selected' : '' }}>South</option>
+                        {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
                             <option value="{{ $brickConfigureProduct->id }}">
                                 @if($brickConfigureProduct->wall_direction == 1)
                                     {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-East
@@ -375,8 +534,23 @@
                                     {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-South
                                 @endif
                             </option>
-                        @endforeach
+                        @endforeach --}}
                     </select>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" step="any" id="length"  name="length[]" class="form-control length">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" step="any" id="height"  name="height[]" class="form-control height">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" step="any" id="wall_nos"  name="wall_nos[]" class="form-control wall_nos">
                 </div>
             </td>
             <td>
@@ -411,7 +585,7 @@
 
             <td>
                 <div class="form-group">
-                    <input type="number" step="any" class="form-control plaster_side" name="plaster_side[]">
+                    <input type="number" step="any" class="form-control plaster_side"  id="plaster_area" name="plaster_side[]">
                 </div>
             </td>
 
@@ -468,24 +642,24 @@
             });
             $('#estimate_project').trigger('change');
 
-            $('body').on('change','.product', function () {
-                var productID = $(this).val();
-                var itemproductID = $(this);
+            // $('body').on('change','.product', function () {
+            //     var productID = $(this).val();
+            //     var itemproductID = $(this);
 
-                itemproductID.closest('tr').find('.plaster_area').val();
+            //     itemproductID.closest('tr').find('.plaster_area').val();
 
 
-                if (productID != '') {
-                    $.ajax({
-                        method: "GET",
-                        url: "{{ route('get_bricks_area') }}",
-                        data: { productID:productID }
-                    }).done(function( response ) {
-                        itemproductID.closest('tr').find('.plaster_area').val(response.sub_total_area);
-                    });
+            //     if (productID != '') {
+            //         $.ajax({
+            //             method: "GET",
+            //             url: "{{ route('get_bricks_area') }}",
+            //             data: { productID:productID }
+            //         }).done(function( response ) {
+            //             itemproductID.closest('tr').find('.plaster_area').val(response.sub_total_area);
+            //         });
 
-                }
-            })
+            //     }
+            // })
             $('.product').trigger("change");
 
             $('#btn-add-product').click(function () {
@@ -513,7 +687,7 @@
             });
 
             $('body').on('keyup','.plaster_side,.plaster_thickness,.deduction_length_one' +
-                '.deduction_height_one,.deduction_length_two,.deduction_height_two', function () {
+                '.deduction_height_one,.deduction_length_two,.deduction_height_two,#length,#height, #wall_nos, .plaster_area', function () {
                 calculate();
             });
 
@@ -538,6 +712,10 @@
                 var deduction_height_two = $('.deduction_height_two:eq('+i+')').val();
                 var plaster_side = $('.plaster_side:eq('+i+')').val();
                 var plaster_thickness = $('.plaster_thickness:eq('+i+')').val();
+                var length = $('#length:eq('+i+')').val();
+                var height = $('#height:eq('+i+')').val();
+                var wall_nos = $('#wall_nos:eq('+i+')').val();
+                // alert(wall_nos);
 
                 if (plaster_area == '' || plaster_area < 0 || !$.isNumeric(plaster_area))
                     plaster_area = 0;
@@ -560,14 +738,28 @@
                 if (plaster_thickness == '' || plaster_thickness < 0 || !$.isNumeric(plaster_thickness))
                     plaster_thickness = 0;
 
+                if (length == '' || length < 0 || !$.isNumeric(length))
+                    length = 0;
+
+                if (height == '' || height < 0 || !$.isNumeric(height))
+                    height = 0;
+
                 var deduction_one = parseFloat(deduction_length_one * deduction_height_one);
                 var deduction_two = parseFloat(deduction_length_two * deduction_height_two);
 
+                var total_area = parseFloat(length * height * wall_nos);
+                
+                // var item = total_area - totalDeduction;
+                
+
                 var totalDeduction = deduction_one + deduction_two;
 
-                $('.sub-total-plaster-morters:eq('+i+')').html(parseFloat((((plaster_area - totalDeduction) * plaster_side) * plaster_thickness).toFixed(2)));
+                var item = parseFloat(total_area - totalDeduction);
+                $('#plaster_area:eq('+i+')').val(item);
+                // console.log($('#plaster_area:eq('+i+')').val(item));
+                $('.sub-total-plaster-morters:eq('+i+')').html(parseFloat(((item * plaster_side) * plaster_thickness).toFixed(2)));
 
-                totalPlasterMorters += parseFloat((((plaster_area - totalDeduction) * plaster_side) * plaster_thickness).toFixed(2));
+                totalPlasterMorters += parseFloat((((item * plaster_side)) * plaster_thickness).toFixed(2));
             });
 
             $('#total-plaster-morters').html(totalPlasterMorters.toFixed(2));

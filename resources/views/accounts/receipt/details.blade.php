@@ -64,6 +64,20 @@
                                    <td width="">{{ $receiptPayment->client->address ?? '' }}</td>
                                    <td><b>Project Name:</b> {{ $receiptPayment->project->name ??'' }}</td>
                                </tr>
+                               <tr>
+                                    <th width="24%">Payment Step</th>
+                                    <th width="2%" class="text-center">:</th>
+                                        @if ($receiptPayment->payment_step == 1)
+                                            <td width="">Booking Money</td>
+                                        @elseif ($receiptPayment->payment_step == 2)
+                                            <td width="">Down Payment</td>
+                                        @elseif ($receiptPayment->payment_step == 3)
+                                            <td width="">{{ $receiptPayment->installment_name ?? '' }}</td>
+                                        @else
+                                            <td width=""></td>
+                                        @endif
+                                    {{-- <td><b>Payment Installment Step: </b> {{ $receiptPayment->installment_name ?? '' }}</td> --}}
+                                </tr>
                                @if($receiptPayment->payment_type == 1)
                                <tr>
                                    <th width="24%">Issuing Bank</th>
@@ -80,8 +94,14 @@
                                <tr>
                                    <th width="24%">Mobile No</th>
                                    <th width="2%" class="text-center">:</th>
-                                   <td width="">{{ $receiptPayment->mobile_no }}</td>
-                                   <td width=""><b>Email:</b> {{ $receiptPayment->email }}</td>
+                                   <td width="">{{ $receiptPayment->client->mobile_no ?? ''}}</td>
+                                   <td width=""><b>Email:</b> {{ $receiptPayment->client->email ?? ''}}</td>
+                               </tr>
+                               <tr>
+                                   <th width="24%">Floor Name</th>
+                                   <th width="2%" class="text-center">:</th>
+                                   <td width="">{{ $receiptPayment->floor->name ?? ''}}</td>
+                                   <td width=""><b>Flat Name:</b> {{ $receiptPayment->flat->name ?? ''}}</td>
                                </tr>
                            </table>
                        </div>

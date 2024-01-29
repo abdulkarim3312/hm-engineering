@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr>
                                     <th>Mobile</th>
-                                    <td>{{ $order->client->mobile }}</td>
+                                    <td>{{ $order->client->mobile_no }}</td>
                                 </tr>
                                 <tr>
                                     <th>Address</th>
@@ -113,10 +113,10 @@
                                 <tbody>
                                 @foreach($order->flats as $flat)
                                     <tr>
-                                        <td>{{ $order->project->name }}</td>
-                                        <td>{{ $order->floor['name'] }}</td>
-                                        <td>{{ $flat->pivot->flat_name }}</td>
-                                        <td class="text-right"> {{ $flat->pivot->price}}</td>
+                                        <td class="text-center">{{ $order->project->name }}</td>
+                                        <td class="text-center">{{ $order->floor['name'] }}</td>
+                                        <td class="text-center">{{ $flat->pivot->flat_name }}</td>
+                                        <td class="text-center"> {{ $flat->pivot->price}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

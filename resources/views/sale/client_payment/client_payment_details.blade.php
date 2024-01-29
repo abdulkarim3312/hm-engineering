@@ -68,6 +68,7 @@
                                         <th>Voucher/Receipt No</th>
                                         <th>Cash/Bank Account</th>
                                         <th>Client name</th>
+                                        <th>Payment Step</th>
                                         <th>Income Code</th>
                                         <th>Net Amount</th>
                                         <th width="14%">Action</th>
@@ -236,6 +237,7 @@
                     { data: 'receipt_payment_no',name:'receipt_payment_no'},
                     {data: 'account_head', name: 'account_head.name'},
                     {data: 'client_name', name: 'client.name'},
+                    {data: 'payment_step', name: 'payment_step'},
                     {data: 'expenses_code', name: 'expenses_code',searchable: false},
                     {data: 'net_amount', name: 'net_amount'},
                     {data: 'action', name: 'action', orderable: false},

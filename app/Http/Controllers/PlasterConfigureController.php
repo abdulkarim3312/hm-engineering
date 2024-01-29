@@ -30,6 +30,7 @@ class PlasterConfigureController extends Controller
             'estimateFloorUnits','unitSections','brickConfigureProducts','bricksCost'));
     }
     public function plasterConfigureAddPost(Request $request) {
+        // dd($request->all());
         $request->validate([
             'first_ratio' => 'required|numeric|min:1',
             'second_ratio' => 'required|numeric|min:1',
@@ -50,12 +51,16 @@ class PlasterConfigureController extends Controller
         ]);
 
         $plasterConfigure = new PlasterConfigure();
+        $plasterConfigure->estimate_project_id = $request->estimate_project;
+        $plasterConfigure->estimate_floor_id = $request->estimate_floor;
+        $plasterConfigure->estimate_floor_unit_id = $request->estimate_floor_unit;
         $plasterConfigure->first_ratio = $request->first_ratio;
         $plasterConfigure->second_ratio = $request->second_ratio;
         $plasterConfigure->dry_morter = $request->dry_morter * $request->floor_number;
         $plasterConfigure->floor_number = $request->floor_number;
         $plasterConfigure->date = $request->date;
         $plasterConfigure->note = $request->note;
+        // dd($plasterConfigure->note);
         $plasterConfigure->total_plaster_area = 0;
         $plasterConfigure->total_cement = 0;
         $plasterConfigure->total_cement_bag = 0;
@@ -95,8 +100,15 @@ class PlasterConfigureController extends Controller
 
             PlasterConfigureProduct::create([
                 'plaster_configure_id' => $plasterConfigure->id,
+                'estimate_project_id' => $request->estimate_project,
+                'estimate_floor_id' => $request->estimate_floor,
+                'estimate_floor_unit_id' => $request->estimate_floor_unit,
                 'bricks_configure_product_id' => $reqProduct,
                 'plaster_area' => $request->plaster_area[$counter],
+                'wall_direction' => $request->product[$counter],
+                'length' => $request->length[$counter] * $request->floor_number,
+                'height' => $request->height[$counter] * $request->floor_number,
+                'wall_nos' => $request->wall_nos[$counter] * $request->floor_number,
                 'deduction_length_one' => $request->deduction_length_one[$counter] * $request->floor_number,
                 'deduction_height_one' => $request->deduction_height_one[$counter] * $request->floor_number,
                 'deduction_length_two' => $request->deduction_length_two[$counter] * $request->floor_number,

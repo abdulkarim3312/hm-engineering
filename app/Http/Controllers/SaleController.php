@@ -397,6 +397,9 @@ class SaleController extends Controller
             $receiptPaymentNoSl = $receiptPaymentNoExplode[1];
             $receiptPayment = new ReceiptPayment();
             $receiptPayment->project_id = $request->project;
+            $receiptPayment->floor_id = $request->floor;
+            $receiptPayment->flat_id = $request->flat;
+            $receiptPayment->payment_step = $order->payment_step;
             $receiptPayment->receipt_payment_no = $voucherNo;
             $receiptPayment->financial_year = financialYear($request->financial_year);
             $receiptPayment->date = Carbon::parse($request->date)->format('Y-m-d');
@@ -851,6 +854,7 @@ class SaleController extends Controller
         }
 
         $order = SalesOrder::find($request->order_no);
+        // dd($order);
         //$order->payment_step = $request->payment_step_no == 4 ? 4 : $request->payment_step_no;
         $order->save();
 
@@ -888,8 +892,11 @@ class SaleController extends Controller
         $receiptPayment = new ReceiptPayment();
 
         $receiptPayment->project_id = $order->project_id;
-        $receiptPayment->payment_step = $order->payment_step;
+        $receiptPayment->floor_id = $order->floor_id;
+        $receiptPayment->flat_id = $order->flat_id;
+        $receiptPayment->payment_step = $request->payment_step;
         $receiptPayment->installment_no = $order->payment_step == 4 ? $order->last_installment : null;
+        $receiptPayment->installment_name = $request->installment_name;
 
         $receiptPayment->receipt_payment_no = $voucherNo;
         $receiptPayment->financial_year = financialYear($request->financial_year);

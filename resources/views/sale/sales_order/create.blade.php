@@ -179,8 +179,8 @@
                                     <label>Payment Step</label>
                                     <select class="form-control" id="payment_step" name="payment_step">
                                         <option value="1" {{ old('payment_step') == '1' ? 'selected' : '' }}>Booking Money</option>
-                                        <option value="1" {{ old('payment_step') == '2' ? 'selected' : '' }}>Down Payment</option>
-                                        <option value="1" {{ old('payment_step') == '3' ? 'selected' : '' }}>Installment</option>
+                                        {{-- <option value="1" {{ old('payment_step') == '2' ? 'selected' : '' }}>Down Payment</option>
+                                        <option value="1" {{ old('payment_step') == '3' ? 'selected' : '' }}>Installment</option> --}}
                                     </select>
                                 </div>
                                 <div class="form-group {{ $errors->has('financial_year') ? 'has-error' :'' }}">

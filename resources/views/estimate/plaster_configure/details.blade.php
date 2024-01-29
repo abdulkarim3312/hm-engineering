@@ -141,7 +141,7 @@
                                         <th>Floor</th>
                                         <th>Unit</th>
                                         <th>Unit Section</th>
-                                        <th>Plaster Area</th>
+                                        <th>Plaster Wall Side</th>
                                         <th>Plaster Side</th>
                                         <th>Plaster Thickness</th>
                                         <th>Sub Total Area</th>

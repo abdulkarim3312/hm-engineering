@@ -154,7 +154,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('first_ratio') ? 'has-error' :'' }}">
-                                    <label>First Ratio</label>
+                                    <label>Cement Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="first_ratio" step="any"
@@ -170,7 +170,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('second_ratio') ? 'has-error' :'' }}">
-                                    <label>Second Ratio</label>
+                                    <label>Sand Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="second_ratio" step="any"
@@ -295,7 +295,7 @@
                                 @if (old('product') != null && sizeof(old('product')) > 0)
                                     @foreach(old('product') as $item)
                                         <tr class="product-item">
-                                            <td>
+                                            <td class="col-md-3">
                                                 <div class="form-group {{ $errors->has('product.'.$loop->index) ? 'has-error' :'' }}">
                                                     <select class="form-control select2 product" name="product[]" data-placeholder="Select Unit Section" required>
                                                         @foreach($unitSections as $unitSection)

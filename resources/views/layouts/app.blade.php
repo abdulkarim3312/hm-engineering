@@ -319,7 +319,7 @@
                              @endcan
                              @can('slab_cap_wall_configure')
                             <li class="{{ Route::currentRouteName() == 'common_configure' ? 'active' : '' }}">
-                                <a href="{{ route('common_configure') }}"><i class="fa fa-circle-o"></i>Slab/P.Cap/Mat/R.wall Configure</a>
+                                <a href="{{ route('common_configure') }}"><i class="fa fa-circle-o"></i>Slab Configure</a>
                             </li>
                                 @endcan
                              @can('slab_cap_wall_configure')

@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Floor;
 use App\Model\Client;
 use App\Model\Flat;
 use App\Model\Project;
+use App\Model\SalesOrder;
 use App\Model\TransactionLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -79,5 +81,17 @@ class ReceiptPayment extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+    public function floor()
+    {
+        return $this->belongsTo(Floor::class);
+    }
+    public function flat()
+    {
+        return $this->belongsTo(flat::class);
+    }
+    public function saleOrder()
+    {
+        return $this->belongsTo(SalesOrder::class);
     }
 }

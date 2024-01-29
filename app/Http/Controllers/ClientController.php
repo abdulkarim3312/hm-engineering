@@ -38,8 +38,10 @@ class ClientController extends Controller
     }
 
     public function addPost(Request $request) {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
+            'client_id' => 'required|string|max:255',
             'company_name' => 'nullable|string|max:255',
             'mobile_no' => 'nullable',
             'image' => 'nullable|mimes:jpg,png,jpeg',
@@ -68,12 +70,12 @@ class ClientController extends Controller
             $imagePath = 'public/public/uploads/client/'.$filename;
         }
 
-        $lastClient = Client::orderBy('id','desc')->where('type',1)->first()->id ?? 0;
-        $defineIdNo = 'C00'.($lastClient + 1);
+        // $lastClient = Client::orderBy('id','desc')->where('type',1)->first()->id ?? 0;
+        // $defineIdNo = 'C00'.($lastClient + 1);
 
         $client = new Client();
         $client->type = 1;
-        $client->id_no = $defineIdNo;
+        $client->id_no = $request->client_id;
         $client->image = $imagePath;
         $client->name = $request->name;
         $client->company_name = $request->company_name;

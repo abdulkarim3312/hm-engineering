@@ -336,7 +336,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('date') ? 'has-error' :'' }}">
                                     <label>Date</label>
 
@@ -353,7 +353,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('note') ? 'has-error' :'' }}">
                                     <label>Note</label>
 
