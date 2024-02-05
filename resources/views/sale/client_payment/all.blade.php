@@ -77,7 +77,7 @@
                                     class="text-danger">*</span></label>
                             <select class="form-control select2" style="width: 100%" name="financial_year">
                                 <option value="">Select Year</option>
-                                @for($i=2022; $i <= date('Y'); $i++)
+                                @for($i=2017; $i <= date('Y'); $i++)
                                     <option value="{{ $i }}" {{ old('financial_year') == $i ? 'selected' : '' }}>{{ $i }}-{{ $i+1 }}</option>
                                 @endfor
                             </select>
@@ -240,7 +240,7 @@
                                 <option value="2">Cash</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label> Account </label>
                             <select class="form-control select2" style="width: 100%" id="refund_account" name="account">
@@ -500,7 +500,6 @@
 
             $("#payment_type").change(function (){
                 var payType = $(this).val();
-                // alert(payType);
 
                 if(payType != ''){
                     if(payType == 1){

@@ -72,6 +72,49 @@
                         </div>
                         <div id="modal-order-info" style="background-color: lightgrey; padding: 10px; border-radius: 3px; margin-left: 191px;margin-bottom: 10px;"></div>
 
+
+                        {{-- <div id="payment_step_area" class="form-group">
+                            <label>Payment Step</label>
+                            <select id="payment_step_show" name="payment_step"  class="form-control">
+                                <option value="">Select Payment Step</option>
+                                <option value="2">Down Payment</option>
+                                <option value="3">Installment</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group payment-step-show" style="display: none">
+                            <label>Installment Step</label>
+                            <input class="form-control" type="text" {{ old('amount',$receiptPayment->installment_name) }} name="installment_name" placeholder="installment step name">
+                        </div> --}}
+
+
+                        <div class="form-group {{ $errors->has('payment_type') ? 'has-error' :'' }}">
+                            <label class="col-sm-2 control-label">Payment Step</label>
+
+                            <div class="col-sm-10">
+                                <select id="payment_step_show" name="payment_step"  class="form-control">
+                                    <option value="">Select Payment Step</option>
+                                    <option value="1" {{ old('payment_step',$receiptPayment->payment_step) == '1' ? 'selected' : '' }}>Boking Money</option>
+                                    <option value="2" {{ old('payment_step',$receiptPayment->payment_step) == '2' ? 'selected' : '' }}>Down Payment</option>
+                                    <option value="3" {{ old('payment_step',$receiptPayment->payment_step) == '3' ? 'selected' : '' }}>Installment</option>
+                                </select>
+
+                                @error('payment_type')
+                                <span class="help-block">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group payment-step-show {{ $errors->has('installment_name') ? 'has-error' :'' }}" style="display: none">
+                            <label class="col-sm-2 control-label">Installment Step</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="installment_name" placeholder="installment step name" value="{{ empty(old('installment_name')) ? ($errors->has('installment_name') ? '' : $receiptPayment->installment_name) : old('installment_name') }}">
+
+                                @error('installment_name')
+                                <span class="help-block">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group {{ $errors->has('payment_type') ? 'has-error' :'' }}">
                             <label class="col-sm-2 control-label">Payment Type *</label>
 
@@ -208,7 +251,7 @@
                             </div>
                         </div>
 
-{{--                        <div class="form-group bank-area {{ $errors->has('next_date') ? 'has-error' :'' }}" style="display: none">--}}
+                       {{-- <div class="form-group bank-area {{ $errors->has('next_date') ? 'has-error' :'' }}" style="display: none">--}}
 {{--                            <label class="col-sm-2 control-label">Next Payment Date </label>--}}
 
 {{--                            <div class="col-sm-10">--}}
@@ -225,7 +268,7 @@
 {{--                                <span class="help-block">{{ $message }}</span>--}}
 {{--                                @enderror--}}
 {{--                            </div>--}}
-{{--                        </div>--}}
+{{--                        </div> --}}
 
                         <div class="form-group {{ $errors->has('note') ? 'has-error' :'' }}">
                             <label class="col-sm-2 control-label">Note</label>
@@ -291,7 +334,6 @@
 
             $("#payment_type").change(function (){
                 var payType = $(this).val();
-
                 if(payType != ''){
                     if(payType == 1){
                         $(".bank-area").show();
@@ -302,6 +344,20 @@
             })
 
             $("#payment_type").trigger("change");
+
+            $("#payment_step_show").change(function (){
+                var payType = $(this).val();
+
+                if(payType != ''){
+                    if(payType == 3){
+                        $(".payment-step-show").show();
+                    }else{
+                        $(".payment-step-show").hide();
+                    }
+                }
+            })
+
+            $("#payment_step_show").trigger("change");
         });
 
         function intSelect2(){

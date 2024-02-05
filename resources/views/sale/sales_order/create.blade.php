@@ -337,6 +337,7 @@
 
             $('#project').change(function () {
                 var projectId = $(this).val();
+                // alert(projectId);
 
                 $('#floor').html('<option value="">Select Floor</option>');
 
@@ -361,6 +362,7 @@
 
             $('body').on('change', '#floor', function () {
                 var floorId = $(this).val();
+                alert(floorId);
                 $('#flat').html('<option value="">Select Flat/Shop</option>');
                 if (floorId != '') {
                     $.ajax({

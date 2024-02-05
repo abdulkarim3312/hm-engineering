@@ -129,6 +129,12 @@ class ReceiptController extends Controller
             ->addColumn('client_name', function(ReceiptPayment $receiptPayment) {
                 return $receiptPayment->client->name ?? '';
             })
+            ->addColumn('floor_name', function(ReceiptPayment $receiptPayment) {
+                return $receiptPayment->floor->name ?? '';
+            })
+            ->addColumn('flat_name', function(ReceiptPayment $receiptPayment) {
+                return $receiptPayment->flat->name ?? '';
+            })
             ->addColumn('payment_step', function(ReceiptPayment $receiptPayment) {
                     $btn = '';
                     if ($receiptPayment->payment_step == 1){
@@ -713,7 +719,7 @@ class ReceiptController extends Controller
 
     public function receiptDetailsEditPost(ReceiptPayment $receiptPayment,Request $request){
 
-        //dd($request->all());
+        // dd($request->all());
         $rules = [
             'financial_year' => 'required',
             'order_no' => 'required',
@@ -817,11 +823,7 @@ class ReceiptController extends Controller
         $receiptPayment->project_id = $order->project_id;
         $receiptPayment->floor_id = $order->floor_id;
         $receiptPayment->flat_id = $order->flat_id;
-        if($order->payment_step == 1){
-            $receiptPayment->payment_step = 3;
-        }else{
-            $receiptPayment->payment_step = 2;
-        }
+        $receiptPayment->payment_step = $request->payment_step;
         $receiptPayment->installment_name = $request->installment_name;
         $receiptPayment->installment_no = $order->payment_step == 4 ? $order->last_installment : null;
 

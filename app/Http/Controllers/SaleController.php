@@ -469,7 +469,7 @@ class SaleController extends Controller
                 $log->cheque_date = Carbon::parse($request->cheque_date)->format('Y-m-d');
             }
             $log->transaction_type = 2;//Account Head Credit
-            $log->account_head_id = 9;
+            $log->account_head_id = $request->account;
             $log->sales_order_id = $order->id;
             $log->amount = $request->paid;
             $log->notes = $request->note;
@@ -819,6 +819,7 @@ class SaleController extends Controller
             'financial_year' => 'required',
             'order_no' => 'required',
             'payment_type' => 'required',
+            'payment_step' => 'required',
             'account' => 'required',
             'amount' => 'required|numeric|min:1',
             'date' => 'required|date',
