@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Grill/Glass/Tiles Configure Details
+   Grill Configure Details
 @endsection
 
 @section('content')
@@ -158,7 +158,7 @@
                                     <tr>
                                         <th>
                                             @if($grillGlassTilesConfigure->configure_type == 1)
-                                                Total Grill KG(Single Floor)
+                                                Total Grill Sft(Single Floor)
                                             @elseif($grillGlassTilesConfigure->configure_type == 2)
                                                 Total Glass Area(Single Floor)
                                             @else
@@ -170,7 +170,7 @@
                                     <tr>
                                         <th>
                                             @if($grillGlassTilesConfigure->configure_type == 1)
-                                                Total Grill KG(All Floor)
+                                                Total Grill Sft(All Floor)
                                             @elseif($grillGlassTilesConfigure->configure_type == 2)
                                                 Total Glass Area(All Floor)
                                             @else
@@ -209,7 +209,7 @@
                                     <tr>
                                         <th class="text-right" colspan="4">Single Floor Total</th>
                                         @if($grillGlassTilesConfigure->configure_type == 1)
-                                        <td> {{ number_format($grillGlassTilesConfigure->total_area_without_floor, 2) }} KG</td>
+                                        <td> {{ number_format($grillGlassTilesConfigure->total_area_without_floor, 2) }} Sft</td>
                                         @else
                                             <td> {{ number_format($grillGlassTilesConfigure->total_area_without_floor, 2) }} Sft</td>
                                         @endif
@@ -217,7 +217,7 @@
                                     <tr>
                                         <th class="text-right" colspan="4">All Floor Total</th>
                                         @if($grillGlassTilesConfigure->configure_type == 1)
-                                            <td> {{ number_format($grillGlassTilesConfigure->total_area_with_floor, 2) }} KG</td>
+                                            <td> {{ number_format($grillGlassTilesConfigure->total_area_with_floor, 2) }} Sft</td>
                                         @else
                                             <td> {{ number_format($grillGlassTilesConfigure->total_area_with_floor, 2) }} Sft</td>
                                         @endif

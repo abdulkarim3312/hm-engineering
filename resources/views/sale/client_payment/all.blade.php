@@ -104,8 +104,6 @@
                                 <option value="2">Down Payment</option>
                                 <option value="3">Installment</option>
                             </select>
-                            {{-- <input type="hidden" id="payment_step_no" name="payment_step_no">
-                            <input type="text" readonly class="form-control" id="payment_step" name="payment_step"> --}}
                         </div>
                         <div class="form-group payment-step-show" style="display: none">
                             <label>Installment Step</label>
@@ -349,7 +347,7 @@
                     data: { clientId: clientId }
                 }).done(function( response ) {
                     $.each(response, function( index, item ) {
-                        $('#modal-order').append('<option value="'+item.id+'">'+item.order_no+'</option>');
+                        $('#modal-order').append('<option value="'+item.id+'">'+item.order_no+'-'+item.floor.name+'-'+item.flat.name+'</option>');
                     });
 
                     $('#modal-pay').modal('show');

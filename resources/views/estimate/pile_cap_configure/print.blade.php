@@ -52,7 +52,7 @@
                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                 </div>
             </div>
-            <div class="col-xs-8 text-center">
+            <div class="col-xs-8 text-center" style="margin-left: -123px;">
                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -68,11 +68,11 @@
             <div class="col-xs-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th>Common Configure No.</th>
+                        <th> Pile Cap Configure No.</th>
                         <td>{{ $commonConfigure->common_configure_no }}</td>
                     </tr>
                     <tr>
-                        <th>Common Configure Date</th>
+                        <th> Pile Cap Configure Date</th>
                         <td>{{ $commonConfigure->date }}</td>
                     </tr>
                     <tr>

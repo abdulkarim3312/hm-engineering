@@ -1190,11 +1190,10 @@ class SaleController extends Controller
     }
 
     public function clientPaymentGetOrders(Request $request) {
-        $orders = SalesOrder::where('client_id', $request->clientId)
+        $orders = SalesOrder::with('flat', 'floor')->where('client_id', $request->clientId)
             ->where('due', '>', 0)
             ->orderBy('order_no')
             ->get()->toArray();
-
         return response()->json($orders);
     }
 

@@ -65,7 +65,7 @@
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('grill_glass_tiles_configure.datatable') }}',
+                ajax: '{{ route('tiles_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
                     {data: 'grill_glass_tiles_configure_no', name: 'grill_glass_tiles_configure_no'},

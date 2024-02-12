@@ -25,7 +25,6 @@ class ReturningWallConfigureController extends Controller
     }
 
     public function returningWallConfigureAddPost(Request $request) {
-        // dd($request->all());
         $request->validate([
             'estimate_project' => 'required',
             'costing_segment' => 'required',

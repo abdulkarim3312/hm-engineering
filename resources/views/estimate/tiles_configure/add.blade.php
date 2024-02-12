@@ -459,7 +459,7 @@ Tiles Configure
 
                 $('.sub-total-area:eq('+i+')').html(parseFloat((length * height) * quantity).toFixed(2));
 
-                totalArea += parseFloat((length * height) * quantity).toFixed(2);
+                totalArea += parseFloat(((length * height) * quantity).toFixed(2));
             });
 
             $('#total-area').html(parseFloat(totalArea).toFixed(2));

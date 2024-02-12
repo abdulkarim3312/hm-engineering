@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Common Configure Details
+    Slab Configure Details
 @endsection
 
 @section('content')
@@ -88,11 +88,11 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>Common Configure No.</th>
+                                        <th>Slab Configure No.</th>
                                         <td>{{ $commonConfigure->common_configure_no }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Common Configure Date</th>
+                                        <th>Slab Configure Date</th>
                                         <td>{{ $commonConfigure->date }}</td>
                                     </tr>
                                     <tr>

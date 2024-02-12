@@ -56,6 +56,20 @@
             background-color: #fff;
             position: relative;
         }
+        .img-overlay {
+            position: absolute;
+            left: 0;
+            top: 80px;
+            width: auto;
+            margin-top: 110px;
+            margin-right: 150px;
+            margin-left: 150px;
+            height: 100%;
+            overflow: hidden;
+            text-align: center;
+            z-index: 9;
+            opacity: 0.2;
+        }
     </style>
 </head>
 <body>
@@ -83,12 +97,15 @@
         </div>
         <div class="row"  style="margin-top: 15px">
             <div class="col-xs-12">
+                <div class="img-overlay">
+                    <img src="{{ asset('img/logo.png') }}">
+               </div>
                 <table class="table table-bordered">
 
                     <tr>
                         <th width="24%">Payee Name & Designation</th>
                         <th width="2%" class="text-center">:</th>
-                        <td width="">{{ $receiptPayment->client->name ?? '' }} , {{ $receiptPayment->client->designation ?? '' }}</td>
+                        <td width="">{{ $receiptPayment->client->name ?? '' }} , {{ $receiptPayment->client->company_name ?? '' }}</td>
                         <td><b>ID:</b> {{ $receiptPayment->customer_id }}</td>
                     </tr>
                     <tr>
@@ -201,7 +218,7 @@
 <div class="footer-signature-area">
     <div class="row signature-area" style="padding:0 50px!important;">
         <div class="col-xs-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 17px;font-weight: bold">Prepared By</span></div>
-        <div class="col-xs-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 17px;font-weight: bold">Checked By</span></div>
+        <div class="col-xs-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 15px;font-weight: bold">Checked By A. H</span></div>
         <div class="col-xs-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 17px;font-weight: bold">Approved By</span></div>
         <div class="col-xs-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 17px;font-weight: bold">Received By</span></div>
     </div>

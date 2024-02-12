@@ -29,7 +29,7 @@
                                         <option value="">Select Client</option>
 
                                         @foreach($clients as $client)
-                                            <option value="{{ $client->id }}" {{ old('client') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                                            <option value="{{ $client->id }}" {{ old('client') == $client->id ? 'selected' : '' }}>{{ $client->name }}|{{ $client->id_no }}</option>
                                         @endforeach
                                     </select>
                                     @error('client')
@@ -337,7 +337,6 @@
 
             $('#project').change(function () {
                 var projectId = $(this).val();
-                // alert(projectId);
 
                 $('#floor').html('<option value="">Select Floor</option>');
 
@@ -362,7 +361,6 @@
 
             $('body').on('change', '#floor', function () {
                 var floorId = $(this).val();
-                alert(floorId);
                 $('#flat').html('<option value="">Select Flat/Shop</option>');
                 if (floorId != '') {
                     $.ajax({

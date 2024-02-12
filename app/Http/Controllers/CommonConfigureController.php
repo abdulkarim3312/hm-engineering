@@ -191,7 +191,6 @@ class CommonConfigureController extends Controller
 
         $commonConfigure->total_ton = $totalTon * $request->costing_segment_quantity;
         $commonConfigure->total_kg = $totalKg * $request->costing_segment_quantity;
-        // dd($commonConfigure->total_kg);
         $commonConfigure->total_common_bar_price = ($totalKg * $request->costing_segment_quantity) * $request->common_bar_costing;
         $commonConfigure->save();
 

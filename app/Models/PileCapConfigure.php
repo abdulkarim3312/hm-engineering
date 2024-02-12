@@ -13,7 +13,7 @@ class PileCapConfigure extends Model
     protected $guarded = [];
 
     public function commonConfigureProducts() {
-        return $this->hasMany(CommonConfigureProduct::class,'common_configure_id','id');
+        return $this->hasMany(PileCapConfigureProduct::class,'common_configure_id','id');
     }
     public function project(){
         return $this->belongsTo(EstimateProject::class,'estimate_project_id');

@@ -461,8 +461,8 @@
                                             <td>
                                                 <div class="form-group {{ $errors->has('length_type.'.$loop->index) ? 'has-error' :'' }}">
                                                     <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
-                                                        <option value="1" {{ old('length_type') == 1 ? 'selected' : '' }}>X-Direction</option>
-                                                        <option value="2" {{ old('length_type') == 2 ? 'selected' : '' }}>Y-Direction</option>
+                                                        <option value="1" {{ old('length_type') == 1 ? 'selected' : '' }}>Horizontal</option>
+                                                        <option value="2" {{ old('length_type') == 2 ? 'selected' : '' }}>Vertical</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -558,8 +558,8 @@
                                         <td>
                                             <div class="form-group">
                                                 <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
-                                                    <option value="1">X-Direction</option>
-                                                    <option value="2">Y-Direction</option>
+                                                    <option value="1">Horizontal</option>
+                                                    <option value="2">Vertcal</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -850,8 +850,8 @@
             <td>
                 <div class="form-group">
                     <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
-                        <option value="1">X-Direction</option>
-                        <option value="2">Y-Direction</option>
+                        <option value="1">Horizontal</option>
+                        <option value="2">Vertical</option>
                     </select>
                 </div>
             </td>

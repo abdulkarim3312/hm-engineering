@@ -1117,9 +1117,9 @@
                     pile_height = 0;
 
                     var lapping = number_of_bar * kg_by_rft * lapping_lenght;
-                    console.log(lapping);
+                    // console.log(lapping);
                     var total_lap = ((pile_height * kg_by_rft) * number_of_bar) + lapping;
-                    console.log(total_lap);
+                    // console.log(total_lap);
 
 
                     // var tie_length = tie_kg_by_rft * tie_length;
@@ -1177,9 +1177,11 @@
 
 
                 var data = parseFloat(tie_kg_by_rft * tie_length);
+                // console.log(data);
                 var tie_data = parseFloat(tie_lapping_length)
+                // console.log(tie_data);
                 var tie_lap = parseFloat(data + tie_data);
-                console.log(tie_lap);
+                // console.log(tie_lap);
                    
 
                 // $('.tie-total-kg:eq('+i+')').html(parseFloat((pre_tie_bar * tie_kg_by_rft)  * tieQuantity).toFixed(2));

@@ -69,7 +69,7 @@ class GrillGlassTilesConfigureController extends Controller
         foreach ($request->product as $key => $reqProduct) {
 
             if ($request->configure_type == 1){
-                $subTotalArea = ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]) * 1.5 );
+                $subTotalArea = ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]));
                 }else{
                 $subTotalArea = (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
             }
@@ -87,7 +87,7 @@ class GrillGlassTilesConfigureController extends Controller
             ]);
 
             if ($request->configure_type == 1){
-                $totalArea += ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]) * 1.5 );
+                $totalArea += ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]));
             }else{
                 $totalArea += (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
             }

@@ -700,7 +700,6 @@ class ReceiptController extends Controller
     }
     public function details(ReceiptPayment $receiptPayment)
     {
-        // dd($receiptPayment);
         $receiptPayment->amount_in_word = DecimalToWords::convert($receiptPayment->net_amount,'Taka',
             'Poisa');
 

@@ -29,6 +29,7 @@ use App\Http\Middleware\CustomMiddleware;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AssignSegmentController;
+use App\Http\Controllers\AutoCadTrainingController;
 use App\Http\Controllers\CostCalculationController;
 use App\Http\Controllers\CostingSegmentController;
 use App\Http\Controllers\EstimateProductController;
@@ -39,6 +40,10 @@ use App\Http\Controllers\MobilizationWorkController;
 use App\Http\Controllers\MobilizationWorkProductController;
 use App\Http\Controllers\SandFillingConfigureController;
 use App\Http\Controllers\BricksSolingConfigureController;
+use App\Http\Controllers\DesignConstructionController;
+use App\Http\Controllers\InteriorDesignController;
+use App\Http\Controllers\SteelStructureController;
+use App\Http\Controllers\ChemicalTreatmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -680,7 +685,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('bricks-configure-details/{bricksConfigure}', [BricksConfigureController::class, 'bricksConfigureDetails'])->name('bricks_configure.details')->middleware('permission:bricks_configure');
     Route::get('bricks-configure-print/{bricksConfigure}', [BricksConfigureController::class, 'bricksConfigurePrint'])->name('bricks_configure.print')->middleware('permission:bricks_configure');
 
-    //Grill Glass Tiles Configure
+    //Grill Configure
     Route::get('grill-glass-tiles-configure', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigure'])->name('grill_glass_tiles_configure')->middleware('permission:grill_glass_tiles_configure');
     Route::get('grill-glass-tiles-configure-datatable', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureDatatable'])->name('grill_glass_tiles_configure.datatable');
     Route::get('grill-glass-tiles-configure/add', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureAdd'])->name('grill_glass_tiles_configure.add')->middleware('permission:grill_glass_tiles_configure');
@@ -688,12 +693,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('grill-glass-tiles-configure-details/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureDetails'])->name('grill_glass_tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('grill-glass-tiles-configure-print/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigurePrint'])->name('grill_glass_tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
 
+    //Glass Configure
     Route::get('glass-configure', [GlassConfigureController::class, 'glassConfigure'])->name('glass_configure')->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure/add', [GlassConfigureController::class, 'glassConfigureAdd'])->name('glass_configure.add')->middleware('permission:grill_glass_tiles_configure');
     Route::post('glass-configure/add', [GlassConfigureController::class, 'glassConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure-details/{glassConfigure}', [GlassConfigureController::class, 'glassConfigureDetails'])->name('glass_configure.details')->middleware('permission:grill_glass_tiles_configure');
-    Route::get('glass-configure-print/{glassConfigure}', [GlassConfigureController::class, 'glassConfigurePrint'])->name('glass.print')->middleware('permission:grill_glass_tiles_configure');
-    Route::get('glass-configure-datatable', [GlassConfigureController::class, 'glassConfigureDatatable'])->name('grill_glass_tiles_configure.datatable');
+    Route::get('glass-configure-print/{glassConfigure}', [GlassConfigureController::class, 'glassConfigurePrint'])->name('glass_configure.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('glass-configure-datatable', [GlassConfigureController::class, 'glassConfigureDatatable'])->name('glass_configure.datatable');
 
     //Tiles Configure
     Route::get('tiles-configure', [TilesConfigureController::class, 'tilesConfigure'])->name('tiles_configure')->middleware('permission:grill_glass_tiles_configure');
@@ -701,7 +707,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('tiles-configure/add', [TilesConfigureController::class, 'tilesConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('tiles-configure-details/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigureDetails'])->name('tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('tiles-configure-print/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigurePrint'])->name('tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
-    Route::get('tiles-configure-datatable', [TilesConfigureController::class, 'tilesConfigureDatatable'])->name('grill_glass_tiles_configure.datatable');
+    Route::get('tiles-configure-datatable', [TilesConfigureController::class, 'tilesConfigureDatatable'])->name('tiles_configure.datatable');
 
     //Paint Configure
     Route::get('paint-configure', [PaintConfigureController::class, 'paintConfigure'])->name('paint_configure')->middleware('permission:paint_configure');
@@ -767,7 +773,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('column-configure-details/{columnConfigure}', [ColumnConfigureController::class, 'columnConfigureDetails'])->name('column_configure.details')->middleware('permission:column_configure');
     Route::get('column-configure-print/{columnConfigure}', [ColumnConfigureController::class, 'columnConfigurePrint'])->name('column_configure.print')->middleware('permission:column_configure');
 
-    //Common Configure
+    //Slab Configure
     Route::get('common-configure', [CommonConfigureController::class, 'configureAll'])->name('common_configure')->middleware('permission:slab_cap_wall_configure');
     Route::get('common-configure-datatable', [CommonConfigureController::class, 'commonConfigureDatatable'])->name('common_configure.datatable');
     Route::get('common-configure/add', [CommonConfigureController::class, 'commonConfigureAdd'])->name('common_configure.add')->middleware('permission:slab_cap_wall_configure');
@@ -973,6 +979,15 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('bank-loan-payment-details/{loan}/{type}', 'LoanController@loanPaymentDetails')->name('loan_payment_details');
     // Route::get('bank-loan-payment-print/{payment}', 'LoanController@loanPaymentPrint')->name('loan_payment_print');
 //    });
+
+
+    //AutoCAD Route
+    Route::get('auto/cad/training', [AutoCadTrainingController::class, 'index'])->name('auto_cad_training');
+    Route::get('auto/cad/dashboard', [AutoCadTrainingController::class, 'home'])->name('home_dashboard');
+    Route::get('chemical/treatment', [ChemicalTreatmentController::class, 'index'])->name('chemical_treatment');
+    Route::get('design/construction', [DesignConstructionController::class, 'index'])->name('design_construction');
+    Route::get('steel/structure', [SteelStructureController::class, 'index'])->name('steel_structure');
+    Route::get('interior/design', [InteriorDesignController::class, 'index'])->name('interior_design');
 });
 
 require __DIR__.'/auth.php';

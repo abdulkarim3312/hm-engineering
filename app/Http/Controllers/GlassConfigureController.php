@@ -133,7 +133,7 @@ class GlassConfigureController extends Controller
                 if ($glassConfigure->configure_type == 1){
                     return '<span class="label label-success">Grill</span>' ;
                 }elseif ($glassConfigure->configure_type == 2){
-                    return '<span class="label label-info">Glass</span>' ;
+                    return '<span class="label label-success">Glass</span>' ;
                 }else{
                     return '<span class="label label-warning">Tiles</span>' ;
                 }

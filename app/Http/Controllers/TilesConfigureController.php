@@ -134,7 +134,7 @@ class TilesConfigureController extends Controller
                 }elseif ($tilesConfigure->configure_type == 2){
                     return '<span class="label label-info">Glass</span>' ;
                 }else{
-                    return '<span class="label label-warning">Tiles</span>' ;
+                    return '<span class="label label-success">Tiles</span>' ;
                 }
             })
             ->addColumn('action', function(TilesConfigure $tilesConfigure) {

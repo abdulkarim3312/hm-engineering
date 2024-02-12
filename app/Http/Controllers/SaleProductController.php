@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Project;
 use App\Model\PurchaseInventory;
 use App\Model\PurchaseInventoryLog;
 use App\Model\PurchaseProduct;
@@ -88,7 +89,6 @@ class SaleProductController extends Controller
     }
 
     public function scrapProductAddPost(Request $request){
-        // dd($request->all());
         $request->validate([
             'project.*' => 'required',
             'product.*' => 'required',

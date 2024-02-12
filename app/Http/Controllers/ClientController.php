@@ -38,7 +38,6 @@ class ClientController extends Controller
     }
 
     public function addPost(Request $request) {
-        // dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'client_id' => 'required|string|max:255',

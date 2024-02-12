@@ -1,11 +1,161 @@
 @extends('layouts.app')
-
+@section('style')
+    <style>
+        .header .info-box {
+            display: block;
+            min-height: 40px;
+            background: #fff;
+            /* width: 100%; */
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+        .header .info-box .info-box-content {
+            padding: 5px 10px;
+            margin-left: 0px;
+            background-color: #36b177;
+            color: white;
+        }
+        .vl {
+            border-left: 6px solid #36b177;
+            height: 50px;
+            margin-left: 167px;
+            margin-right: 167px;
+            margin-top: -15px;
+        }
+        .col-md-3 .card_width{
+            width: 90%;
+        }
+        .sub_header_box .sub_header{
+            min-height: 60px;
+            background-color: #36b177;
+            color: white;
+        }
+        hr.new5 {
+            border: 6px solid #36b177;
+            border-radius: 2px;
+        }
+        .header_arrow .vl{
+            border-left: 6px solid #36b177;
+            height: 20px;
+            /* margin-left: 167px;
+            margin-right: 167px; */
+        }
+        .margin_top{
+            margin-top: 13px;
+        }
+        .card_mt{
+            margin-top: 35px;
+        }
+    </style>
+@endsection
 @section('content')
 
      @can('dashboard')
-
     <div class="row">
-        <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-3 col-xs-3">
+        </div>
+        <div class="col-md-4 header col-sm-4 col-xs-4">
+            <div class="info-box">
+                <div class="info-box-content">
+                    <h4 class="text-center text-bold">HM. ENGINEERING TECHNOLOGY</h4>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-3">
+        </div>
+    <!-- /.col -->
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-3 col-xs-3">
+        </div>
+        <div class="col-md-4 header col-sm-4 col-xs-4">
+            <div class="vl"></div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-3">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"  style="margin-top: -20px;">
+            <hr class="new5">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-left: -74px;margin-top: -5px;">
+            <div class="col-md-3 header_arrow col-sm-3 col-xs-3">
+                <div class="vl"></div>
+            </div>
+            <div class="col-md-3 header_arrow col-sm-3 col-xs-3">
+                <div class="vl" style="margin-left: 136px;"></div>
+            </div>
+            <div class="col-md-2 header_arrow col-sm-4 col-xs-4">
+                <div class="vl" style="margin-left: 100px;"></div>
+                <!-- /.info-box -->
+            </div>
+            <div class="col-md-2 header_arrow col-sm-3 col-xs-3">
+                <div class="vl" style="margin-left: 136px;"></div>
+            </div>
+            <div class="col-md-2 header_arrow col-sm-3 col-xs-3">
+                <div class="vl" style="margin-left: 145px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12 sub_header_box">
+            <a href="{{ route('auto_cad_training') }}">
+                <div class="info-box card_width sub_header">
+                    <div class="info-box-content" style="margin-left: 0px;">
+                        <span class="info-box-text text-bold margin_top"> HM. AutoCAD Training Center</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 sub_header_box">
+           <a href="{{ route('chemical_treatment') }}">
+            <div class="info-box sub_header" style="width: 76%;margin-left: -22px;">
+                <div class="info-box-content" style="margin-left: 0px;">
+                    <span class="info-box-text text-bold margin_top"> HM. Chemical Treatment </span>
+                </div>
+            </div>
+           </a>
+        </div>
+
+        <div class="col-md-2 col-sm-6 col-xs-12 sub_header_box">
+            <a href="{{ route('design_construction') }}">
+                <div class="info-box card_width sub_header" style="margin-left: -75px;width: 138%;">
+                    <div class="info-box-content" style="margin-left: 0px;">
+                        <span class="info-box-text text-bold margin_top"> HM. Design & Construction </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-2 col-sm-6 col-xs-12 sub_header_box">
+            <a href="{{ route('steel_structure') }}">
+                <div class="info-box card_width sub_header" style="margin-left: -21px; width: 104%;">
+                    <div class="info-box-content" style="margin-left: 0px;">
+                        <span class="info-box-text text-bold margin_top"> HM. Steel Structure </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12 sub_header_box">
+           <a href="{{ route('interior_design') }}">
+            <div class="info-box card_width sub_header" style="margin-left: -17px; width: 109%;">
+                <div class="info-box-content" style="margin-left: 0px;">
+                    <span class="info-box-text text-bold margin_top"> HM. Interior Design</span>
+                </div>
+            </div>
+           </a>
+        </div>
+    </div>
+    <div class="row card_mt">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-shopping-cart"></i></span>
 
@@ -20,7 +170,7 @@
         <!-- /.col -->
 
 
-        <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-star-half"></i></span>
 
@@ -32,7 +182,7 @@
             </div>
             <!-- /.info-box -->
         </div>
-        <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
 
@@ -46,7 +196,7 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-dollar"></i></span>
 
@@ -60,7 +210,7 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
 

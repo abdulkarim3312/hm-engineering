@@ -43,6 +43,7 @@
                            <h3 class="text-center m-0 fs-style" style="font-size: 22px !important;">FY : {{ $receiptPayment->financial_year }}</h3>
                        </div>
                    </div>
+                  
                    <div class="row" style="margin-top: 10px;">
                        <div class="col-xs-4 col-xs-offset-8">
                            <h4 style="margin: 0;font-size: 20px!important;">Receipt No: {{ $receiptPayment->receipt_payment_no }}</h4>
@@ -51,11 +52,14 @@
                    </div>
                    <div class="row" style="margin-top: 10px;">
                        <div class="col-12">
+                        <div class="img-overlay" style="margin-top: 311px;">
+                            <img src="{{ asset('img/logo.png') }}">
+                       </div>
                            <table class="table table-bordered">
                                <tr>
                                    <th width="24%">Depositor's Name & Designation</th>
                                    <th width="2%" class="text-center">:</th>
-                                   <td width="">{{ $receiptPayment->client->name ?? '' }} {{ $receiptPayment->client->designation ?? '' }}</td>
+                                   <td width="">{{ $receiptPayment->client->name ?? '' }} , {{ $receiptPayment->client->company_name ?? '' }}</td>
                                    <td><b>ID:</b> {{ $receiptPayment->customer_id }}</td>
                                </tr>
                                <tr>
@@ -176,7 +180,7 @@
                    </div>
                    <div class="row signature-area" style="margin-top: 30px">
                        <div class="col-md-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 20px;font-weight: bold">Prepared By</span></div>
-                       <div class="col-md-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 20px;font-weight: bold">Checked By</span></div>
+                       <div class="col-md-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 20px;font-weight: bold">Checked By Acc. Head</span></div>
                        <div class="col-md-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 20px;font-weight: bold">Approved By</span></div>
                        <div class="col-md-3 text-center"><span style="border: 1px solid #000 !important;display: block;padding: 18px;font-size: 20px;font-weight: bold">Received By</span></div>
                    </div>

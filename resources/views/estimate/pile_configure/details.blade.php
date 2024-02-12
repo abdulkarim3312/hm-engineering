@@ -192,6 +192,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <h4>Main Bar Description</h4>
                                     @foreach($pileConfigure->pileConfigureProducts as $product)
                                         <tr>
                                             <td>
@@ -241,6 +242,86 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Bar</th>
+                                        <th>Dia</th>
+                                        <th>Dia(D^2)</th>
+                                        <th>Value of Bar</th>
+                                        <th>Kg/Rft</th>
+                                        <th>Kg/Ton</th>
+                                        <th>Sub Total Kg</th>
+                                        <th>Sub Total Ton</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <h4>Extra Bar Description</h4>
+                                    @foreach($pileConfigure->pileConfigureProducts as $product)
+                                        @if($product->status == 1)
+                                            <?php
+                                            $extraTotalKg += $product->sub_total_kg;
+                                            $extraTotalTon += $product->sub_total_ton;
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    @if($product->bar_type == 6)
+                                                        6mm
+                                                    @elseif($product->bar_type == 8)
+                                                        8mm
+                                                    @elseif($product->bar_type == 10)
+                                                        10mm
+                                                    @elseif($product->bar_type == 12)
+                                                        12mm
+                                                    @elseif($product->bar_type == 16)
+                                                        16mm
+                                                    @elseif($product->bar_type == 18)
+                                                        18mm
+                                                    @elseif($product->bar_type == 20)
+                                                        20mm
+                                                    @elseif($product->bar_type == 22)
+                                                        22mm
+                                                    @elseif($product->bar_type == 25)
+                                                        25mm
+                                                    @elseif($product->bar_type == 28)
+                                                        28mm
+                                                    @elseif($product->bar_type == 32)
+                                                        32mm
+                                                    @elseif($product->bar_type == 36)
+                                                        36mm
+                                                    @endif
+
+                                                </td>
+                                                <td>{{ $product->dia }}</td>
+                                                <td> {{ $product->dia_square }}</td>
+                                                <td> {{ number_format($product->value_of_bar, 2) }}</td>
+                                                <td> {{ number_format($product->kg_by_rft, 2) }}</td>
+                                                <td> {{ number_format($product->kg_by_ton, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_kg, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_ton, 3) }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+
+                                    {{-- <tr>
+                                        <th colspan="6" class="text-right" >Extra Bar Total</th>
+                                        <td> {{ number_format($extraTotalKg, 2) }}</td>
+                                        <td> {{ number_format($extraTotalTon, 3) }}</td>
+                                    </tr> --}}
+
+                                    <tr>
+                                        <th colspan="6" class="text-right" >Total Ton/KG</th>
+                                        <td> {{ number_format($pileConfigure->total_kg, 2) }}</td>
+                                        <td> {{ number_format($pileConfigure->total_ton, 3) }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
                         <u><i><h2>Costing Area</h2></i></u>
                         <div class="row">
                             <div class="col-md-6">

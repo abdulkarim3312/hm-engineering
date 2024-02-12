@@ -9,7 +9,7 @@
 @endsection
 
 @section('title')
-    All Common Configure
+    All Slab Configure
 @endsection
 
 @section('content')
@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    <a class="btn btn-primary" href="{{ route('common_configure.add') }}">Add Common Configure</a>
+                    <a class="btn btn-primary" href="{{ route('common_configure.add') }}">Add Slab Configure</a>
                     <hr>
 
                     <table id="table" class="table table-bordered table-striped">

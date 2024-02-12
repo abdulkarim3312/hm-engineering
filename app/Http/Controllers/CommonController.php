@@ -357,14 +357,10 @@ class CommonController extends Controller
     }
     public function getRequisition(Request $request){
 
-        // $requisitionId = PurchaseOrder::pluck('requisition_id');
-        // dd($requisitionId);
-        // $requisitions = Requisition::where('project_id',$request->projectId)->where('status',1)->whereNotIn('id',$requisitionId)
-        // dd($requisitions);
-        $requisitions = Requisition::where('project_id',$request->projectId)
+        $requisitionId = PurchaseOrder::pluck('requisition_id');
+        $requisitions = Requisition::where('project_id',$request->projectId)->where('status',1)->whereNotIn('id',$requisitionId)
             ->orderBy('requisition_no')
             ->get()->toArray();
-        // dd($requisitions);
         return response()->json($requisitions);
     }
     public function getUnit(Request $request){

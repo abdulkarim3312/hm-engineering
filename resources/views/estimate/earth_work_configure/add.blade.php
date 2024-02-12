@@ -73,7 +73,7 @@
                                             </td>
                                             <td>
                                                 <div class="form-group {{ $errors->has('quantity.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" step="any" class="form-control height" id="quantity" name="quantity[]" value="{{ old('quantity.'.$loop->index) }}">
+                                                    <input type="number" step="any" class="form-control quantity" id="quantity" name="quantity[]" value="{{ old('quantity.'.$loop->index) }}">
                                                 </div>
                                             </td>
 
@@ -120,7 +120,7 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="number" step="any" class="form-control height" id="quantity" name="quantity[]">
+                                                <input type="number" step="any" class="form-control quantity" id="quantity" name="quantity[]">
                                             </div>
                                         </td>
 
@@ -192,7 +192,7 @@
             </td>
             <td>
                 <div class="form-group">
-                    <input type="number" step="any" class="form-control height" id="quantity" name="quantity[]">
+                    <input type="number" step="any" class="form-control quantity" id="quantity" name="quantity[]">
                 </div>
             </td>
 
@@ -292,7 +292,7 @@
                 }
             });
 
-            $('body').on('keyup','.width,.height', function () {
+            $('body').on('keyup','.width,.height,.quantity', function () {
                 calculate();
             });
 
@@ -313,7 +313,7 @@
                 var length = $('.length:eq('+i+')').val();
                 var width = $('.width:eq('+i+')').val();
                 var height = $('.height:eq('+i+')').val();
-                var quantity = $('#quantity:eq('+i+')').val();
+                var quantity = $('.quantity:eq('+i+')').val();
 
                 if (length == '' || length < 0 || !$.isNumeric(length))
                     length = 0;
