@@ -153,7 +153,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('segment_thickness') ? 'has-error' :'' }}">
-                                    <label>Segment Thickness(Ft)</label>
+                                    <label style="font-size: 15px;">Segment Thickness(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="segment_thickness" step="any"
@@ -493,13 +493,6 @@
 
                                             <td class="total-kg">0.00</td>
                                             <td class="total-ton">0.00</td>
-
-{{--                                            <td>--}}
-{{--                                            <th class="text-right">0.00</th>--}}
-{{--                                                <div class="form-group {{ $errors->has('rft_by_ton.'.$loop->index) ? 'has-error' :'' }}">--}}
-{{--                                                    <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]" value="{{ old('rft_by_ton.'.$loop->index) }}">--}}
-{{--                                                </div>--}}
-{{--                                            </td>--}}
                                             <td class="text-center">
                                                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                             </td>
@@ -589,14 +582,6 @@
                                         </td>
                                         <td class="total-kg">0.00</td>
                                         <td class="total-ton">0.00</td>
-{{--                                        <td>--}}
-{{--                                        <th class="text-right">0.00</th>--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]">--}}
-{{--                                            </div>--}}
-{{--                                        </td>--}}
-
-
                                         <td class="text-center">
                                             <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                         </td>
@@ -609,15 +594,225 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product">Add More</a>
                                     </td>
-{{--                                    <th colspan="5" class="text-right">Total Rft/Ton</th>--}}
-{{--                                    <th id="total-ton">0.00</th>--}}
-{{--                                    <td></td>--}}
                                 </tr>
                                 </tfoot>
                             </table>
                         </div>
 
                         <div class="table-responsive">
+                            <strong><h3>Calculation of Extra Bar</h3></strong>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Bar Type</th>
+                                    <th>Dia</th>
+                                    <th>Dia Square(D^2)</th>
+                                    <th>Value of Bar</th>
+                                    <th>Kg/Rft</th>
+                                    <th>Kg/Ton</th>
+                                    <th>Length Type</th>
+                                    <th>Length</th>
+                                    <th>Spacing</th>
+                                    <th>Type Length</th>
+                                    <th>Layer</th>
+                                    <th>Kg</th>
+                                    <th>Ton</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+
+                                <tbody id="product-container-extra">
+                                @if (old('product') != null && sizeof(old('product')) > 0)
+                                    @foreach(old('product') as $item)
+                                        <tr class="product-item">
+                                            <td>
+                                                <div class="form-group {{ $errors->has('product.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <select class="form-control select2 product" name="product[]" data-placeholder="Select Product" required>
+                                                            <option value="6" {{ old('product') == 6 ? 'selected' : '' }}>6mm</option>
+                                                            <option value="8" {{ old('product') == 8 ? 'selected' : '' }}>8mm</option>
+                                                            <option value="10" {{ old('product') == 10 ? 'selected' : '' }}>10mm</option>
+                                                            <option value="12" {{ old('product') == 12 ? 'selected' : '' }}>12mm</option>
+                                                            <option value="16" {{ old('product') == 16 ? 'selected' : '' }}>16mm</option>
+                                                            <option value="18" {{ old('product') == 18 ? 'selected' : '' }}>18mm</option>
+                                                            <option value="20" {{ old('product') == 20 ? 'selected' : '' }}>20mm</option>
+                                                            <option value="22" {{ old('product') == 22 ? 'selected' : '' }}>22mm</option>
+                                                            <option value="25" {{ old('product') == 25 ? 'selected' : '' }}>25mm</option>
+                                                            <option value="28" {{ old('product') == 28 ? 'selected' : '' }}>28mm</option>
+                                                            <option value="32" {{ old('product') == 32 ? 'selected' : '' }}>32mm</option>
+                                                            <option value="36" {{ old('product') == 36 ? 'selected' : '' }}>36mm</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('dia.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text"  name="dia[]" class="form-control dia" value="{{ old('dia.'.$loop->index) }}" readonly>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('dia_square.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" class="form-control dia_square" name="dia_square[]" value="{{ old('dia_square.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('value_of_bar.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" readonly class="form-control value_of_bar" name="value_of_bar[]" value="{{ old('value_of_bar.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('kg_by_rft.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" class="form-control kg_by_rft" name="kg_by_rft[]" value="{{ old('kg_by_rft.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('kg_by_ton.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" readonly class="form-control kg_by_ton" name="kg_by_ton[]" value="{{ old('kg_by_ton.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('length_type.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
+                                                        <option value="1" {{ old('length_type') == 1 ? 'selected' : '' }}>Horizontal</option>
+                                                        <option value="2" {{ old('length_type') == 2 ? 'selected' : '' }}>Vertical</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('length.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" class="form-control length" name="length[]" step="any" value="{{ old('length.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('spacing.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" class="form-control spacing" name="spacing[]" step="any" value="{{ old('spacing.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('type_length.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" class="form-control type_length" name="type_length[]" step="any" value="{{ old('type_length.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('layer.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" class="form-control layer" name="layer[]" value="{{ old('layer.'.$loop->index) }}" step="any">
+                                                </div>
+                                            </td>
+
+                                            <td class="total-kg">0.00</td>
+                                            <td class="total-ton">0.00</td>
+                                            <td class="text-center">
+                                                <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr class="product-item">
+                                        <td>
+                                            <div class="form-group">
+                                                <select class="form-control product" name="product[]" required>
+                                                    <option value="6">6mm</option>
+                                                    <option value="8">8mm</option>
+                                                    <option value="10">10mm</option>
+                                                    <option value="12">12mm</option>
+                                                    <option value="16">16mm</option>
+                                                    <option value="18">18mm</option>
+                                                    <option value="20">20mm</option>
+                                                    <option value="22">22mm</option>
+                                                    <option value="25">25mm</option>
+                                                    <option value="28">28mm</option>
+                                                    <option value="32">32mm</option>
+                                                    <option value="36">36mm</option>
+                                                </select>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" name="dia[]" class="form-control dia" readonly>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control dia_square" name="dia_square[]">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control value_of_bar" name="value_of_bar[]" value="532.17">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control kg_by_rft" name="kg_by_rft[]">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control kg_by_ton" name="kg_by_ton[]" value="1000">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
+                                                    <option value="1">Horizontal</option>
+                                                    <option value="2">Vertcal</option>
+                                                </select>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control length" name="length[]" step="any">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control spacing" name="spacing[]" step="any">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control type_length" name="type_length[]" step="any">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control layer" name="layer[]" value="1" step="any">
+                                            </div>
+                                        </td>
+                                        <td class="total-kg">0.00</td>
+                                        <td class="total-ton">0.00</td>
+                                        <td class="text-center">
+                                            <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                                </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <td>
+                                        <a role="button" class="btn btn-info btn-sm" id="btn-add-product-extra">Add More</a>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        {{-- <div class="table-responsive">
                             <strong><h3>Calculation of Extra Bar</h3></strong>
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -786,7 +981,7 @@
                                 </tr>
                                 </tfoot>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- /.box-body -->
 
@@ -881,19 +1076,102 @@
             </td>
             <td class="total-kg">0.00</td>
             <td class="total-ton">0.00</td>
-{{--            <td>--}}
-{{--            <th class="text-right">0.00</th>--}}
-{{--                <div class="form-group">--}}
-{{--                    <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]">--}}
-{{--                </div>--}}
-{{--            </td>--}}
 
             <td class="text-center">
                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
             </td>
         </tr>
     </template>
-    <template id="template-extra-product">
+    <template id="template-product-extra">
+        <tr class="product-item">
+            <td>
+                <div class="form-group">
+                    <select class="form-control product" name="product[]" required>
+                        <option value="6">6mm</option>
+                        <option value="8">8mm</option>
+                        <option value="10">10mm</option>
+                        <option value="12">12mm</option>
+                        <option value="16">16mm</option>
+                        <option value="18">18mm</option>
+                        <option value="20">20mm</option>
+                        <option value="22">22mm</option>
+                        <option value="25">25mm</option>
+                        <option value="28">28mm</option>
+                        <option value="32">32mm</option>
+                        <option value="36">36mm</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="dia[]" class="form-control dia" readonly>
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control dia_square" name="dia_square[]">
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="text" readonly class="form-control value_of_bar" name="value_of_bar[]" value="532.17">
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control kg_by_rft" name="kg_by_rft[]">
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="text" readonly class="form-control kg_by_ton" name="kg_by_ton[]" value="1000">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
+                        <option value="1">Horizontal</option>
+                        <option value="2">Vertical</option>
+                    </select>
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="number" class="form-control length" name="length[]" step="any">
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="number" class="form-control spacing" name="spacing[]" step="any">
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="number" class="form-control type_length" name="type_length[]" step="any">
+                </div>
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="number" class="form-control layer" name="layer[]" value="1" step="any">
+                </div>
+            </td>
+            <td class="total-kg">0.00</td>
+            <td class="total-ton">0.00</td>
+
+            <td class="text-center">
+                <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
+            </td>
+        </tr>
+    </template>
+    {{-- <template id="template-extra-product">
         <tr class="extra-item">
             <td>
                 <div class="form-group">
@@ -961,7 +1239,7 @@
                 <a role="button" class="btn btn-danger btn-sm extra-btn-remove">X</a>
             </td>
         </tr>
-    </template>
+    </template> --}}
 @endsection
 
 @section('script')
@@ -1000,6 +1278,18 @@
                 var item = $(html);
 
                 $('#product-container').append(item);
+
+                initProduct();
+
+                if ($('.product-item').length >= 1 ) {
+                    $('.btn-remove').show();
+                }
+            });
+            $('#btn-add-product-extra').click(function () {
+                var html = $('#template-product-extra').html();
+                var item = $(html);
+
+                $('#product-container-extra').append(item);
 
                 initProduct();
 

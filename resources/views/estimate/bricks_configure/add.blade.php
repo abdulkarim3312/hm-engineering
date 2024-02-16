@@ -110,7 +110,7 @@
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="brick_size" step="any"
-                                               name="brick_size" value="{{ old('brick_size',0.2075) }}" >
+                                               name="brick_size" value="{{ old('brick_size') }}" >
                                     </div>
                                     <!-- /.input group -->
 

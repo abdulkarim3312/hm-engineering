@@ -91,6 +91,14 @@
                         <th>Note </th>
                         <td>{{ $grillGlassTilesConfigure->note??'' }}</td>
                     </tr>
+                    <th>Gril Information: </th>
+                    <td>@if($grillGlassTilesConfigure->configure_type == 1)
+                         <span class="label label-success">MS</span>
+                    @elseif($grillGlassTilesConfigure->configure_type == 2)
+                         <span class="label label-success">SS</span>
+                    @else
+                        Tiles Info
+                    @endif</td>
                 </table>
             </div>
 

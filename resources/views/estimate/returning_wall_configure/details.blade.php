@@ -133,6 +133,10 @@
                                         <td>{{ $commonConfigure->costing_segment_quantity }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Ratio</th>
+                                        <td>{{ $commonConfigure->first_ratio }}:{{ $commonConfigure->second_ratio }}:{{ $commonConfigure->third_ratio }}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Total Ton</th>
                                         <td>{{ $commonConfigure->total_ton }} Rod</td>
                                     </tr>
@@ -221,9 +225,9 @@
                                                 <td> {{ number_format($product->kg_by_ton, 2) }}</td>
                                                 <td>
                                                     @if($product->length_type == 1)
-                                                        X-Direction
+                                                        Horizontal
                                                     @else
-                                                    Y-Direction
+                                                        Vertical
                                                     @endif
                                                 </td>
                                                 <td> {{ number_format($product->length, 2) }}</td>

@@ -88,40 +88,20 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>@if($glassConfigure->configure_type == 1)
-                                                Grill Configure No.
-                                            @elseif($glassConfigure->configure_type == 2)
-                                                Glass Configure No.
-                                            @else
-                                                Tiles Configure No.
-                                            @endif
-
-                                        </th>
+                                        <th> Glass Configure No.</th>
                                         <td>{{ $glassConfigure->grill_glass_tiles_configure_no }}</td>
                                     </tr>
                                     <tr>
-                                        <th>@if($glassConfigure->configure_type == 1)
-                                                Grill Configure No.
-                                            @elseif($glassConfigure->configure_type == 2)
-                                                Glass Configure No.
-                                            @else
-                                                Tiles Configure No.
-                                            @endif
-
-                                        </th>
+                                        <th> Glass Configure No</th>
                                         <td>{{ $glassConfigure->floor_number }}</td>
                                     </tr>
                                     <tr>
-                                        <th>@if($glassConfigure->configure_type == 1)
-                                                Grill Configure Date
-                                            @elseif($glassConfigure->configure_type == 2)
-                                                Glass Configure Date
-                                            @else
-                                                Tiles Configure Date
-                                            @endif
-
-                                        </th>
+                                        <th> Glass Configure Date</th>
                                         <td>{{ $glassConfigure->date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th> Glass Configure Type Name</th>
+                                        <td><b>{{ $glassConfigure->configure_type }}</b></td>
                                     </tr>
                                     <tr>
                                         <th>Note </th>
@@ -133,15 +113,7 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th colspan="2" class="text-center">
-                                            @if($glassConfigure->configure_type == 1)
-                                                Grill Info
-                                            @elseif($glassConfigure->configure_type == 2)
-                                                Glass Info
-                                            @else
-                                                Tiles Info
-                                            @endif
-                                        </th>
+                                        <th colspan="2" class="text-center">Glass Info</th>
                                     </tr>
                                     <tr>
                                         <th>Estimate Project</th>
@@ -156,27 +128,11 @@
                                         <td>{{ $glassConfigure->estimateFloorUnit->name }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            @if($glassConfigure->configure_type == 1)
-                                                Total Grill KG(Single Floor)
-                                            @elseif($glassConfigure->configure_type == 2)
-                                                Total Glass Area(Single Floor)
-                                            @else
-                                                Total Tiles Area(Single Floor)
-                                            @endif
-                                        </th>
+                                        <th>Total Glass Area(Single Floor)</th>
                                         <td>{{ $glassConfigure->total_area_without_floor }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            @if($glassConfigure->configure_type == 1)
-                                                Total Grill KG(All Floor)
-                                            @elseif($glassConfigure->configure_type == 2)
-                                                Total Glass Area(All Floor)
-                                            @else
-                                                Total Tiles Area(All Floor)
-                                            @endif
-                                        </th>
+                                        <th>Total Glass Area(All Floor)</th>
                                         <td>{{ $glassConfigure->total_area_with_floor }}</td>
                                     </tr>
                                 </table>
@@ -224,11 +180,8 @@
                                     </tr>
                                     <tr>
                                         <th class="text-right" colspan="4">Total Cost</th>
-                                        @if($glassConfigure->configure_type == 1)
                                             <td>৳ {{ number_format($glassConfigure->total_grill_cost, 2) }} Taka</td>
-                                        @else
-                                            <td>৳ {{ number_format($glassConfigure->total_tiles_glass_cost, 2) }} Taka</td>
-                                        @endif
+                                       
                                     </tr>
                                 </table>
                             </div>

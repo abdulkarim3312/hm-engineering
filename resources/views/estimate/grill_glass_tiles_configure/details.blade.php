@@ -88,45 +88,30 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>@if($grillGlassTilesConfigure->configure_type == 1)
-                                                Grill Configure No.
-                                            @elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                Glass Configure No.
-                                            @else
-                                                Tiles Configure No.
-                                            @endif
-
-                                        </th>
-                                        <td>{{ $grillGlassTilesConfigure->grill_glass_tiles_configure_no }}</td>
+                                        <th> Grill Configure No. </th>
+                                        <td>{{ $grillGlassTilesConfigure->grill_glass_tiles_configure_no ?? ''}}</td>
                                     </tr>
                                     <tr>
-                                        <th>@if($grillGlassTilesConfigure->configure_type == 1)
-                                                Grill Configure No.
-                                            @elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                Glass Configure No.
-                                            @else
-                                                Tiles Configure No.
-                                            @endif
-
-                                        </th>
-                                        <td>{{ $grillGlassTilesConfigure->floor_number }}</td>
+                                        <th> Grill Configure No.</th>
+                                        <td>{{ $grillGlassTilesConfigure->floor_number ?? ''}}</td>
                                     </tr>
                                     <tr>
-                                        <th>@if($grillGlassTilesConfigure->configure_type == 1)
-                                                Grill Configure Date
-                                            @elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                Glass Configure Date
-                                            @else
-                                                Tiles Configure Date
-                                            @endif
-
-                                        </th>
-                                        <td>{{ $grillGlassTilesConfigure->date }}</td>
+                                        <th> Grill Configure Date</th>
+                                        <td>{{ $grillGlassTilesConfigure->date ?? ''}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Grill Type</th>
+                                        <td>{{ $grillGlassTilesConfigure->configure_type ?? ''}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Grill Size</th>
+                                        <td>{{ $grillGlassTilesConfigure->grill_size ?? ''}}</td>
                                     </tr>
                                     <tr>
                                         <th>Note </th>
-                                        <td>{{ $grillGlassTilesConfigure->note??'' }}</td>
+                                        <td>{{ $grillGlassTilesConfigure->note ??'' }}</td>
                                     </tr>
+                                    
                                 </table>
                             </div>
 
@@ -134,13 +119,7 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th colspan="2" class="text-center">
-                                            @if($grillGlassTilesConfigure->configure_type == 1)
-                                                Grill Info
-                                            @elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                Glass Info
-                                            @else
-                                                Tiles Info
-                                            @endif
+                                                Grill  Information
                                         </th>
                                     </tr>
                                     <tr>
@@ -156,27 +135,11 @@
                                         <td>{{ $grillGlassTilesConfigure->estimateFloorUnit->name }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            @if($grillGlassTilesConfigure->configure_type == 1)
-                                                Total Grill Sft(Single Floor)
-                                            @elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                Total Glass Area(Single Floor)
-                                            @else
-                                                Total Tiles Area(Single Floor)
-                                            @endif
-                                        </th>
+                                        <th>Total Grill Sft(Single Floor)</th>
                                         <td>{{ $grillGlassTilesConfigure->total_area_without_floor }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            @if($grillGlassTilesConfigure->configure_type == 1)
-                                                Total Grill Sft(All Floor)
-                                            @elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                Total Glass Area(All Floor)
-                                            @else
-                                                Total Tiles Area(All Floor)
-                                            @endif
-                                        </th>
+                                        <th>Total Grill Sft(All Floor)</th>
                                         <td>{{ $grillGlassTilesConfigure->total_area_with_floor }}</td>
                                     </tr>
                                 </table>

@@ -53,7 +53,7 @@
                             <td>{{$earthWorkConfigure->total_area}} Cft</td>
                             <td>৳ {{number_format($earthWorkConfigure->total_price,2)}} Taka</td>
                             <td>
-                                <a href="" class="btn btn-primary btn-sm">Details</a>
+                                <a href="{{ route('earth_work_configure.details', $earthWorkConfigure->id) }}" class="btn btn-primary btn-sm">Details</a>
                             </td>
                         </tr>
                         @endforeach

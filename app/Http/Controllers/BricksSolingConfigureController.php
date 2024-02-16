@@ -46,4 +46,10 @@ class BricksSolingConfigureController extends Controller
 
         return redirect()->route('bricks_soling_configure');
     }
+    public function brickSolingConfigureDetails(BrickSolingConfigure $bricksSolingConfigure){
+        return view('estimate.brick_soling_configure.details',compact('bricksSolingConfigure'));
+    }
+    public function brickSolingConfigurePrint(BrickSolingConfigure $bricksSolingConfigure){
+        return view('estimate.brick_soling_configure.print',compact('bricksSolingConfigure'));
+    }
 }

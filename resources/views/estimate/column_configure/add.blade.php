@@ -126,7 +126,7 @@
 
                         <div class="row">
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('ring_quantity') ? 'has-error' :'' }}">
                                     <label>Tie Ring Qty</label>
 
@@ -142,7 +142,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('tie_interval') ? 'has-error' :'' }}">
                                     <label>Tie Interval(Ft)</label>
 
@@ -158,7 +158,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('column_quantity') ? 'has-error' :'' }}">
                                     <label>Column Quantity</label>
 
@@ -174,9 +174,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('first_ratio') ? 'has-error' :'' }}">
-                                    <label>Ratio</label>
+                                    <label>Cement Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="first_ratio" step="any"
@@ -190,9 +190,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('second_ratio') ? 'has-error' :'' }}">
-                                    <label>Ratio</label>
+                                    <label>Sand Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="second_ratio" step="any"
@@ -206,9 +206,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('third_ratio') ? 'has-error' :'' }}">
-                                    <label>Ratio</label>
+                                    <label>Stone/Bricks Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="third_ratio" step="any"
@@ -242,7 +242,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('tie_length_volume') ? 'has-error' :'' }}">
-                                    <label>Tie Length(Ft)-Volume</label>
+                                    <label style="font-size: 15px;">Tie Length(Ft)-Volume</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="tie_length_volume" step="any"
@@ -272,7 +272,7 @@
                                 </div>
                             </div>
 
-{{--                            <div class="col-md-2">--}}
+                           {{-- <div class="col-md-2">--}}
 {{--                                <div class="form-group {{ $errors->has('cover') ? 'has-error' :'' }}">--}}
 {{--                                    <label>Clear Cover(Ft)</label>--}}
 
@@ -286,7 +286,7 @@
 {{--                                    <span class="help-block">{{ $message }}</span>--}}
 {{--                                    @enderror--}}
 {{--                                </div>--}}
-{{--                            </div>--}}
+{{--                            </div> --}}
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('total_volume') ? 'has-error' :'' }}">
@@ -335,7 +335,8 @@
                                     @enderror
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('date') ? 'has-error' :'' }}">
                                     <label>Date</label>

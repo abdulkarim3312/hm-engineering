@@ -147,40 +147,72 @@ class ReturningWallConfigureController extends Controller
             ]);
 
             $totalKg += (($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter];
-            // dd($totalKg);
             $totalTon += (((($division * $request->type_length[$counter]) * $request->layer[$counter]) * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]);
 
             $counter++;
         }
 
         $counter = 0;
+        $totalTonExtra = 0;
+        $totalKgExtra = 0;
+        foreach ($request->product as $key => $reqProduct) {
 
-        foreach ($request->extra_product as $key => $reqProduct) {
+            $division = $request->length[$counter]/$request->spacing[$counter];
 
             ReturningWallConfigureProduct::create([
                 'common_configure_id' => $commonConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
                 'costing_segment_id' => $request->costing_segment,
                 'bar_type' => $reqProduct,
-                'dia' => $request->extra_dia[$counter],
-                'dia_square' => $request->extra_dia_square[$counter],
-                'value_of_bar' => $request->extra_value_of_bar[$counter],
-                'kg_by_rft' => $request->extra_kg_by_rft[$counter],
-                'kg_by_ton' => $request->extra_kg_by_ton[$counter],
-                'number_of_bar' => $request->extra_number_of_bar[$counter] * $request->costing_segment_quantity,
-                'extra_length' => $request->extra_length[$counter]??0 * $request->costing_segment_quantity,
-                'sub_total_kg' => ((($request->extra_number_of_bar[$counter] *
-                        $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0) * $request->costing_segment_quantity),
-                'sub_total_ton' => (((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter])
-                        * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]) * $request->costing_segment_quantity),
-                'status' => 1,
+                'dia' => $request->dia[$counter],
+                'dia_square' => $request->dia_square[$counter],
+                'value_of_bar' => $request->value_of_bar[$counter],
+                'kg_by_rft' => $request->kg_by_rft[$counter],
+                'kg_by_ton' => $request->kg_by_ton[$counter],
+                'length_type' => $request->length_type[$counter] * $request->costing_segment_quantity,
+                'length' => $request->length[$counter] * $request->costing_segment_quantity,
+                'spacing' => $request->spacing[$counter] * $request->costing_segment_quantity,
+                'type_length' => $request->type_length[$counter] * $request->costing_segment_quantity,
+                'layer' => $request->layer[$counter] * $request->costing_segment_quantity,
+                'sub_total_kg' => ((($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter] * $request->costing_segment_quantity),
+                'sub_total_ton' => ((((($division * $request->type_length[$counter]) * $request->layer[$counter])
+                        * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]) * $request->costing_segment_quantity),
             ]);
 
-            $totalKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
-            $totalTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
+            $totalKgExtra += (($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter];
+            $totalTonExtra += (((($division * $request->type_length[$counter]) * $request->layer[$counter]) * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]);
 
             $counter++;
         }
+
+        // $counter = 0;
+
+        // foreach ($request->extra_product as $key => $reqProduct) {
+
+        //     ReturningWallConfigureProduct::create([
+        //         'common_configure_id' => $commonConfigure->id,
+        //         'estimate_project_id' => $request->estimate_project,
+        //         'costing_segment_id' => $request->costing_segment,
+        //         'bar_type' => $reqProduct,
+        //         'dia' => $request->extra_dia[$counter],
+        //         'dia_square' => $request->extra_dia_square[$counter],
+        //         'value_of_bar' => $request->extra_value_of_bar[$counter],
+        //         'kg_by_rft' => $request->extra_kg_by_rft[$counter],
+        //         'kg_by_ton' => $request->extra_kg_by_ton[$counter],
+        //         'number_of_bar' => $request->extra_number_of_bar[$counter] * $request->costing_segment_quantity,
+        //         'extra_length' => $request->extra_length[$counter]??0 * $request->costing_segment_quantity,
+        //         'sub_total_kg' => ((($request->extra_number_of_bar[$counter] *
+        //                 $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0) * $request->costing_segment_quantity),
+        //         'sub_total_ton' => (((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter])
+        //                 * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]) * $request->costing_segment_quantity),
+        //         'status' => 1,
+        //     ]);
+
+        //     $totalKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
+        //     $totalTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
+
+        //     $counter++;
+        // }
 
 
         $commonConfigure->total_ton = $totalTon * $request->costing_segment_quantity;

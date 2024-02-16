@@ -53,7 +53,7 @@
                             <td>{{$sandFillingConfigure->total_area}} Cft</td>
                             <td>৳ {{number_format($sandFillingConfigure->total_price,2)}} Taka</td>
                             <td>
-                                <a href="" class="btn btn-primary btn-sm">Details</a>
+                                <a href="{{ route('sand_filling_configure.details', $sandFillingConfigure->id) }}" class="btn btn-primary btn-sm">Details</a>
                             </td>
                         </tr>
                         @endforeach

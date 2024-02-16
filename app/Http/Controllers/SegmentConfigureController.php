@@ -258,8 +258,7 @@ class SegmentConfigureController extends Controller
                     'kg_by_ton' => $request->kg_by_ton[$counter],
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->pile_quantity,
                     'sub_total_kg' => (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])),
-                    'sub_total_ton' => (((((($request->radius - $request->cover) * 2) * 3.1416) * ($request->pile_height/$request->spiral_interval)) *
-                        ($request->kg_by_rft[$counter] *  $request->number_of_bar[$counter])/$request->kg_by_ton[$counter]) * $request->pile_quantity),
+                    'sub_total_ton' => (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter],
                 ]);
             }else{
                 PileConfigureProduct::create([
@@ -273,51 +272,50 @@ class SegmentConfigureController extends Controller
                     'kg_by_ton' => $request->kg_by_ton[$counter],
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->pile_quantity,
                     'sub_total_kg' => (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])),
-                    'sub_total_ton' => ((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->pile_height/$request->kg_by_ton[$counter]) * $request->pile_quantity),
+                    'sub_total_ton' => (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter],
                 ]);
             }
 
             if ($key == 0){
-                $totalTon += ((((($request->radius - $request->cover) * 2) * 3.1416) * ($request->pile_height/$request->spiral_interval)) *
-                    ($request->kg_by_rft[$counter] *  $request->number_of_bar[$counter])/$request->kg_by_ton[$counter]);
+                $totalTon += (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter];
                 $totalKg += (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter]));
             }else{
-                $totalTon += (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->pile_height/$request->kg_by_ton[$counter]);
+                $totalTon += (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter];
                 $totalKg += (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter]));
             }
             $counter++;
         }
 
-        foreach ($request->extra_product as $key => $reqProduct) {
+        $counter = 0;
+        $totalKgTie = 0;
+        $totalTonTie = 0;
+        foreach ($request->tie_product as $key => $reqProduct) {
 
             PileConfigureProduct::create([
                 'pile_configure_id' => $pileConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
-                'bar_type' => $reqProduct,
-                'dia' => $request->extra_dia[$counter],
-                'dia_square' => $request->extra_dia_square[$counter],
-                'value_of_bar' => $request->extra_value_of_bar[$counter],
-                'kg_by_rft' => $request->extra_kg_by_rft[$counter],
-                'kg_by_ton' => $request->extra_kg_by_ton[$counter],
-                'number_of_bar' => $request->extra_number_of_bar[$counter] * $request->costing_segment_quantity,
-                'extra_length' => $request->extra_length[$counter]??0 * $request->costing_segment_quantity,
-                'sub_total_kg' => ((($request->extra_number_of_bar[$counter] *
-                        $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0) * $request->costing_segment_quantity),
-                'sub_total_ton' => (((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter])
-                        * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]) * $request->costing_segment_quantity),
-                'status' => 1,
+                'tie_bar_type' => $reqProduct,
+                'tie_dia' => $request->tie_dia[$counter],
+                'tie_dia_square' => $request->tie_dia_square[$counter],
+                'tie_value_of_bar' => $request->tie_value_of_bar[$counter],
+                'tie_kg_by_rft' => $request->tie_kg_by_rft[$counter],
+                'tie_kg_by_ton' => $request->tie_kg_by_ton[$counter],
+                'tie_length' => $request->tie_length[$counter] * $request->pile_quantity,
+                'tie_lapping_length' => $request->tie_lapping_length[$counter]?? 0 * $request->costing_segment_quantity,
+                'sub_total_kg_tie' => ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter]),
+                'sub_total_ton_tie' => (((($request->tie_kg_by_rft[$counter] * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter])))/$request->tie_kg_by_ton[$counter],
             ]);
 
-            $totalKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
-            $totalTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
+            $totalKgTie += ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter]);
+            $totalTonTie += (((($request->tie_kg_by_rft[$counter] * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter])))/$request->tie_kg_by_ton[$counter];
 
             $counter++;
         }
 
-        $pileConfigure->total_ton = $totalTon * $request->pile_quantity;
-        $pileConfigure->total_kg = $totalKg * $request->pile_quantity;
+        $pileConfigure->total_ton = ($totalTon + $totalTonTie) * $request->pile_quantity;
+        $pileConfigure->total_kg = ($totalKg + $totalKgTie) * $request->pile_quantity;
         // dd($pileConfigure->total_kg);
-        $pileConfigure->total_pile_bar_price = ($totalKg * $request->pile_quantity) * $request->pile_bar_costing;
+        $pileConfigure->total_pile_bar_price =  ($totalKg + $totalKgTie) * $request->pile_bar_costing;
         $pileConfigure->save();
 
         return redirect()->route('pile_configure.details', ['pileConfigure' => $pileConfigure->id]);

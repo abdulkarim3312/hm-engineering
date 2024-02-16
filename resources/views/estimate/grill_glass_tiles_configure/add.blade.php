@@ -27,14 +27,30 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('configure_type') ? 'has-error' :'' }}">
-                                    <label>Configure Type</label>
-                                    <select class="form-control select2" style="width: 100%;" name="configure_type" id="configure_type"
-                                            data-placeholder="Select Configure Type">
+                                    <label>Grill Type</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="configure_type"
+                                               name="configure_type" value="{{ old('configure_type') }}" >
+                                    </div>
+                                    {{-- <select class="form-control select2" style="width: 100%;" name="configure_type" id="configure_type" data-placeholder="Select Configure Type">
                                         <option value="">Select Configure Type</option>
-                                        <option value="1" {{ old('configure_type') == 1 ? 'selected' : '' }}>Grill</option>
-                                        {{-- <option value="2" {{ old('configure_type') == 2 ? 'selected' : '' }}>Glass</option> --}}
-                                        {{-- <option value="3" {{ old('configure_type') == 3 ? 'selected' : '' }}>Tiles</option> --}}
-                                    </select>
+                                        <option value="1" {{ old('configure_type') == 1 ? 'selected' : '' }}>MS</option>
+                                        <option value="2" {{ old('configure_type') == 2 ? 'selected' : '' }}>SS</option>
+                                    </select> --}}
+
+                                    @error('configure_type')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group {{ $errors->has('configure_type') ? 'has-error' :'' }}">
+                                    <label>Grill Size</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="grill_size"
+                                               name="grill_size" value="{{ old('grill_size') }}" >
+                                    </div>
+                                    <!-- /.input group -->
 
                                     @error('configure_type')
                                     <span class="help-block">{{ $message }}</span>
@@ -59,21 +75,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
-                                    <label>Estimate Floor</label>
-
-                                    <select class="form-control select2" style="width: 100%;" name="estimate_floor" id="estimate_floor" data-placeholder="Select Estimate Floor">
-                                        <option value="">Select Estimate Floor</option>
-                                    </select>
-
-                                    @error('estimate_floor')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
                                     <label>Estimate Floor Unit</label>
@@ -90,26 +91,22 @@
                                     @enderror
                                 </div>
                             </div>
-
-{{--                            <div class="col-md-2">--}}
-{{--                                <div class="form-group {{ $errors->has('unit_section') ? 'has-error' :'' }}">--}}
-{{--                                    <label>Unit Section</label>--}}
-
-{{--                                    <select class="form-control select2" style="width: 100%;" name="unit_section" data-placeholder="Select Unit Section">--}}
-{{--                                        <option value="">Select Unit Section</option>--}}
-{{--                                        @foreach($unitSections as $unitSection)--}}
-{{--                                            <option value="{{ $unitSection->id }}" {{ old('unit_section') == $unitSection->id ? 'selected' : '' }}>{{ $unitSection->name }}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-
-{{--                                    @error('unit_section')--}}
-{{--                                    <span class="help-block">{{ $message }}</span>--}}
-{{--                                    @enderror--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
 
                         <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
+                                    <label>Estimate Floor</label>
+
+                                    <select class="form-control select2" style="width: 100%;" name="estimate_floor" id="estimate_floor" data-placeholder="Select Estimate Floor">
+                                        <option value="">Select Estimate Floor</option>
+                                    </select>
+
+                                    @error('estimate_floor')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('floor_number') ? 'has-error' :'' }}">
                                     <label>Floor Quantity</label>
@@ -143,7 +140,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('note') ? 'has-error' :'' }}">
                                     <label>Note</label>
 
@@ -165,7 +162,7 @@
                             <div id="grill_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('grill_costing') ? 'has-error' :'' }}">
-                                        <label>Grill Cost(Per Kg)</label>
+                                        <label>Grill Cost(Per Sft)/Per Kg</label>
 
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->grill_costing??0 }}"
@@ -180,10 +177,10 @@
                                 </div>
                             </div>
 
-                            <div id="tiles_glass_costing">
+                            {{-- <div id="tiles_glass_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('tiles_glass_costing') ? 'has-error' :'' }}">
-                                        <label>Glass Costing(Per Sft)</label>
+                                        <label>Grill Cost(Per Sft)/Per Kg</label>
 
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->tiles_glass_costing??0 }}"
@@ -196,7 +193,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="table-responsive">

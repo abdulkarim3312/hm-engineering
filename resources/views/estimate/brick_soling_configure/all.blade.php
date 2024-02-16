@@ -51,7 +51,7 @@
                             <td>{{$brickSolingConfigure->total_area}} Nos</td>
                             <td>৳ {{number_format($brickSolingConfigure->total_price,2)}} Taka</td>
                             <td>
-                                <a href="" class="btn btn-primary btn-sm">Details</a>
+                                <a href="{{ route('bricks_soling_configure.details', $brickSolingConfigure->id) }}" class="btn btn-primary btn-sm">Details</a>
                             </td>
                         </tr>
                         @endforeach

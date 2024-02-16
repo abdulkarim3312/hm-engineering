@@ -52,7 +52,7 @@
                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                 </div>
             </div>
-            <div class="col-xs-8 text-center">
+            <div class="col-xs-8 text-center" style="margin-left: -123px;">
                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -64,16 +64,16 @@
             <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th>Plaster Configure No.</th>
-                        <td>{{ $plasterConfigure->plaster_configure_no }}</td>
+                        <th>Estimate Project Name.</th>
+                        <td>{{ $sandFillingConfigure->project->name ?? ''}}</td>
                     </tr>
                     <tr>
-                        <th>Plaster Configure Date</th>
-                        <td>{{ $plasterConfigure->date }}</td>
+                        <th>Sand Configure Length</th>
+                        <td>{{ $sandFillingConfigure->length ?? ''}}</td>
                     </tr>
                     <tr>
-                        <th>Note </th>
-                        <td>{{ $plasterConfigure->note??'' }}</td>
+                        <th>Sand Configure Width</th>
+                        <td>{{ $sandFillingConfigure->width ?? '' }}</td>
                     </tr>
                 </table>
             </div>
@@ -81,82 +81,32 @@
             <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th colspan="2" class="text-center">Plaster Info</th>
+                        <th colspan="2" class="text-center">Sand Filling Info</th>
+                    </tr>
+                   
+                    <tr>
+                        <th>Height</th>
+                        <td>{{ $sandFillingConfigure->height }} </td>
                     </tr>
                     <tr>
-                        <th>Ratio</th>
-                        <td>{{ $plasterConfigure->first_ratio }}:{{ $plasterConfigure->second_ratio }}</td>
+                        <th>Quantity</th>
+                        <td>{{ $sandFillingConfigure->quantity }} Psc</td>
                     </tr>
                     <tr>
-                        <th>Total Cement</th>
-                        <td>{{ $plasterConfigure->total_cement }} Cft</td>
+                        <th>Unit Price</th>
+                        <td>{{ $sandFillingConfigure->unit_price }}</td>
                     </tr>
                     <tr>
-                        <th>Total Cement Bag</th>
-                        <td>{{ $plasterConfigure->total_cement_bag }} Bag</td>
+                        <th>Total Area</th>
+                        <td>{{ $sandFillingConfigure->total_area }} </td>
                     </tr>
                     <tr>
-                        <th>Total Sands</th>
-                        <td>{{ $plasterConfigure->total_sands }} Cft</td>
+                        <th>Total Price</th>
+                        <td>{{ number_format($sandFillingConfigure->total_price, 2) }} Tk</td>
                     </tr>
                 </table>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Floor</th>
-                        <th>Unit</th>
-                        <th>Unit Section</th>
-                        <th>Plaster Area</th>
-                        <th>Plaster Side</th>
-                        <th>Plaster Thickness</th>
-                        <th>Sub Total Area</th>
-                        <th>Sub Total Cement</th>
-                        <th>Sub Total Sands</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($plasterConfigure->plasterConfigureProducts as $product)
-                        <tr>
-                            <td>{{ $product->bricksConfigureProduct->project->name }}</td>
-                            <td>{{ $product->bricksConfigureProduct->estimateFloor->name }}</td>
-                            <td>{{ $product->bricksConfigureProduct->estimateFloorUnit->name }}</td>
-                            <td>{{ $product->bricksConfigureProduct->unitSection->plaster_area }}</td>
-                            <td>
-                                @if($product->bricksConfigureProduct->wall_direction == 1)
-                                    East
-                                @elseif($product->bricksConfigureProduct->wall_direction == 2)
-                                    West
-                                @elseif($product->bricksConfigureProduct->wall_direction == 3)
-                                    North
-                                @elseif($product->bricksConfigureProduct->wall_direction == 4)
-                                    South
-                                @else
-                                @endif
-                            </td>
-                            <td> {{ $product->plaster_side }}</td>
-                            <td> {{ $product->plaster_thickness }}</td>
-                            <td> {{ number_format($product->sub_total_dry_area, 2) }}</td>
-                            <td> {{ number_format($product->sub_total_cement, 2) }}</td>
-                            <td> {{ number_format($product->sub_total_sands, 2) }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                    <tr>
-                        <th class="text-right" colspan="7">Total</th>
-                        <td> {{ number_format($plasterConfigure->total_plaster_area, 2) }} Cft</td>
-                        <td> {{ number_format($plasterConfigure->total_cement, 2) }} Cft</td>
-                        <td> {{ number_format($plasterConfigure->total_sands, 2) }} Cft</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
         <div class="row" style="margin-top: 50px !important;">
             <div class="col-xs-3" style="margin-top: 25px;">
                 <div class="text-left" style="margin-left: 10px;">

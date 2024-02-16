@@ -543,7 +543,7 @@
                                                 <input type="number" step="0.01" class="form-control spiral_lenght" name="spiral_lenght[]">
                                             </div>
                                         </td> --}}
-                                        
+
                                         <td class="total-kg">0.00</td>
                                         <td class="total-ton">0.00</td>
 {{--                                        <td>--}}
@@ -1064,7 +1064,7 @@
             var spiral_bar = $('#spiral_bar').val();
             console.log(spiral_bar);
 
-            
+
 
 
             if (pile_height == '' || pile_height < 0 || !$.isNumeric(pile_height))
@@ -1128,7 +1128,8 @@
                 // $('.total-kg:eq('+i+')').html(parseFloat((pile_height * kg_by_rft) * number_of_bar).toFixed(2));
                 $('.total-kg:eq('+i+')').html(parseFloat(total_lap).toFixed(2));
                 // $('.tie-total-kg:eq('+i+')').html(parseFloat(tie_length).toFixed(2));
-                $('.total-ton:eq('+i+')').html(parseFloat((((pile_height * kg_by_rft) * number_of_bar)/kg_by_ton)).toFixed(3));
+                // $('.total-ton:eq('+i+')').html(parseFloat((((pile_height * kg_by_rft) * number_of_bar)/kg_by_ton)).toFixed(3));
+                $('.total-ton:eq('+i+')').html(parseFloat((total_lap/kg_by_ton)).toFixed(3));
 
                 // $('.total-kg:eq('+i+')').html(parseFloat((pile_height * kg_by_rft) * number_of_bar).toFixed(2));
                 //total += rft_by_ton;
@@ -1177,16 +1178,14 @@
 
 
                 var data = parseFloat(tie_kg_by_rft * tie_length);
-                // console.log(data);
                 var tie_data = parseFloat(tie_lapping_length)
-                // console.log(tie_data);
                 var tie_lap = parseFloat(data + tie_data);
-                // console.log(tie_lap);
-                   
+
 
                 // $('.tie-total-kg:eq('+i+')').html(parseFloat((pre_tie_bar * tie_kg_by_rft)  * tieQuantity).toFixed(2));
                 $('.tie-total-kg:eq('+i+')').html(parseFloat(tie_lap).toFixed(2));
-                $('.tie-total-ton:eq('+i+')').html(parseFloat((((pre_tie_bar * tie_kg_by_rft)  * tieQuantity)/tie_kg_by_ton)).toFixed(3));
+                // $('.tie-total-ton:eq('+i+')').html(parseFloat((((pre_tie_bar * tie_kg_by_rft)  * tieQuantity)/tie_kg_by_ton)).toFixed(3));
+                $('.tie-total-ton:eq('+i+')').html(parseFloat(tie_lap/tie_kg_by_ton).toFixed(3));
                 //total += rft_by_ton;
             });
 

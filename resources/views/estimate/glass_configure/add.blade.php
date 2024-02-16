@@ -27,15 +27,10 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('configure_type') ? 'has-error' :'' }}">
-                                    <label>Configure Type</label>
-                                    <select class="form-control select2" style="width: 100%;" name="configure_type" id="configure_type"
-                                            data-placeholder="Select Configure Type">
-                                        <option value="">Select Configure Type</option>
-                                        {{-- <option value="1" {{ old('configure_type') == 1 ? 'selected' : '' }}>Grill</option> --}}
-                                        <option value="2" {{ old('configure_type') == 2 ? 'selected' : '' }}>Glass</option>
-                                        {{-- <option value="3" {{ old('configure_type') == 3 ? 'selected' : '' }}>Tiles</option> --}}
-                                    </select>
-
+                                    <label>Configure Type Name</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="configure_type" value="{{ old('configure_type') }}">
+                                    </div>
                                     @error('configure_type')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
@@ -91,22 +86,6 @@
                                 </div>
                             </div>
 
-{{--                            <div class="col-md-2">--}}
-{{--                                <div class="form-group {{ $errors->has('unit_section') ? 'has-error' :'' }}">--}}
-{{--                                    <label>Unit Section</label>--}}
-
-{{--                                    <select class="form-control select2" style="width: 100%;" name="unit_section" data-placeholder="Select Unit Section">--}}
-{{--                                        <option value="">Select Unit Section</option>--}}
-{{--                                        @foreach($unitSections as $unitSection)--}}
-{{--                                            <option value="{{ $unitSection->id }}" {{ old('unit_section') == $unitSection->id ? 'selected' : '' }}>{{ $unitSection->name }}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-
-{{--                                    @error('unit_section')--}}
-{{--                                    <span class="help-block">{{ $message }}</span>--}}
-{{--                                    @enderror--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
 
                         <div class="row">
@@ -165,7 +144,7 @@
                             <div id="grill_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('grill_costing') ? 'has-error' :'' }}">
-                                        <label>Glass Cost(Per Kg)</label>
+                                        <label>Glass Costing(Per Sft)</label>
 
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->grill_costing??0 }}"
@@ -180,7 +159,7 @@
                                 </div>
                             </div>
 
-                            <div id="tiles_glass_costing">
+                            {{-- <div id="tiles_glass_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('tiles_glass_costing') ? 'has-error' :'' }}">
                                         <label>Glass Costing(Per Sft)</label>
@@ -196,7 +175,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="table-responsive">

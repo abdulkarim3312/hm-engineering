@@ -154,7 +154,7 @@
            </a>
         </div>
     </div>
-    <div class="row card_mt">
+    {{-- <div class="row card_mt">
         <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-shopping-cart"></i></span>
@@ -224,9 +224,9 @@
         </div>
 
 
-    </div>
+    </div> --}}
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-6">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -316,7 +316,7 @@
                 <!-- /.box-footer -->
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <div class="row">

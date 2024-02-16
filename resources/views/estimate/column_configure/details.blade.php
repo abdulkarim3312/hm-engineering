@@ -76,7 +76,7 @@
                                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                                 </div>
                             </div>
-                            <div class="col-xs-8 text-center">
+                            <div class="col-xs-8 text-center" style="margin-left: -128px;">
                                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -268,7 +268,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <h4>Straight Rod Description</h4>
+                                    <h4>Main Rod Description</h4>
                                     @foreach($columnConfigure->columnConfigureProducts as $product)
                                         @if($product->bar_type != null)
 

@@ -32,7 +32,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Configure No</th>
-                            <th>Configure Type</th>
+                            <th>Configure Type Name</th>
                             <th>Project Name</th>
                             <th>Estimate Floor</th>
                             <th>Estimate Floor Unit</th>

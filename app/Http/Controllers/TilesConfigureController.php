@@ -28,8 +28,10 @@ class TilesConfigureController extends Controller
     }
 
     public function tilesConfigureAddPost(Request $request) {
+        // dd($request->all());
         $request->validate([
-            'configure_type' => 'required',
+            'configure_type' => 'nullable|required',
+            'tiles_size' => 'required',
             'estimate_project' => 'required',
             'estimate_floor' => 'required',
             'estimate_floor_unit' => 'required',
@@ -37,7 +39,6 @@ class TilesConfigureController extends Controller
             'date' => 'required',
             'note' => 'nullable',
             'grill_costing' => 'required|numeric|min:0',
-            'tiles_glass_costing' => 'required|numeric|min:0',
             'product.*' => 'required',
             'length.*' => 'required|numeric|min:0',
             'height.*' => 'required|numeric|min:0',
@@ -46,6 +47,8 @@ class TilesConfigureController extends Controller
 
         $grillGlassTilesConfigure = new TilesConfigure();
         $grillGlassTilesConfigure->configure_type = $request->configure_type;
+        $grillGlassTilesConfigure->tiles_size = $request->tiles_size;
+        // dd($grillGlassTilesConfigure->tiles_size);
         $grillGlassTilesConfigure->estimate_project_id = $request->estimate_project;
         $grillGlassTilesConfigure->estimate_floor_id = $request->estimate_floor;
         $grillGlassTilesConfigure->estimate_floor_unit_id = $request->estimate_floor_unit;
@@ -69,11 +72,9 @@ class TilesConfigureController extends Controller
         $totalArea = 0;
         foreach ($request->product as $key => $reqProduct) {
 
-            if ($request->configure_type == 1){
-                $subTotalArea = ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]) * 1.5 );
-                }else{
-                $subTotalArea = (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
-            }
+
+            $subTotalArea = (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
+
 
             TilesConfigureProduct::create([
                 'grill_glass_tiles_configure_id' => $grillGlassTilesConfigure->id,
@@ -87,21 +88,17 @@ class TilesConfigureController extends Controller
                 'sub_total_area' => $subTotalArea,
             ]);
 
-            if ($request->configure_type == 1){
-                $totalArea += ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]) * 1.5 );
-            }else{
-                $totalArea += (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
-            }
+
+            $totalArea += (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
+
             $counter++;
         }
 
         $grillGlassTilesConfigure->total_area_with_floor = $totalArea * $request->floor_number;
         $grillGlassTilesConfigure->total_area_without_floor = $totalArea;
-        if ($request->configure_type == 1) {
-            $grillGlassTilesConfigure->total_grill_cost = ($totalArea * $request->floor_number) * $request->grill_costing;
-        }else{
-            $grillGlassTilesConfigure->total_tiles_glass_cost = ($totalArea * $request->floor_number) * $request->tiles_glass_costing;
-        }
+
+        $grillGlassTilesConfigure->total_tiles_glass_cost = ($totalArea * $request->floor_number) * $request->grill_costing;
+
         $grillGlassTilesConfigure->save();
 
         return redirect()->route('tiles_configure.details', ['tilesConfigure' => $grillGlassTilesConfigure->id]);
@@ -129,13 +126,14 @@ class TilesConfigureController extends Controller
                 return $tilesConfigure->estimateFloorUnit->name??'';
             })
             ->addColumn('configure_type', function(TilesConfigure $tilesConfigure) {
-                if ($tilesConfigure->configure_type == 1){
-                    return '<span class="label label-success">Grill</span>' ;
-                }elseif ($tilesConfigure->configure_type == 2){
-                    return '<span class="label label-info">Glass</span>' ;
-                }else{
-                    return '<span class="label label-success">Tiles</span>' ;
-                }
+
+                return $tilesConfigure->configure_type ?? '' ;
+
+            })
+            ->addColumn('tiles_size', function(TilesConfigure $tilesConfigure) {
+
+                return $tilesConfigure->tiles_size ?? '' ;
+
             })
             ->addColumn('action', function(TilesConfigure $tilesConfigure) {
 

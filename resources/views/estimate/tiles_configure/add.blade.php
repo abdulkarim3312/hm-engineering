@@ -28,15 +28,31 @@ Tiles Configure
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('configure_type') ? 'has-error' :'' }}">
                                     <label>Configure Type</label>
-                                    <select class="form-control select2" style="width: 100%;" name="configure_type" id="configure_type"
+                                    <div class="form-group">
+                                        <input type="texts" class="form-control"
+                                               name="configure_type" value="{{ old('configure_type') }}" >
+                                    </div>
+                                    {{-- <select class="form-control select2" style="width: 100%;" name="configure_type" id="configure_type"
                                             data-placeholder="Select Configure Type">
                                         <option value="">Select Configure Type</option>
-                                        {{-- <option value="1" {{ old('configure_type') == 1 ? 'selected' : '' }}>Grill</option> --}}
-                                        {{-- <option value="2" {{ old('configure_type') == 2 ? 'selected' : '' }}>Glass</option> --}}
+                                        <option value="1" {{ old('configure_type') == 1 ? 'selected' : '' }}>Grill</option>
+                                        <option value="2" {{ old('configure_type') == 2 ? 'selected' : '' }}>Glass</option>
                                         <option value="3" {{ old('configure_type') == 3 ? 'selected' : '' }}>Tiles</option>
-                                    </select>
+                                    </select> --}}
 
                                     @error('configure_type')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group {{ $errors->has('tiles_size') ? 'has-error' :'' }}">
+                                    <label>Tiles Size</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control"
+                                               name="tiles_size" value="{{ old('tiles_size') }}" >
+                                    </div>
+                                    @error('tiles_size')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -74,23 +90,6 @@ Tiles Configure
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
-                                    <label>Estimate Floor Unit</label>
-
-                                    <select class="form-control select2" style="width: 100%;" name="estimate_floor_unit" data-placeholder="Select Estimate Floor Unit">
-                                        <option value="">Select Estimate Floor Unit</option>
-                                        @foreach($estimateFloorUnits as $estimateFloorUnit)
-                                            <option value="{{ $estimateFloorUnit->id }}" {{ old('estimate_floor_unit') == $estimateFloorUnit->id ? 'selected' : '' }}>{{ $estimateFloorUnit->name }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('estimate_floor_unit')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
 {{--                            <div class="col-md-2">--}}
 {{--                                <div class="form-group {{ $errors->has('unit_section') ? 'has-error' :'' }}">--}}
 {{--                                    <label>Unit Section</label>--}}
@@ -110,6 +109,22 @@ Tiles Configure
                         </div>
 
                         <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
+                                    <label>Estimate Floor Unit</label>
+
+                                    <select class="form-control select2" style="width: 100%;" name="estimate_floor_unit" data-placeholder="Select Estimate Floor Unit">
+                                        <option value="">Select Estimate Floor Unit</option>
+                                        @foreach($estimateFloorUnits as $estimateFloorUnit)
+                                            <option value="{{ $estimateFloorUnit->id }}" {{ old('estimate_floor_unit') == $estimateFloorUnit->id ? 'selected' : '' }}>{{ $estimateFloorUnit->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('estimate_floor_unit')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('floor_number') ? 'has-error' :'' }}">
                                     <label>Floor Quantity</label>
@@ -143,7 +158,7 @@ Tiles Configure
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('note') ? 'has-error' :'' }}">
                                     <label>Note</label>
 
@@ -162,14 +177,14 @@ Tiles Configure
                         <u><i><h3>Costing Area</h3></i></u>
 
                         <div class="row">
-                            <div id="grill_costing">
+                            <div>
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('grill_costing') ? 'has-error' :'' }}">
-                                        <label>Tiles Cost(Per Kg)</label>
+                                        <label>Tiles Cost(Per Sft)</label>
 
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->grill_costing??0 }}"
-                                                   name="grill_costing"  placeholder="Enter Per Kg Costing">
+                                                   name="grill_costing"  placeholder="Enter Per Sft Costing">
                                         </div>
                                         <!-- /.input group -->
 
@@ -180,7 +195,7 @@ Tiles Configure
                                 </div>
                             </div>
 
-                            <div id="tiles_glass_costing">
+                            {{-- <div id="tiles_glass_costing">
                                 <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('tiles_glass_costing') ? 'has-error' :'' }}">
                                         <label>Tiles Costing(Per Sft)</label>
@@ -196,7 +211,7 @@ Tiles Configure
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="table-responsive">
@@ -365,20 +380,7 @@ Tiles Configure
                 format: 'yyyy-mm-dd'
             });
 
-            $('body').on('change','#configure_type', function () {
-                var configureType = $(this).val();
-
-                if (configureType == 1) {
-                    $('#grill_costing').show();
-                    $('#tiles_glass_costing').hide();
-                }else if(configureType == 2 || configureType == 3){
-                    $('#grill_costing').hide();
-                    $('#tiles_glass_costing').show();
-                }else {
-
-                }
-            })
-            $('#configure_type').trigger("change");
+            
 
             $('#btn-add-product').click(function () {
                 var html = $('#template-product').html();

@@ -730,24 +730,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('earth-work-configure-datatable', [EarthWorkConfigureController::class, 'earthWorkConfigureDatatable'])->name('earth_work_configure.datatable');
     Route::get('earth-work-configure/add', [EarthWorkConfigureController::class, 'earthWorkConfigureAdd'])->name('earth_work_configure.add')->middleware('permission:earth_work_configure');
     Route::post('earth-work-configure/add', [EarthWorkConfigureController::class, 'earthWorkConfigureAddPost'])->middleware('permission:earth_work_configure');
-    Route::get('earth-work-configure-details/{earthWorkConfigure}', [EarthWorkConfigureController::class, 'earthWorkConfigureDetails'])->name('earth_work_configure.details')->middleware('permission:earth_work_configure');
-    Route::get('earth-work-configure-print/{earthWorkConfigure}', [EarthWorkConfigureController::class, 'earthWorkConfigurePrint'])->name('earth_work_configure.print')->middleware('permission:earth_work_configure');
+    Route::get('earth-work-configure-details/{earthWorkingConfigure}', [EarthWorkConfigureController::class, 'earthWorkConfigureDetails'])->name('earth_work_configure.details')->middleware('permission:earth_work_configure');
+    Route::get('earth-work-configure-print/{earthWorkingConfigure}', [EarthWorkConfigureController::class, 'earthWorkConfigurePrint'])->name('earth_work_configure.print')->middleware('permission:earth_work_configure');
 
     //Sand Filling Configure
     Route::get('sand-filling-configure', [SandFillingConfigureController::class, 'sandFillingConfigure'])->name('sand_filling_configure')->middleware('permission:earth_work_configure');
     Route::get('sand-filling-configure-datatable', [SandFillingConfigureController::class, 'sandFillingConfigureDatatable'])->name('sand_filling_configure.datatable');
     Route::get('sand-filling-configure/add', [SandFillingConfigureController::class, 'sandFillingConfigureAdd'])->name('sand_filling_configure.add')->middleware('permission:earth_work_configure');
     Route::post('sand-filling-configure/add', [SandFillingConfigureController::class, 'sandFillingConfigureAddPost'])->middleware('permission:earth_work_configure');
-    Route::get('sand-filling-configure-details/{earthWorkConfigure}', [SandFillingConfigureController::class, 'earthWorkConfigureDetails'])->name('sand_filling_configure.details')->middleware('permission:earth_work_configure');
-    Route::get('sand-filling-configure-print/{earthWorkConfigure}', [SandFillingConfigureController::class, 'earthWorkConfigurePrint'])->name('sand_filling_configure.print')->middleware('permission:earth_work_configure');
+    Route::get('sand-filling-configure-details/{sandFillingConfigure}', [SandFillingConfigureController::class, 'sandFillingConfigureDetails'])->name('sand_filling_configure.details')->middleware('permission:earth_work_configure');
+    Route::get('sand-filling-configure-print/{sandFillingConfigure}', [SandFillingConfigureController::class, 'sandFillingConfigurePrint'])->name('sand_filling_configure.print')->middleware('permission:earth_work_configure');
 
     //Bricks Soling Configure
     Route::get('bricks-soling-configure', [BricksSolingConfigureController::class, 'brickSolingConfigure'])->name('bricks_soling_configure')->middleware('permission:earth_work_configure');
     Route::get('bricks-soling-configure-datatable', [BricksSolingConfigureController::class, 'brickSolingConfigureDatatable'])->name('bricks_soling_configure.datatable');
     Route::get('bricks-soling-configure/add', [BricksSolingConfigureController::class, 'brickSolingConfigureAdd'])->name('bricks_soling_configure.add')->middleware('permission:earth_work_configure');
     Route::post('bricks-soling-configure/add', [BricksSolingConfigureController::class, 'brickSolingConfigureAddPost'])->middleware('permission:earth_work_configure');
-    Route::get('bricks-soling-configure-details/{earthWorkConfigure}', [BricksSolingConfigureController::class, 'brickSolingConfigureDetails'])->name('sand_filling_configure.details')->middleware('permission:earth_work_configure');
-    Route::get('bricks-soling-configure-print/{earthWorkConfigure}', [BricksSolingConfigureController::class, 'brickSolingConfigurePrint'])->name('sand_filling_configure.print')->middleware('permission:earth_work_configure');
+    Route::get('bricks-soling-configure-details/{bricksSolingConfigure}', [BricksSolingConfigureController::class, 'brickSolingConfigureDetails'])->name('bricks_soling_configure.details')->middleware('permission:earth_work_configure');
+    Route::get('bricks-soling-configure-print/{bricksSolingConfigure}', [BricksSolingConfigureController::class, 'brickSolingConfigurePrint'])->name('bricks_soling_configure.print')->middleware('permission:earth_work_configure');
 
     //Pile Configure
     Route::get('pile-configure', [SegmentConfigureController::class, 'pileConfigure'])->name('pile_configure')->middleware('permission:pile_configure');

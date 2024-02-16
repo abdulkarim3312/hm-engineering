@@ -101,14 +101,14 @@
             </div>
 
             <hr>
-            <a target="_blank" href="http://2aitlimited.com">
+            {{-- <a target="_blank" href="http://2aitlimited.com">
                 <img style="display: block; margin-left: auto; margin-right: auto; height: 50px;" src="{{ asset('img/2ait.png') }}">
-            </a>
-            <p style="text-align:center; font-size:14px; color:Blue;">
+            </a> --}}
+            {{-- <p style="text-align:center; font-size:14px; color:Blue;">
                 <a target="_blank" href="http://2aitlimited.com">
                     <strong style="color: #0b4444">Design & Develop</strong>
                 </a>
-            </p>
+            </p> --}}
         </form>
     </div>
     <!-- /.login-box-body -->

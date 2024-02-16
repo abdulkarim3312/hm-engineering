@@ -64,28 +64,25 @@
             <div class="col-xs-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th>@if($tilesConfigure->configure_type == 1)
-                                Grill Configure No.
-                            @elseif($tilesConfigure->configure_type == 2)
-                                Glass Configure No.
-                            @else
-                                Tiles Configure No.
-                            @endif
-
-                        </th>
+                        <th>Tiles Configure No.</th>
                         <td>{{ $tilesConfigure->grill_glass_tiles_configure_no }}</td>
                     </tr>
                     <tr>
-                        <th>@if($tilesConfigure->configure_type == 1)
-                                Grill Configure Date
-                            @elseif($tilesConfigure->configure_type == 2)
-                                Glass Configure Date
-                            @else
-                                Tiles Configure Date
-                            @endif
-
+                        <th>Tiles Number of Floor No.
                         </th>
+                        <td>{{ $tilesConfigure->floor_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tiles Configure Date:</th>
                         <td>{{ $tilesConfigure->date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tiles Configure Names:</th>
+                        <td>{{ $tilesConfigure->configure_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tiles Size:</th>
+                        <td>{{ $tilesConfigure->tiles_size }}</td>
                     </tr>
                     <tr>
                         <th>Note </th>

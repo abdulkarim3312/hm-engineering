@@ -47,4 +47,11 @@ class EarthWorkConfigureController extends Controller
 
         return redirect()->route('earth_work_configure');
     }
+
+    public function earthWorkConfigureDetails(EarthWorkConfigure $earthWorkingConfigure){
+        return view('estimate.earth_work_configure.details',compact('earthWorkingConfigure'));
+    }
+    public function earthWorkConfigurePrint(EarthWorkConfigure $earthWorkingConfigure){
+        return view('estimate.earth_work_configure.print',compact('earthWorkingConfigure'));
+    }
 }

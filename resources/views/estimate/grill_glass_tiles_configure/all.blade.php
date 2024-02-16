@@ -32,7 +32,8 @@
                         <tr>
                             <th>Date</th>
                             <th>Configure No</th>
-                            <th>Configure Type</th>
+                            <th>Grill Type</th>
+                            <th>Grill Size</th>
                             <th>Project Name</th>
                             <th>Estimate Floor</th>
                             <th>Estimate Floor Unit</th>
@@ -70,6 +71,7 @@
                     {data: 'date', name: 'date'},
                     {data: 'grill_glass_tiles_configure_no', name: 'grill_glass_tiles_configure_no'},
                     {data: 'configure_type', name: 'configure_type'},
+                    {data: 'grill_size', name: 'grill_size'},
                     {data: 'project_name', name: 'project.name'},
                     {data: 'estimate_floor', name: 'estimateFloor.name'},
                     {data: 'estimate_floor_unit', name: 'estimateFloorUnit.name'},

@@ -38,7 +38,6 @@ class GlassConfigureController extends Controller
             'date' => 'required',
             'note' => 'nullable',
             'grill_costing' => 'required|numeric|min:0',
-            'tiles_glass_costing' => 'required|numeric|min:0',
             'product.*' => 'required',
             'length.*' => 'required|numeric|min:0',
             'height.*' => 'required|numeric|min:0',
@@ -70,11 +69,9 @@ class GlassConfigureController extends Controller
         $totalArea = 0;
         foreach ($request->product as $key => $reqProduct) {
 
-            if ($request->configure_type == 1){
-                $subTotalArea = ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]) * 1.5 );
-                }else{
-                $subTotalArea = (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
-            }
+            
+            $subTotalArea = (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
+            
 
             GlassConfigureProduct::create([
                 'grill_glass_tiles_configure_id' => $grillGlassTilesConfigure->id,
@@ -88,21 +85,14 @@ class GlassConfigureController extends Controller
                 'sub_total_area' => $subTotalArea,
             ]);
 
-            if ($request->configure_type == 1){
-                $totalArea += ((($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]) * 1.5 );
-            }else{
-                $totalArea += (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
-            }
+            $totalArea += (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
             $counter++;
         }
 
         $grillGlassTilesConfigure->total_area_with_floor = $totalArea * $request->floor_number;
         $grillGlassTilesConfigure->total_area_without_floor = $totalArea;
-        if ($request->configure_type == 1) {
-            $grillGlassTilesConfigure->total_grill_cost = ($totalArea * $request->floor_number) * $request->grill_costing;
-        }else{
-            $grillGlassTilesConfigure->total_tiles_glass_cost = ($totalArea * $request->floor_number) * $request->tiles_glass_costing;
-        }
+        $grillGlassTilesConfigure->total_grill_cost = ($totalArea * $request->floor_number) * $request->grill_costing;
+        
         $grillGlassTilesConfigure->save();
 
         return redirect()->route('glass_configure.details', ['glassConfigure' => $grillGlassTilesConfigure->id]);
@@ -121,22 +111,16 @@ class GlassConfigureController extends Controller
 
         return DataTables::eloquent($query)
             ->addColumn('project_name', function(GlassConfigure $glassConfigure) {
-                return $glassConfigure->project->name??'';
+                return $glassConfigure->project->name ??'';
             })
             ->addColumn('estimate_floor', function(GlassConfigure $glassConfigure) {
-                return $glassConfigure->estimateFloor->name??'';
+                return $glassConfigure->estimateFloor->name ??'';
             })
             ->addColumn('estimate_floor_unit', function(GlassConfigure $glassConfigure) {
-                return $glassConfigure->estimateFloorUnit->name??'';
+                return $glassConfigure->estimateFloorUnit->name ??'';
             })
             ->addColumn('configure_type', function(GlassConfigure $glassConfigure) {
-                if ($glassConfigure->configure_type == 1){
-                    return '<span class="label label-success">Grill</span>' ;
-                }elseif ($glassConfigure->configure_type == 2){
-                    return '<span class="label label-success">Glass</span>' ;
-                }else{
-                    return '<span class="label label-warning">Tiles</span>' ;
-                }
+                return $glassConfigure->configure_type ?? '';
             })
             ->addColumn('action', function(GlassConfigure $glassConfigure) {
 

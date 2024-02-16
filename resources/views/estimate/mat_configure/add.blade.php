@@ -153,7 +153,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('segment_thickness') ? 'has-error' :'' }}">
-                                    <label>Segment Thickness(Ft)</label>
+                                    <label style="font-size: 14px;">Segment Thickness(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="segment_thickness" step="any"
@@ -218,7 +218,7 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('first_ratio') ? 'has-error' :'' }}">
-                                    <label> First Ratio</label>
+                                    <label> Cement Ratio Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="first_ratio" step="any"
@@ -234,7 +234,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('second_ratio') ? 'has-error' :'' }}">
-                                    <label>Second Ratio</label>
+                                    <label>Sand Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="second_ratio" step="any"
@@ -250,7 +250,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('third_ratio') ? 'has-error' :'' }}">
-                                    <label>Third Ratio</label>
+                                    <label>Stone/Bricks Ratio</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="third_ratio" step="any"
@@ -336,6 +336,21 @@
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('common_sands_costing') ? 'has-error' :'' }}">
                                     <label>Sands Cost(Per Cft)</label>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" step="any" value="{{ $columnCost->column_sands_per_cost??0 }}"
+                                               name="common_sands_costing"  placeholder="Enter Per Cft Sands Costing">
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('common_sands_costing')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('common_sands_costing') ? 'has-error' :'' }}">
+                                    <label>L.Sands Cost(Per Cft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" step="any" value="{{ $columnCost->column_sands_per_cost??0 }}"
@@ -1127,6 +1142,7 @@
                     layer = 0;
 
                 var rft = ((length / spacing) * type_length * layer);
+                console.log(rft);
 
                 $('.total-kg:eq('+i+')').html(parseFloat((rft * kg_by_rft)).toFixed(2));
                 $('.total-ton:eq('+i+')').html(parseFloat(((rft * kg_by_rft)/kg_by_ton)).toFixed(3));

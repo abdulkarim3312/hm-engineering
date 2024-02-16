@@ -26,7 +26,7 @@ class GrillGlassTilesConfigureController extends Controller
     }
 
     public function grillGlassTilesConfigureAddPost(Request $request) {
-
+        // dd($request->all());
         $request->validate([
             'configure_type' => 'required',
             'estimate_project' => 'required',
@@ -36,7 +36,6 @@ class GrillGlassTilesConfigureController extends Controller
             'date' => 'required',
             'note' => 'nullable',
             'grill_costing' => 'required|numeric|min:0',
-            'tiles_glass_costing' => 'required|numeric|min:0',
             'product.*' => 'required',
             'length.*' => 'required|numeric|min:0',
             'height.*' => 'required|numeric|min:0',
@@ -45,6 +44,7 @@ class GrillGlassTilesConfigureController extends Controller
 
         $grillGlassTilesConfigure = new GrillGlassTilesConfigure();
         $grillGlassTilesConfigure->configure_type = $request->configure_type;
+        $grillGlassTilesConfigure->grill_size = $request->grill_size;
         $grillGlassTilesConfigure->estimate_project_id = $request->estimate_project;
         $grillGlassTilesConfigure->estimate_floor_id = $request->estimate_floor;
         $grillGlassTilesConfigure->estimate_floor_unit_id = $request->estimate_floor_unit;
@@ -99,7 +99,7 @@ class GrillGlassTilesConfigureController extends Controller
         if ($request->configure_type == 1) {
             $grillGlassTilesConfigure->total_grill_cost = ($totalArea * $request->floor_number) * $request->grill_costing;
         }else{
-            $grillGlassTilesConfigure->total_tiles_glass_cost = ($totalArea * $request->floor_number) * $request->tiles_glass_costing;
+            $grillGlassTilesConfigure->total_tiles_glass_cost = ($totalArea * $request->floor_number) * $request->grill_costing;
         }
         $grillGlassTilesConfigure->save();
 
@@ -127,13 +127,12 @@ class GrillGlassTilesConfigureController extends Controller
                 return $grillGlassTilesConfigure->estimateFloorUnit->name??'';
             })
             ->addColumn('configure_type', function(GrillGlassTilesConfigure $grillGlassTilesConfigure) {
-                if ($grillGlassTilesConfigure->configure_type == 1){
-                    return '<span class="label label-success">Grill</span>' ;
-                }elseif ($grillGlassTilesConfigure->configure_type == 2){
-                    return '<span class="label label-info">Glass</span>' ;
-                }else{
-                    return '<span class="label label-warning">Tiles</span>' ;
-                }
+                return $grillGlassTilesConfigure->configure_type?? '';
+                  
+            })
+            ->addColumn('grill_size', function(GrillGlassTilesConfigure $grillGlassTilesConfigure) {
+                return $grillGlassTilesConfigure->grill_size?? '';
+                  
             })
             ->addColumn('action', function(GrillGlassTilesConfigure $grillGlassTilesConfigure) {
 

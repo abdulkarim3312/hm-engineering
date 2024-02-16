@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Glass Configure Details
+   Tiles Configure Details
 @endsection
 
 @section('content')
@@ -88,40 +88,25 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>@if($tilesConfigure->configure_type == 1)
-                                                Grill Configure No.
-                                            @elseif($tilesConfigure->configure_type == 2)
-                                                Glass Configure No.
-                                            @else
-                                                Tiles Configure No.
-                                            @endif
-
-                                        </th>
+                                        <th>Tiles Configure No.</th>
                                         <td>{{ $tilesConfigure->grill_glass_tiles_configure_no }}</td>
                                     </tr>
                                     <tr>
-                                        <th>@if($tilesConfigure->configure_type == 1)
-                                                Grill Configure No.
-                                            @elseif($tilesConfigure->configure_type == 2)
-                                                Glass Configure No.
-                                            @else
-                                                Tiles Configure No.
-                                            @endif
-
+                                        <th>Tiles Number of Floor No.
                                         </th>
                                         <td>{{ $tilesConfigure->floor_number }}</td>
                                     </tr>
                                     <tr>
-                                        <th>@if($tilesConfigure->configure_type == 1)
-                                                Grill Configure Date
-                                            @elseif($tilesConfigure->configure_type == 2)
-                                                Glass Configure Date
-                                            @else
-                                                Tiles Configure Date
-                                            @endif
-
-                                        </th>
+                                        <th>Tiles Configure Date:</th>
                                         <td>{{ $tilesConfigure->date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tiles Configure Names:</th>
+                                        <td>{{ $tilesConfigure->configure_type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tiles Size:</th>
+                                        <td>{{ $tilesConfigure->tiles_size }}</td>
                                     </tr>
                                     <tr>
                                         <th>Note </th>
@@ -133,15 +118,7 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th colspan="2" class="text-center">
-                                            @if($tilesConfigure->configure_type == 1)
-                                                Grill Info
-                                            @elseif($tilesConfigure->configure_type == 2)
-                                                Glass Info
-                                            @else
-                                                Tiles Info
-                                            @endif
-                                        </th>
+                                        <th colspan="2" class="text-center">Tiles Info</th>
                                     </tr>
                                     <tr>
                                         <th>Estimate Project</th>
@@ -156,27 +133,11 @@
                                         <td>{{ $tilesConfigure->estimateFloorUnit->name }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            @if($tilesConfigure->configure_type == 1)
-                                                Total Grill KG(Single Floor)
-                                            @elseif($tilesConfigure->configure_type == 2)
-                                                Total Glass Area(Single Floor)
-                                            @else
-                                                Total Tiles Area(Single Floor)
-                                            @endif
-                                        </th>
+                                        <th>Total Tiles Area(Single Floor)</th>
                                         <td>{{ $tilesConfigure->total_area_without_floor }}</td>
                                     </tr>
                                     <tr>
-                                        <th>
-                                            @if($tilesConfigure->configure_type == 1)
-                                                Total Grill KG(All Floor)
-                                            @elseif($tilesConfigure->configure_type == 2)
-                                                Total Glass Area(All Floor)
-                                            @else
-                                                Total Tiles Area(All Floor)
-                                            @endif
-                                        </th>
+                                        <th>Total Tiles Area(All Floor)</th>
                                         <td>{{ $tilesConfigure->total_area_with_floor }}</td>
                                     </tr>
                                 </table>

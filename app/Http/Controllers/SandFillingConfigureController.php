@@ -48,4 +48,11 @@ class SandFillingConfigureController extends Controller
 
         return redirect()->route('sand_filling_configure');
     }
+
+    public function sandFillingConfigureDetails(SandFillingConfigure $sandFillingConfigure){
+        return view('estimate.sand_filling_configure.details',compact('sandFillingConfigure'));
+    }
+    public function sandFillingConfigurePrint(SandFillingConfigure $sandFillingConfigure){
+        return view('estimate.sand_filling_configure.print',compact('sandFillingConfigure'));
+    }
 }
