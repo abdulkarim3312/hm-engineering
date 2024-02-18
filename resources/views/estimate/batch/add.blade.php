@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Add Batch
+    Add Footing
 @endsection
 @section('style')
     <!-- Select2 -->
@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Batch Information</h3>
+                    <h3 class="box-title">Footing Information</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->

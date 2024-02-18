@@ -153,7 +153,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('segment_thickness') ? 'has-error' :'' }}">
-                                    <label>Segment Thickness(Ft)</label>
+                                    <label style="font-size: 15px;">Segment Thickness(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="segment_thickness" step="any"
@@ -493,13 +493,6 @@
 
                                             <td class="total-kg">0.00</td>
                                             <td class="total-ton">0.00</td>
-
-{{--                                            <td>--}}
-{{--                                            <th class="text-right">0.00</th>--}}
-{{--                                                <div class="form-group {{ $errors->has('rft_by_ton.'.$loop->index) ? 'has-error' :'' }}">--}}
-{{--                                                    <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]" value="{{ old('rft_by_ton.'.$loop->index) }}">--}}
-{{--                                                </div>--}}
-{{--                                            </td>--}}
                                             <td class="text-center">
                                                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                             </td>
@@ -589,12 +582,6 @@
                                         </td>
                                         <td class="total-kg">0.00</td>
                                         <td class="total-ton">0.00</td>
-{{--                                        <td>--}}
-{{--                                        <th class="text-right">0.00</th>--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]">--}}
-{{--                                            </div>--}}
-{{--                                        </td>--}}
 
 
                                         <td class="text-center">
@@ -609,9 +596,6 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product">Add More</a>
                                     </td>
-{{--                                    <th colspan="5" class="text-right">Total Rft/Ton</th>--}}
-{{--                                    <th id="total-ton">0.00</th>--}}
-{{--                                    <td></td>--}}
                                 </tr>
                                 </tfoot>
                             </table>
@@ -881,12 +865,6 @@
             </td>
             <td class="total-kg">0.00</td>
             <td class="total-ton">0.00</td>
-{{--            <td>--}}
-{{--            <th class="text-right">0.00</th>--}}
-{{--                <div class="form-group">--}}
-{{--                    <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]">--}}
-{{--                </div>--}}
-{{--            </td>--}}
 
             <td class="text-center">
                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>

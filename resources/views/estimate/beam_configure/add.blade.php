@@ -207,7 +207,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('tie_length') ? 'has-error' :'' }}">
-                                    <label>Stirrup Length(Ft)</label>
+                                    <label>Beam Height(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="tie_length" step="any"
@@ -223,7 +223,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('tie_width') ? 'has-error' :'' }}">
-                                    <label>Stirrup Width(Ft)</label>
+                                    <label>Beam Width(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="tie_width" step="any"
@@ -380,6 +380,21 @@
                                     <!-- /.input group -->
 
                                     @error('beam_sands_costing')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('s_sands_costing') ? 'has-error' :'' }}">
+                                    <label>S.Sands Cost(Per Cft)</label>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" step="any" value="{{ $pileCost->s_sands_costing??0 }}"
+                                               name="s_sands_costing"  placeholder="Enter Per Cft S.Sands Costing">
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('s_sands_costing')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>

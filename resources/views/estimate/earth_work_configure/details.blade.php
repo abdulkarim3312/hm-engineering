@@ -91,43 +91,56 @@
                                         <th>Estimate Project Name.</th>
                                         <td>{{ $earthWorkingConfigure->project->name ?? ''}}</td>
                                     </tr>
-                                    <tr>
-                                        <th>Earth Work Configure Length</th>
-                                        <td>{{ $earthWorkingConfigure->length ?? ''}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Earth Work Configure Width</th>
-                                        <td>{{ $earthWorkingConfigure->width ?? '' }}</td>
-                                    </tr>
                                 </table>
                             </div>
 
-                            <div class="col-md-6">
-                                <table class="table table-bordered">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                   @if ($earthWorkingConfigure->earth_work_type == 1)
+                                        <h3><b><u>Earth Working Calculation For Earth Cutting</u></b></h3>
+                                   @else
+                                        <h3><b><u>Earth Working Calculation For Earth Filling</u></b></h3>
+                                   @endif
+                                    <thead>
                                     <tr>
-                                        <th colspan="2" class="text-center">Earth Work Filling Info</th>
-                                    </tr>
-                                   
-                                    <tr>
+                                        <th>Length</th>
+                                        <th>Width</th>
                                         <th>Height</th>
-                                        <td>{{ $earthWorkingConfigure->height }} </td>
-                                    </tr>
-                                    <tr>
                                         <th>Quantity</th>
-                                        <td>{{ $earthWorkingConfigure->quantity }} </td>
-                                    </tr>
-                                    <tr>
                                         <th>Unit Price</th>
-                                        <td>{{ $earthWorkingConfigure->unit_price }}</td>
+                                        <th>Total Volume</th>
+                                        <th>Sub Total Price</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $totalArea = 0;
+                                            $totalPrice = 0;
+                                        @endphp
+                                    @foreach($earthWorkingConfigure->earthWorkConfigureProducts as $product)
+                                        <tr>
+                                            <td>{{ number_format($product->length, 2) ?? ''}}</td>
+                                            <td>{{ number_format($product->width, 2) ?? ''}}</td>
+                                            <td>{{ number_format($product->height, 2) ?? ''}}</td>
+                                            <td>{{ number_format($product->quantity, 2) }}</td>
+                                            <td>{{ number_format($product->unit_price, 2) }} Taka</td>
+                                            <td>{{ number_format($product->total_area, 2) }} Cft</td>
+                                            <td>{{ number_format($product->total_price, 2) }} Taka</td>
+                                        </tr>
+                                        @php
+                                            $totalArea += $product->total_area;
+                                            $totalPrice += $product->total_price;
+                                        @endphp
+                                    @endforeach
                                     <tr>
-                                        <th>Total Area</th>
-                                        <td>{{ $earthWorkingConfigure->total_area }} </td>
+                                        <th class="text-right" colspan="5">Total</th>
+                                            <td><b>৳ {{ number_format($totalArea, 2) }} Cft</b></td>
+                                            <td><b>৳ {{ number_format($totalPrice, 2) }} Taka</b></td>
                                     </tr>
-                                    <tr>
-                                        <th>Total Price</th>
-                                        <td>{{ number_format($earthWorkingConfigure->total_price, 2) }} Tk</td>
-                                    </tr>
+                                    </tbody>
+
                                 </table>
                             </div>
                         </div>

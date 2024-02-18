@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Model\EstimateProject;
+use App\Models\EarthWork;
 use App\Models\EarthWorkConfigure;
 use Illuminate\Http\Request;
 
 class EarthWorkConfigureController extends Controller
 {
     public function earthWorkConfigure() {
-        $earthWorkConfigures = EarthWorkConfigure::get();
+        $earthWorkConfigures = EarthWork::get();
         return view('estimate.earth_work_configure.all',compact('earthWorkConfigures'));
     }
 
@@ -30,9 +31,17 @@ class EarthWorkConfigureController extends Controller
 
         $counter = 0;
 
+        $earthWorkingConfigure = new EarthWork();
+        $earthWorkingConfigure->earth_work_type = $request->earth_work_type[$counter];
+        $earthWorkingConfigure->estimate_project_id = $request->project[$counter];
+        $earthWorkingConfigure->save();
+
+        $counter = 0;
+
         foreach ($request->project as $key => $reqProject) {
 
             EarthWorkConfigure::create([
+                'earth_work_id' => $earthWorkingConfigure->id,
                 'estimate_project_id' => $reqProject,
                 'length' => $request->length[$counter],
                 'width' => $request->width[$counter],
@@ -45,13 +54,13 @@ class EarthWorkConfigureController extends Controller
             $counter++;
         }
 
-        return redirect()->route('earth_work_configure');
+        return redirect()->route('earth_work_configure.details', ['earthWorkingConfigure' => $earthWorkingConfigure->id]);
     }
 
-    public function earthWorkConfigureDetails(EarthWorkConfigure $earthWorkingConfigure){
+    public function earthWorkConfigureDetails(EarthWork $earthWorkingConfigure){
         return view('estimate.earth_work_configure.details',compact('earthWorkingConfigure'));
     }
-    public function earthWorkConfigurePrint(EarthWorkConfigure $earthWorkingConfigure){
+    public function earthWorkConfigurePrint(EarthWork $earthWorkingConfigure){
         return view('estimate.earth_work_configure.print',compact('earthWorkingConfigure'));
     }
 }

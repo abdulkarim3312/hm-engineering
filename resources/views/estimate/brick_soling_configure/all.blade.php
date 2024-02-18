@@ -31,12 +31,6 @@
                         <thead>
                         <tr>
                             <th>Estimate Project</th>
-                            <th>Length(ft)</th>
-                            <th>Width(ft)</th>
-                            <th>Height(ft)</th>
-                            <th>Unit Price</th>
-                            <th>Total Volume</th>
-                            <th>Total Price</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -44,12 +38,6 @@
                         @foreach($brickSolingConfigures as $brickSolingConfigure)
                         <tr>
                             <td>{{$brickSolingConfigure->project->name}}</td>
-                            <td>{{$brickSolingConfigure->length}}</td>
-                            <td>{{$brickSolingConfigure->width}}</td>
-                            <td>{{$brickSolingConfigure->height}}</td>
-                            <td>৳ {{number_format($brickSolingConfigure->unit_price,2)}} Taka</td>
-                            <td>{{$brickSolingConfigure->total_area}} Nos</td>
-                            <td>৳ {{number_format($brickSolingConfigure->total_price,2)}} Taka</td>
                             <td>
                                 <a href="{{ route('bricks_soling_configure.details', $brickSolingConfigure->id) }}" class="btn btn-primary btn-sm">Details</a>
                             </td>

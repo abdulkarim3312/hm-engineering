@@ -6,7 +6,7 @@
 @endsection
 
 @section('title')
-    Add Grade Of Concrete Type
+    Footing Type
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    <a class="btn btn-primary" href="{{ route('batch.add') }}"> Add Batch</a>
+                    <a class="btn btn-primary" href="{{ route('batch.add') }}"> Add Footing</a>
 
                     <hr>
 

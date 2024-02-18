@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Beam Configure Details
+    Footing Configure Details
 @endsection
 
 @section('content')
@@ -63,7 +63,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a target="_blank" href="{{ route('footing_configure.print', ['columnConfigure' => $columnConfigure->id]) }}" class="btn btn-primary">Print</a>
+                            <a target="_blank" href="{{ route('footing_configure.print', ['footingConfigure' => $footingConfigure->id]) }}" class="btn btn-primary">Print</a>
                         </div>
                     </div>
                     <div id="prinarea">
@@ -76,7 +76,7 @@
                                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                                 </div>
                             </div>
-                            <div class="col-xs-8 text-center">
+                            <div class="col-xs-8 text-center" style="margin-left: -118px;">
                                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -88,44 +88,52 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>Beam Configure No.</th>
-                                        <td>{{ $columnConfigure->beam_configure_no }}</td>
+                                        <th> Footing Configure No.</th>
+                                        <td>{{ $footingConfigure->common_configure_no }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Beam Configure Date</th>
-                                        <td>{{ $columnConfigure->date }}</td>
+                                        <th> Footing Configure Date</th>
+                                        <td>{{ $footingConfigure->date }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Estimate Project</th>
-                                        <td>{{ $columnConfigure->project->name }}</td>
+                                        <th>Estimate Project Name</th>
+                                        <td>{{ $footingConfigure->project->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Costing Segment Name</th>
+                                        <td>{{ $footingConfigure->costingSegment->name }}</td>
                                     </tr>
                                     <tr>
                                         <th>Total Ton</th>
-                                        <td>{{ $columnConfigure->total_ton }} Rod</td>
+                                        <td>{{ $footingConfigure->total_ton }} Rod</td>
                                     </tr>
                                     <tr>
                                         <th>Total Kg</th>
-                                        <td>{{ $columnConfigure->total_kg }} Rod</td>
+                                        <td>{{ $footingConfigure->total_kg }} Rod</td>
                                     </tr>
                                     <tr>
                                         <th>Total Cement</th>
-                                        <td>{{ $columnConfigure->total_cement_bag }} Bag</td>
+                                        <td>{{ $footingConfigure->total_cement_bag }} Bag</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Sands</th>
-                                        <td>{{ $columnConfigure->total_sands }} Cft</td>
+                                        <th>Local Sands</th>
+                                        <td>{{ $footingConfigure->total_sands }} Cft</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sylhet Sands</th>
+                                        <td>{{ $footingConfigure->total_s_sands }} Cft</td>
                                     </tr>
                                     <tr>
                                         <th>Total Aggregate</th>
-                                        <td>{{ $columnConfigure->total_aggregate }} Cft</td>
+                                        <td>{{ $footingConfigure->total_aggregate }} Cft</td>
                                     </tr>
                                     <tr>
                                         <th>Total Piked</th>
-                                        <td>{{ $columnConfigure->total_picked }} Pcs</td>
+                                        <td>{{ $footingConfigure->total_picked }} Pcs</td>
                                     </tr>
                                     <tr>
                                         <th>Note </th>
-                                        <td>{{ $columnConfigure->note??'' }}</td>
+                                        <td>{{ $footingConfigure->note??'' }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -133,44 +141,37 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th colspan="2" class="text-center">Beam Info</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Stirrup Bar</th>
-                                        <td>{{ $columnConfigure->tie_bar }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Stirrup Interval</th>
-                                        <td>{{ $columnConfigure->tie_interval }}</td>
+                                        <th colspan="2" class="text-center">{{$footingConfigure->costingSegment->name}} Info</th>
                                     </tr>
                                     <tr>
                                         <th>Ratio</th>
-                                        <td>{{ $columnConfigure->first_ratio }}:{{ $columnConfigure->second_ratio }}:{{ $columnConfigure->third_ratio }}</td>
+                                        <td>{{ $footingConfigure->first_ratio }}:{{ $footingConfigure->second_ratio }}:{{ $footingConfigure->third_ratio }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Height</th>
-                                        <td>{{ $columnConfigure->beam_length }}</td>
+                                        <th>{{$footingConfigure->costingSegment->name}} Quantity</th>
+                                        <td>{{ $footingConfigure->costing_segment_quantity }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Tie</th>
-                                        <td>{{ $columnConfigure->tie_length }}</td>
+                                        <th>Footing Length</th>
+                                        <td>{{ $footingConfigure->segment_length }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Tie</th>
-                                        <td>{{ $columnConfigure->tie_width }}</td>
+                                        <th>Footing Width</th>
+                                        <td>{{ $footingConfigure->segment_width }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Beam Quantity</th>
-                                        <td>{{ $columnConfigure->beam_quantity }}</td>
+                                        <th>Footing Thickness</th>
+                                        <td>{{ $footingConfigure->segment_thickness }}</td>
                                     </tr>
                                     <tr>
                                         <th>Total Volume</th>
-                                        <td>{{ $columnConfigure->total_volume }}</td>
+                                        <td>{{ $footingConfigure->total_volume }}</td>
                                     </tr>
                                     <tr>
                                         <th>Total Dry Volume</th>
-                                        <td>{{ $columnConfigure->total_dry_volume }}</td>
+                                        <td>{{ $footingConfigure->total_dry_volume }}</td>
                                     </tr>
+
                                 </table>
                             </div>
                         </div>
@@ -184,6 +185,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
+                                <h4>Main Bar Calculation</h4>
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
@@ -193,95 +195,29 @@
                                         <th>Value of Bar</th>
                                         <th>Kg/Rft</th>
                                         <th>Kg/Ton</th>
+                                        <th>Length Type</th>
+                                        <th>Length</th>
+                                        <th>Spacing</th>
+                                        <th>Type Length</th>
+                                        <th>Layer</th>
                                         <th>Sub Total Kg</th>
                                         <th>Sub Total Ton</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <h4>Main Bar Description</h4>
-                                    @foreach($columnConfigure->footingConfigureProducts as $product)
+                                    @foreach($footingConfigure->footingConfigureProducts as $product)
+
                                         @if($product->status == null)
                                             <?php
                                             $mainTotalKg += $product->sub_total_kg;
                                             $mainTotalTon += $product->sub_total_ton;
                                             ?>
-                                        <tr>
-                                            <td>
-                                            @if($product->bar_type == 6)
-                                                6mm
-                                                @elseif($product->bar_type == 8)
-                                                8mm
-                                                @elseif($product->bar_type == 10)
-                                                    10mm
-                                                @elseif($product->bar_type == 12)
-                                                    12mm
-                                                @elseif($product->bar_type == 16)
-                                                    16mm
-                                                @elseif($product->bar_type == 18)
-                                                    18mm
-                                                @elseif($product->bar_type == 20)
-                                                    20mm
-                                                @elseif($product->bar_type == 22)
-                                                    22mm
-                                                @elseif($product->bar_type == 25)
-                                                    25mm
-                                                @elseif($product->bar_type == 28)
-                                                    28mm
-                                                @elseif($product->bar_type == 32)
-                                                    32mm
-                                                @elseif($product->bar_type == 36)
-                                                    36mm
-                                                @endif
-
-                                            </td>
-                                            <td>{{ $product->dia }}</td>
-                                            <td> {{ $product->dia_square }}</td>
-                                            <td> {{ number_format($product->value_of_bar, 2) }}</td>
-                                            <td> {{ number_format($product->kg_by_rft, 2) }}</td>
-                                            <td> {{ number_format($product->kg_by_ton, 2) }}</td>
-                                            <td> {{ number_format($product->sub_total_kg, 2) }}</td>
-                                            <td> {{ number_format($product->sub_total_ton, 3) }}</td>
-                                        </tr>
-                                        @endif
-                                    @endforeach
-                                    </tbody>
-                                    <tr>
-                                        <th colspan="6" class="text-right">Main Bar Total</th>
-                                        <th> {{ number_format($mainTotalKg, 2) }}</th>
-                                        <th> {{ number_format($mainTotalTon, 3) }}</th>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Bar</th>
-                                        <th>Dia</th>
-                                        <th>Dia(D^2)</th>
-                                        <th>Value of Bar</th>
-                                        <th>Kg/Rft</th>
-                                        <th>Kg/Ton</th>
-                                        <th>Sub Total Kg</th>
-                                        <th>Sub Total Ton</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <h4>Extra Bar Description</h4>
-                                    @foreach($columnConfigure->footingConfigureProducts as $product)
-                                        @if($product->status == 1)
-                                            <?php
-                                            $extraTotalKg += $product->sub_total_kg;
-                                            $extraTotalTon += $product->sub_total_ton;
-                                            ?>
                                             <tr>
                                                 <td>
-                                                    @if($product->bar_type == 6)
-                                                        6mm
+                                                @if($product->bar_type == 6)
+                                                    6mm
                                                     @elseif($product->bar_type == 8)
-                                                        8mm
+                                                    8mm
                                                     @elseif($product->bar_type == 10)
                                                         10mm
                                                     @elseif($product->bar_type == 12)
@@ -310,59 +246,72 @@
                                                 <td> {{ number_format($product->value_of_bar, 2) }}</td>
                                                 <td> {{ number_format($product->kg_by_rft, 2) }}</td>
                                                 <td> {{ number_format($product->kg_by_ton, 2) }}</td>
+                                                <td>
+                                                    @if($product->length_type == 1)
+                                                        X-Direction
+                                                    @else
+                                                    Y-Direction
+                                                    @endif
+                                                </td>
+                                                <td> {{ number_format($product->length, 2) }}</td>
+                                                <td> {{ number_format($product->spacing, 2) }}</td>
+                                                <td> {{ number_format($product->type_length, 2) }}</td>
+                                                <td> {{ number_format($product->layer, 2) }}</td>
                                                 <td> {{ number_format($product->sub_total_kg, 2) }}</td>
                                                 <td> {{ number_format($product->sub_total_ton, 3) }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
                                     </tbody>
-
                                     <tr>
-                                        <th colspan="6" class="text-right" >Extra Bar Total</th>
-                                        <td> {{ number_format($extraTotalKg, 2) }}</td>
-                                        <td> {{ number_format($extraTotalTon, 3) }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th colspan="6" class="text-right" >Total Ton/KG</th>
-                                        <td> {{ number_format($columnConfigure->total_kg, 2) }}</td>
-                                        <td> {{ number_format($columnConfigure->total_ton, 3) }}</td>
+                                        <th colspan="11" class="text-right">Main Bar Total</th>
+                                        <th> {{ number_format($mainTotalKg, 2) }}</th>
+                                        <th> {{ number_format($mainTotalTon, 3) }}</th>
                                     </tr>
                                 </table>
                             </div>
                         </div>
+
                         <u><i><h2>Costing Area</h2></i></u>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Bar(Rod) Price (Kg)</th>
-                                        <td>৳ {{ $columnConfigure->total_beam_bar_price }} Taka</td>
+                                        <td>৳ {{ $footingConfigure->total_common_bar_price }} Taka</td>
                                     </tr>
                                     <tr>
                                         <th>Cement Price(Bag)</th>
-                                        <td>৳ {{ $columnConfigure->total_beam_cement_bag_price }} Taka</td>
+                                        <td>৳ {{ number_format($footingConfigure->total_common_cement_bag_price,2) }} Taka</td>
                                     </tr>
                                 </table>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Sands Price (Cft)</th>
-                                        <td>৳ {{ $columnConfigure->total_beam_sands_price }} Taka</td>
+                                        <td>৳ {{ $footingConfigure->total_common_sands_price }} Taka</td>
                                     </tr>
-                                    @if($columnConfigure->total_picked == 0)
+                                    @if($footingConfigure->total_picked == 0)
                                         <tr>
                                             <th>Aggregate Price (Cft)</th>
-                                            <td>৳ {{ $columnConfigure->total_beam_aggregate_price }} Taka</td>
+                                            <td>৳ {{ $footingConfigure->total_common_aggregate_price }} Taka</td>
                                         </tr>
                                     @else
                                         <tr>
                                             <th>Picked Price (Pcs)</th>
-                                            <td>৳ {{ $columnConfigure->total_beam_picked_price }} Taka</td>
+                                            <td>৳ {{ $footingConfigure->total_common_picked_price }} Taka</td>
                                         </tr>
                                     @endif
+                                </table>
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Sylhet Sands Price (Cft)</th>
+                                        <td>৳ {{ $footingConfigure->total_beam_s_sands_price }} Taka</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

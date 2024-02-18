@@ -52,7 +52,7 @@
                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                 </div>
             </div>
-            <div class="col-xs-8 text-center">
+            <div class="col-xs-8 text-center" style="margin-left: -123px;">
                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -88,8 +88,12 @@
                         <td>{{ $beamConfigure->total_cement_bag }} Bag</td>
                     </tr>
                     <tr>
-                        <th>Total Sands</th>
+                        <th>Total Local Sands</th>
                         <td>{{ $beamConfigure->total_sands }} Cft</td>
+                    </tr>
+                    <tr>
+                        <th>Total Sylhet Sands</th>
+                        <td>{{ $beamConfigure->total_s_sands }} Cft</td>
                     </tr>
                     <tr>
                         <th>Total Aggregate</th>
@@ -128,11 +132,11 @@
                         <td>{{ $beamConfigure->beam_length }}</td>
                     </tr>
                     <tr>
-                        <th>Tie</th>
+                        <th>Beam Height</th>
                         <td>{{ $beamConfigure->tie_length }}</td>
                     </tr>
                     <tr>
-                        <th>Tie</th>
+                        <th>Beam Width</th>
                         <td>{{ $beamConfigure->tie_width }}</td>
                     </tr>
                     <tr>
@@ -218,7 +222,7 @@
 
         <u><i><h2>Costing Area</h2></i></u>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-md-4">
                 <table class="table table-bordered">
                     <tr>
                         <th>Bar(Rod) Price (Kg)</th>
@@ -231,10 +235,10 @@
                 </table>
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-md-4">
                 <table class="table table-bordered">
                     <tr>
-                        <th>Sands Price (Cft)</th>
+                        <th>Local Sands Price (Cft)</th>
                         <td>৳ {{ $beamConfigure->total_beam_sands_price }} Taka</td>
                     </tr>
                     @if($beamConfigure->total_picked == 0)
@@ -248,6 +252,14 @@
                             <td>৳ {{ $beamConfigure->total_beam_picked_price }} Taka</td>
                         </tr>
                     @endif
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Sylhet Sands Price (Cft)</th>
+                        <td>৳ {{ $beamConfigure->total_beam_s_sands_price }} Taka</td>
+                    </tr>
                 </table>
             </div>
         </div>

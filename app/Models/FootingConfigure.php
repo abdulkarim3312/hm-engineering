@@ -12,13 +12,7 @@ class FootingConfigure extends Model
     protected $table = 'footing_configures';
     protected $guarded = [];
 
-    // public function columnConfigureProducts() {
-    //     return $this->hasMany(FootingConfigureProduct::class,'column_configure_id','id');
-    // }
-    // public function project(){
-    //     return $this->belongsTo(EstimateProject::class,'estimate_project_id');
-    // }
-    public function commonConfigureProducts() {
+    public function footingConfigureProducts() {
         return $this->hasMany(FootingConfigureProduct::class,'common_configure_id','id');
     }
     public function project(){

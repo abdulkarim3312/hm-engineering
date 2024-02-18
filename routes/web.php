@@ -649,17 +649,17 @@ Route::middleware(['auth'])->group(function () {
     Route::Post('grade-of-concrete-type/edit/{gradeOfConcrete}', [GradeOfConcreteTypeController::class, 'gradeOfConcreteTypeEditPost'])->middleware('permission:grade_of_concrete_type');
 
     //Batch
-    Route::get('batch', [BatchController::class, 'batch'])->name('batch')->middleware('permission:batch');
+    Route::get('footing', [BatchController::class, 'batch'])->name('batch')->middleware('permission:batch');
     Route::get('footing/configure', [BatchController::class, 'footing'])->name('footing_configure');
     Route::get('footing/configure/add', [BatchController::class, 'footingConfigureAdd'])->name('footing_configure.add');
     Route::post('footing/configure/add', [BatchController::class, 'footingConfigureAddPost'])->middleware('permission:batch');
-    Route::get('batch/add', [BatchController::class, 'batchAdd'])->name('batch.add')->middleware('permission:batch');
-    Route::post('batch/add', [BatchController::class, 'batchAddPost'])->middleware('permission:batch');
-    Route::get('batch/edit/{batch}', [BatchController::class, 'batchEdit'])->name('batch.edit')->middleware('permission:batch');
+    Route::get('footing/add', [BatchController::class, 'batchAdd'])->name('batch.add')->middleware('permission:batch');
+    Route::post('footing/add', [BatchController::class, 'batchAddPost'])->middleware('permission:batch');
+    Route::get('footing/edit/{batch}', [BatchController::class, 'batchEdit'])->name('batch.edit')->middleware('permission:batch');
     Route::Post('batch/edit/{batch}', [BatchController::class, 'batchEditPost'])->middleware('permission:batch');
     Route::get('footing-configure-datatable', [BatchController::class, 'footingConfigureDatatable'])->name('footing_configure.datatable');
-    Route::get('footing-configure-details/{columnConfigure}', [BatchController::class, 'footingConfigureDetails'])->name('footing_configure.details');
-    Route::get('footing-configure-print/{columnConfigure}', [BatchController::class, 'footingConfigurePrint'])->name('footing_configure.print')->middleware('permission:batch');
+    Route::get('footing-configure-details/{footingConfigure}', [BatchController::class, 'footingConfigureDetails'])->name('footing_configure.details');
+    Route::get('footing-configure-print/{footingConfigure}', [BatchController::class, 'footingConfigurePrint'])->name('footing_configure.print')->middleware('permission:batch');
 
     //Grade of Concrete
     Route::get('grade-of-concrete', [GradeOfConcreteController::class, 'gradeOfConcrete'])->name('grade_of_concrete')->middleware('permission:grade_of_concrete');

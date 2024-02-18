@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FootingConfigureProduct extends Model
 {
     use HasFactory;
-    protected $table = 'footing_confogure_products';
+    protected $table = 'footing_configure_products';
     protected $guarded = [];
 }

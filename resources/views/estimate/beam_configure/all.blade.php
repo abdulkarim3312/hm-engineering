@@ -33,8 +33,11 @@
                             <th>Date</th>
                             <th>Configure No</th>
                             <th>Project No</th>
+                            <th>Floor Name</th>
+                            <th>Beam Type</th>
                             <th>Total Volume</th>
                             <th>Dry Volume</th>
+                            <th>Total Rod</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -67,8 +70,11 @@
                     {data: 'date', name: 'date'},
                     {data: 'beam_configure_no', name: 'beam_configure_no'},
                     {data: 'project_name', name: 'project.name'},
+                    {data: 'floor_name', name: 'floor_name.name'},
+                    {data: 'beam_type', name: 'beam_type.name'},
                     {data: 'total_volume', name: 'total_volume'},
                     {data: 'total_dry_volume', name: 'total_dry_volume'},
+                    {data: 'total_rod', name: 'total_rod'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],

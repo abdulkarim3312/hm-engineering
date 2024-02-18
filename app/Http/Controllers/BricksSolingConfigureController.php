@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Model\EstimateProject;
 use App\Models\BrickSolingConfigure;
+use App\Models\BricksSoling;
 use Illuminate\Http\Request;
 
 class BricksSolingConfigureController extends Controller
 {
     public function brickSolingConfigure() {
-        $brickSolingConfigures = BrickSolingConfigure::get();
+        $brickSolingConfigures = BricksSoling::get();
         return view('estimate.brick_soling_configure.all',compact('brickSolingConfigures'));
     }
 
@@ -29,27 +30,34 @@ class BricksSolingConfigureController extends Controller
         ]);
 
         $counter = 0;
+        $bricksSolingConfigure = new BricksSoling();
+        $bricksSolingConfigure->estimate_project_id = $request->project[$counter];
+        $bricksSolingConfigure->save();
+
+
+        $counter = 0;
 
         foreach ($request->project as $key => $reqProject) {
 
             BrickSolingConfigure::create([
+                'brick_soling_id' => $bricksSolingConfigure->id,
                 'estimate_project_id' => $reqProject,
                 'length' => $request->length[$counter],
                 'width' => $request->width[$counter],
                 'height' => $request->height[$counter],
                 'unit_price' => $request->unit_price[$counter],
-                'total_area' => (($request->length[$counter] * $request->width[$counter]) * $request->height[$counter]),
-                'total_price' => ((($request->length[$counter] * $request->width[$counter]) * $request->height[$counter]) * $request->unit_price[$counter]),
+                'total_area' => (($request->length[$counter] * $request->width[$counter]) * $request->height[$counter]) * 3,
+                'total_price' => ((($request->length[$counter] * $request->width[$counter]) * $request->height[$counter]) * $request->unit_price[$counter]) * 3,
             ]);
             $counter++;
         }
 
-        return redirect()->route('bricks_soling_configure');
+        return redirect()->route('bricks_soling_configure.details' , ['bricksSolingConfigure' => $bricksSolingConfigure->id ]);
     }
-    public function brickSolingConfigureDetails(BrickSolingConfigure $bricksSolingConfigure){
+    public function brickSolingConfigureDetails(BricksSoling $bricksSolingConfigure){
         return view('estimate.brick_soling_configure.details',compact('bricksSolingConfigure'));
     }
-    public function brickSolingConfigurePrint(BrickSolingConfigure $bricksSolingConfigure){
+    public function brickSolingConfigurePrint(BricksSoling $bricksSolingConfigure){
         return view('estimate.brick_soling_configure.print',compact('bricksSolingConfigure'));
     }
 }

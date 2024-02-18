@@ -306,12 +306,12 @@
                 if (height == '' || height < 0 || !$.isNumeric(height))
                     height = 0;
 
-                $('.sub-total:eq('+i+')').html(parseFloat(((length * width) * height).toFixed(2)));
+                $('.sub-total:eq('+i+')').html(parseFloat((((length * width) * height) * 3).toFixed(2)));
 
-                totalArea += parseFloat(((length * width) * height).toFixed(2));
+                totalArea += parseFloat((((length * width) * height)).toFixed(2));
             });
 
-            $('#total-area').html(totalArea.toFixed(2) +' '+'Sft');
+            $('#total-area').html(totalArea.toFixed(2) +' '+'Psc');
         }
 
         function initProduct() {

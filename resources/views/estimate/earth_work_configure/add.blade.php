@@ -29,6 +29,7 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th width="25%">Earth Work Type</th>
                                     <th width="25%">Estimate Project</th>
                                     <th width="15%">Length(ft)</th>
                                     <th width="15%">Width(ft)</th>
@@ -44,6 +45,15 @@
                                 @if (old('project') != null && sizeof(old('project')) > 0)
                                     @foreach(old('project') as $item)
                                         <tr class="project-item">
+                                            <td>
+                                                <div class="form-group {{ $errors->has('earth_work_type.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <select class="form-control select2 project" style="width: 100%;" name="earth_work_type[]" data-placeholder="Select Estimate Projects" required>
+                                                        <option>Select Earth Work Type</option>
+                                                        <option value="1">Earth Cutting</option>
+                                                        <option value="2">Earth Filling</option>
+                                                    </select>
+                                                </div>
+                                            </td>
                                             <td>
                                                 <div class="form-group {{ $errors->has('project.'.$loop->index) ? 'has-error' :'' }}">
                                                     <select class="form-control select2 project" style="width: 100%;" name="project[]" data-placeholder="Select Estimate Projects" required>
@@ -91,6 +101,15 @@
                                     @endforeach
                                 @else
                                     <tr class="project-item">
+                                        <td>
+                                            <div class="form-group">
+                                                <select class="form-control select2 project" style="width: 100%;" name="earth_work_type[]" data-placeholder="Select Estimate Project" required>
+                                                    <option>Select Earth Work Type</option>
+                                                    <option value="1">Earth Cutting</option>
+                                                    <option value="2">Earth Filling</option>
+                                                </select>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="form-group">
                                                 <select class="form-control select2 project" style="width: 100%;" name="project[]" data-placeholder="Select Estimate Project" required>
@@ -163,6 +182,15 @@
 
     <template id="template-project">
         <tr class="project-item">
+            <td>
+                <div class="form-group">
+                    <select class="form-control select2 project" style="width: 100%;" name="earth_work_type[]" data-placeholder="Select Estimate Project" required>
+                        <option>Select Earth Work Type</option>
+                        <option value="1">Earth Cutting</option>
+                        <option value="2">Earth Filling</option>
+                    </select>
+                </div>
+            </td>
             <td>
                 <div class="form-group">
                     <select class="form-control select2 project" style="width: 100%;" name="project[]" data-placeholder="Select Estimate Project" required>

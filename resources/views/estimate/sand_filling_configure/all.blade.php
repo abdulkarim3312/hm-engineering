@@ -31,13 +31,6 @@
                         <thead>
                         <tr>
                             <th>Estimate Project</th>
-                            <th>Length(ft)</th>
-                            <th>Width(ft)</th>
-                            <th>Height(ft)</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Total Volume</th>
-                            <th>Total Price</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -45,13 +38,6 @@
                         @foreach($sandFillingConfigures as $sandFillingConfigure)
                         <tr>
                             <td>{{$sandFillingConfigure->project->name ?? ''}}</td>
-                            <td>{{$sandFillingConfigure->length}}</td>
-                            <td>{{$sandFillingConfigure->width}}</td>
-                            <td>{{$sandFillingConfigure->height}}</td>
-                            <td>{{$sandFillingConfigure->quantity}}</td>
-                            <td>৳ {{number_format($sandFillingConfigure->unit_price,2)}} Taka</td>
-                            <td>{{$sandFillingConfigure->total_area}} Cft</td>
-                            <td>৳ {{number_format($sandFillingConfigure->total_price,2)}} Taka</td>
                             <td>
                                 <a href="{{ route('sand_filling_configure.details', $sandFillingConfigure->id) }}" class="btn btn-primary btn-sm">Details</a>
                             </td>

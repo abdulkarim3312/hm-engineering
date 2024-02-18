@@ -62,7 +62,6 @@ class BricksConfigureController extends Controller
         $bricksConfigure->estimate_project_id = $request->estimate_project;
         $bricksConfigure->estimate_floor_id = $request->estimate_floor;
         $bricksConfigure->estimate_floor_unit_id = $request->estimate_floor_unit;
-//        $bricksConfigure->unit_section_id = $request->unit_section;
         $bricksConfigure->floor_number = $request->floor_number;
         $bricksConfigure->brick_size = $request->brick_size * $request->floor_number;
         $bricksConfigure->morter = $request->morter * $request->floor_number;

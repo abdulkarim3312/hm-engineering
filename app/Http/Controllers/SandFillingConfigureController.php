@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Model\EstimateProject;
 use App\Models\SandFillingConfigure;
-use App\Models\EarthWorkConfigure;
+use App\Models\SandFilling;
 use Illuminate\Http\Request;
 
 class SandFillingConfigureController extends Controller
 {
     public function sandFillingConfigure() {
-        $sandFillingConfigures = SandFillingConfigure::get();
+        $sandFillingConfigures = SandFilling::get();
         return view('estimate.sand_filling_configure.all',compact('sandFillingConfigures'));
     }
 
@@ -30,10 +30,21 @@ class SandFillingConfigureController extends Controller
         ]);
 
         $counter = 0;
+        $sandFillingConfigure = new SandFilling();
+        $sandFillingConfigure->estimate_project_id = $request->project[$counter];
+        $sandFillingConfigure->length = $request->length[$counter];
+        $sandFillingConfigure->width = $request->width[$counter];
+        $sandFillingConfigure->height = $request->height[$counter];
+        $sandFillingConfigure->quantity = $request->quantity[$counter];
+        $sandFillingConfigure->save();
+
+
+        $counter = 0;
 
         foreach ($request->project as $key => $reqProject) {
 
             SandFillingConfigure::create([
+                'sand_filling_id' => $sandFillingConfigure->id,
                 'estimate_project_id' => $reqProject,
                 'length' => $request->length[$counter],
                 'width' => $request->width[$counter],
@@ -46,13 +57,13 @@ class SandFillingConfigureController extends Controller
             $counter++;
         }
 
-        return redirect()->route('sand_filling_configure');
+        return redirect()->route('sand_filling_configure.details', ['sandFillingConfigure' => $sandFillingConfigure->id]);
     }
 
-    public function sandFillingConfigureDetails(SandFillingConfigure $sandFillingConfigure){
+    public function sandFillingConfigureDetails(SandFilling $sandFillingConfigure){
         return view('estimate.sand_filling_configure.details',compact('sandFillingConfigure'));
     }
-    public function sandFillingConfigurePrint(SandFillingConfigure $sandFillingConfigure){
+    public function sandFillingConfigurePrint(SandFilling $sandFillingConfigure){
         return view('estimate.sand_filling_configure.print',compact('sandFillingConfigure'));
     }
 }

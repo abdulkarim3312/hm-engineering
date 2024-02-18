@@ -18,4 +18,10 @@ class BeamConfigure extends Model
     public function project(){
         return $this->belongsTo(EstimateProject::class,'estimate_project_id');
     }
+    public function estimateFloor(){
+        return $this->belongsTo(EstimateFloor::class,'estimate_floor_id');
+    }
+    public function beamType(){
+        return $this->belongsTo(BeamType::class,'beam_type_id');
+    }
 }

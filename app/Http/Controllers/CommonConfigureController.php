@@ -234,7 +234,6 @@ class CommonConfigureController extends Controller
         $estimateProjects = EstimateProject::where('status',1)->get();
         $beamTypes = BeamType::where('status',1)->get();
         $pileCost = PileConfigure::orderBy('id','desc')->first();
-        //dd($beamCost);
         return view('estimate.beam_configure.add',compact('estimateProjects',
             'beamTypes','pileCost'));
     }
@@ -326,23 +325,26 @@ class CommonConfigureController extends Controller
         $beamConfigure->total_kg = 0;
         $beamConfigure->total_cement = $totalCement * $request->beam_quantity;
         $beamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
-        $beamConfigure->total_sands = $totalSands * $request->beam_quantity;
+        $beamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
+        $beamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
         $beamConfigure->total_aggregate = $totalAggregate * $request->beam_quantity;
         $beamConfigure->total_picked = $totalPiked * $request->beam_quantity;
         //price
         $beamConfigure->beam_bar_per_cost = $request->beam_bar_costing;
         $beamConfigure->beam_cement_per_cost = $request->beam_cement_costing;
         $beamConfigure->beam_sands_per_cost = $request->beam_sands_costing;
-        $beamConfigure->beam_aggregate_per_cost = $request->beam_aggregate_costing??0;
-        $beamConfigure->beam_picked_per_cost = $request->beam_picked_costing??0;
+        $beamConfigure->s_sands_costing = $request->s_sands_costing;
+        $beamConfigure->beam_aggregate_per_cost = $request->beam_aggregate_costing ?? 0;
+        $beamConfigure->beam_picked_per_cost = $request->beam_picked_costing ?? 0;
         //Total Price
         $beamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
-        $beamConfigure->total_beam_sands_price = ($totalSands * $request->beam_quantity) * $request->beam_sands_costing;
+        $beamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
+        $beamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
         $beamConfigure->total_beam_aggregate_price = ($totalAggregate * $request->beam_quantity) * $request->beam_aggregate_costing;
         $beamConfigure->total_beam_picked_price = ($totalPiked * $request->beam_quantity) * $request->beam_picked_costing;
         $beamConfigure->total_beam_bar_price = 0;
         $beamConfigure->save();
-        $beamConfigure->beam_configure_no = str_pad($beamConfigure->id, 5, "0", STR_PAD_LEFT);
+        $beamConfigure->beam_configure_no = str_pad($beamConfigure->id, 4, "0", STR_PAD_LEFT);
         $beamConfigure->save();
 
         $counter = 0;
@@ -365,9 +367,8 @@ class CommonConfigureController extends Controller
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->beam_quantity,
                     'lapping_length' => $request->lapping_length[$counter]??0 * $request->beam_quantity,
                     'lapping_nos' => $request->lapping_nos[$counter]??0 * $request->beam_quantity,
-                    'sub_total_kg' => ((($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter]) * $request->beam_quantity),
-                    'sub_total_ton' => (((($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter])
-                        /$request->kg_by_ton[$counter]) * $request->beam_quantity),
+                    'sub_total_kg' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))),
+                    'sub_total_ton' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity),
                 ]);
             }else{
                 $lapping = (($request->lapping_length[$counter]??0 * $request->lapping_nos[$counter]??0) * $request->kg_by_rft[$counter]);
@@ -384,23 +385,24 @@ class CommonConfigureController extends Controller
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->beam_quantity,
                     'lapping_length' => $request->lapping_length[$counter]??0 * $request->beam_quantity,
                     'lapping_nos' => $request->lapping_nos[$counter]??0 * $request->beam_quantity,
-                    'sub_total_kg' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + $lapping)  * $request->beam_quantity),
-                    'sub_total_ton' => ((((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter])
-                                * $request->beam_length) + $lapping)/$request->kg_by_ton[$counter]) * $request->beam_quantity),
+                    'sub_total_kg' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))),
+                    'sub_total_ton' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity),
                 ]);
             }
-
+            // $request->kg_by_ton[$counter])
             if ($key == 0){
-                $totalKg += (($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter]);
-                $totalTon+= ((($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]);
+                $totalKg += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter])));
+                $totalTon+= (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity);
             }else{
-                $totalKg += ((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + $lapping);
-                $totalTon += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + $lapping)/$request->kg_by_ton[$counter]);
+                $totalKg += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter])));
+                $totalTon += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity);
             }
             $counter++;
         }
 
         $counter = 0;
+        $totalExtraTon = 0;
+        $totalExtraKg = 0;
 
         foreach ($request->extra_product as $key => $reqProduct) {
 
@@ -421,15 +423,15 @@ class CommonConfigureController extends Controller
                     'status' => 1,
                 ]);
 
-                $totalKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
-                $totalTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
+                $totalExtraKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
+                $totalExtraTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
 
             $counter++;
         }
 
-        $beamConfigure->total_ton = $totalTon * $request->beam_quantity;
-        $beamConfigure->total_kg = $totalKg * $request->beam_quantity;
-        $beamConfigure->total_beam_bar_price = ($totalKg * $request->beam_quantity) * $request->beam_bar_costing;
+        $beamConfigure->total_ton = ($totalTon +$totalExtraTon) * $request->beam_quantity;
+        $beamConfigure->total_kg = ($totalKg + $totalExtraKg) * $request->beam_quantity;
+        $beamConfigure->total_beam_bar_price = (($totalKg + $totalExtraKg) * $request->beam_bar_costing) * $request->beam_quantity;
         $beamConfigure->save();
 
         return redirect()->route('beam_configure.details', ['beamConfigure' => $beamConfigure->id]);
@@ -443,11 +445,20 @@ class CommonConfigureController extends Controller
     }
 
     public function beamConfigureDatatable() {
-        $query = BeamConfigure::with('project');
+        $query = BeamConfigure::with('project', 'estimateFloor', 'beamType', 'beamConfigureProducts');
 
         return DataTables::eloquent($query)
             ->addColumn('project_name', function(BeamConfigure $beamConfigure) {
                 return $beamConfigure->project->name??'';
+            })
+            ->addColumn('floor_name', function(BeamConfigure $beamConfigure) {
+                return $beamConfigure->estimateFloor->name ??'';
+            })
+            ->addColumn('beam_type', function(BeamConfigure $beamConfigure) {
+                return $beamConfigure->beamType->name ??'';
+            })
+            ->addColumn('total_rod', function(BeamConfigure $beamConfigure) {
+                return $beamConfigure->total_kg ??'';
             })
             ->addColumn('action', function(BeamConfigure $beamConfigure) {
 

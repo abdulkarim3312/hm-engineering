@@ -67,39 +67,49 @@
                         <th>Estimate Project Name.</th>
                         <td>{{ $bricksSolingConfigure->project->name ?? ''}}</td>
                     </tr>
-                    <tr>
-                        <th>Brick Soling Configure Length</th>
-                        <td>{{ $bricksSolingConfigure->length ?? ''}}</td>
-                    </tr>
-                    <tr>
-                        <th>Brick Soling Configure Width</th>
-                        <td>{{ $bricksSolingConfigure->width ?? '' }}</td>
-                    </tr>
                 </table>
             </div>
-
-            <div class="col-md-6">
-                <table class="table table-bordered">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <h3><b><u>Bricks Soling Calculation</u></b></h3>
+                    <thead>
                     <tr>
-                        <th colspan="2" class="text-center">Brick Soling Filling Info</th>
-                    </tr>
-                   
-                    <tr>
-                        <th>Height</th>
-                        <td>{{ $bricksSolingConfigure->height }} </td>
-                    </tr>
-                    <tr>
+                        <th>Length</th>
+                        <th>Width</th>
+                        <th>Nos</th>
                         <th>Unit Price</th>
-                        <td>{{ $bricksSolingConfigure->unit_price }}</td>
+                        <th>Total Volume</th>
+                        <th>Sub Total Price</th>
                     </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $totalArea = 0;
+                            $totalPrice = 0;
+                        @endphp
+                    @foreach($bricksSolingConfigure->bricksSolingConfigureProducts as $product)
+                        <tr>
+                            <td>{{ number_format($product->length, 2) ?? ''}}</td>
+                            <td>{{ number_format($product->width, 2) ?? ''}}</td>
+                            <td>{{ number_format($product->height, 2) ?? ''}}</td>
+                            <td>{{ number_format($product->unit_price, 2) }} Taka</td>
+                            <td>{{ number_format($product->total_area, 2) }} Cft</td>
+                            <td>{{ number_format($product->total_price, 2) }} Taka</td>
+                        </tr>
+                        @php
+                            $totalArea += $product->total_area;
+                            $totalPrice += $product->total_price;
+                        @endphp
+                    @endforeach
                     <tr>
-                        <th>Total Area</th>
-                        <td>{{ $bricksSolingConfigure->total_area }} </td>
+                        <th class="text-right" colspan="4">Total</th>
+                            <td><b>৳ {{ number_format($totalArea, 2) }} Cft</b></td>
+                            <td><b>৳ {{ number_format($totalPrice, 2) }} Taka</b></td>
                     </tr>
-                    <tr>
-                        <th>Total Price</th>
-                        <td>{{ number_format($bricksSolingConfigure->total_price, 2) }} Tk</td>
-                    </tr>
+                    </tbody>
+
                 </table>
             </div>
         </div>

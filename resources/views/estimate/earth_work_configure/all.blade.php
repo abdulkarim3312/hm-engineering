@@ -30,28 +30,22 @@
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
+                            <th>Earth Work Type</th>
                             <th>Estimate Project</th>
-                            <th>Length</th>
-                            <th>Width</th>
-                            <th>Height</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Total Volume</th>
-                            <th>Total Price</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($earthWorkConfigures as $earthWorkConfigure)
                         <tr>
-                            <td>{{$earthWorkConfigure->project->name}}</td>
-                            <td>{{$earthWorkConfigure->length}}</td>
-                            <td>{{$earthWorkConfigure->width}}</td>
-                            <td>{{$earthWorkConfigure->height}}</td>
-                            <td>{{$earthWorkConfigure->quantity}}</td>
-                            <td>৳ {{number_format($earthWorkConfigure->unit_price,2)}} Taka</td>
-                            <td>{{$earthWorkConfigure->total_area}} Cft</td>
-                            <td>৳ {{number_format($earthWorkConfigure->total_price,2)}} Taka</td>
+                            <td>
+                                @if ($earthWorkConfigure->earth_work_type == 1)
+                                    <span class="label label-success">Earth Cutting</span>
+                                @else
+                                    <span class="label label-info">Earth Filling</span>
+                                @endif
+                            </td>
+                            <td>{{$earthWorkConfigure->project->name ?? ''}}</td>
                             <td>
                                 <a href="{{ route('earth_work_configure.details', $earthWorkConfigure->id) }}" class="btn btn-primary btn-sm">Details</a>
                             </td>
