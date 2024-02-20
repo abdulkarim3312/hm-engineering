@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form method="POST" action="{{ route('plaster_configure.add') }}">
+                <div method="POST" action="{{ route('plaster_configure.add') }}">
                     @csrf
 
                     <div class="box-body">
@@ -124,10 +124,6 @@
                                     @enderror
                                 </div>
                             </div> --}}
-                            
-                        </div>
-
-
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('first_ratio') ? 'has-error' :'' }}">
                                     <label>First Ratio</label>
@@ -226,7 +222,7 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
                         <u><i><h3>Costing Area</h3></i></u>
                         <div class="row">
                             <div class="col-md-3">
@@ -261,7 +257,7 @@
                                 </div>
                             </div>
                         </div>
-
+                    
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -748,9 +744,9 @@
                 var deduction_two = parseFloat(deduction_length_two * deduction_height_two);
 
                 var total_area = parseFloat(length * height * wall_nos);
-                
+
                 // var item = total_area - totalDeduction;
-                
+
 
                 var totalDeduction = deduction_one + deduction_two;
 

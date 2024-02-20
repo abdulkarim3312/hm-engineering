@@ -1055,7 +1055,7 @@
             var cover = $('#cover').val();
             var spiral_bar = $('#spiral_bar').val();
             var lapping_nos = $('#lapping_nos').val();
-            
+
 
 
 
@@ -1114,8 +1114,8 @@
 
                     var lapping = (lapping_lenght * lapping_nos) * kg_by_rft;
                     var total_lap = ((pile_height * kg_by_rft) * number_of_bar) + lapping;
-                   
-                   
+
+
                 $('.total-kg:eq('+i+')').html(parseFloat(total_lap).toFixed(2));
                 $('.total-ton:eq('+i+')').html(parseFloat((total_lap/kg_by_ton)).toFixed(3));
                 //total += rft_by_ton;
@@ -1131,7 +1131,7 @@
                 var tie_interval = $('#tie_interval').val();
                 var lapping_nos = $('.lapping_nos:eq('+i+')').val();
                 var tie_lapping_length = $('.tie_lapping_length:eq('+i+')').val();
-               
+
                 // var tie_kg_by_rft = $('.tie_kg_by_rft:eq('+i+')').val();
 
                 var tieQuantity = (column_length / tie_interval) + 1;
@@ -1166,19 +1166,14 @@
 
 
                 var lie_length = parseFloat(tie_kg_by_rft * tie_lapping_length);
-                
+
                 var data = parseFloat((tie_kg_by_rft * tie_length) + lie_length);
-               
-                
+
+
                 $('.tie-total-kg:eq('+i+')').html(parseFloat(data).toFixed(2));
                 $('.tie-total-ton:eq('+i+')').html(parseFloat(data/tie_kg_by_ton).toFixed(3));
                 //total += rft_by_ton;
             });
-
-
-
-
-
 
            var total_volume = 3.1416 * (radius * radius) * pile_height ;
 

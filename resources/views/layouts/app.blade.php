@@ -222,12 +222,12 @@
                     'estimate_report','estimate_floor','estimate_floor.add','estimate_floor.edit',
                     'column_type','column_type.add','column_type.edit', 'grade_beam_type', 'grade_beam_type.add', 'grade_beam_type.edit',
                     'estimate_floor_unit','estimate_floor_unit.add','estimate_floor_unit.edit',
-                    'unit_section','unit_section.add','unit_section.edit', 'grade_beam_type_configure.add', 'grade_beam_configure.details',
+                    'unit_section','unit_section.add','unit_section.edit', 'grade_beam_type_configure.add', 'grade_beam_configure.details', 'mat_configure.add', 'mat_configure.details', 'pile_cap_configure.add', 'pile_cap_configure.details',
                     'unit_section','unit_section.add','unit_section.edit','footing_configure.add', 'footing_configure.details',
                     'beam_type','beam_type.add','beam_type.edit','grade_of_concrete_type','grade_of_concrete_type.add',
                     'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details',
                     'batch','batch.add','batch.edit','grade_of_concrete','grade_of_concrete.add','grade_of_concrete.edit',
-                    'costing_report','estimation_costing_summary','mobilization_work','mobilization_work.add','mobilization_work.details','mobilization_work_product',
+                    'costing_report','estimation_costing_summary','mobilization_work','mobilization_work.add','mobilization_work.details','mobilization_work_product', 'returning_wall_configure.add', 'returning_wall_configure.details',
                     'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure', 'glass_configure', 'tiles_configure', 'bricks_soling_configure.add', 'bricks_soling_configure.details', 'sand_filling_configure.add', 'sand_filling_configure.details'];
                 ?>
 
