@@ -340,6 +340,21 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('s_sands_costing') ? 'has-error' :'' }}">
+                                    <label>S.Sands Cost(Per Cft)</label>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" step="any" value="{{ $pileCost->s_sands_costing??0 }}"
+                                               name="s_sands_costing"  placeholder="Enter Per Cft S.Sands Costing">
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('s_sands_costing')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div id="pile_aggregate_costing">
                                 <div class="col-md-2" id="pile_aggregate_costing">
                                     <div class="form-group {{ $errors->has('pile_aggregate_costing') ? 'has-error' :'' }}">
@@ -390,6 +405,7 @@
                                     <th width="10%">Kg/Ton</th>
                                     <th width="10%">Bar Nos.</th>
                                     <th width="10%">Lapping Length(ft)</th>
+                                    <th width="10%">Lapping Nos.</th>
                                     <th width="10%">Kg</th>
                                     <th width="10%">Ton</th>
                                     <th></th>
@@ -458,21 +474,15 @@
                                                     <input type="number" step="0.01" class="form-control lapping_lenght" name="lapping_lenght[]" value="{{ old('lapping_lenght.'.$loop->index) }}">
                                                 </div>
                                             </td>
-                                            {{-- <td>
-                                                <div class="form-group {{ $errors->has('lapping_lenght.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" step="0.01" class="form-control spiral_lenght" name="spiral_lenght[]" value="{{ old('spiral_lenght.'.$loop->index) }}">
+                                            <td>
+                                                <div class="form-group {{ $errors->has('lapping_nos.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" step="any" class="form-control lapping_nos" name="lapping_nos[]" value="{{ old('lapping_nos.'.$loop->index) }}">
                                                 </div>
-                                            </td> --}}
+                                            </td>
 
                                             <td class="total-kg">0.00</td>
                                             <td class="total-ton">0.00</td>
 
-                                           {{-- <td>--}}
-{{--                                            <th class="text-right">0.00</th>--}}
-{{--                                                <div class="form-group {{ $errors->has('rft_by_ton.'.$loop->index) ? 'has-error' :'' }}">--}}
-{{--                                                    <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]" value="{{ old('rft_by_ton.'.$loop->index) }}">--}}
-{{--                                                </div>--}}
-{{--                                            </td> --}}
                                             <td class="text-center">
                                                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                             </td>
@@ -538,21 +548,14 @@
                                                 <input type="number" step="0.01" class="form-control lapping_lenght" name="lapping_lenght[]">
                                             </div>
                                         </td>
-                                        {{-- <td>
+                                        <td>
                                             <div class="form-group">
-                                                <input type="number" step="0.01" class="form-control spiral_lenght" name="spiral_lenght[]">
+                                                <input type="number" step="any" class="form-control lapping_nos" name="lapping_nos[]">
                                             </div>
-                                        </td> --}}
+                                        </td>
 
                                         <td class="total-kg">0.00</td>
                                         <td class="total-ton">0.00</td>
-{{--                                        <td>--}}
-{{--                                        <th class="text-right">0.00</th>--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]">--}}
-{{--                                            </div>--}}
-{{--                                        </td>--}}
-
 
                                         <td class="text-center">
                                             <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
@@ -830,19 +833,13 @@
                     <input type="number" step="0.01" class="form-control lapping_lenght" name="lapping_lenght[]">
                 </div>
             </td>
-            {{-- <td>
+            <td>
                 <div class="form-group">
-                    <input type="number" step="0.01" class="form-control spiral_lenght" name="spiral_lenght[]">
+                    <input type="number" step="any" class="form-control lapping_nos" name="lapping_nos[]">
                 </div>
-            </td> --}}
+            </td>
             <td class="total-kg">0.00</td>
             <td class="total-ton">0.00</td>
-{{--            <td>--}}
-{{--            <th class="text-right">0.00</th>--}}
-{{--                <div class="form-group">--}}
-{{--                    <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]">--}}
-{{--                </div>--}}
-{{--            </td>--}}
 
             <td class="text-center">
                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
@@ -912,11 +909,6 @@
                 </div>
             </td>
 
-            {{-- <td>
-                <div class="form-group">
-                    <input type="number" class="form-control tie_clear_cover" step="any" name="tie_clear_cover[]">
-                </div>
-            </td> --}}
             <td class="tie-total-kg">0.00</td>
             <td class="tie-total-ton">0.00</td>
             <td class="text-center">
@@ -1038,7 +1030,7 @@
             $('.tie_product').trigger("change");
 
 
-            $('body').on('keyup','#pile_height,#radius,#dry_volume,.lapping_lenght,.tie_length,.tie_lapping_length, .number_of_bar,#cover', function () {
+            $('body').on('keyup','#pile_height,#radius,#dry_volume,.lapping_lenght,.lapping_nos,.tie_length,.tie_lapping_length, .number_of_bar,#cover', function () {
                 calculate();
             });
 
@@ -1062,13 +1054,17 @@
             var spiral_interval = $('#spiral_interval').val();
             var cover = $('#cover').val();
             var spiral_bar = $('#spiral_bar').val();
-            console.log(spiral_bar);
+            var lapping_nos = $('#lapping_nos').val();
+            
 
 
 
 
             if (pile_height == '' || pile_height < 0 || !$.isNumeric(pile_height))
                 pile_height = 0;
+
+            if (lapping_nos == '' || lapping_nos < 0 || !$.isNumeric(lapping_nos))
+                lapping_nos = 0;
 
             if (radius == '' || radius < 0 || !$.isNumeric(radius))
                 radius = 0;
@@ -1089,11 +1085,11 @@
                 var lapping_lenght = $('.lapping_lenght:eq('+i+')').val();
                 var tie_length = $('.tie_length:eq('+i+')').val();
                 var tie_kg_by_rft = $('.tie_kg_by_rft:eq('+i+')').val();
-                console.log(tie_kg_by_rft);
+                var lapping_nos = $('.lapping_nos:eq('+i+')').val();
+                console.log(lapping_nos);
 
 
                 var ap = spiral_bar/kg_by_rft;
-                console.log(ap);
 
                 if (number_of_bar == '' || number_of_bar < 0 || !$.isNumeric(number_of_bar))
                     number_of_bar = 0;
@@ -1110,28 +1106,18 @@
                 if (tie_length == '' || tie_length < 0 || !$.isNumeric(tie_length))
                     tie_length = 0;
 
-                // if (tie_kg_by_rft == '' || tie_kg_by_rft < 0 || !$.isNumeric(tie_kg_by_rft))
-                //     tie_kg_by_rft = 0;
+                if (lapping_nos == '' || lapping_nos < 0 || !$.isNumeric(lapping_nos))
+                    lapping_nos = 0;
 
                 if (pile_height == '' || pile_height < 0 || !$.isNumeric(pile_height))
                     pile_height = 0;
 
-                    var lapping = number_of_bar * kg_by_rft * lapping_lenght;
-                    // console.log(lapping);
+                    var lapping = (lapping_lenght * lapping_nos) * kg_by_rft;
                     var total_lap = ((pile_height * kg_by_rft) * number_of_bar) + lapping;
-                    // console.log(total_lap);
-
-
-                    // var tie_length = tie_kg_by_rft * tie_length;
-                    // console.log(tie_length);
-
-                // $('.total-kg:eq('+i+')').html(parseFloat((pile_height * kg_by_rft) * number_of_bar).toFixed(2));
+                   
+                   
                 $('.total-kg:eq('+i+')').html(parseFloat(total_lap).toFixed(2));
-                // $('.tie-total-kg:eq('+i+')').html(parseFloat(tie_length).toFixed(2));
-                // $('.total-ton:eq('+i+')').html(parseFloat((((pile_height * kg_by_rft) * number_of_bar)/kg_by_ton)).toFixed(3));
                 $('.total-ton:eq('+i+')').html(parseFloat((total_lap/kg_by_ton)).toFixed(3));
-
-                // $('.total-kg:eq('+i+')').html(parseFloat((pile_height * kg_by_rft) * number_of_bar).toFixed(2));
                 //total += rft_by_ton;
             });
 
@@ -1143,10 +1129,9 @@
                 var tie_width = $('.tie_width:eq('+i+')').val();
                 var column_length = $('#column_length').val();
                 var tie_interval = $('#tie_interval').val();
-                // var tie_lapping_length = $('.tie_lapping_length').val();
+                var lapping_nos = $('.lapping_nos:eq('+i+')').val();
                 var tie_lapping_length = $('.tie_lapping_length:eq('+i+')').val();
-                console.log(tie_lapping_length);
-
+               
                 // var tie_kg_by_rft = $('.tie_kg_by_rft:eq('+i+')').val();
 
                 var tieQuantity = (column_length / tie_interval) + 1;
@@ -1169,6 +1154,9 @@
                 if (tie_width == '' || tie_width < 0 || !$.isNumeric(tie_width))
                     tie_width = 0;
 
+                if (lapping_nos == '' || lapping_nos < 0 || !$.isNumeric(lapping_nos))
+                lapping_nos = 0;
+
                 if (tieQuantity == '' || tieQuantity < 0 || !$.isNumeric(tieQuantity))
                     tieQuantity = 0;
 
@@ -1177,15 +1165,13 @@
                 var pre_tie_bar = ((length_tie_total + width_tie_total) * 2) + 0.42;
 
 
-                var data = parseFloat(tie_kg_by_rft * tie_length);
-                var tie_data = parseFloat(tie_lapping_length)
-                var tie_lap = parseFloat(data + tie_data);
-
-
-                // $('.tie-total-kg:eq('+i+')').html(parseFloat((pre_tie_bar * tie_kg_by_rft)  * tieQuantity).toFixed(2));
-                $('.tie-total-kg:eq('+i+')').html(parseFloat(tie_lap).toFixed(2));
-                // $('.tie-total-ton:eq('+i+')').html(parseFloat((((pre_tie_bar * tie_kg_by_rft)  * tieQuantity)/tie_kg_by_ton)).toFixed(3));
-                $('.tie-total-ton:eq('+i+')').html(parseFloat(tie_lap/tie_kg_by_ton).toFixed(3));
+                var lie_length = parseFloat(tie_kg_by_rft * tie_lapping_length);
+                
+                var data = parseFloat((tie_kg_by_rft * tie_length) + lie_length);
+               
+                
+                $('.tie-total-kg:eq('+i+')').html(parseFloat(data).toFixed(2));
+                $('.tie-total-ton:eq('+i+')').html(parseFloat(data/tie_kg_by_ton).toFixed(3));
                 //total += rft_by_ton;
             });
 

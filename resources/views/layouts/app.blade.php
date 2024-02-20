@@ -220,10 +220,10 @@
                     'grill_glass_tiles_configure','grill_glass_tiles_configure.add','grill_glass_tiles_configure.details',
                     'paint_configure','paint_configure.add','paint_configure.details',
                     'estimate_report','estimate_floor','estimate_floor.add','estimate_floor.edit',
-                    'column_type','column_type.add','column_type.edit',
+                    'column_type','column_type.add','column_type.edit', 'grade_beam_type', 'grade_beam_type.add', 'grade_beam_type.edit',
                     'estimate_floor_unit','estimate_floor_unit.add','estimate_floor_unit.edit',
-                    'unit_section','unit_section.add','unit_section.edit',
-                    'unit_section','unit_section.add','unit_section.edit',
+                    'unit_section','unit_section.add','unit_section.edit', 'grade_beam_type_configure.add', 'grade_beam_configure.details',
+                    'unit_section','unit_section.add','unit_section.edit','footing_configure.add', 'footing_configure.details',
                     'beam_type','beam_type.add','beam_type.edit','grade_of_concrete_type','grade_of_concrete_type.add',
                     'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details',
                     'batch','batch.add','batch.edit','grade_of_concrete','grade_of_concrete.add','grade_of_concrete.edit',
@@ -283,9 +283,14 @@
                                 <a href="{{ route('footing_configure') }}"><i class="fa fa-circle-o"></i>Footing Type Configure</a>
                             </li>
 
-                              @can('grade_of_concrete_type')
+                            @can('grade_of_concrete_type')
                              <li class="{{ Route::currentRouteName() == 'grade_of_concrete_type' ? 'active' : '' }}">
-                                <a href="{{ route('grade_of_concrete_type') }}"><i class="fa fa-circle-o"></i>Grade Beam Type</a>
+                                <a href="{{ route('grade_of_concrete_type') }}"><i class="fa fa-circle-o"></i>Grade Concrete Type</a>
+                            </li>
+                            @endcan
+                              @can('grade_of_concrete_type')
+                             <li class="{{ Route::currentRouteName() == 'grade_beam_type' ? 'active' : '' }}">
+                                <a href="{{ route('grade_beam_type') }}"><i class="fa fa-circle-o"></i>Grade Beam Type</a>
                             </li>
                             @endcan
                             <li class="{{ Route::currentRouteName() == 'grade_beam_type_configure' ? 'active' : '' }}">

@@ -171,7 +171,6 @@ class SegmentConfigureController extends Controller
             'kg_by_rft.*' => 'required|numeric|min:0',
             'kg_by_ton.*' => 'required|numeric|min:0',
             'number_of_bar.*' => 'required|numeric|min:1',
-            //'rft_by_ton.*' => 'required|numeric|min:0',
             'spiral_bar' => 'required',
         ]);
 
@@ -190,19 +189,7 @@ class SegmentConfigureController extends Controller
             $request->pile_picked_costing = 0;
             $totalPiked = 0;
         }
-        $count = 0;
-
-        // $value_spiral = ($request->spiral_bar * $request->kg_by_rft[$count]);
-        // $data = floatval();
-        // $item =  floatval($value_spiral / $data);
-        // dd($value_spiral);
-        $count = 0;
-        // $total_rod = $request->number_of_bar[$count] * $request->kg_by_rft[$count] * $request->lapping_lenght[$count];
-        // dd($total_rod);
-        // $co = 0;
-        // $total_value = (($request->pile_height * $request->kg_by_rft[$count]) * $request->number_of_bar[$count]) + $total_rod;
-        // dd($total_value);
-
+       
         $pileConfigure = new PileConfigure();
         $pileConfigure->estimate_project_id = $request->estimate_project;
         $pileConfigure->spiral_bar = $request->spiral_bar * $request->pile_quantity;
@@ -223,18 +210,21 @@ class SegmentConfigureController extends Controller
         $pileConfigure->total_kg = 0;
         $pileConfigure->total_cement = $totalCementCft * $request->pile_quantity;
         $pileConfigure->total_cement_bag = $totalCementBag * $request->pile_quantity;
-        $pileConfigure->total_sands = $totalSands * $request->pile_quantity;
+        $pileConfigure->total_sands = (($totalSands)/2 * $request->pile_quantity);
+        $pileConfigure->total_s_sands =(($totalSands)/2 * $request->pile_quantity);
         $pileConfigure->total_aggregate = $totalAggregate * $request->pile_quantity;
         $pileConfigure->total_picked = $totalPiked * $request->pile_quantity;
         //price
         $pileConfigure->pile_bar_per_cost = $request->pile_bar_costing;
         $pileConfigure->pile_cement_per_cost = $request->pile_cement_costing;
         $pileConfigure->pile_sands_per_cost = $request->pile_sands_costing;
+        $pileConfigure->s_sands_costing = $request->s_sands_costing;
         $pileConfigure->pile_aggregate_per_cost = $request->pile_aggregate_costing??0;
         $pileConfigure->pile_picked_per_cost = $request->pile_picked_costing??0;
         //Total Price
         $pileConfigure->total_pile_cement_bag_price = ($totalCementBag * $request->pile_quantity) * $request->pile_cement_costing;
-        $pileConfigure->total_pile_sands_price = ($totalSands * $request->pile_quantity) * $request->pile_sands_costing;
+        $pileConfigure->total_pile_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->pile_sands_costing;
+        $pileConfigure->total_pile_s_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->s_sands_costing;
         $pileConfigure->total_pile_aggregate_price = ($totalAggregate * $request->pile_quantity) * $request->pile_aggregate_costing;
         $pileConfigure->total_pile_picked_price = ($totalPiked * $request->pile_quantity) * $request->pile_picked_costing;
         $pileConfigure->total_pile_bar_price = 0;
@@ -257,8 +247,9 @@ class SegmentConfigureController extends Controller
                     'kg_by_rft' => $request->kg_by_rft[$counter],
                     'kg_by_ton' => $request->kg_by_ton[$counter],
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->pile_quantity,
-                    'sub_total_kg' => (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])),
-                    'sub_total_ton' => (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter],
+                    'lapping_nos' => $request->lapping_nos[$counter] ?? 0 * $request->pile_quantity,
+                    'sub_total_kg' => (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter])),
+                    'sub_total_ton' => (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter],
                 ]);
             }else{
                 PileConfigureProduct::create([
@@ -271,17 +262,18 @@ class SegmentConfigureController extends Controller
                     'kg_by_rft' => $request->kg_by_rft[$counter],
                     'kg_by_ton' => $request->kg_by_ton[$counter],
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->pile_quantity,
-                    'sub_total_kg' => (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])),
-                    'sub_total_ton' => (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter],
+                    'lapping_nos' => $request->lapping_nos[$counter] ?? 0 * $request->pile_quantity,
+                    'sub_total_kg' => (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter])),
+                    'sub_total_ton' => (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter],
                 ]);
             }
 
             if ($key == 0){
-                $totalTon += (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter];
-                $totalKg += (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter]));
+                $totalTon += (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter];
+                $totalKg += (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter]));
             }else{
-                $totalTon += (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter];
-                $totalKg += (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->number_of_bar[$counter] * $request->lapping_lenght[$counter]));
+                $totalTon += (((($request->kg_by_rft[$counter] * $request->pile_height) * $request->number_of_bar[$counter]) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter])))/$request->kg_by_ton[$counter];
+                $totalKg += (($request->number_of_bar[$counter] * $request->kg_by_rft[$counter] * $request->pile_height) + ($request->kg_by_rft[$counter] * $request->lapping_nos[$counter] * $request->lapping_lenght[$counter]));
             }
             $counter++;
         }
@@ -301,20 +293,20 @@ class SegmentConfigureController extends Controller
                 'tie_kg_by_rft' => $request->tie_kg_by_rft[$counter],
                 'tie_kg_by_ton' => $request->tie_kg_by_ton[$counter],
                 'tie_length' => $request->tie_length[$counter] * $request->pile_quantity,
-                'tie_lapping_length' => $request->tie_lapping_length[$counter]?? 0 * $request->costing_segment_quantity,
-                'sub_total_kg_tie' => ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter]),
-                'sub_total_ton_tie' => (((($request->tie_kg_by_rft[$counter] * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter])))/$request->tie_kg_by_ton[$counter],
+                'tie_lapping_length' => $request->tie_lapping_length[$counter] ?? 0 * $request->costing_segment_quantity,
+                'sub_total_kg_tie' => ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + ($request->tie_kg_by_rft[$counter]) * $request->tie_lapping_length[$counter]),
+                'sub_total_ton_tie' => ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + ($request->tie_kg_by_rft[$counter]) * $request->tie_lapping_length[$counter]) / $request->tie_kg_by_ton[$counter],
             ]);
 
-            $totalKgTie += ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter]);
-            $totalTonTie += (((($request->tie_kg_by_rft[$counter] * $request->tie_length[$counter]) + $request->tie_lapping_length[$counter])))/$request->tie_kg_by_ton[$counter];
+            $totalKgTie += ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + ($request->tie_kg_by_rft[$counter]) * $request->tie_lapping_length[$counter]);
+            $totalTonTie += ((($request->tie_kg_by_rft[$counter]) * $request->tie_length[$counter]) + ($request->tie_kg_by_rft[$counter]) * $request->tie_lapping_length[$counter]) / $request->tie_kg_by_ton[$counter];
 
             $counter++;
         }
 
         $pileConfigure->total_ton = ($totalTon + $totalTonTie) * $request->pile_quantity;
         $pileConfigure->total_kg = ($totalKg + $totalKgTie) * $request->pile_quantity;
-        // dd($pileConfigure->total_kg);
+
         $pileConfigure->total_pile_bar_price =  ($totalKg + $totalKgTie) * $request->pile_bar_costing;
         $pileConfigure->save();
 

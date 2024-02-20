@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GradeOfConcreteType extends Model
+class GradeBeamType extends Model
 {
-    protected $guarded = [];
     use HasFactory;
+    protected $table = 'grade_beam_types';
+    protected $guarded = [];
 }

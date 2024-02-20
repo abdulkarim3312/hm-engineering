@@ -32,9 +32,11 @@
                         <tr>
                             <th>Date</th>
                             <th>Configure No</th>
-                            <th>Project No</th>
+                            <th>Project</th>
+                            <th>Footing Type</th>
                             <th>Total Volume</th>
                             <th>Dry Volume</th>
+                            <th>Total Rod</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -65,10 +67,12 @@
                 ajax: '{{ route('footing_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
-                    {data: 'beam_configure_no', name: 'beam_configure_no'},
+                    {data: 'common_configure_no', name: 'beam_configure_no'},
                     {data: 'project_name', name: 'project.name'},
+                    {data: 'footing_type', name: 'footing_type.name'},
                     {data: 'total_volume', name: 'total_volume'},
                     {data: 'total_dry_volume', name: 'total_dry_volume'},
+                    {data: 'total_kg', name: 'total_kg'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],

@@ -112,8 +112,12 @@
                                         <td>{{ $columnConfigure->total_cement_bag }} Bag</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Sands</th>
+                                        <th>Total Local Sands</th>
                                         <td>{{ $columnConfigure->total_sands }} Cft</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Sylhet Sands</th>
+                                        <td>{{ $columnConfigure->total_s_sands }} Cft</td>
                                     </tr>
                                     <tr>
                                         <th>Total Aggregate</th>
@@ -152,11 +156,11 @@
                                         <td>{{ $columnConfigure->column_length }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Tie Length</th>
+                                        <th>Column Length</th>
                                         <td>{{ $columnConfigure->tie_length_volume }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Tie Width</th>
+                                        <th>Column Width</th>
                                         <td>{{ $columnConfigure->tie_width_volume }}</td>
                                     </tr>
                                     <tr>
@@ -178,80 +182,6 @@
                         $straightTotalTon = 0;
                         @endphp
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Bar</th>
-                                        <th>Dia</th>
-                                        <th>Dia(D^2)</th>
-                                        <th>Value of Bar</th>
-                                        <th>Kg/Rft</th>
-                                        <th>Kg/Ton</th>
-                                        <th>Sub Total Kg</th>
-                                        <th>Sub Total Ton</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <h4>Tie Rod Description</h4>
-                                    @foreach($columnConfigure->columnConfigureProducts as $product)
-                                        @if($product->tie_bar_type != null )
-
-                                            <?php
-                                            $tieTotalKg += $product->sub_total_kg_tie;
-                                            $tieTotalTon += $product->sub_total_ton_tie;
-                                            ?>
-                                            <tr>
-                                                <td>
-                                                    @if($product->tie_bar_type == 6)
-                                                        6mm
-                                                    @elseif($product->tie_bar_type == 8)
-                                                        8mm
-                                                    @elseif($product->tie_bar_type == 10)
-                                                        10mm
-                                                    @elseif($product->tie_bar_type == 12)
-                                                        12mm
-                                                    @elseif($product->tie_bar_type == 16)
-                                                        16mm
-                                                    @elseif($product->tie_bar_type == 18)
-                                                        18mm
-                                                    @elseif($product->tie_bar_type == 20)
-                                                        20mm
-                                                    @elseif($product->tie_bar_type == 22)
-                                                        22mm
-                                                    @elseif($product->tie_bar_type == 25)
-                                                        25mm
-                                                    @elseif($product->tie_bar_type == 28)
-                                                        28mm
-                                                    @elseif($product->tie_bar_type == 32)
-                                                        32mm
-                                                    @elseif($product->tie_bar_type == 36)
-                                                        36mm
-                                                    @endif
-
-                                                </td>
-                                                <td>{{ $product->tie_dia }}</td>
-                                                <td> {{ $product->tie_dia_square }}</td>
-                                                <td> {{ number_format($product->tie_value_of_bar, 2) }}</td>
-                                                <td> {{ number_format($product->tie_kg_by_rft, 2) }}</td>
-                                                <td> {{ number_format($product->tie_kg_by_ton, 2) }}</td>
-                                                <td> {{ number_format($product->sub_total_kg_tie, 2) }}</td>
-                                                <td> {{ number_format($product->sub_total_ton_tie, 3) }}</td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                    </tbody>
-
-                                    <tr>
-                                        <th colspan="6" class="text-right">Sub Total</th>
-                                        <th> {{ number_format($tieTotalKg, 2) }}</th>
-                                        <th> {{ number_format($tieTotalTon, 3) }}</th>
-                                    </tr>
-
-                                </table>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-bordered table-striped">
@@ -323,6 +253,79 @@
                                         <th> {{ number_format($straightTotalTon, 3) }}</th>
                                     </tr>
 
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Bar</th>
+                                        <th>Dia</th>
+                                        <th>Dia(D^2)</th>
+                                        <th>Value of Bar</th>
+                                        <th>Kg/Rft</th>
+                                        <th>Kg/Ton</th>
+                                        <th>Sub Total Kg</th>
+                                        <th>Sub Total Ton</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <h4>Tie Rod Description</h4>
+                                    @foreach($columnConfigure->columnConfigureProducts as $product)
+                                        @if($product->tie_bar_type != null )
+
+                                            <?php
+                                            $tieTotalKg += $product->sub_total_kg_tie;
+                                            $tieTotalTon += $product->sub_total_ton_tie;
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    @if($product->tie_bar_type == 6)
+                                                        6mm
+                                                    @elseif($product->tie_bar_type == 8)
+                                                        8mm
+                                                    @elseif($product->tie_bar_type == 10)
+                                                        10mm
+                                                    @elseif($product->tie_bar_type == 12)
+                                                        12mm
+                                                    @elseif($product->tie_bar_type == 16)
+                                                        16mm
+                                                    @elseif($product->tie_bar_type == 18)
+                                                        18mm
+                                                    @elseif($product->tie_bar_type == 20)
+                                                        20mm
+                                                    @elseif($product->tie_bar_type == 22)
+                                                        22mm
+                                                    @elseif($product->tie_bar_type == 25)
+                                                        25mm
+                                                    @elseif($product->tie_bar_type == 28)
+                                                        28mm
+                                                    @elseif($product->tie_bar_type == 32)
+                                                        32mm
+                                                    @elseif($product->tie_bar_type == 36)
+                                                        36mm
+                                                    @endif
+
+                                                </td>
+                                                <td>{{ $product->tie_dia }}</td>
+                                                <td> {{ $product->tie_dia_square }}</td>
+                                                <td> {{ number_format($product->tie_value_of_bar, 2) }}</td>
+                                                <td> {{ number_format($product->tie_kg_by_rft, 2) }}</td>
+                                                <td> {{ number_format($product->tie_kg_by_ton, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_kg_tie, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_ton_tie, 3) }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+
+                                    <tr>
+                                        <th colspan="6" class="text-right">Sub Total</th>
+                                        <th> {{ number_format($tieTotalKg, 2) }}</th>
+                                        <th> {{ number_format($tieTotalTon, 3) }}</th>
+                                    </tr>
                                     <tr>
                                         <th colspan="6" class="text-right">Total Ton/KG</th>
                                         <th> {{ number_format($columnConfigure->total_kg, 2) }}</th>
@@ -331,9 +334,10 @@
                                 </table>
                             </div>
                         </div>
+                       
                         <u><i><h2>Costing Area</h2></i></u>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Bar(Rod) Price (Kg)</th>
@@ -346,7 +350,7 @@
                                 </table>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Sands Price (Cft)</th>
@@ -363,6 +367,14 @@
                                             <td>৳ {{ $columnConfigure->total_column_picked_price }} Taka</td>
                                         </tr>
                                     @endif
+                                </table>
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Sylhet Sands Price (Cft)</th>
+                                        <td>৳ {{ $columnConfigure->total_column_s_sands_price }} Taka</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

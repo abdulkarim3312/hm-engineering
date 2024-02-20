@@ -32,9 +32,12 @@
                         <tr>
                             <th>Date</th>
                             <th>Configure No</th>
-                            <th>Project No</th>
+                            <th>Project</th>
+                            <th>Floor Name</th>
+                            <th>Column Type</th>
                             <th>Total Volume</th>
                             <th>Dry Volume</th>
+                            <th>Total Rod</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -67,8 +70,11 @@
                     {data: 'date', name: 'date'},
                     {data: 'column_configure_no', name: 'column_configure_no'},
                     {data: 'project_name', name: 'project.name'},
+                    {data: 'floor_name', name: 'floor_name.name'},
+                    {data: 'column_type', name: 'column_type.name'},
                     {data: 'total_volume', name: 'total_volume'},
                     {data: 'total_dry_volume', name: 'total_dry_volume'},
+                    {data: 'total_kg', name: 'total_kg'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],

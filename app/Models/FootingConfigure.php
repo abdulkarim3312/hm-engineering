@@ -21,4 +21,7 @@ class FootingConfigure extends Model
     public function costingSegment(){
         return $this->belongsTo(CostingSegment::class,'costing_segment_id');
     }
+    public function footingType(){
+        return $this->belongsTo(Batch::class,'footing_type_id');
+    }
 }

@@ -634,14 +634,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('column-type/edit/{columnType}', [EstimateTypeController::class, 'columnTypeEdit'])->name('column_type.edit')->middleware('permission:column_type');
     Route::post('column-type/edit/{columnType}', [EstimateTypeController::class, 'columnTypeEditPost'])->middleware('permission:column_type');
 
-    //Grade of Concrete Type
+    //Grade Beam Type
+    Route::get('grade-beam-type', [EstimateTypeController::class, 'gradeBeamType'])->name('grade_beam_type')->middleware('permission:column_type');
+    Route::get('grade-beam-type/add', [EstimateTypeController::class, 'gradeBeamTypeAdd'])->name('grade_beam_type.add')->middleware('permission:column_type');
+    Route::post('grade-beam-type/add', [EstimateTypeController::class, 'gradeBeamTypeAddPost'])->middleware('permission:column_type');
+    Route::get('grade-beam-type/edit/{gradeBeamType}', [EstimateTypeController::class, 'gradeBeamTypeEdit'])->name('grade_beam_type.edit')->middleware('permission:column_type');
+    Route::post('grade-beam-type/edit/{gradeBeamType}', [EstimateTypeController::class, 'gradeBeamTypeEditPost'])->middleware('permission:column_type');
+
+    //Grade Beam Configure
     Route::get('grade-of-concrete-type', [GradeOfConcreteTypeController::class, 'gradeOfConcreteType'])->name('grade_of_concrete_type')->middleware('permission:grade_of_concrete_type');
     Route::get('grade/beam/type/configure', [GradeOfConcreteTypeController::class, 'gradeBeanTypeConfigure'])->name('grade_beam_type_configure')->middleware('permission:grade_of_concrete_type');
-    Route::get('grade/beam/type/configure/add', [GradeOfConcreteTypeController::class, 'gradeBeanTypeConfigureAdd'])->name('grade_beam_type_configure_add')->middleware('permission:grade_of_concrete_type');
+    Route::get('grade/beam/type/configure/add', [GradeOfConcreteTypeController::class, 'gradeBeanTypeConfigureAdd'])->name('grade_beam_type_configure.add')->middleware('permission:grade_of_concrete_type');
     Route::post('grade/beam/type/configure/add', [GradeOfConcreteTypeController::class, 'gradeBeamConfigureAddPost'])->middleware('permission:grade_of_concrete_type');
     Route::get('grade-beam-configure-datatable', [GradeOfConcreteTypeController::class, 'gradeBeamConfigureDatatable'])->name('grade_beam_configure.datatable');
-    Route::get('grade-beam-configure-details/{beamConfigure}', [GradeOfConcreteTypeController::class, 'gradeBeamConfigureDetails'])->name('grade_beam_configure.details')->middleware('permission:beam_configure');
-    Route::get('grade-beam-configure-print/{beamConfigure}', [GradeOfConcreteTypeController::class, 'gradeBeamConfigurePrint'])->name('grade_beam_configure.print')->middleware('permission:beam_configure');
+    Route::get('grade-beam-configure-details/{gradeBeamConfigure}', [GradeOfConcreteTypeController::class, 'gradeBeamConfigureDetails'])->name('grade_beam_configure.details')->middleware('permission:beam_configure');
+    Route::get('grade-beam-configure-print/{gradeBeamConfigure}', [GradeOfConcreteTypeController::class, 'gradeBeamConfigurePrint'])->name('grade_beam_configure.print')->middleware('permission:beam_configure');
 
     Route::get('grade-of-concrete-type/add', [GradeOfConcreteTypeController::class, 'gradeOfConcreteTypeAdd'])->name('grade_of_concrete_type.add')->middleware('permission:grade_of_concrete_type');
     Route::post('grade-of-concrete-type/add', [GradeOfConcreteTypeController::class, 'gradeOfConcreteTypeAddPost'])->middleware('permission:grade_of_concrete_type');

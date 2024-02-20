@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    <a class="btn btn-primary" href="{{ route('grade_beam_type_configure_add') }}">Add Grade Beam Configure</a>
+                    <a class="btn btn-primary" href="{{ route('grade_beam_type_configure.add') }}">Add Grade Beam Configure</a>
                     <hr>
 
                     <table id="table" class="table table-bordered table-striped">
@@ -32,9 +32,12 @@
                         <tr>
                             <th>Date</th>
                             <th>Configure No</th>
-                            <th>Project No</th>
+                            <th>Project</th>
+                            <th>Estimate Floor</th>
+                            <th>Beam Type</th>
                             <th>Total Volume</th>
                             <th>Dry Volume</th>
+                            <th>Total Rod</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -67,8 +70,11 @@
                     {data: 'date', name: 'date'},
                     {data: 'beam_configure_no', name: 'beam_configure_no'},
                     {data: 'project_name', name: 'project.name'},
+                    {data: 'estimate_floor_name', name: 'estimateFloor.name'},
+                    {data: 'grade_beam_name', name: 'gradeBeamType.name'},
                     {data: 'total_volume', name: 'total_volume'},
                     {data: 'total_dry_volume', name: 'total_dry_volume'},
+                    {data: 'total_kg', name: 'total_kg'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],

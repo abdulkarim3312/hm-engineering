@@ -7,6 +7,7 @@ use App\Models\BeamConfogureProduct;
 use App\Models\BeamType;
 use App\Models\GradeBeamConfigure;
 use App\Models\GradeBeamConfigureProduct;
+use App\Models\GradeBeamType;
 use App\Models\GradeOfConcreteType;
 use App\Models\PileConfigure;
 use Illuminate\Http\Request;
@@ -24,8 +25,6 @@ class GradeOfConcreteTypeController extends Controller
     }
 
     public function gradeOfConcreteTypeAddPost(Request $request){
-
-//        return($request->all());
         $request->validate([
             'name' => 'required',
             'first_ratio' => 'required|numeric|min:1',
@@ -80,11 +79,10 @@ class GradeOfConcreteTypeController extends Controller
 
     public function gradeBeanTypeConfigureAdd() {
         $estimateProjects = EstimateProject::where('status',1)->get();
-        $beamTypes = BeamType::where('status',1)->get();
+        $grateBeamTypes = GradeBeamType::where('status',1)->get();
         $pileCost = PileConfigure::orderBy('id','desc')->first();
-        //dd($beamCost);
         return view('estimate.grade_beam_configure.add',compact('estimateProjects',
-            'beamTypes','pileCost'));
+            'grateBeamTypes','pileCost'));
     }
 
     public function gradeBeamConfigureAddPost(Request $request) {
@@ -136,6 +134,7 @@ class GradeOfConcreteTypeController extends Controller
         ]);
 
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
+
         $totalCement = ($request->total_dry_volume * $request->first_ratio/$totalRatio);
         $totalCementBag = ($totalCement/1.25);
         $totalSands = ($request->total_dry_volume * $request->second_ratio/$totalRatio);
@@ -149,48 +148,51 @@ class GradeOfConcreteTypeController extends Controller
             $totalPiked = 0;
         }
 
-
-        $beamConfigure = new GradeBeamConfigure();
-        $beamConfigure->estimate_project_id = $request->estimate_project;
-        $beamConfigure->estimate_floor_id = $request->estimate_floor;
-        $beamConfigure->beam_type_id = $request->beam_type;
-        $beamConfigure->tie_bar = $request->tie_bar * $request->beam_quantity;
-        $beamConfigure->tie_interval = $request->tie_interval * $request->beam_quantity;
-        $beamConfigure->beam_quantity = $request->beam_quantity;
-        $beamConfigure->first_ratio = $request->first_ratio;
-        $beamConfigure->second_ratio = $request->second_ratio;
-        $beamConfigure->third_ratio = $request->third_ratio;
-        $beamConfigure->beam_length = $request->beam_length * $request->beam_quantity;
-        $beamConfigure->tie_length = $request->tie_length * $request->beam_quantity;
-        $beamConfigure->tie_width = $request->tie_width * $request->beam_quantity;
-        $beamConfigure->total_volume = $request->total_volume * $request->beam_quantity;
-        $beamConfigure->dry_volume = $request->dry_volume * $request->beam_quantity;
-        $beamConfigure->total_dry_volume = $request->total_dry_volume * $request->beam_quantity;
-        $beamConfigure->cover = $request->cover * $request->beam_quantity;
-        $beamConfigure->date = $request->date;
-        $beamConfigure->note = $request->note;
-        $beamConfigure->total_ton = 0;
-        $beamConfigure->total_kg = 0;
-        $beamConfigure->total_cement = $totalCement * $request->beam_quantity;
-        $beamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
-        $beamConfigure->total_sands = $totalSands * $request->beam_quantity;
-        $beamConfigure->total_aggregate = $totalAggregate * $request->beam_quantity;
-        $beamConfigure->total_picked = $totalPiked * $request->beam_quantity;
+        $counter = 0;
+        $gradeBeamConfigure = new GradeBeamConfigure();
+        $gradeBeamConfigure->estimate_project_id = $request->estimate_project;
+        $gradeBeamConfigure->estimate_floor_id = $request->estimate_floor;
+        $gradeBeamConfigure->beam_type_id = $request->beam_type;
+        $gradeBeamConfigure->tie_bar = $request->tie_bar * $request->beam_quantity;
+        $gradeBeamConfigure->tie_interval = $request->tie_interval * $request->beam_quantity;
+        $gradeBeamConfigure->beam_quantity = $request->beam_quantity;
+        $gradeBeamConfigure->first_ratio = $request->first_ratio;
+        $gradeBeamConfigure->second_ratio = $request->second_ratio;
+        $gradeBeamConfigure->third_ratio = $request->third_ratio;
+        $gradeBeamConfigure->beam_length = $request->beam_length * $request->beam_quantity;
+        $gradeBeamConfigure->grade_beam_length = $request->grade_beam_length * $request->beam_quantity;
+        $gradeBeamConfigure->grade_beam_width = $request->grade_beam_width * $request->beam_quantity;
+        $gradeBeamConfigure->total_volume = $request->total_volume * $request->beam_quantity;
+        $gradeBeamConfigure->dry_volume = $request->dry_volume * $request->beam_quantity;
+        $gradeBeamConfigure->total_dry_volume = $request->total_dry_volume * $request->beam_quantity;
+        $gradeBeamConfigure->cover = $request->cover * $request->beam_quantity;
+        $gradeBeamConfigure->date = $request->date;
+        $gradeBeamConfigure->note = $request->note;
+        $gradeBeamConfigure->total_ton = 0;
+        $gradeBeamConfigure->total_kg = 0;
+        $gradeBeamConfigure->total_cement = $totalCement * $request->beam_quantity;
+        $gradeBeamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
+        $gradeBeamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
+        $gradeBeamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
+        $gradeBeamConfigure->total_aggregate = $totalAggregate * $request->beam_quantity;
+        $gradeBeamConfigure->total_picked = $totalPiked * $request->beam_quantity;
         //price
-        $beamConfigure->beam_bar_per_cost = $request->beam_bar_costing;
-        $beamConfigure->beam_cement_per_cost = $request->beam_cement_costing;
-        $beamConfigure->beam_sands_per_cost = $request->beam_sands_costing;
-        $beamConfigure->beam_aggregate_per_cost = $request->beam_aggregate_costing??0;
-        $beamConfigure->beam_picked_per_cost = $request->beam_picked_costing??0;
+        $gradeBeamConfigure->beam_bar_per_cost = $request->beam_bar_costing;
+        $gradeBeamConfigure->beam_cement_per_cost = $request->beam_cement_costing;
+        $gradeBeamConfigure->beam_sands_per_cost = $request->beam_sands_costing;
+        $gradeBeamConfigure->s_sands_costing = $request->s_sands_costing;
+        $gradeBeamConfigure->beam_aggregate_per_cost = $request->beam_aggregate_costing ?? 0;
+        $gradeBeamConfigure->beam_picked_per_cost = $request->beam_picked_costing ?? 0;
         //Total Price
-        $beamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
-        $beamConfigure->total_beam_sands_price = ($totalSands * $request->beam_quantity) * $request->beam_sands_costing;
-        $beamConfigure->total_beam_aggregate_price = ($totalAggregate * $request->beam_quantity) * $request->beam_aggregate_costing;
-        $beamConfigure->total_beam_picked_price = ($totalPiked * $request->beam_quantity) * $request->beam_picked_costing;
-        $beamConfigure->total_beam_bar_price = 0;
-        $beamConfigure->save();
-        $beamConfigure->beam_configure_no = str_pad($beamConfigure->id, 5, "0", STR_PAD_LEFT);
-        $beamConfigure->save();
+        $gradeBeamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
+        $gradeBeamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
+        $gradeBeamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
+        $gradeBeamConfigure->total_beam_aggregate_price = ($totalAggregate * $request->beam_quantity) * $request->beam_aggregate_costing;
+        $gradeBeamConfigure->total_beam_picked_price = ($totalPiked * $request->beam_quantity) * $request->beam_picked_costing;
+        $gradeBeamConfigure->total_beam_bar_price = 0;
+        $gradeBeamConfigure->save();
+        $gradeBeamConfigure->beam_configure_no = str_pad($gradeBeamConfigure->id, 4, "0", STR_PAD_LEFT);
+        $gradeBeamConfigure->save();
 
         $counter = 0;
         $totalTon = 0;
@@ -201,7 +203,7 @@ class GradeOfConcreteTypeController extends Controller
                 $lapping = (($request->lapping_length[$counter]??0 * $request->lapping_nos[$counter]??0) * $request->kg_by_rft[$counter]);
 
                 GradeBeamConfigureProduct::create([
-                    'beam_configure_id' => $beamConfigure->id,
+                    'beam_configure_id' => $gradeBeamConfigure->id,
                     'estimate_project_id' => $request->estimate_project,
                     'bar_type' => $reqProduct,
                     'dia' => $request->dia[$counter],
@@ -212,15 +214,15 @@ class GradeOfConcreteTypeController extends Controller
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->beam_quantity,
                     'lapping_length' => $request->lapping_length[$counter]??0 * $request->beam_quantity,
                     'lapping_nos' => $request->lapping_nos[$counter]??0 * $request->beam_quantity,
-                    'sub_total_kg' => ((($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter]) * $request->beam_quantity),
-                    'sub_total_ton' => (((($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter])
-                        /$request->kg_by_ton[$counter]) * $request->beam_quantity),
+                    'sub_total_kg' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))),
+                    'sub_total_ton' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity),
+                    'status' => 2,
                 ]);
             }else{
                 $lapping = (($request->lapping_length[$counter]??0 * $request->lapping_nos[$counter]??0) * $request->kg_by_rft[$counter]);
 
                 GradeBeamConfigureProduct::create([
-                    'beam_configure_id' => $beamConfigure->id,
+                    'beam_configure_id' => $gradeBeamConfigure->id,
                     'estimate_project_id' => $request->estimate_project,
                     'bar_type' => $reqProduct,
                     'dia' => $request->dia[$counter],
@@ -231,28 +233,30 @@ class GradeOfConcreteTypeController extends Controller
                     'number_of_bar' => $request->number_of_bar[$counter] * $request->beam_quantity,
                     'lapping_length' => $request->lapping_length[$counter]??0 * $request->beam_quantity,
                     'lapping_nos' => $request->lapping_nos[$counter]??0 * $request->beam_quantity,
-                    'sub_total_kg' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + $lapping)  * $request->beam_quantity),
-                    'sub_total_ton' => ((((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter])
-                                * $request->beam_length) + $lapping)/$request->kg_by_ton[$counter]) * $request->beam_quantity),
+                    'sub_total_kg' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))),
+                    'sub_total_ton' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity),
+                    'status' => 2,
                 ]);
             }
-
+            
             if ($key == 0){
-                $totalKg += (($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter]);
-                $totalTon+= ((($request->tie_bar + $lapping ) * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]);
+                $totalKg += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter])));
+                $totalTon+= (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity);
             }else{
-                $totalKg += ((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + $lapping);
-                $totalTon += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + $lapping)/$request->kg_by_ton[$counter]);
+                $totalKg += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter])));
+                $totalTon += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity);
             }
             $counter++;
         }
 
         $counter = 0;
+        $totalExtraTon = 0;
+        $totalExtraKg = 0;
 
         foreach ($request->extra_product as $key => $reqProduct) {
 
-            GradeBeamConfigureProduct::create([
-                    'beam_configure_id' => $beamConfigure->id,
+                GradeBeamConfigureProduct::create([
+                    'beam_configure_id' => $gradeBeamConfigure->id,
                     'estimate_project_id' => $request->estimate_project,
                     'bar_type' => $reqProduct,
                     'dia' => $request->extra_dia[$counter],
@@ -268,42 +272,82 @@ class GradeOfConcreteTypeController extends Controller
                     'status' => 1,
                 ]);
 
-                $totalKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
-                $totalTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
+                $totalExtraKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter] ?? 0);
+                $totalExtraTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter] ?? 0)/$request->extra_kg_by_ton[$counter]);
 
             $counter++;
         }
 
-        $beamConfigure->total_ton = $totalTon * $request->beam_quantity;
-        $beamConfigure->total_kg = $totalKg * $request->beam_quantity;
-        $beamConfigure->total_beam_bar_price = ($totalKg * $request->beam_quantity) * $request->beam_bar_costing;
-        $beamConfigure->save();
 
-        return redirect()->route('beam_configure.details', ['beamConfigure' => $beamConfigure->id]);
+        $counter = 0;
+        $totalTonTie = 0;
+        $totalKgTie = 0;
+
+        foreach ($request->tie_product as $key => $reqProduct) {
+
+            $length_tie_total = $request->tie_length[$counter] / 12;
+            
+            $width_tie_total = $request->tie_width[$counter] / 12;
+           
+            $pre_tie_bar = (($length_tie_total + $width_tie_total) * 2) + 0.42;
+            GradeBeamConfigureProduct::create([
+                'beam_configure_id' => $gradeBeamConfigure->id,
+                'estimate_project_id' => $request->estimate_project,
+                'tie_bar_type' => $reqProduct,
+                'tie_dia' => $request->tie_dia[$counter],
+                'tie_dia_square' => $request->tie_dia_square[$counter],
+                'tie_value_of_bar' => $request->tie_value_of_bar[$counter],
+                'tie_kg_by_rft' => $request->tie_kg_by_rft[$counter],
+                'tie_kg_by_ton' => $request->tie_kg_by_ton[$counter],
+                'tie_length' => $request->tie_length[$counter] * $request->beam_quantity,
+                'tie_width' => $request->tie_width[$counter] * $request->beam_quantity,
+                'sub_total_kg_tie' => ((($pre_tie_bar * $request->tie_kg_by_rft[$counter]) * $request->ring_quantity) * $request->beam_quantity),
+                'sub_total_ton_tie' => (((($pre_tie_bar * $request->tie_kg_by_rft[$counter])
+                        * $request->ring_quantity)/$request->tie_kg_by_ton[$counter]) * $request->beam_quantity),
+            ]);
+
+            $totalKgTie += (($pre_tie_bar * $request->tie_kg_by_rft[$counter]) * $request->ring_quantity);
+            $totalTonTie += ((($pre_tie_bar * $request->tie_kg_by_rft[$counter]) * $request->ring_quantity)/$request->tie_kg_by_ton[$counter]);
+
+            $counter++;
+        }
+
+        $gradeBeamConfigure->total_ton = ($totalTon + $totalExtraTon + $totalTonTie) * $request->beam_quantity;
+        $gradeBeamConfigure->total_kg = ($totalKg + $totalExtraKg +  $totalKgTie) * $request->beam_quantity;
+        $gradeBeamConfigure->total_beam_bar_price = (($totalKg + $totalExtraKg + $totalKgTie) * $request->beam_bar_costing) * $request->beam_quantity;
+        $gradeBeamConfigure->save();
+
+        return redirect()->route('grade_beam_configure.details', ['gradeBeamConfigure' => $gradeBeamConfigure->id]);
     }
 
     public function gradeBeamConfigureDatatable() {
-        $query = GradeBeamConfigure::with('project');
+        $query = GradeBeamConfigure::with('project', 'estimateFloor', 'gradeBeamType');
 
         return DataTables::eloquent($query)
-            ->addColumn('project_name', function(GradeBeamConfigure $beamConfigure) {
-                return $beamConfigure->project->name??'';
+            ->addColumn('project_name', function(GradeBeamConfigure $gradeBeamConfigure) {
+                return $gradeBeamConfigure->project->name??'';
             })
-            ->addColumn('action', function(GradeBeamConfigure $beamConfigure) {
+            ->addColumn('estimate_floor_name', function(GradeBeamConfigure $gradeBeamConfigure) {
+                return $gradeBeamConfigure->estimateFloor->name??'';
+            })
+            ->addColumn('grade_beam_name', function(GradeBeamConfigure $gradeBeamConfigure) {
+                return $gradeBeamConfigure->gradeBeamType->name??'';
+            })
+            ->addColumn('action', function(GradeBeamConfigure $gradeBeamConfigure) {
 
-                return '<a href="'.route('grade_beam_configure.details', ['beamConfigure' => $beamConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                return '<a href="'.route('grade_beam_configure.details', ['gradeBeamConfigure' => $gradeBeamConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
 
             })
-            ->editColumn('date', function(GradeBeamConfigure $beamConfigure) {
-                return $beamConfigure->date;
+            ->editColumn('date', function(GradeBeamConfigure $gradeBeamConfigure) {
+                return $gradeBeamConfigure->date;
             })
             ->rawColumns(['action'])
             ->toJson();
     }
-    public function gradeBeamConfigureDetails(GradeBeamConfigure $beamConfigure){
-        return view('estimate.grade_beam_configure.details',compact('beamConfigure'));
+    public function gradeBeamConfigureDetails(GradeBeamConfigure $gradeBeamConfigure){
+        return view('estimate.grade_beam_configure.details',compact('gradeBeamConfigure'));
     }
-    public function gradeBeamConfigurePrint(GradeBeamConfigure $beamConfigure){
-        return view('estimate.grade_beam_configure.print',compact('beamConfigure'));
+    public function gradeBeamConfigurePrint(GradeBeamConfigure $gradeBeamConfigure){
+        return view('estimate.grade_beam_configure.print',compact('gradeBeamConfigure'));
     }
 }

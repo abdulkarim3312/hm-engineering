@@ -20,14 +20,13 @@ class ColumnConfigureController extends Controller
     public function columnConfigureAdd() {
         $estimateProjects = EstimateProject::where('status',1)->get();
         $columnTypes = ColumnType::where('status',1)->get();
-        // dd($columnTypes);
         $beamCost = BeamConfigure::orderBy('id','desc')->first();
         return view('estimate.column_configure.add',compact('estimateProjects',
             'columnTypes','beamCost'));
     }
 
     public function columnConfigureAddPost(Request $request) {
-
+        // dd($request->all());
         $request->validate([
             'estimate_project' => 'required',
             'estimate_floor' => 'required',
@@ -111,18 +110,21 @@ class ColumnConfigureController extends Controller
         $columnConfigure->total_ton = 0;
         $columnConfigure->total_cement = $totalCement * $request->column_quantity;
         $columnConfigure->total_cement_bag = $totalCementBag * $request->column_quantity;
-        $columnConfigure->total_sands = $totalSands * $request->column_quantity;
+        $columnConfigure->total_sands = (($totalSands)/2 * $request->column_quantity);
+        $columnConfigure->total_s_sands =(($totalSands)/2 * $request->column_quantity);
         $columnConfigure->total_aggregate = $totalAggregate * $request->column_quantity;
         $columnConfigure->total_picked = $totalPiked * $request->column_quantity;
         //price
         $columnConfigure->column_bar_per_cost = $request->column_bar_costing;
         $columnConfigure->column_cement_per_cost = $request->column_cement_costing;
         $columnConfigure->column_sands_per_cost = $request->column_sands_costing;
+        $columnConfigure->column_s_sands_costing = $request->s_sands_costing;
         $columnConfigure->column_aggregate_per_cost = $request->column_aggregate_costing??0;
         $columnConfigure->column_picked_per_cost = $request->column_picked_costing??0;
         //Total Price
         $columnConfigure->total_column_cement_bag_price = ($totalCementBag * $request->column_quantity) * $request->column_cement_costing;
-        $columnConfigure->total_column_sands_price = ($totalSands * $request->column_quantity) * $request->column_sands_costing;
+        $columnConfigure->total_column_sands_price = (($totalSands/2) * $request->column_quantity) * $request->column_sands_costing;
+        $columnConfigure->total_column_s_sands_price = (($totalSands/2) * $request->column_quantity) * $request->s_sands_costing;
         $columnConfigure->total_column_aggregate_price = ($totalAggregate * $request->column_quantity) * $request->column_aggregate_costing;
         $columnConfigure->total_column_picked_price = ($totalPiked * $request->column_quantity) * $request->column_picked_costing;
         $columnConfigure->total_column_bar_price = 0;
@@ -153,27 +155,24 @@ class ColumnConfigureController extends Controller
                     'lapping_length' => $request->lapping_length[$counter] * $request->column_quantity,
                     'lapping_nos' => $request->lapping_nos[$counter] * $request->column_quantity,
                     'sub_total_kg_straight' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->column_length) + $lapping) * $request->column_quantity),
-                    'sub_total_ton_straight' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter])
-                            * $request->column_height + $lapping) / $request->kg_by_ton[$counter]) * $request->column_quantity),
+                    'sub_total_ton_straight' => (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->column_length) + $lapping) / $request->kg_by_ton[$counter]) * $request->column_quantity,
                 ]);
 
                 $totalKgStraight += ((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->column_length) + $lapping);
-                $totalTonStraight += ((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->column_height + $lapping) /$request->kg_by_ton[$counter]);
+                $totalTonStraight += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->column_length) + $lapping) / $request->kg_by_ton[$counter]) * $request->column_quantity;
 
             $counter++;
         }
-
+        
         $counter = 0;
         $totalTonTie = 0;
         $totalKgTie = 0;
 
         foreach ($request->tie_product as $key => $reqProduct) {
 
-            $length_tie_total = $request->tie_length[$counter] - (2 * $request->tie_clear_cover[$counter]);
-            $width_tie_total = $request->tie_width[$counter] - (2 * $request->tie_clear_cover[$counter]);
-
+            $length_tie_total = $request->tie_length[$counter] / 12;
+            $width_tie_total = $request->tie_width[$counter] / 12;
             $pre_tie_bar = (($length_tie_total + $width_tie_total) * 2) + 0.42;
-
             ColumnConfigureProduct::create([
                 'column_configure_id' => $columnConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
@@ -185,7 +184,6 @@ class ColumnConfigureController extends Controller
                 'tie_kg_by_ton' => $request->tie_kg_by_ton[$counter],
                 'tie_length' => $request->tie_length[$counter] * $request->column_quantity,
                 'tie_width' => $request->tie_width[$counter] * $request->column_quantity,
-                'tie_clear_cover' => $request->tie_clear_cover[$counter] * $request->column_quantity,
                 'sub_total_kg_tie' => ((($pre_tie_bar * $request->tie_kg_by_rft[$counter]) * $request->ring_quantity) * $request->column_quantity),
                 'sub_total_ton_tie' => (((($pre_tie_bar * $request->tie_kg_by_rft[$counter])
                         * $request->ring_quantity)/$request->tie_kg_by_ton[$counter]) * $request->column_quantity),
@@ -217,11 +215,17 @@ class ColumnConfigureController extends Controller
     }
 
     public function columnConfigureDatatable() {
-        $query = ColumnCofigure::with('project');
+        $query = ColumnCofigure::with('project', 'columnType', 'columnFloor');
 
         return DataTables::eloquent($query)
             ->addColumn('project_name', function(ColumnCofigure $columnConfigure) {
-                return $columnConfigure->project->name??'';
+                return $columnConfigure->project->name ?? '';
+            })
+            ->addColumn('floor_name', function(ColumnCofigure $columnConfigure) {
+                return $columnConfigure->columnFloor->name ?? '';
+            })
+            ->addColumn('column_type', function(ColumnCofigure $columnConfigure) {
+                return $columnConfigure->columnType->name ?? '';
             })
             ->addColumn('action', function(ColumnCofigure $columnConfigure) {
 

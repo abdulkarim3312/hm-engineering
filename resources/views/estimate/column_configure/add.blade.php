@@ -242,7 +242,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('tie_length_volume') ? 'has-error' :'' }}">
-                                    <label style="font-size: 15px;">Tie Length(Ft)-Volume</label>
+                                    <label style="font-size: 15px;">Column Height(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="tie_length_volume" step="any"
@@ -258,7 +258,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('tie_width_volume') ? 'has-error' :'' }}">
-                                    <label>Tie Width(Ft)-volume</label>
+                                    <label>Column Width(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="tie_width_volume" step="any"
@@ -271,22 +271,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-                           {{-- <div class="col-md-2">--}}
-{{--                                <div class="form-group {{ $errors->has('cover') ? 'has-error' :'' }}">--}}
-{{--                                    <label>Clear Cover(Ft)</label>--}}
-
-{{--                                    <div class="form-group">--}}
-{{--                                        <input type="number" class="form-control" id="cover" step="any"--}}
-{{--                                               name="cover" value="{{ old('cover') }}" placeholder="Clear Cover">--}}
-{{--                                    </div>--}}
-{{--                                    <!-- /.input group -->--}}
-
-{{--                                    @error('cover')--}}
-{{--                                    <span class="help-block">{{ $message }}</span>--}}
-{{--                                    @enderror--}}
-{{--                                </div>--}}
-{{--                            </div> --}}
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('total_volume') ? 'has-error' :'' }}">
@@ -421,6 +405,21 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('s_sands_costing') ? 'has-error' :'' }}">
+                                    <label>S.Sands Cost(Per Cft)</label>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" step="any" value="{{ $pileCost->s_sands_costing??0 }}"
+                                               name="s_sands_costing"  placeholder="Enter Per Cft S.Sands Costing">
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('s_sands_costing')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div id="column_aggregate_costing">
                                 <div class="col-md-2">
                                     <div class="form-group {{ $errors->has('column_aggregate_costing') ? 'has-error' :'' }}">
@@ -456,190 +455,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <strong><h3>Calculation of Tie Bar</h3></strong>
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Bar Type</th>
-                                    <th>Dia</th>
-                                    <th>Dia Square(D^2)</th>
-                                    <th>Value of Bar</th>
-                                    <th>Kg/Rft</th>
-                                    <th>Kg/Ton</th>
-                                    <th>Tie Length</th>
-                                    <th>Tie Width</th>
-                                    <th>Tie Clear Cover</th>
-                                    <th>Kg</th>
-                                    <th>Ton</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-
-                                <tbody id="tie-container">
-                                @if (old('tie_product') != null && sizeof(old('tie_product')) > 0)
-                                    @foreach(old('tie_product') as $item)
-                                        <tr class="tie-item">
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_product.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <select class="form-control select2 tie_product" name="tie_product[]" data-placeholder="Select Product" required>
-                                                        <option value="6" {{ old('tie_product') == 6 ? 'selected' : '' }}>6mm</option>
-                                                        <option value="8" {{ old('tie_product') == 8 ? 'selected' : '' }}>8mm</option>
-                                                        <option value="10" {{ old('tie_product') == 10 ? 'selected' : '' }}>10mm</option>
-                                                        <option value="12" {{ old('tie_product') == 12 ? 'selected' : '' }}>12mm</option>
-                                                        <option value="16" {{ old('tie_product') == 16 ? 'selected' : '' }}>16mm</option>
-                                                        <option value="18" {{ old('tie_product') == 18 ? 'selected' : '' }}>18mm</option>
-                                                        <option value="20" {{ old('tie_product') == 20 ? 'selected' : '' }}>20mm</option>
-                                                        <option value="22" {{ old('tie_product') == 22 ? 'selected' : '' }}>22mm</option>
-                                                        <option value="25" {{ old('tie_product') == 25 ? 'selected' : '' }}>25mm</option>
-                                                        <option value="28" {{ old('tie_product') == 28 ? 'selected' : '' }}>28mm</option>
-                                                        <option value="32" {{ old('tie_product') == 32 ? 'selected' : '' }}>32mm</option>
-                                                        <option value="36" {{ old('tie_product') == 36 ? 'selected' : '' }}>36mm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_dia.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text"  name="tie_dia[]" class="form-control tie_dia" value="{{ old('tie_dia.'.$loop->index) }}" readonly>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_dia_square.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" class="form-control tie_dia_square" name="tie_dia_square[]" value="{{ old('tie_dia_square.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_value_of_bar.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" readonly class="form-control tie_value_of_bar" name="tie_value_of_bar[]" value="{{ old('tie_value_of_bar.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_kg_by_rft.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" class="form-control tie_kg_by_rft" name="tie_kg_by_rft[]" value="{{ old('tie_kg_by_rft.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_kg_by_ton.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" readonly class="form-control tie_kg_by_ton" name="tie_kg_by_ton[]" value="{{ old('tie_kg_by_ton.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_length.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number"  step="any" class="form-control tie_length" name="tie_length[]" value="{{ old('tie_length.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_width.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" step="any" class="form-control tie_width" name="tie_width[]" value="{{ old('tie_width.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('tie_clear_cover.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" step="any" class="form-control tie_clear_cover" name="tie_clear_cover[]" value="{{ old('tie_clear_cover.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td class="tie-total-kg">0.00</td>
-                                            <td class="tie-total-ton">0.00</td>
-                                            <td class="text-center">
-                                                <a role="button" class="btn btn-danger btn-sm tie-btn-remove">X</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr class="tie-item">
-                                        <td>
-                                            <div class="form-group">
-                                                <select class="form-control tie_product" style="width: 100%;" name="tie_product[]" required>
-                                                    <option value="6">6mm</option>
-                                                    <option value="8">8mm</option>
-                                                    <option value="10">10mm</option>
-                                                    <option value="12">12mm</option>
-                                                    <option value="16">16mm</option>
-                                                    <option value="18">18mm</option>
-                                                    <option value="20">20mm</option>
-                                                    <option value="22">22mm</option>
-                                                    <option value="25">25mm</option>
-                                                    <option value="28">28mm</option>
-                                                    <option value="32">32mm</option>
-                                                    <option value="36">36mm</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" name="tie_dia[]" class="form-control tie_dia" readonly>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control tie_dia_square" name="tie_dia_square[]">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" readonly class="form-control tie_value_of_bar" name="tie_value_of_bar[]" value="532.17">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control tie_kg_by_rft" name="tie_kg_by_rft[]">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" readonly class="form-control tie_kg_by_ton" name="tie_kg_by_ton[]" value="1000">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" step="any" class="form-control tie_length" name="tie_length[]">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" step="any" class="form-control tie_width" name="tie_width[]">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" step="any" class="form-control tie_clear_cover" name="tie_clear_cover[]">
-                                            </div>
-                                        </td>
-                                        <td class="tie-total-kg">0.00</td>
-                                        <td class="tie-total-ton">0.00</td>
-
-                                        <td class="text-center">
-                                            <a role="button" class="btn btn-danger btn-sm tie-btn-remove">X</a>
-                                        </td>
-                                    </tr>
-                                @endif
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <td>
-                                        <a role="button" class="btn btn-info btn-sm" id="btn-add-tie">Add More</a>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
                         </div>
 
                         <div class="table-responsive">
@@ -822,6 +637,176 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <div class="table-responsive">
+                            <strong><h3>Calculation of Tie Bar</h3></strong>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Bar Type</th>
+                                    <th>Dia</th>
+                                    <th>Dia Square(D^2)</th>
+                                    <th>Value of Bar</th>
+                                    <th>Kg/Rft</th>
+                                    <th>Kg/Ton</th>
+                                    <th>Tie Length(Inch)</th>
+                                    <th>Tie Width(Inch)</th>
+                                    <th>Kg</th>
+                                    <th>Ton</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+
+                                <tbody id="tie-container">
+                                @if (old('tie_product') != null && sizeof(old('tie_product')) > 0)
+                                    @foreach(old('tie_product') as $item)
+                                        <tr class="tie-item">
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_product.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <select class="form-control select2 tie_product" name="tie_product[]" data-placeholder="Select Product" required>
+                                                        <option value="6" {{ old('tie_product') == 6 ? 'selected' : '' }}>6mm</option>
+                                                        <option value="8" {{ old('tie_product') == 8 ? 'selected' : '' }}>8mm</option>
+                                                        <option value="10" {{ old('tie_product') == 10 ? 'selected' : '' }}>10mm</option>
+                                                        <option value="12" {{ old('tie_product') == 12 ? 'selected' : '' }}>12mm</option>
+                                                        <option value="16" {{ old('tie_product') == 16 ? 'selected' : '' }}>16mm</option>
+                                                        <option value="18" {{ old('tie_product') == 18 ? 'selected' : '' }}>18mm</option>
+                                                        <option value="20" {{ old('tie_product') == 20 ? 'selected' : '' }}>20mm</option>
+                                                        <option value="22" {{ old('tie_product') == 22 ? 'selected' : '' }}>22mm</option>
+                                                        <option value="25" {{ old('tie_product') == 25 ? 'selected' : '' }}>25mm</option>
+                                                        <option value="28" {{ old('tie_product') == 28 ? 'selected' : '' }}>28mm</option>
+                                                        <option value="32" {{ old('tie_product') == 32 ? 'selected' : '' }}>32mm</option>
+                                                        <option value="36" {{ old('tie_product') == 36 ? 'selected' : '' }}>36mm</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_dia.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text"  name="tie_dia[]" class="form-control tie_dia" value="{{ old('tie_dia.'.$loop->index) }}" readonly>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_dia_square.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" class="form-control tie_dia_square" name="tie_dia_square[]" value="{{ old('tie_dia_square.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_value_of_bar.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" readonly class="form-control tie_value_of_bar" name="tie_value_of_bar[]" value="{{ old('tie_value_of_bar.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_kg_by_rft.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" class="form-control tie_kg_by_rft" name="tie_kg_by_rft[]" value="{{ old('tie_kg_by_rft.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_kg_by_ton.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" readonly class="form-control tie_kg_by_ton" name="tie_kg_by_ton[]" value="{{ old('tie_kg_by_ton.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_length.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number"  step="any" class="form-control tie_length" name="tie_length[]" value="{{ old('tie_length.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('tie_width.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" step="any" class="form-control tie_width" name="tie_width[]" value="{{ old('tie_width.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td class="tie-total-kg">0.00</td>
+                                            <td class="tie-total-ton">0.00</td>
+                                            <td class="text-center">
+                                                <a role="button" class="btn btn-danger btn-sm tie-btn-remove">X</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr class="tie-item">
+                                        <td>
+                                            <div class="form-group">
+                                                <select class="form-control tie_product" style="width: 100%;" name="tie_product[]" required>
+                                                    <option value="6">6mm</option>
+                                                    <option value="8">8mm</option>
+                                                    <option value="10">10mm</option>
+                                                    <option value="12">12mm</option>
+                                                    <option value="16">16mm</option>
+                                                    <option value="18">18mm</option>
+                                                    <option value="20">20mm</option>
+                                                    <option value="22">22mm</option>
+                                                    <option value="25">25mm</option>
+                                                    <option value="28">28mm</option>
+                                                    <option value="32">32mm</option>
+                                                    <option value="36">36mm</option>
+                                                </select>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" name="tie_dia[]" class="form-control tie_dia" readonly>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control tie_dia_square" name="tie_dia_square[]">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control tie_value_of_bar" name="tie_value_of_bar[]" value="532.17">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control tie_kg_by_rft" name="tie_kg_by_rft[]">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control tie_kg_by_ton" name="tie_kg_by_ton[]" value="1000">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any" class="form-control tie_length" name="tie_length[]">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any" class="form-control tie_width" name="tie_width[]">
+                                            </div>
+                                        </td>
+                                        <td class="tie-total-kg">0.00</td>
+                                        <td class="tie-total-ton">0.00</td>
+
+                                        <td class="text-center">
+                                            <a role="button" class="btn btn-danger btn-sm tie-btn-remove">X</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                                </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <td>
+                                        <a role="button" class="btn btn-info btn-sm" id="btn-add-tie">Add More</a>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
 
@@ -899,12 +884,6 @@
             </td>
             <td class="total-kg">0.00</td>
             <td class="total-ton">0.00</td>
-{{--            <td>--}}
-{{--            <th class="text-right">0.00</th>--}}
-{{--                <div class="form-group">--}}
-{{--                    <input type="text" class="form-control rft_by_ton" name="rft_by_ton[]">--}}
-{{--                </div>--}}
-{{--            </td>--}}
 
             <td class="text-center">
                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
@@ -973,11 +952,11 @@
                 </div>
             </td>
 
-            <td>
+            {{-- <td>
                 <div class="form-group">
                     <input type="number" class="form-control tie_clear_cover" step="any" name="tie_clear_cover[]">
                 </div>
-            </td>
+            </td> --}}
             <td class="tie-total-kg">0.00</td>
             <td class="tie-total-ton">0.00</td>
             <td class="text-center">
@@ -1113,8 +1092,8 @@
             $('.tie_product').trigger("change");
 
             $('body').on('keyup','#column_length,#tie_length,#dry_volume,' +
-                '.number_of_bar,#cover,.tie_length,.tie_width,#tie_interval,' +
-                '.tie_clear_cover,.lapping_length,.lapping_nos,#tie_length_volume,#tie_width_volume', function () {
+                '.number_of_bar,.tie_length,.tie_width,#tie_interval,' +
+                '.lapping_length,.lapping_nos,#tie_length_volume,#tie_width_volume', function () {
                 calculate();
             });
 
@@ -1187,12 +1166,12 @@
             $('.tie-item').each(function(i, obj) {
                 var tie_kg_by_ton = $('.tie_kg_by_ton:eq('+i+')').val();
                 var tie_kg_by_rft = $('.tie_kg_by_rft:eq('+i+')').val();
-                var cover = $('.tie_clear_cover:eq('+i+')').val();
+                // var cover = $('.tie_clear_cover:eq('+i+')').val();
                 var tie_length = $('.tie_length:eq('+i+')').val();
                 var tie_width = $('.tie_width:eq('+i+')').val();
                 var column_length = $('#column_length').val();
                 var tie_interval = $('#tie_interval').val();
-
+                
                 var tieQuantity = (column_length / tie_interval) + 1;
 
                 if (tie_kg_by_ton == '' || tie_kg_by_ton < 0 || !$.isNumeric(tie_kg_by_ton))
@@ -1201,8 +1180,8 @@
                 if (tie_kg_by_rft == '' || tie_kg_by_rft < 0 || !$.isNumeric(tie_kg_by_rft))
                     tie_kg_by_rft = 0;
 
-                if (cover == '' || cover < 0 || !$.isNumeric(cover))
-                    cover = 0;
+                // if (cover == '' || cover < 0 || !$.isNumeric(cover))
+                //     cover = 0;
 
                 if (tie_length == '' || tie_length < 0 || !$.isNumeric(tie_length))
                     tie_length = 0;
@@ -1213,9 +1192,15 @@
                 if (tieQuantity == '' || tieQuantity < 0 || !$.isNumeric(tieQuantity))
                     tieQuantity = 0;
 
-                var length_tie_total = tie_length - (2 * cover);
-                var width_tie_total = tie_width - (2 * cover);
-                var pre_tie_bar = ((length_tie_total + width_tie_total) * 2) + 0.42;
+                var length_tie_total = tie_length/12;
+                var width_tie_total = tie_width/12;
+                var pre_tie_bar = ((parseFloat(length_tie_total) + parseFloat(width_tie_total)) * 2) + 0.42;
+
+                // console.log(pre_tie_bar);
+
+                // console.log(length_tie_total);
+                // var pre_tie_bar = ((length_tie_total + width_tie_total) * 2) + 0.42;
+                // console.log(tie_width);
 
                 $('.tie-total-kg:eq('+i+')').html(parseFloat((pre_tie_bar * tie_kg_by_rft)  * tieQuantity).toFixed(2));
                 $('.tie-total-ton:eq('+i+')').html(parseFloat((((pre_tie_bar * tie_kg_by_rft)  * tieQuantity)/tie_kg_by_ton)).toFixed(3));

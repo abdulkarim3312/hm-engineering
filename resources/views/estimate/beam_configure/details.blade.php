@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Beam Configure Details
+    Beam Configure Details
 @endsection
 
 @section('content')
@@ -157,11 +157,11 @@
                                     </tr>
                                     <tr>
                                         <th>Beam Height</th>
-                                        <td>{{ $beamConfigure->tie_length }}</td>
+                                        <td>{{ $beamConfigure->grade_beam_length }}</td>
                                     </tr>
                                     <tr>
                                         <th>Beam Width</th>
-                                        <td>{{ $beamConfigure->tie_width }}</td>
+                                        <td>{{ $beamConfigure->grade_beam_width }}</td>
                                     </tr>
                                     <tr>
                                         <th>Beam Quantity</th>
@@ -204,7 +204,7 @@
                                     <tbody>
                                     <h4>Main Bar Description</h4>
                                     @foreach($beamConfigure->beamConfigureProducts as $product)
-                                        @if($product->status == null)
+                                        @if($product->status == 2)
                                             <?php
                                             $mainTotalKg += $product->sub_total_kg;
                                             $mainTotalTon += $product->sub_total_ton;
@@ -243,7 +243,7 @@
                                             <td> {{ number_format($product->value_of_bar, 2) }}</td>
                                             <td> {{ number_format($product->kg_by_rft, 2) }}</td>
                                             <td> {{ number_format($product->kg_by_ton, 2) }}</td>
-                                            <td> {{ number_format($product->sub_total_kg, 2) }}</td>
+                                            <td> {{ number_format($product->sub_total_kg, 3) }}</td>
                                             <td> {{ number_format($product->sub_total_ton, 3) }}</td>
                                         </tr>
                                         @endif
@@ -251,7 +251,7 @@
                                     </tbody>
                                     <tr>
                                         <th colspan="6" class="text-right">Main Bar Total</th>
-                                        <th> {{ number_format($mainTotalKg, 2) }}</th>
+                                        <th> {{ number_format($mainTotalKg, 3) }}</th>
                                         <th> {{ number_format($mainTotalTon, 3) }}</th>
                                     </tr>
                                 </table>
@@ -314,7 +314,7 @@
                                                 <td> {{ number_format($product->value_of_bar, 2) }}</td>
                                                 <td> {{ number_format($product->kg_by_rft, 2) }}</td>
                                                 <td> {{ number_format($product->kg_by_ton, 2) }}</td>
-                                                <td> {{ number_format($product->sub_total_kg, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_kg, 3) }}</td>
                                                 <td> {{ number_format($product->sub_total_ton, 3) }}</td>
                                             </tr>
                                         @endif
@@ -323,14 +323,90 @@
 
                                     <tr>
                                         <th colspan="6" class="text-right" >Extra Bar Total</th>
-                                        <td> {{ number_format($extraTotalKg, 2) }}</td>
+                                        <td> {{ number_format($extraTotalKg, 3) }}</td>
                                         <td> {{ number_format($extraTotalTon, 3) }}</td>
                                     </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Bar</th>
+                                        <th>Dia</th>
+                                        <th>Dia(D^2)</th>
+                                        <th>Value of Bar</th>
+                                        <th>Kg/Rft</th>
+                                        <th>Kg/Ton</th>
+                                        <th>Sub Total Kg</th>
+                                        <th>Sub Total Ton</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                             $tieTotalKg = 0;
+                                             $tieTotalTon = 0;
+                                        @endphp
+                                    <h4>Tie Rod Description</h4>
+                                    @foreach($beamConfigure->beamConfigureProducts as $product)
+                                        @if($product->tie_bar_type != null )
+
+                                            <?php
+                                            $tieTotalKg += $product->sub_total_kg_tie;
+                                            $tieTotalTon += $product->sub_total_ton_tie;
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    @if($product->tie_bar_type == 6)
+                                                        6mm
+                                                    @elseif($product->tie_bar_type == 8)
+                                                        8mm
+                                                    @elseif($product->tie_bar_type == 10)
+                                                        10mm
+                                                    @elseif($product->tie_bar_type == 12)
+                                                        12mm
+                                                    @elseif($product->tie_bar_type == 16)
+                                                        16mm
+                                                    @elseif($product->tie_bar_type == 18)
+                                                        18mm
+                                                    @elseif($product->tie_bar_type == 20)
+                                                        20mm
+                                                    @elseif($product->tie_bar_type == 22)
+                                                        22mm
+                                                    @elseif($product->tie_bar_type == 25)
+                                                        25mm
+                                                    @elseif($product->tie_bar_type == 28)
+                                                        28mm
+                                                    @elseif($product->tie_bar_type == 32)
+                                                        32mm
+                                                    @elseif($product->tie_bar_type == 36)
+                                                        36mm
+                                                    @endif
+
+                                                </td>
+                                                <td>{{ $product->tie_dia }}</td>
+                                                <td> {{ $product->tie_dia_square }}</td>
+                                                <td> {{ number_format($product->tie_value_of_bar, 2) }}</td>
+                                                <td> {{ number_format($product->tie_kg_by_rft, 2) }}</td>
+                                                <td> {{ number_format($product->tie_kg_by_ton, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_kg_tie, 3) }}</td>
+                                                <td> {{ number_format($product->sub_total_ton_tie, 3) }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
 
                                     <tr>
-                                        <th colspan="6" class="text-right" >Total Ton/KG</th>
-                                        <td> {{ number_format($beamConfigure->total_kg, 2) }}</td>
-                                        <td> {{ number_format($beamConfigure->total_ton, 3) }}</td>
+                                        <th colspan="6" class="text-right">Sub Total</th>
+                                        <th> {{ number_format($tieTotalKg, 2) }}</th>
+                                        <th> {{ number_format($tieTotalTon, 3) }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="6" class="text-right">Total Ton/KG</th>
+                                        <th> {{ number_format($beamConfigure->total_kg, 3) }}</th>
+                                        <th> {{ number_format($beamConfigure->total_ton, 3) }}</th>
                                     </tr>
                                 </table>
                             </div>

@@ -139,6 +139,7 @@ class BatchController extends Controller
         $footingConfigure->estimate_project_id = $request->estimate_project;
         $footingConfigure->costing_segment_id = $request->costing_segment;
         $footingConfigure->costing_segment_quantity = $request->costing_segment_quantity;
+        $footingConfigure->footing_type_id = $request->footing_type_id;
         $footingConfigure->first_ratio = $request->first_ratio;
         $footingConfigure->second_ratio = $request->second_ratio;
         $footingConfigure->third_ratio = $request->third_ratio;
@@ -221,14 +222,17 @@ class BatchController extends Controller
     }
 
     public function footingConfigureDatatable() {
-        $query = FootingConfigure::with('project','costingSegment');
+        $query = FootingConfigure::with('project','costingSegment', 'footingType');
 
         return DataTables::eloquent($query)
             ->addColumn('project_name', function(FootingConfigure $footingConfigure) {
-                return $footingConfigure->project->name??'';
+                return $footingConfigure->project->name ??'';
             })
             ->addColumn('segment_name', function(FootingConfigure $footingConfigure) {
-                return $footingConfigure->costingSegment->name??'';
+                return $footingConfigure->costingSegment->name ??'';
+            })
+            ->addColumn('footing_type', function(FootingConfigure $footingConfigure) {
+                return $footingConfigure->footingType->name ??'';
             })
             ->addColumn('action', function(FootingConfigure $footingConfigure) {
 

@@ -85,17 +85,17 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <div class="form-group {{ $errors->has('beam_type') ? 'has-error' :'' }}">
+                                <div class="form-group {{ $errors->has('footing_type') ? 'has-error' :'' }}">
                                     <label>Footing Type</label>
 
-                                    <select class="form-control select2" style="width: 100%;" name="beam_type" data-placeholder="Select Footing Type">
+                                    <select class="form-control select2" style="width: 100%;" name="footing_type" data-placeholder="Select Footing Type">
                                         <option value="">Select Footing Type</option>
                                         @foreach($beamTypes as $beamType)
-                                            <option value="{{ $beamType->id }}" {{ old('beam_type') == $beamType->id ? 'selected' : '' }}>{{ $beamType->name }}</option>
+                                            <option value="{{ $beamType->id }}" {{ old('footing_type') == $beamType->id ? 'selected' : '' }}>{{ $beamType->name }}</option>
                                         @endforeach
                                     </select>
 
-                                    @error('beam_type')
+                                    @error('footing_type')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>

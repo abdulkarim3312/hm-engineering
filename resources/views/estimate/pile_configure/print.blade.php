@@ -92,8 +92,12 @@
                         <td>{{ $pileConfigure->total_cement }} Bag</td>
                     </tr>
                     <tr>
-                        <th>Total Sands</th>
+                        <th>Total Local Sands</th>
                         <td>{{ $pileConfigure->total_sands }} Cft</td>
+                    </tr>
+                    <tr>
+                        <th>Total Sylhet Sands</th>
+                        <td>{{ $pileConfigure->total_s_sands }} Cft</td>
                     </tr>
                     <tr>
                         <th>Total Aggregate</th>
@@ -317,7 +321,7 @@
         </div>
         <u><i><h2>Costing Area</h2></i></u>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-4">
                 <table class="table table-bordered">
                     <tr>
                         <th>Bar(Rod) Price (Kg)</th>
@@ -330,7 +334,7 @@
                 </table>
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-xs-4">
                 <table class="table table-bordered">
                     <tr>
                         <th>Sands Price (Cft)</th>
@@ -347,6 +351,14 @@
                             <td>৳ {{ $pileConfigure->total_pile_picked_price }} Taka</td>
                         </tr>
                     @endif
+                </table>
+            </div>
+            <div class="col-xs-4">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Sylhet Sands Price (Cft)</th>
+                        <td>৳ {{ $pileConfigure->total_pile_s_sands_price }} Taka</td>
+                    </tr>
                 </table>
             </div>
         </div>

@@ -36,6 +36,7 @@
                             <th>Radius</th>
                             <th>Total Volume</th>
                             <th>Dry Volume</th>
+                            <th>Total Rod</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -71,6 +72,7 @@
                     {data: 'radius', name: 'radius'},
                     {data: 'total_volume', name: 'total_volume'},
                     {data: 'total_dry_volume', name: 'total_dry_volume'},
+                    {data: 'total_kg', name: 'total_kg'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],

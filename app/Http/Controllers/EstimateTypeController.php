@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BeamType;
 use App\Models\ColumnType;
+use App\Models\GradeBeamType;
 use Illuminate\Http\Request;
 
 class EstimateTypeController extends Controller
@@ -87,6 +88,47 @@ class EstimateTypeController extends Controller
         $columnType->status = $request->status;
         $columnType->save();
 
-        return redirect()->route('column_type')->with('message', 'Column Type edit successfully.');
+        return redirect()->route('grade_beam_type')->with('message', 'Column Type edit successfully.');
+    }
+
+    public function gradeBeamType() {
+        $gradeBeamTypes = GradeBeamType::get();
+        return view('estimate.grade_beam_type.all', compact('gradeBeamTypes'));
+    }
+
+    public function gradeBeamTypeAdd() {
+        return view('estimate.grade_beam_type.add');
+    }
+
+    public function gradeBeamTypeAddPost(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required'
+        ]);
+
+        $gradeBeamType = new GradeBeamType();
+        $gradeBeamType->name = $request->name;
+        $gradeBeamType->status = $request->status;
+        $gradeBeamType->save();
+
+        return redirect()->route('grade_beam_type')->with('message', 'Grade Beam Type add successfully.');
+    }
+
+    public function gradeBeamTypeEdit(GradeBeamType $gradeBeamType) {
+        return view('estimate.grade_beam_type.edit', compact( 'gradeBeamType'));
+    }
+
+    public function gradeBeamTypeEditPost(GradeBeamType $gradeBeamType, Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required'
+        ]);
+
+        $gradeBeamType->name = $request->name;
+        $gradeBeamType->status = $request->status;
+        $gradeBeamType->save();
+
+        return redirect()->route('grade_beam_type')->with('message', 'Grade Beam Type edit successfully.');
     }
 }
