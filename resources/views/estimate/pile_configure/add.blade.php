@@ -48,7 +48,7 @@
                                     <label>Spiral Bar(Rft)</label>
 
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="spiral_bar" step="any"
+                                        <input type="number" class="form-control spiral_bar" id="spiral_bar" step="any"
                                                name="spiral_bar" value="{{ old('spiral_bar') }}" placeholder="Spiral Bar" readonly>
                                     </div>
                                     <!-- /.input group -->
@@ -653,7 +653,7 @@
 
                                             <td>
                                                 <div class="form-group {{ $errors->has('tie_length.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number"  step="any" class="form-control tie_length" name="tie_length[]" value="{{ old('tie_length.'.$loop->index) }}">
+                                                    <input type="number" id="tie_length" step="any" readonly class="form-control tie_length" name="tie_length[]" value="{{ old('tie_length.'.$loop->index) }}">
                                                 </div>
                                             </td>
 
@@ -662,12 +662,6 @@
                                                     <input type="number" step="any" class="form-control tie_lapping_length" name="tie_lapping_length[]" value="{{ old('tie_lapping_length.'.$loop->index) }}">
                                                 </div>
                                             </td>
-
-                                            {{-- <td>
-                                                <div class="form-group {{ $errors->has('tie_clear_cover.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" step="any" class="form-control tie_clear_cover" name="tie_clear_cover[]" value="{{ old('tie_clear_cover.'.$loop->index) }}">
-                                                </div>
-                                            </td> --}}
 
                                             <td class="tie-total-kg">0.00</td>
                                             <td class="tie-total-ton">0.00</td>
@@ -728,7 +722,7 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="number" step="any" class="form-control tie_length" name="tie_length[]">
+                                                <input type="number" step="any" id="tie_length" readonly class="form-control tie_length" name="tie_length[]">
                                             </div>
                                         </td>
 
@@ -738,11 +732,6 @@
                                             </div>
                                         </td>
 
-                                        {{-- <td>
-                                            <div class="form-group">
-                                                <input type="number" step="any" class="form-control tie_clear_cover" name="tie_clear_cover[]">
-                                            </div>
-                                        </td> --}}
                                         <td class="tie-total-kg">0.00</td>
                                         <td class="tie-total-ton">0.00</td>
 
@@ -899,7 +888,7 @@
             </td>
             <td>
                 <div class="form-group">
-                    <input type="number" class="form-control tie_length" step="any" name="tie_length[]">
+                    <input type="number" class="form-control tie_length" id="tie_length" step="any" name="tie_length[]">
                 </div>
             </td>
 
@@ -1086,7 +1075,6 @@
                 var tie_length = $('.tie_length:eq('+i+')').val();
                 var tie_kg_by_rft = $('.tie_kg_by_rft:eq('+i+')').val();
                 var lapping_nos = $('.lapping_nos:eq('+i+')').val();
-                console.log(lapping_nos);
 
 
                 var ap = spiral_bar/kg_by_rft;
@@ -1169,7 +1157,6 @@
 
                 var data = parseFloat((tie_kg_by_rft * tie_length) + lie_length);
 
-
                 $('.tie-total-kg:eq('+i+')').html(parseFloat(data).toFixed(2));
                 $('.tie-total-ton:eq('+i+')').html(parseFloat(data/tie_kg_by_ton).toFixed(3));
                 //total += rft_by_ton;
@@ -1183,6 +1170,7 @@
             $('#total_volume').val(total_volume.toFixed(2));
             $('#total_dry_volume').val((total_volume * dry_volume).toFixed(2));
             $('#spiral_bar').val(total_spiral_bar.toFixed(2));
+            $('#tie_length').val(total_spiral_bar.toFixed(2));
 
             //$('#total-ton').html(total);
         }
