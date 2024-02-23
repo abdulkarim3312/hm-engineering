@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\EstimateProject;
+use App\Models\Batch;
 use App\Models\BeamConfigure;
 use App\Models\BeamConfogureProduct;
 use App\Models\BeamType;
@@ -10,6 +11,7 @@ use App\Models\ColumnCofigure;
 use App\Models\PileCapConfigure;
 use App\Models\PileCapConfigureProduct;
 use App\Models\CostingSegment;
+use App\Models\PileConfigure;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,15 +23,18 @@ class PileCapConfigureController extends Controller
 
     public function pileCapConfigureAdd() {
         $estimateProjects = EstimateProject::where('status',1)->get();
+        $beamTypes = Batch::where('status',1)->get();
+        $pileCost = PileConfigure::orderBy('id','desc')->first();
+        $estimateProjects = EstimateProject::where('status',1)->get();
         $costingSegments = CostingSegment::where('status',1)->get();
         $columnCost = ColumnCofigure::orderBy('id','desc')->first();
         return view('estimate.pile_cap_configure.add',compact('estimateProjects',
-            'costingSegments','columnCost'));
+        'beamTypes','pileCost', 'costingSegments', 'columnCost'));
     }
 
     public function pileCapConfigureAddPost(Request $request) {
-        // dd($request->all());
-        $request->validate([
+        //  dd($request->all());
+         $request->validate([
             'estimate_project' => 'required',
             'costing_segment' => 'required',
             'course_aggregate_type' => 'required',
@@ -71,16 +76,11 @@ class PileCapConfigureController extends Controller
         ]);
 
         $total_dry_volume = (($request->segment_length * $request->segment_width) * $request->segment_thickness) * 1.5;
-        // dd($total_dry_volume);
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
-        // dd($totalRatio);
         $totalCement = ($total_dry_volume * $request->first_ratio/$totalRatio);
         $totalCementBag = ($totalCement/1.25);
-        // dd($totalCementBag);
         $totalSands = ($total_dry_volume * $request->second_ratio/$totalRatio);
-        // dd($totalSands);
         $totalAggregate = ($total_dry_volume * $request->third_ratio/$totalRatio);
-        // dd($totalAggregate);
         if ($request->course_aggregate_type == 2){
             $totalPiked = ($totalAggregate * 11.11);
         }else{
@@ -88,50 +88,95 @@ class PileCapConfigureController extends Controller
         }
 
 
-        $commonConfigure = new PileCapConfigure();
-        $commonConfigure->estimate_project_id = $request->estimate_project;
-        $commonConfigure->costing_segment_id = $request->costing_segment;
-        $commonConfigure->costing_segment_quantity = $request->costing_segment_quantity;
-        $commonConfigure->first_ratio = $request->first_ratio;
-        $commonConfigure->second_ratio = $request->second_ratio;
-        $commonConfigure->third_ratio = $request->third_ratio;
-        $commonConfigure->date = $request->date;
-        $commonConfigure->note = $request->note;
-        $commonConfigure->total_ton = 0;
-        $commonConfigure->total_kg = 0;
-        $commonConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
-        $commonConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
-        $commonConfigure->total_sands = $totalSands * $request->costing_segment_quantity;
-        $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
-        $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
-
+        $pileCapConfigure = new PileCapConfigure();
+        $pileCapConfigure->estimate_project_id = $request->estimate_project;
+        $pileCapConfigure->costing_segment_id = $request->costing_segment;
+        $pileCapConfigure->costing_segment_quantity = $request->costing_segment_quantity;
+        $pileCapConfigure->footing_type_id = $request->footing_type;
+        $pileCapConfigure->course_aggregate_type = $request->course_aggregate_type;
+        $pileCapConfigure->first_ratio = $request->first_ratio;
+        $pileCapConfigure->second_ratio = $request->second_ratio;
+        $pileCapConfigure->third_ratio = $request->third_ratio;
+        $pileCapConfigure->segment_length = $request->segment_length;
+        $pileCapConfigure->segment_width = $request->segment_width;
+        $pileCapConfigure->segment_thickness = $request->segment_thickness;
+        $pileCapConfigure->date = $request->date;
+        $pileCapConfigure->note = $request->note;
+        $pileCapConfigure->total_ton = 0;
+        $pileCapConfigure->total_kg = 0;
+        $pileCapConfigure->total_volume = $request->total_volume * $request->costing_segment_quantity;
+        $pileCapConfigure->dry_volume = $request->dry_volume * $request->costing_segment_quantity;
+        $pileCapConfigure->total_dry_volume = $request->total_dry_volume * $request->costing_segment_quantity;
+        
+        if($request->course_aggregate_type == 1){
+            $pileCapConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
+            $pileCapConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $pileCapConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $pileCapConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $pileCapConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
+        }else if($request->course_aggregate_type == 2){
+            $pileCapConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
+            $pileCapConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $pileCapConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $pileCapConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $pileCapConfigure->total_aggregate = 0;
+            $pileCapConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
+        }else{
+            $pileCapConfigure->total_cement = 0;
+            $pileCapConfigure->total_cement_bag = 0;
+            $pileCapConfigure->total_sands = 0;
+            $pileCapConfigure->total_s_sands =0;
+            $pileCapConfigure->total_aggregate = 0;
+            $pileCapConfigure->total_picked = 0;
+        }
         //price
-        $commonConfigure->common_bar_per_cost = $request->common_bar_costing;
-        $commonConfigure->common_cement_per_cost = $request->common_cement_costing;
-        $commonConfigure->common_sands_per_cost = $request->common_sands_costing;
-        $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
-        $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
+        $pileCapConfigure->common_bar_per_cost = $request->common_bar_costing;
+        $pileCapConfigure->common_cement_per_cost = $request->common_cement_costing;
+        $pileCapConfigure->common_sands_per_cost = $request->common_sands_costing;
+        $pileCapConfigure->s_sands_costing = $request->s_sands_costing;
+        $pileCapConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
+        $pileCapConfigure->common_picked_per_cost = $request->common_picked_costing??0;
         //Total Price
-        $commonConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
-        // dd($commonConfigure->total_common_cement_bag_price);
-        $commonConfigure->total_common_sands_price = ($totalSands * $request->costing_segment_quantity) * $request->common_sands_costing;
-        $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
-        $commonConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
-        $commonConfigure->total_common_bar_price = 0;
+       
+        if($request->course_aggregate_type == 1){
+            $pileCapConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $pileCapConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $pileCapConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $pileCapConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
+            $pileCapConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
+            $pileCapConfigure->total_pile_cap_rmc_price = 0;
+        }else if($request->course_aggregate_type == 2){
+            $pileCapConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $pileCapConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $pileCapConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $pileCapConfigure->total_common_aggregate_price = 0;
+            $pileCapConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
+            $pileCapConfigure->total_pile_cap_rmc_price = 0;
+        }else{
+            $pileCapConfigure->total_pile_cap_rmc_price = $request->total_volume * $request->rmc_costing;
+            $pileCapConfigure->total_common_cement_bag_price = 0;
+            $pileCapConfigure->total_common_sands_price = 0;
+            $pileCapConfigure->total_beam_s_sands_price = 0;
+            $pileCapConfigure->total_common_aggregate_price = 0;
+            $pileCapConfigure->total_common_picked_price = 0;
+        }
+        $pileCapConfigure->total_common_bar_price = 0;
 
-        $commonConfigure->save();
-        $commonConfigure->common_configure_no = str_pad($commonConfigure->id, 5, "0", STR_PAD_LEFT);
-        $commonConfigure->save();
+        $pileCapConfigure->save();
+        $pileCapConfigure->common_configure_no = str_pad($pileCapConfigure->id, 4, "0", STR_PAD_LEFT);
+        $pileCapConfigure->save();
 
         $counter = 0;
         $totalTon = 0;
         $totalKg = 0;
         foreach ($request->product as $key => $reqProduct) {
 
+            $type_length = $request->type_length[$counter] - 0.5;
+            $rft = (((($request->length[$counter] / $request->spacing[$counter]) + 1) * $type_length * $request->layer[$counter]));
             $division = $request->length[$counter]/$request->spacing[$counter];
 
             PileCapConfigureProduct::create([
-                'common_configure_id' => $commonConfigure->id,
+                'common_configure_id' => $pileCapConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
                 'costing_segment_id' => $request->costing_segment,
                 'bar_type' => $reqProduct,
@@ -145,81 +190,51 @@ class PileCapConfigureController extends Controller
                 'spacing' => $request->spacing[$counter] * $request->costing_segment_quantity,
                 'type_length' => $request->type_length[$counter] * $request->costing_segment_quantity,
                 'layer' => $request->layer[$counter] * $request->costing_segment_quantity,
-                'sub_total_kg' => ((($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter] * $request->costing_segment_quantity),
-                'sub_total_ton' => ((((($division * $request->type_length[$counter]) * $request->layer[$counter])
-                        * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]) * $request->costing_segment_quantity),
+                'sub_total_kg' => $rft * $request->kg_by_rft[$counter],
+                'sub_total_ton' => $rft * $request->kg_by_rft[$counter] / $request->kg_by_ton[$counter],
             ]);
 
-            $totalKg += (($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter];
-            // dd($totalKg);
-            $totalTon += (((($division * $request->type_length[$counter]) * $request->layer[$counter]) * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]);
+            $totalKg += $rft * $request->kg_by_rft[$counter];
+            $totalTon += $rft * $request->kg_by_rft[$counter] / $request->kg_by_ton[$counter];
 
             $counter++;
         }
 
-        $counter = 0;
+        $pileCapConfigure->total_ton = $totalTon * $request->costing_segment_quantity;
+        $pileCapConfigure->total_kg = $totalKg * $request->costing_segment_quantity;
+        $pileCapConfigure->total_common_bar_price = ($totalKg * $request->common_bar_costing) * $request->costing_segment_quantity;
+        $pileCapConfigure->save();
 
-        foreach ($request->extra_product as $key => $reqProduct) {
-
-            PileCapConfigureProduct::create([
-                'common_configure_id' => $commonConfigure->id,
-                'estimate_project_id' => $request->estimate_project,
-                'costing_segment_id' => $request->costing_segment,
-                'bar_type' => $reqProduct,
-                'dia' => $request->extra_dia[$counter],
-                'dia_square' => $request->extra_dia_square[$counter],
-                'value_of_bar' => $request->extra_value_of_bar[$counter],
-                'kg_by_rft' => $request->extra_kg_by_rft[$counter],
-                'kg_by_ton' => $request->extra_kg_by_ton[$counter],
-                'number_of_bar' => $request->extra_number_of_bar[$counter] * $request->costing_segment_quantity,
-                'extra_length' => $request->extra_length[$counter]??0 * $request->costing_segment_quantity,
-                'sub_total_kg' => ((($request->extra_number_of_bar[$counter] *
-                        $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0) * $request->costing_segment_quantity),
-                'sub_total_ton' => (((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter])
-                        * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]) * $request->costing_segment_quantity),
-                'status' => 1,
-            ]);
-
-            $totalKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
-            $totalTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
-
-            $counter++;
-        }
-
-
-        $commonConfigure->total_ton = $totalTon * $request->costing_segment_quantity;
-        $commonConfigure->total_kg = $totalKg * $request->costing_segment_quantity;
-        // dd($commonConfigure->total_kg);
-        $commonConfigure->total_common_bar_price = ($totalKg * $request->costing_segment_quantity) * $request->common_bar_costing;
-        $commonConfigure->save();
-
-        return redirect()->route('pile_cap_configure.details', ['commonConfigure' => $commonConfigure->id]);
+        return redirect()->route('pile_cap_configure.details', ['pileCapConfigure' => $pileCapConfigure->id]);
     }
 
-    public function pileCapConfigureDetails(PileCapConfigure $commonConfigure){
-        return view('estimate.pile_cap_configure.details',compact('commonConfigure'));
+    public function pileCapConfigureDetails(PileCapConfigure $pileCapConfigure){
+        return view('estimate.pile_cap_configure.details',compact('pileCapConfigure'));
     }
-    public function pileCapConfigurePrint(PileCapConfigure $commonConfigure){
-        return view('estimate.pile_cap_configure.print',compact('commonConfigure'));
+    public function pileCapConfigurePrint(PileCapConfigure $pileCapConfigure){
+        return view('estimate.pile_cap_configure.print',compact('pileCapConfigure'));
     }
 
     public function pileCapConfigureDatatable() {
-        $query = PileCapConfigure::with('project','costingSegment');
+        $query = PileCapConfigure::with('project','costingSegment', 'footingType');
 
         return DataTables::eloquent($query)
-            ->addColumn('project_name', function(PileCapConfigure $commonConfigure) {
-                return $commonConfigure->project->name??'';
+            ->addColumn('project_name', function(PileCapConfigure $pileCapConfigure) {
+                return $pileCapConfigure->project->name??'';
             })
-            ->addColumn('segment_name', function(PileCapConfigure $commonConfigure) {
-                return $commonConfigure->costingSegment->name??'';
+            ->addColumn('segment_name', function(PileCapConfigure $pileCapConfigure) {
+                return $pileCapConfigure->costingSegment->name??'';
             })
-            ->addColumn('action', function(PileCapConfigure $commonConfigure) {
+            ->addColumn('pile_cap_type', function(PileCapConfigure $pileCapConfigure) {
+                return $pileCapConfigure->footingType->name??'';
+            })
+            ->addColumn('action', function(PileCapConfigure $pileCapConfigure) {
 
-                return '<a href="'.route('pile_cap_configure.details', ['commonConfigure' => $commonConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                return '<a href="'.route('pile_cap_configure.details', ['pileCapConfigure' => $pileCapConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
 
             })
-            ->editColumn('date', function(PileCapConfigure $commonConfigure) {
-                return $commonConfigure->date;
+            ->editColumn('date', function(PileCapConfigure $pileCapConfigure) {
+                return $pileCapConfigure->date;
             })
             ->rawColumns(['action'])
             ->toJson();

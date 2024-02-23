@@ -12,7 +12,7 @@ class PileCapConfigure extends Model
     protected $table = 'pile_cap_configures';
     protected $guarded = [];
 
-    public function commonConfigureProducts() {
+    public function pileCapConfigureProducts() {
         return $this->hasMany(PileCapConfigureProduct::class,'common_configure_id','id');
     }
     public function project(){
@@ -20,5 +20,8 @@ class PileCapConfigure extends Model
     }
     public function costingSegment(){
         return $this->belongsTo(CostingSegment::class,'costing_segment_id');
+    }
+    public function footingType(){
+        return $this->belongsTo(Batch::class,'footing_type_id');
     }
 }

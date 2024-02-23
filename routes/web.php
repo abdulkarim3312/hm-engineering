@@ -793,24 +793,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pile-cap-configure-datatable', [PileCapConfigureController::class, 'pileCapConfigureDatatable'])->name('pile_cap_configure.datatable');
     Route::get('pile-cap-configure/add', [PileCapConfigureController::class, 'pileCapConfigureAdd'])->name('pile_cap_configure.add')->middleware('permission:slab_cap_wall_configure');
     Route::post('pile-cap-configure/add', [PileCapConfigureController::class, 'pileCapConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
-    Route::get('pile-cap-configure-details/{commonConfigure}', [PileCapConfigureController::class, 'pileCapConfigureDetails'])->name('pile_cap_configure.details')->middleware('permission:slab_cap_wall_configure');
-    Route::get('pile-cap-configure-print/{commonConfigure}', [PileCapConfigureController::class, 'pileCapConfigurePrint'])->name('pile_cap_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('pile-cap-configure-details/{pileCapConfigure}', [PileCapConfigureController::class, 'pileCapConfigureDetails'])->name('pile_cap_configure.details')->middleware('permission:slab_cap_wall_configure');
+    Route::get('pile-cap-configure-print/{pileCapConfigure}', [PileCapConfigureController::class, 'pileCapConfigurePrint'])->name('pile_cap_configure.print')->middleware('permission:slab_cap_wall_configure');
 
     //Mat Configure
     Route::get('mat-configure', [MatConfigureController::class, 'matConfigureAll'])->name('mat_configure')->middleware('permission:slab_cap_wall_configure');
     Route::get('mat-configure-datatable', [MatConfigureController::class, 'matConfigureDatatable'])->name('mat_configure.datatable');
     Route::get('mat-configure/add', [MatConfigureController::class, 'matConfigureAdd'])->name('mat_configure.add')->middleware('permission:slab_cap_wall_configure');
     Route::post('mat-configure/add', [MatConfigureController::class, 'matConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
-    Route::get('mat-configure-details/{commonConfigure}', [MatConfigureController::class, 'matConfigureDetails'])->name('mat_configure.details')->middleware('permission:slab_cap_wall_configure');
-    Route::get('mat-configure-print/{commonConfigure}', [MatConfigureController::class, 'matConfigurePrint'])->name('mat_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('mat-configure-details/{matConfigure}', [MatConfigureController::class, 'matConfigureDetails'])->name('mat_configure.details')->middleware('permission:slab_cap_wall_configure');
+    Route::get('mat-configure-print/{matConfigure}', [MatConfigureController::class, 'matConfigurePrint'])->name('mat_configure.print')->middleware('permission:slab_cap_wall_configure');
 
     //Returning Wall Configure
     Route::get('returning-wall-configure', [ReturningWallConfigureController::class, 'returningWallConfigureAll'])->name('returning_wall_configure')->middleware('permission:slab_cap_wall_configure');
     Route::get('returning-wall-configure-datatable', [ReturningWallConfigureController::class, 'returningWallConfigureDatatable'])->name('returning_wall_configure.datatable');
     Route::get('returning-wall-configure/add', [ReturningWallConfigureController::class, 'returningWallConfigureAdd'])->name('returning_wall_configure.add')->middleware('permission:slab_cap_wall_configure');
     Route::post('returning-wall-configure/add', [ReturningWallConfigureController::class, 'returningWallConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
-    Route::get('returning-wall-configure-details/{commonConfigure}', [ReturningWallConfigureController::class, 'returningWallConfigureDetails'])->name('returning_wall_configure.details')->middleware('permission:slab_cap_wall_configure');
-    Route::get('returning-wall-configure-print/{commonConfigure}', [ReturningWallConfigureController::class, 'returningWallConfigurePrint'])->name('returning_wall_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('returning-wall-configure-details/{returningWall}', [ReturningWallConfigureController::class, 'returningWallConfigureDetails'])->name('returning_wall_configure.details')->middleware('permission:slab_cap_wall_configure');
+    Route::get('returning-wall-configure-print/{returningWall}', [ReturningWallConfigureController::class, 'returningWallConfigurePrint'])->name('returning_wall_configure.print')->middleware('permission:slab_cap_wall_configure');
 
     //Assign Segment
     Route::get('assign-segment', [AssignSegmentController::class, 'assignSegment'])->name('assign_segment.all');

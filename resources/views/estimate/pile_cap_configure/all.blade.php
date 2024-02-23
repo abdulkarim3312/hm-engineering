@@ -32,10 +32,11 @@
                         <tr>
                             <th>Date</th>
                             <th>Configure No</th>
-                            <th>Project No</th>
-                            <th>Segment</th>
-                            <th>Total Rod(Kg)</th>
-                            <th>Total Rod(Ton)</th>
+                            <th>Project</th>
+                            <th>Footing Type</th>
+                            <th>Total Volume</th>
+                            <th>Dry Volume</th>
+                            <th>Total Rod</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -66,11 +67,12 @@
                 ajax: '{{ route('pile_cap_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
-                    {data: 'common_configure_no', name: 'common_configure_no'},
+                    {data: 'common_configure_no', name: 'beam_configure_no'},
                     {data: 'project_name', name: 'project.name'},
-                    {data: 'segment_name', name: 'costingSegment.name'},
+                    {data: 'pile_cap_type', name: 'pile_cap_type.name'},
+                    {data: 'total_volume', name: 'total_volume'},
+                    {data: 'total_dry_volume', name: 'total_dry_volume'},
                     {data: 'total_kg', name: 'total_kg'},
-                    {data: 'total_ton', name: 'total_ton'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],

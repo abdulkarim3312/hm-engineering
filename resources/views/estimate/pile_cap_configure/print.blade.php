@@ -61,71 +61,113 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 text-center">
-{{--                <h4 style="padding: 10px;"><span style="font-weight: 700" class="pull-left">Serial No: {{ $order->id+10000 }}</span> <u><span style="font-size: 30px;font-weight: bold;text-transform: uppercase; margin-right: 100px;"> Purchase Receipt </span></u><span style="text-align: center; font-weight: normal;font-size: 16px;position: absolute;text-transform: capitalize;right: 20px;"><b>Date: </b> {{ date('j F, Y') }}</span></h4>--}}
-
-            </div>
-            <div class="col-xs-6">
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th> Pile Cap Configure No.</th>
-                        <td>{{ $commonConfigure->common_configure_no }}</td>
+                        <th> Pile Cap Type.</th>
+                        <td>{{ $pileCapConfigure->footingType->name ?? '' }}</td>
                     </tr>
                     <tr>
                         <th> Pile Cap Configure Date</th>
-                        <td>{{ $commonConfigure->date }}</td>
+                        <td>{{ $pileCapConfigure->date }}</td>
                     </tr>
                     <tr>
                         <th>Estimate Project Name</th>
-                        <td>{{ $commonConfigure->project->name }}</td>
+                        <td>{{ $pileCapConfigure->project->name }}</td>
                     </tr>
                     <tr>
                         <th>Costing Segment Name</th>
-                        <td>{{ $commonConfigure->costingSegment->name }}</td>
+                        <td>{{ $pileCapConfigure->costingSegment->name }}</td>
                     </tr>
-                    <tr>
-                        <th>Total Cement</th>
-                        <td>{{ $commonConfigure->total_cement_bag }} Bag</td>
-                    </tr>
-                    <tr>
-                        <th>Total Sands</th>
-                        <td>{{ $commonConfigure->total_sands }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Aggregate</th>
-                        <td>{{ $commonConfigure->total_aggregate }} Cft</td>
-                    </tr>
+                    @if ($pileCapConfigure->course_aggregate_type == 3)
+                        
+                    @elseif ($pileCapConfigure->course_aggregate_type == 2)
+                        <tr>
+                            <th>Total Cement</th>
+                            <td>{{ $pileCapConfigure->total_cement_bag }} Bag</td>
+                        </tr>
+                        <tr>
+                            <th>Local Sands</th>
+                            <td>{{ $pileCapConfigure->total_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Sylhet Sands</th>
+                            <td>{{ $pileCapConfigure->total_s_sands }} Cft</td>
+                        </tr>
+                        
+                    @else    
+                        <tr>
+                            <th>Total Cement</th>
+                            <td>{{ $pileCapConfigure->total_cement_bag }} Bag</td>
+                        </tr>
+                        <tr>
+                            <th>Local Sands</th>
+                            <td>{{ $pileCapConfigure->total_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Sylhet Sands</th>
+                            <td>{{ $pileCapConfigure->total_s_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Aggregate</th>
+                            <td>{{ $pileCapConfigure->total_aggregate }} Cft</td>
+                        </tr>
+                    @endif
                     <tr>
                         <th>Note </th>
-                        <td>{{ $commonConfigure->note??'' }}</td>
+                        <td>{{ $pileCapConfigure->note??'' }}</td>
                     </tr>
                 </table>
             </div>
-            <div class="col-xs-6">
+
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th colspan="2" class="text-center">{{$commonConfigure->costingSegment->name}} Info</th>
+                        <th colspan="2" class="text-center">{{$pileCapConfigure->costingSegment->name}} Info</th>
                     </tr>
                     <tr>
-                        <th>{{$commonConfigure->costingSegment->name}} Quantity</th>
-                        <td>{{ $commonConfigure->costing_segment_quantity }}</td>
+                        <th>{{$pileCapConfigure->costingSegment->name}} Quantity</th>
+                        <td>{{ $pileCapConfigure->costing_segment_quantity }}</td>
                     </tr>
                     <tr>
                         <th>Total Ton</th>
-                        <td>{{ $commonConfigure->total_ton }} Rod</td>
+                        <td>{{ $pileCapConfigure->total_ton }} Rod</td>
                     </tr>
                     <tr>
                         <th>Total Kg</th>
-                        <td>{{ $commonConfigure->total_kg }} Rod</td>
+                        <td>{{ $pileCapConfigure->total_kg }} Rod</td>
+                    </tr>
+                    @if ($pileCapConfigure->course_aggregate_type == 2)
+                        <tr>
+                            <th>Total Piked</th>
+                            <td>{{ $pileCapConfigure->total_picked }} Pcs</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <th>Pile Cap Length</th>
+                        <td>{{ $pileCapConfigure->segment_length }}</td>
                     </tr>
                     <tr>
-                        <th>Total Piked</th>
-                        <td>{{ $commonConfigure->total_picked }} Pcs</td>
+                        <th>Pile Cap Width</th>
+                        <td>{{ $pileCapConfigure->segment_width }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pile Cap Thickness</th>
+                        <td>{{ $pileCapConfigure->segment_thickness }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Volume</th>
+                        <td>{{ $pileCapConfigure->total_volume }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Dry Volume</th>
+                        <td>{{ $pileCapConfigure->total_dry_volume }}</td>
                     </tr>
 
                 </table>
             </div>
         </div>
+
         @php
             $mainTotalKg = 0;
             $mainTotalTon = 0;
@@ -155,7 +197,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($commonConfigure->commonConfigureProducts as $product)
+                    @foreach($pileCapConfigure->pileCapConfigureProducts as $product)
+
                         @if($product->status == null)
                             <?php
                             $mainTotalKg += $product->sub_total_kg;
@@ -163,10 +206,10 @@
                             ?>
                             <tr>
                                 <td>
-                                    @if($product->bar_type == 6)
-                                        6mm
+                                @if($product->bar_type == 6)
+                                    6mm
                                     @elseif($product->bar_type == 8)
-                                        8mm
+                                    8mm
                                     @elseif($product->bar_type == 10)
                                         10mm
                                     @elseif($product->bar_type == 12)
@@ -197,9 +240,9 @@
                                 <td> {{ number_format($product->kg_by_ton, 2) }}</td>
                                 <td>
                                     @if($product->length_type == 1)
-                                        Horizontal
+                                        X-Direction
                                     @else
-                                        Vertical
+                                    Y-Direction
                                     @endif
                                 </td>
                                 <td> {{ number_format($product->length, 2) }}</td>
@@ -213,92 +256,9 @@
                     @endforeach
                     </tbody>
                     <tr>
-                        <th colspan="11" class="text-right" >Total Ton/KG</th>
-                        <td> {{ number_format($mainTotalKg, 2) }}</td>
-                        <td> {{ number_format($mainTotalTon, 3) }}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Extra Bar Calculation</h4>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Bar</th>
-                        <th>Dia</th>
-                        <th>Dia(D^2)</th>
-                        <th>Value of Bar</th>
-                        <th>Kg/Rft</th>
-                        <th>Kg/Ton</th>
-                        <th>Extra Bar</th>
-                        <th>Extra Length</th>
-                        <th>Sub Total Kg</th>
-                        <th>Sub Total Ton</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($commonConfigure->commonConfigureProducts as $product)
-
-                        @if($product->status == 1)
-                            <?php
-                            $extraTotalKg += $product->sub_total_kg;
-                            $extraTotalTon += $product->sub_total_ton;
-                            ?>
-                            <tr>
-                                <td>
-                                    @if($product->bar_type == 6)
-                                        6mm
-                                    @elseif($product->bar_type == 8)
-                                        8mm
-                                    @elseif($product->bar_type == 10)
-                                        10mm
-                                    @elseif($product->bar_type == 12)
-                                        12mm
-                                    @elseif($product->bar_type == 16)
-                                        16mm
-                                    @elseif($product->bar_type == 18)
-                                        18mm
-                                    @elseif($product->bar_type == 20)
-                                        20mm
-                                    @elseif($product->bar_type == 22)
-                                        22mm
-                                    @elseif($product->bar_type == 25)
-                                        25mm
-                                    @elseif($product->bar_type == 28)
-                                        28mm
-                                    @elseif($product->bar_type == 32)
-                                        32mm
-                                    @elseif($product->bar_type == 36)
-                                        36mm
-                                    @endif
-
-                                </td>
-                                <td>{{ $product->dia }}</td>
-                                <td> {{ $product->dia_square }}</td>
-                                <td> {{ number_format($product->value_of_bar, 2) }}</td>
-                                <td> {{ number_format($product->kg_by_rft, 2) }}</td>
-                                <td> {{ number_format($product->kg_by_ton, 2) }}</td>
-                                <td> {{ number_format($product->number_of_bar, 2) }}</td>
-                                <td> {{ number_format($product->extra_length, 2) }}</td>
-                                <td> {{ number_format($product->sub_total_kg, 2) }}</td>
-                                <td> {{ number_format($product->sub_total_ton, 3) }}</td>
-                            </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                    <tr>
-                        <th colspan="8" class="text-right" >Extra Bar Total</th>
-                        <td> {{ number_format($extraTotalKg, 2) }}</td>
-                        <td> {{ number_format($extraTotalTon, 3) }}</td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="8" class="text-right" >Total Ton/KG</th>
-                        <td> {{ number_format($commonConfigure->total_kg, 2) }}</td>
-                        <td> {{ number_format($commonConfigure->total_ton, 3) }}</td>
+                        <th colspan="11" class="text-right">Main Bar Total</th>
+                        <th> {{ number_format($mainTotalKg, 2) }}</th>
+                        <th> {{ number_format($mainTotalTon, 3) }}</th>
                     </tr>
                 </table>
             </div>
@@ -306,34 +266,62 @@
 
         <u><i><h2>Costing Area</h2></i></u>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-md-4">
                 <table class="table table-bordered">
-                    <tr>
-                        <th>Bar(Rod) Price (Kg)</th>
-                        <td>৳ {{ $commonConfigure->total_common_bar_price }} Taka</td>
-                    </tr>
-                    <tr>
-                        <th>Cement Price(Bag)</th>
-                        <td>৳ {{ $commonConfigure->total_common_cement_bag_price }} Taka</td>
-                    </tr>
+                    @if ($pileCapConfigure->course_aggregate_type == 3)
+                        <tr>
+                            <th>Bar(Rod) Price (Kg)</th>
+                            <td>৳ {{ $pileCapConfigure->total_common_bar_price }} Taka</td>
+                        </tr>
+                    @else  
+                        <tr>
+                            <th>Bar(Rod) Price (Kg)</th>
+                            <td>৳ {{ $pileCapConfigure->total_common_bar_price }} Taka</td>
+                        </tr>
+                        <tr>
+                            <th>Cement Price(Bag)</th>
+                            <td>৳ {{ number_format($pileCapConfigure->total_common_cement_bag_price,2) }} Taka</td>
+                        </tr>  
+                    @endif
                 </table>
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-md-4">
                 <table class="table table-bordered">
+                    @if($pileCapConfigure->course_aggregate_type == 1)
                     <tr>
                         <th>Sands Price (Cft)</th>
-                        <td>৳ {{ $commonConfigure->total_common_sands_price }} Taka</td>
+                        <td>৳ {{ $pileCapConfigure->total_common_sands_price }} Taka</td>
                     </tr>
-                    @if($commonConfigure->total_picked == 0)
+                    <tr>
+                        <th>Aggregate Price (Cft)</th>
+                        <td>৳ {{ $pileCapConfigure->total_common_aggregate_price }} Taka</td>
+                    </tr>
+                    @elseif ($pileCapConfigure->course_aggregate_type == 2)
                         <tr>
-                            <th>Aggregate Price (Cft)</th>
-                            <td>৳ {{ $commonConfigure->total_common_aggregate_price }} Taka</td>
+                            <th>Sands Price (Cft)</th>
+                            <td>৳ {{ $pileCapConfigure->total_common_sands_price }} Taka</td>
                         </tr>
-                    @else
                         <tr>
                             <th>Picked Price (Pcs)</th>
-                            <td>৳ {{ $commonConfigure->total_common_picked_price }} Taka</td>
+                            <td>৳ {{ $pileCapConfigure->total_common_picked_price }} Taka</td>
+                        </tr>
+                    @else
+                      
+                    @endif
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table table-bordered">
+                    @if ($pileCapConfigure->course_aggregate_type == 3)
+                        <tr>
+                            <th>RMC Price (Cft)</th>
+                            <td>৳ {{ $pileCapConfigure->total_pile_cap_rmc_price }} Taka</td>
+                        </tr>
+                    @else    
+                        <tr>
+                            <th>Sylhet Sands Price (Cft)</th>
+                            <td>৳ {{ $pileCapConfigure->total_beam_s_sands_price }} Taka</td>
                         </tr>
                     @endif
                 </table>

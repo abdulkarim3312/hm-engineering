@@ -73,16 +73,16 @@ class CommonConfigureController extends Controller
         ]);
 
         $total_dry_volume = (($request->segment_length * $request->segment_width) * $request->segment_thickness) * 1.5;
-        // dd($total_dry_volume);
+        
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
-        // dd($totalRatio);
+        
         $totalCement = ($total_dry_volume * $request->first_ratio/$totalRatio);
         $totalCementBag = ($totalCement/1.25);
-        // dd($totalCementBag);
+       
         $totalSands = ($total_dry_volume * $request->second_ratio/$totalRatio);
-        // dd($totalSands);
+        
         $totalAggregate = ($total_dry_volume * $request->third_ratio/$totalRatio);
-        // dd($totalAggregate);
+       
         if ($request->course_aggregate_type == 2){
             $totalPiked = ($totalAggregate * 11.11);
         }else{
@@ -94,29 +94,65 @@ class CommonConfigureController extends Controller
         $commonConfigure->estimate_project_id = $request->estimate_project;
         $commonConfigure->costing_segment_id = $request->costing_segment;
         $commonConfigure->costing_segment_quantity = $request->costing_segment_quantity;
+        $commonConfigure->course_aggregate_type = $request->course_aggregate_type;
         $commonConfigure->first_ratio = $request->first_ratio;
         $commonConfigure->second_ratio = $request->second_ratio;
         $commonConfigure->third_ratio = $request->third_ratio;
+        $commonConfigure->slab_length = $request->segment_length;
+        $commonConfigure->slab_width = $request->segment_width;
+        $commonConfigure->slab_thickness = $request->segment_thickness;
+        $commonConfigure->total_volume = $request->total_volume * $request->costing_segment_quantity;
+        $commonConfigure->dry_volume = $request->dry_volume * $request->costing_segment_quantity;
+        $commonConfigure->total_dry_volume = $request->total_dry_volume * $request->costing_segment_quantity;
         $commonConfigure->date = $request->date;
         $commonConfigure->note = $request->note;
         $commonConfigure->total_ton = 0;
         $commonConfigure->total_kg = 0;
         $commonConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
         $commonConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
-        $commonConfigure->total_sands = $totalSands * $request->costing_segment_quantity;
-        $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
-        $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
-
+        if($request->course_aggregate_type == 3){
+            $commonConfigure->total_sands = 0;
+            $commonConfigure->total_s_sands = 0;
+            $commonConfigure->total_aggregate = 0;
+        }else if($request->course_aggregate_type == 2){
+            $commonConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $commonConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
+            $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
+        }else{
+            $commonConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $commonConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
+            $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
+        }
+        
         //price
         $commonConfigure->common_bar_per_cost = $request->common_bar_costing;
         $commonConfigure->common_cement_per_cost = $request->common_cement_costing;
         $commonConfigure->common_sands_per_cost = $request->common_sands_costing;
-        $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
-        $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
+        $commonConfigure->s_sands_costing = $request->s_sands_costing;
         //Total Price
         $commonConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
-        // dd($commonConfigure->total_common_cement_bag_price);
-        $commonConfigure->total_common_sands_price = ($totalSands * $request->costing_segment_quantity) * $request->common_sands_costing;
+        if($request->course_aggregate_type == 3){
+            $commonConfigure->total_common_sands_price = 0;
+            $commonConfigure->total_slab_s_sands_price = 0;
+            $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
+            $commonConfigure->common_aggregate_per_cost = 0;
+            $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
+        }else if($request->course_aggregate_type == 2){
+            $commonConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $commonConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
+            $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing ?? 0;
+            $commonConfigure->common_picked_per_cost = $request->common_picked_costing ?? 0;
+        }else{
+            $commonConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $commonConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
+            $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
+            $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
+        }
+        
         $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
         $commonConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
         $commonConfigure->total_common_bar_price = 0;
@@ -130,8 +166,12 @@ class CommonConfigureController extends Controller
         $totalKg = 0;
         foreach ($request->product as $key => $reqProduct) {
 
-            $division = $request->length[$counter]/$request->spacing[$counter];
-
+            $rft = ($request->length[$counter]/$request->spacing[$counter]) + 1;
+            $item = ($request->type_length[$counter] - (($request->clear_cover[$counter] / 12) * 2));
+            $data = $rft *  $item;
+            $sub_total =  ($request->lapping_lenght[$counter] * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter];
+            $total_main_rod = (($data *  $request->kg_by_rft[$counter]) + $sub_total) * $request->layer[$counter];
+           
             CommonConfigureProduct::create([
                 'common_configure_id' => $commonConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
@@ -147,14 +187,13 @@ class CommonConfigureController extends Controller
                 'spacing' => $request->spacing[$counter] * $request->costing_segment_quantity,
                 'type_length' => $request->type_length[$counter] * $request->costing_segment_quantity,
                 'layer' => $request->layer[$counter] * $request->costing_segment_quantity,
-                'sub_total_kg' => ((($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter] * $request->costing_segment_quantity),
-                'sub_total_ton' => ((((($division * $request->type_length[$counter]) * $request->layer[$counter])
-                        * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]) * $request->costing_segment_quantity),
+                'sub_total_kg' => $total_main_rod,
+                'sub_total_ton' => (($total_main_rod / $request->kg_by_ton[$counter]) * $request->costing_segment_quantity),
             ]);
 
-            $totalKg += (($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter];
+            $totalKg +=$total_main_rod;
             // dd($totalKg);
-            $totalTon += (((($division * $request->type_length[$counter]) * $request->layer[$counter]) * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]);
+            $totalTon += ($total_main_rod / $request->kg_by_ton[$counter]);
 
             $counter++;
         }

@@ -52,7 +52,7 @@
                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                 </div>
             </div>
-            <div class="col-xs-8 text-center">
+            <div class="col-xs-8 text-center" style="margin-left:-118px;">
                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -61,11 +61,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 text-center">
-{{--                <h4 style="padding: 10px;"><span style="font-weight: 700" class="pull-left">Serial No: {{ $order->id+10000 }}</span> <u><span style="font-size: 30px;font-weight: bold;text-transform: uppercase; margin-right: 100px;"> Purchase Receipt </span></u><span style="text-align: center; font-weight: normal;font-size: 16px;position: absolute;text-transform: capitalize;right: 20px;"><b>Date: </b> {{ date('j F, Y') }}</span></h4>--}}
-
-            </div>
-            <div class="col-xs-6">
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
                         <th>Slab Configure No.</th>
@@ -83,25 +79,39 @@
                         <th>Costing Segment Name</th>
                         <td>{{ $commonConfigure->costingSegment->name }}</td>
                     </tr>
-                    <tr>
-                        <th>Total Cement</th>
-                        <td>{{ $commonConfigure->total_cement_bag }} Bag</td>
-                    </tr>
-                    <tr>
-                        <th>Total Sands</th>
-                        <td>{{ $commonConfigure->total_sands }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Aggregate</th>
-                        <td>{{ $commonConfigure->total_aggregate }} Cft</td>
-                    </tr>
+                    @if ($commonConfigure->course_aggregate_type == 3)
+                        
+                    @else
+                        <tr>
+                            <th>Total Cement(Cft)</th>
+                            <td>{{ $commonConfigure->total_cement }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Cement</th>
+                            <td>{{ $commonConfigure->total_cement_bag }} Bag</td>
+                        </tr>
+                        <tr>
+                            <th>Total Local Sands</th>
+                            <td>{{ $commonConfigure->total_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Sylhet Sands</th>
+                            <td>{{ $commonConfigure->total_s_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Aggregate</th>
+                            <td>{{ $commonConfigure->total_aggregate }} Cft</td>
+                        </tr>    
+                    @endif
+
                     <tr>
                         <th>Note </th>
                         <td>{{ $commonConfigure->note??'' }}</td>
                     </tr>
                 </table>
             </div>
-            <div class="col-xs-6">
+
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
                         <th colspan="2" class="text-center">{{$commonConfigure->costingSegment->name}} Info</th>
@@ -122,10 +132,31 @@
                         <th>Total Piked</th>
                         <td>{{ $commonConfigure->total_picked }} Pcs</td>
                     </tr>
+                    <tr>
+                        <th>Slab Length</th>
+                        <td>{{ $commonConfigure->slab_length }}</td>
+                    </tr>
+                    <tr>
+                        <th>Slab Width</th>
+                        <td>{{ $commonConfigure->slab_width }} </td>
+                    </tr>
+                    <tr>
+                        <th>Slab Thickness</th>
+                        <td>{{ $commonConfigure->slab_thickness }} </td>
+                    </tr>
+                    <tr>
+                        <th>Total Volume</th>
+                        <td>{{ $commonConfigure->total_volume }} </td>
+                    </tr>
+                    <tr>
+                        <th>Total Dry Volume</th>
+                        <td>{{ $commonConfigure->total_dry_volume }} </td>
+                    </tr>
 
                 </table>
             </div>
         </div>
+
         @php
             $mainTotalKg = 0;
             $mainTotalTon = 0;
@@ -156,6 +187,7 @@
                     </thead>
                     <tbody>
                     @foreach($commonConfigure->commonConfigureProducts as $product)
+
                         @if($product->status == null)
                             <?php
                             $mainTotalKg += $product->sub_total_kg;
@@ -163,10 +195,10 @@
                             ?>
                             <tr>
                                 <td>
-                                    @if($product->bar_type == 6)
-                                        6mm
+                                @if($product->bar_type == 6)
+                                    6mm
                                     @elseif($product->bar_type == 8)
-                                        8mm
+                                    8mm
                                     @elseif($product->bar_type == 10)
                                         10mm
                                     @elseif($product->bar_type == 12)
@@ -197,9 +229,9 @@
                                 <td> {{ number_format($product->kg_by_ton, 2) }}</td>
                                 <td>
                                     @if($product->length_type == 1)
-                                        Horizontal
+                                        X-Direction
                                     @else
-                                        Vertical
+                                    Y-Direction
                                     @endif
                                 </td>
                                 <td> {{ number_format($product->length, 2) }}</td>
@@ -213,9 +245,9 @@
                     @endforeach
                     </tbody>
                     <tr>
-                        <th colspan="11" class="text-right" >Total Ton/KG</th>
-                        <td> {{ number_format($mainTotalKg, 2) }}</td>
-                        <td> {{ number_format($mainTotalTon, 3) }}</td>
+                        <th colspan="11" class="text-right">Main Bar Total</th>
+                        <th> {{ number_format($mainTotalKg, 2) }}</th>
+                        <th> {{ number_format($mainTotalTon, 3) }}</th>
                     </tr>
                 </table>
             </div>
@@ -291,49 +323,76 @@
                     </tbody>
                     <tr>
                         <th colspan="8" class="text-right" >Extra Bar Total</th>
-                        <td> {{ number_format($extraTotalKg, 2) }}</td>
-                        <td> {{ number_format($extraTotalTon, 3) }}</td>
+                        <td><b>{{ number_format($extraTotalKg, 2) }}</b></td>
+                        <td><b>{{ number_format($extraTotalTon, 3) }}</b></td>
                     </tr>
 
                     <tr>
                         <th colspan="8" class="text-right" >Total Ton/KG</th>
-                        <td> {{ number_format($commonConfigure->total_kg, 2) }}</td>
-                        <td> {{ number_format($commonConfigure->total_ton, 3) }}</td>
+                        <td><b>{{ number_format($commonConfigure->total_kg, 2) }}</b></td>
+                        <td><b>{{ number_format($commonConfigure->total_ton, 3) }}</b></td>
                     </tr>
                 </table>
             </div>
         </div>
-
         <u><i><h2>Costing Area</h2></i></u>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-md-4">
                 <table class="table table-bordered">
-                    <tr>
-                        <th>Bar(Rod) Price (Kg)</th>
-                        <td>৳ {{ $commonConfigure->total_common_bar_price }} Taka</td>
-                    </tr>
-                    <tr>
-                        <th>Cement Price(Bag)</th>
-                        <td>৳ {{ $commonConfigure->total_common_cement_bag_price }} Taka</td>
-                    </tr>
+                    @if ($commonConfigure->course_aggregate_type == 3)
+                        <tr>
+                            <th>Bar(Rod) Price (Kg)</th>
+                            <td>৳ {{ $commonConfigure->total_common_bar_price }} Taka</td>
+                        </tr>
+                    @else  
+                        <tr>
+                            <th>Bar(Rod) Price (Kg)</th>
+                            <td>৳ {{ $commonConfigure->total_common_bar_price }} Taka</td>
+                        </tr>
+                        <tr>
+                            <th>Cement Price(Bag)</th>
+                            <td>৳ {{ number_format($commonConfigure->total_common_cement_bag_price,2) }} Taka</td>
+                        </tr>  
+                    @endif
                 </table>
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-md-4">
                 <table class="table table-bordered">
+                    @if($commonConfigure->course_aggregate_type == 1)
                     <tr>
                         <th>Sands Price (Cft)</th>
                         <td>৳ {{ $commonConfigure->total_common_sands_price }} Taka</td>
                     </tr>
-                    @if($commonConfigure->total_picked == 0)
+                    <tr>
+                        <th>Aggregate Price (Cft)</th>
+                        <td>৳ {{ $commonConfigure->total_common_aggregate_price }} Taka</td>
+                    </tr>
+                    @elseif ($commonConfigure->course_aggregate_type == 2)
                         <tr>
-                            <th>Aggregate Price (Cft)</th>
-                            <td>৳ {{ $commonConfigure->total_common_aggregate_price }} Taka</td>
+                            <th>Sands Price (Cft)</th>
+                            <td>৳ {{ $commonConfigure->total_common_sands_price }} Taka</td>
                         </tr>
-                    @else
                         <tr>
                             <th>Picked Price (Pcs)</th>
                             <td>৳ {{ $commonConfigure->total_common_picked_price }} Taka</td>
+                        </tr>
+                    @else
+                      
+                    @endif
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table table-bordered">
+                    @if ($commonConfigure->course_aggregate_type == 3)
+                        <tr>
+                            <th>RMC Price (Cft)</th>
+                            <td>৳ {{ $commonConfigure->total_slab_rmc_price }} Taka</td>
+                        </tr>
+                    @else    
+                        <tr>
+                            <th>Sylhet Sands Price (Cft)</th>
+                            <td>৳ {{ $commonConfigure->total_slab_s_sands_price }} Taka</td>
                         </tr>
                     @endif
                 </table>

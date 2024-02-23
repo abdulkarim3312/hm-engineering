@@ -327,7 +327,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('pile_sands_costing') ? 'has-error' :'' }}">
-                                    <label>Sands Cost(Per Cft)</label>
+                                    <label>L.Sands Cost(Per Cft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" step="any"
@@ -1044,10 +1044,6 @@
             var cover = $('#cover').val();
             var spiral_bar = $('#spiral_bar').val();
             var lapping_nos = $('#lapping_nos').val();
-
-
-
-
 
             if (pile_height == '' || pile_height < 0 || !$.isNumeric(pile_height))
                 pile_height = 0;

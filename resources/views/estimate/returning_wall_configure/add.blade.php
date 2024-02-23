@@ -87,11 +87,11 @@
 
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('costing_segment_quantity') ? 'has-error' :'' }}">
-                                    <label>Costing Segment Quantity</label>
+                                    <label>Returning Wall Quantity</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="costing_segment_quantity" step="any"
-                                               name="costing_segment_quantity" value="{{ old('costing_segment_quantity') }}" placeholder="Costing Segment Quantity">
+                                               name="costing_segment_quantity" value="{{ old('costing_segment_quantity') }}" placeholder="Returning Wall Quantity">
                                     </div>
                                     <!-- /.input group -->
 
@@ -105,10 +105,10 @@
                                     <label>Course Aggregate Type</label>
 
                                     <select class="form-control select2" style="width: 100%;" name="course_aggregate_type" id="course_aggregate_type"
-                                            data-placeholder="Select Course Aggregate Type">
-{{--                                        <option value="">Select Course Aggregate Type</option>--}}
+                                            data-placeholder="Select Course Aggregate Type">                               
                                         <option value="1" {{ old('course_aggregate_type') == 1 ? 'selected' : '' }}>Stone</option>
                                         <option value="2" {{ old('course_aggregate_type') == 2 ? 'selected' : '' }}>Brick Chips</option>
+                                        <option value="3" {{ old('course_aggregate_type') == 3 ? 'selected' : '' }}>RMC</option>
                                     </select>
 
                                     @error('course_aggregate_type')
@@ -121,11 +121,11 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('segment_length') ? 'has-error' :'' }}">
-                                    <label>Segment Length(Ft)</label>
+                                    <label>R. Wall Length(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="segment_length" step="any"
-                                               name="segment_length" value="{{ old('segment_length') }}" placeholder="Segment Length">
+                                               name="segment_length" value="{{ old('segment_length') }}" placeholder="Returning Wall Length">
                                     </div>
                                     <!-- /.input group -->
 
@@ -137,11 +137,11 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('segment_width') ? 'has-error' :'' }}">
-                                    <label>Segment Width(Ft)</label>
+                                    <label>R. Wall Width(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="segment_width" step="any"
-                                               name="segment_width" value="{{ old('segment_width') }}" placeholder="Segment Width">
+                                               name="segment_width" value="{{ old('segment_width') }}" placeholder="Returning Wall Width">
                                     </div>
                                     <!-- /.input group -->
 
@@ -153,11 +153,11 @@
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('segment_thickness') ? 'has-error' :'' }}">
-                                    <label style="font-size: 15px;">Segment Thickness(Ft)</label>
+                                    <label style="font-size: 15px;">R. Wall Thickness(Ft)</label>
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="segment_thickness" step="any"
-                                               name="segment_thickness" value="{{ old('segment_thickness') }}" placeholder="Segment Thickness">
+                                               name="segment_thickness" value="{{ old('segment_thickness') }}" placeholder="Returning Wall Thickness">
                                     </div>
                                     <!-- /.input group -->
 
@@ -300,28 +300,31 @@
                         <u><i><h3>Costing Area</h3></i></u>
 
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('common_bar_costing') ? 'has-error' :'' }}">
-                                    <label>Bar Cost(Per Kg)</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" step="any"
-                                               name="common_bar_costing" value="{{ $columnCost->column_bar_per_cost??0 }}" placeholder="Enter Per Kg Bar Costing">
+                            <div id="common_bar_costing">
+                                <div class="col-md-3">
+                                    <div class="form-group {{ $errors->has('common_bar_costing') ? 'has-error' :'' }}">
+                                        <label>Bar Cost(Per Kg)</label>
+    
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" step="any"
+                                                   name="common_bar_costing" value="{{ 0 }}" placeholder="Enter Per Kg Bar Costing">
+                                        </div>
+                                        <!-- /.input group -->
+    
+                                        @error('common_bar_costing')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <!-- /.input group -->
-
-                                    @error('common_bar_costing')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
                                 </div>
                             </div>
 
+                           <div id="common_cement_costing">
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('common_cement_costing') ? 'has-error' :'' }}">
                                     <label>Cement Cost(Per Bag)</label>
 
                                     <div class="form-group">
-                                        <input type="number" class="form-control" step="any" value="{{ $columnCost->column_cement_per_cost??0 }}"
+                                        <input type="number" class="form-control" step="any" value="{{ 0 }}"
                                                name="common_cement_costing"  placeholder="Enter Per Bag Cement Costing"
                                         >
                                     </div>
@@ -332,13 +335,15 @@
                                     @enderror
                                 </div>
                             </div>
+                           </div>
 
+                           <div id="common_sands_costing">
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('common_sands_costing') ? 'has-error' :'' }}">
-                                    <label>Sands Cost(Per Cft)</label>
+                                    <label>L.Sands Cost(Per Cft)</label>
 
                                     <div class="form-group">
-                                        <input type="number" class="form-control" step="any" value="{{ $columnCost->column_sands_per_cost??0 }}"
+                                        <input type="number" class="form-control" step="any" value="{{ 0 }}"
                                                name="common_sands_costing"  placeholder="Enter Per Cft Sands Costing">
                                     </div>
                                     <!-- /.input group -->
@@ -348,13 +353,31 @@
                                     @enderror
                                 </div>
                             </div>
+                           </div>
+                           <div id="s_sands_costing">
+                            <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('s_sands_costing') ? 'has-error' :'' }}">
+                                    <label>S.Sands Cost(Per Cft)</label>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" step="any" value="{{ 0 }}"
+                                               name="s_sands_costing"  placeholder="Enter Per Cft S.Sands Costing">
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('s_sands_costing')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                           </div>
                             <div id="common_aggregate_costing">
                                 <div class="col-md-2">
                                     <div class="form-group {{ $errors->has('common_aggregate_costing') ? 'has-error' :'' }}">
                                         <label>Aggregate Cost(Cft)</label>
 
                                         <div class="form-group">
-                                            <input type="number" class="form-control" step="any" value="{{ $columnCost->column_aggregate_per_cost??0 }}"
+                                            <input type="number" class="form-control" step="any" value="{{ 0 }}"
                                                    name="common_aggregate_costing"  placeholder="Enter Per Cft Aggregates Costing">
                                         </div>
                                         <!-- /.input group -->
@@ -372,12 +395,29 @@
                                         <label>Picked Cost(Per Cft)</label>
 
                                         <div class="form-group">
-                                            <input type="number" class="form-control" step="any" value="{{ $columnCost->column_picked_per_cost??0 }}"
+                                            <input type="number" class="form-control" step="any" value="{{ 0 }}"
                                                    name="common_picked_costing"  placeholder="Enter Per Pcs Picked Costing">
                                         </div>
                                         <!-- /.input group -->
 
                                         @error('common_picked_costing')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="rmc_costing">
+                                <div class="col-md-4">
+                                    <div class="form-group {{ $errors->has('rmc_costing') ? 'has-error' :'' }}">
+                                        <label>RMC Cost(Per Cft)</label>
+
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" step="any" value="{{ 0 }}"
+                                                   name="rmc_costing"  placeholder="Enter Rmc Costing">
+                                        </div>
+                                        <!-- /.input group -->
+
+                                        @error('rmc_costing')
                                         <span class="help-block">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -390,20 +430,22 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Bar Type</th>
-                                    <th>Dia</th>
-                                    <th>Dia Square(D^2)</th>
-                                    <th>Value of Bar</th>
-                                    <th>Kg/Rft</th>
-                                    <th>Kg/Ton</th>
-                                    <th>Length Type</th>
-                                    <th>Length</th>
-                                    <th>Spacing</th>
-                                    <th>Type Length</th>
-                                    <th>Layer</th>
-                                    <th>Kg</th>
-                                    <th>Ton</th>
-                                    <th></th>
+                                    <th width="5%">Bar Type</th>
+                                    <th width="5%">Dia</th>
+                                    <th width="5%">Dia Square(D^2)</th>
+                                    <th width="5%">Value of Bar</th>
+                                    <th width="5%">Kg/Rft</th>
+                                    <th width="5%">Kg/Ton</th>
+                                    <th width="5%">Length Type</th>
+                                    <th width="5%">Length(ft)</th>
+                                    <th width="5%">Spacing(ft)</th>
+                                    <th width="5%">Type Length(ft)</th>
+                                    <th width="5%">Clear Cover(inch)</th>
+                                    <th width="5%">Lapping Length(ft)</th>
+                                    <th width="5%">Lapping Nos.</th>
+                                    <th width="5%">Layer</th>
+                                    <th width="5%">Kg</th>
+                                    <th width="5%">Ton</th>
                                 </tr>
                                 </thead>
 
@@ -484,6 +526,22 @@
                                                     <input type="number" class="form-control type_length" name="type_length[]" step="any" value="{{ old('type_length.'.$loop->index) }}">
                                                 </div>
                                             </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('clear_cover.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" class="form-control clear_cover" name="clear_cover[]" step="any" value="{{ old('clear_cover.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group {{ $errors->has('lapping_lenght.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" id="lapping_lenght" step="0.01" class="form-control lapping_lenght" name="lapping_lenght[]" value="{{ old('lapping_lenght.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('lapping_nos.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" id="lapping_nos" step="any" class="form-control lapping_nos" name="lapping_nos[]" value="{{ old('lapping_nos.'.$loop->index) }}">
+                                                </div>
+                                            </td>
 
                                             <td>
                                                 <div class="form-group {{ $errors->has('layer.'.$loop->index) ? 'has-error' :'' }}">
@@ -493,6 +551,7 @@
 
                                             <td class="total-kg">0.00</td>
                                             <td class="total-ton">0.00</td>
+
                                             <td class="text-center">
                                                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                             </td>
@@ -552,7 +611,7 @@
                                             <div class="form-group">
                                                 <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
                                                     <option value="1">Horizontal</option>
-                                                    <option value="2">Vertcal</option>
+                                                    <option value="2">Vertical</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -577,11 +636,29 @@
 
                                         <td>
                                             <div class="form-group">
+                                                <input type="number" class="form-control clear_cover" name="clear_cover[]" step="any">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="0.01" id="lapping_lenght" class="form-control lapping_lenght" name="lapping_lenght[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any" id="lapping_nos" class="form-control lapping_nos" name="lapping_nos[]">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
                                                 <input type="number" class="form-control layer" name="layer[]" value="1" step="any">
                                             </div>
                                         </td>
                                         <td class="total-kg">0.00</td>
                                         <td class="total-ton">0.00</td>
+
                                         <td class="text-center">
                                             <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                         </td>
@@ -594,225 +671,13 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product">Add More</a>
                                     </td>
+
                                 </tr>
                                 </tfoot>
                             </table>
                         </div>
 
                         <div class="table-responsive">
-                            <strong><h3>Calculation of Extra Bar</h3></strong>
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Bar Type</th>
-                                    <th>Dia</th>
-                                    <th>Dia Square(D^2)</th>
-                                    <th>Value of Bar</th>
-                                    <th>Kg/Rft</th>
-                                    <th>Kg/Ton</th>
-                                    <th>Length Type</th>
-                                    <th>Length</th>
-                                    <th>Spacing</th>
-                                    <th>Type Length</th>
-                                    <th>Layer</th>
-                                    <th>Kg</th>
-                                    <th>Ton</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-
-                                <tbody id="product-container-extra">
-                                @if (old('product') != null && sizeof(old('product')) > 0)
-                                    @foreach(old('product') as $item)
-                                        <tr class="product-item">
-                                            <td>
-                                                <div class="form-group {{ $errors->has('product.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <select class="form-control select2 product" name="product[]" data-placeholder="Select Product" required>
-                                                            <option value="6" {{ old('product') == 6 ? 'selected' : '' }}>6mm</option>
-                                                            <option value="8" {{ old('product') == 8 ? 'selected' : '' }}>8mm</option>
-                                                            <option value="10" {{ old('product') == 10 ? 'selected' : '' }}>10mm</option>
-                                                            <option value="12" {{ old('product') == 12 ? 'selected' : '' }}>12mm</option>
-                                                            <option value="16" {{ old('product') == 16 ? 'selected' : '' }}>16mm</option>
-                                                            <option value="18" {{ old('product') == 18 ? 'selected' : '' }}>18mm</option>
-                                                            <option value="20" {{ old('product') == 20 ? 'selected' : '' }}>20mm</option>
-                                                            <option value="22" {{ old('product') == 22 ? 'selected' : '' }}>22mm</option>
-                                                            <option value="25" {{ old('product') == 25 ? 'selected' : '' }}>25mm</option>
-                                                            <option value="28" {{ old('product') == 28 ? 'selected' : '' }}>28mm</option>
-                                                            <option value="32" {{ old('product') == 32 ? 'selected' : '' }}>32mm</option>
-                                                            <option value="36" {{ old('product') == 36 ? 'selected' : '' }}>36mm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group {{ $errors->has('dia.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text"  name="dia[]" class="form-control dia" value="{{ old('dia.'.$loop->index) }}" readonly>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('dia_square.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" class="form-control dia_square" name="dia_square[]" value="{{ old('dia_square.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('value_of_bar.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" readonly class="form-control value_of_bar" name="value_of_bar[]" value="{{ old('value_of_bar.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('kg_by_rft.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" class="form-control kg_by_rft" name="kg_by_rft[]" value="{{ old('kg_by_rft.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('kg_by_ton.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" readonly class="form-control kg_by_ton" name="kg_by_ton[]" value="{{ old('kg_by_ton.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group {{ $errors->has('length_type.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
-                                                        <option value="1" {{ old('length_type') == 1 ? 'selected' : '' }}>Horizontal</option>
-                                                        <option value="2" {{ old('length_type') == 2 ? 'selected' : '' }}>Vertical</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('length.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" class="form-control length" name="length[]" step="any" value="{{ old('length.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('spacing.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" class="form-control spacing" name="spacing[]" step="any" value="{{ old('spacing.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('type_length.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" class="form-control type_length" name="type_length[]" step="any" value="{{ old('type_length.'.$loop->index) }}">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('layer.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" class="form-control layer" name="layer[]" value="{{ old('layer.'.$loop->index) }}" step="any">
-                                                </div>
-                                            </td>
-
-                                            <td class="total-kg">0.00</td>
-                                            <td class="total-ton">0.00</td>
-                                            <td class="text-center">
-                                                <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr class="product-item">
-                                        <td>
-                                            <div class="form-group">
-                                                <select class="form-control product" name="product[]" required>
-                                                    <option value="6">6mm</option>
-                                                    <option value="8">8mm</option>
-                                                    <option value="10">10mm</option>
-                                                    <option value="12">12mm</option>
-                                                    <option value="16">16mm</option>
-                                                    <option value="18">18mm</option>
-                                                    <option value="20">20mm</option>
-                                                    <option value="22">22mm</option>
-                                                    <option value="25">25mm</option>
-                                                    <option value="28">28mm</option>
-                                                    <option value="32">32mm</option>
-                                                    <option value="36">36mm</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" name="dia[]" class="form-control dia" readonly>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control dia_square" name="dia_square[]">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" readonly class="form-control value_of_bar" name="value_of_bar[]" value="532.17">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control kg_by_rft" name="kg_by_rft[]">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" readonly class="form-control kg_by_ton" name="kg_by_ton[]" value="1000">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
-                                                    <option value="1">Horizontal</option>
-                                                    <option value="2">Vertcal</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" class="form-control length" name="length[]" step="any">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" class="form-control spacing" name="spacing[]" step="any">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" class="form-control type_length" name="type_length[]" step="any">
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" class="form-control layer" name="layer[]" value="1" step="any">
-                                            </div>
-                                        </td>
-                                        <td class="total-kg">0.00</td>
-                                        <td class="total-ton">0.00</td>
-                                        <td class="text-center">
-                                            <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
-                                        </td>
-                                    </tr>
-                                @endif
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <td>
-                                        <a role="button" class="btn btn-info btn-sm" id="btn-add-product-extra">Add More</a>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        {{-- <div class="table-responsive">
                             <strong><h3>Calculation of Extra Bar</h3></strong>
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -824,7 +689,7 @@
                                     <th width="10%">Kg/Rft</th>
                                     <th width="10%">Kg/Ton</th>
                                     <th width="10%">Bar Nos.</th>
-                                    <th width="10%">Length</th>
+                                    <th width="10%">Length(ft)</th>
                                     <th>Kg</th>
                                     <th>Ton</th>
                                     <th></th>
@@ -981,7 +846,7 @@
                                 </tr>
                                 </tfoot>
                             </table>
-                        </div> --}}
+                        </div>
                     </div>
                     <!-- /.box-body -->
 
@@ -1055,7 +920,7 @@
                 <div class="form-group">
                     <input type="number" class="form-control length" name="length[]" step="any">
                 </div>
-            </td>
+            </td> 
 
             <td>
                 <div class="form-group">
@@ -1068,93 +933,20 @@
                     <input type="number" class="form-control type_length" name="type_length[]" step="any">
                 </div>
             </td>
-
             <td>
                 <div class="form-group">
-                    <input type="number" class="form-control layer" name="layer[]" value="1" step="any">
-                </div>
-            </td>
-            <td class="total-kg">0.00</td>
-            <td class="total-ton">0.00</td>
-
-            <td class="text-center">
-                <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
-            </td>
-        </tr>
-    </template>
-    <template id="template-product-extra">
-        <tr class="product-item">
-            <td>
-                <div class="form-group">
-                    <select class="form-control product" name="product[]" required>
-                        <option value="6">6mm</option>
-                        <option value="8">8mm</option>
-                        <option value="10">10mm</option>
-                        <option value="12">12mm</option>
-                        <option value="16">16mm</option>
-                        <option value="18">18mm</option>
-                        <option value="20">20mm</option>
-                        <option value="22">22mm</option>
-                        <option value="25">25mm</option>
-                        <option value="28">28mm</option>
-                        <option value="32">32mm</option>
-                        <option value="36">36mm</option>
-                    </select>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <input type="text" name="dia[]" class="form-control dia" readonly>
+                    <input type="number" class="form-control clear_cover" name="clear_cover[]" step="any">
                 </div>
             </td>
 
             <td>
                 <div class="form-group">
-                    <input type="text" class="form-control dia_square" name="dia_square[]">
-                </div>
-            </td>
-
-            <td>
-                <div class="form-group">
-                    <input type="text" readonly class="form-control value_of_bar" name="value_of_bar[]" value="532.17">
-                </div>
-            </td>
-
-            <td>
-                <div class="form-group">
-                    <input type="text" class="form-control kg_by_rft" name="kg_by_rft[]">
-                </div>
-            </td>
-
-            <td>
-                <div class="form-group">
-                    <input type="text" readonly class="form-control kg_by_ton" name="kg_by_ton[]" value="1000">
+                    <input type="number" step="0.01" id="lapping_lenght" class="form-control lapping_lenght" name="lapping_lenght[]">
                 </div>
             </td>
             <td>
                 <div class="form-group">
-                    <select class="form-control select2 length_type" style="width: 100%;" name="length_type[]" data-placeholder="Select Length Type" required>
-                        <option value="1">Horizontal</option>
-                        <option value="2">Vertical</option>
-                    </select>
-                </div>
-            </td>
-
-            <td>
-                <div class="form-group">
-                    <input type="number" class="form-control length" name="length[]" step="any">
-                </div>
-            </td>
-
-            <td>
-                <div class="form-group">
-                    <input type="number" class="form-control spacing" name="spacing[]" step="any">
-                </div>
-            </td>
-
-            <td>
-                <div class="form-group">
-                    <input type="number" class="form-control type_length" name="type_length[]" step="any">
+                    <input type="number" step="any" id="lapping_nos" class="form-control lapping_nos" name="lapping_nos[]">
                 </div>
             </td>
 
@@ -1166,12 +958,13 @@
             <td class="total-kg">0.00</td>
             <td class="total-ton">0.00</td>
 
+
             <td class="text-center">
                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
             </td>
         </tr>
     </template>
-    {{-- <template id="template-extra-product">
+    <template id="template-extra-product">
         <tr class="extra-item">
             <td>
                 <div class="form-group">
@@ -1239,7 +1032,7 @@
                 <a role="button" class="btn btn-danger btn-sm extra-btn-remove">X</a>
             </td>
         </tr>
-    </template> --}}
+    </template>
 @endsection
 
 @section('script')
@@ -1263,10 +1056,28 @@
 
                 if (courseType == 1) {
                     $('#common_picked_costing').hide();
+                    $('#rmc_costing').hide();
                     $('#common_aggregate_costing').show();
+                    $('#common_bar_costing').show();
+                    $('#s_sands_costing').show();
+                    $('#common_cement_costing').show();
+                    $('#common_sands_costing').show();
                 }else if(courseType == 2){
                     $('#common_picked_costing').show();
+                    $('#common_bar_costing').show();
+                    $('#s_sands_costing').show();
+                    $('#common_cement_costing').show();
+                    $('#common_sands_costing').show();
                     $('#common_aggregate_costing').hide();
+                    $('#rmc_costing').hide();
+                }else if(courseType == 3){
+                    $('#rmc_costing').show();
+                    $('#common_bar_costing').show();
+                    $('#common_aggregate_costing').hide();
+                    $('#s_sands_costing').hide();
+                    $('#common_cement_costing').hide();
+                    $('#common_sands_costing').hide();
+                    $('#common_picked_costing').hide();
                 }else {
 
                 }
@@ -1278,18 +1089,6 @@
                 var item = $(html);
 
                 $('#product-container').append(item);
-
-                initProduct();
-
-                if ($('.product-item').length >= 1 ) {
-                    $('.btn-remove').show();
-                }
-            });
-            $('#btn-add-product-extra').click(function () {
-                var html = $('#template-product-extra').html();
-                var item = $(html);
-
-                $('#product-container-extra').append(item);
 
                 initProduct();
 
@@ -1358,7 +1157,7 @@
             })
             $('.extra_product').trigger("change");
 
-            $('body').on('keyup','.length,.spacing,.type_length,.layer, #segment_length, #segment_width, #segment_thickness', function () {
+            $('body').on('keyup','.length,.spacing,.type_length,.layer,.lapping_lenght,.clear_cover, .lapping_nos, #segment_length, #segment_width, #segment_thickness', function () {
                 calculate();
             });
             $('body').on('keyup','.extra_length,.extra_number_of_bar', function () {
@@ -1379,15 +1178,15 @@
             var segment_length = $('#segment_length').val();
             var segment_width = $('#segment_width').val();
             var segment_thickness = $('#segment_thickness').val();
-
+            var lapping_lenght = $('#lapping_lenght').val();
+            var lapping_nos = $('#lapping_nos').val();
+            
             var total_dry = segment_length * segment_width * segment_thickness;
             $('#total_volume').val(total_dry);
 
             var total_dry_volume = total_dry * 1.5;
 
             $('#total_dry_volume').val(total_dry_volume);
-
-            console.log(total_dry_volume);
 
 
             $('.product-item').each(function(i, obj) {
@@ -1396,8 +1195,11 @@
                 var length = $('.length:eq('+i+')').val();
                 var spacing = $('.spacing:eq('+i+')').val();
                 var type_length = $('.type_length:eq('+i+')').val();
+                var lapping_lenght = $('.lapping_lenght:eq('+i+')').val();
+                var lapping_nos = $('.lapping_nos:eq('+i+')').val();
+                var clear_cover = $('.clear_cover:eq('+i+')').val();
                 var layer = $('.layer:eq('+i+')').val();
-
+                // alert(clear_cover);
                 if (kg_by_ton == '' || kg_by_ton < 0 || !$.isNumeric(kg_by_ton))
                     kg_by_ton = 0;
 
@@ -1413,13 +1215,26 @@
                 if (type_length == '' || type_length < 0 || !$.isNumeric(type_length))
                     type_length = 0;
 
+                if (lapping_lenght == '' || lapping_lenght < 0 || !$.isNumeric(lapping_lenght))
+                    lapping_lenght = 0;
+
+                if (lapping_nos == '' || lapping_nos < 0 || !$.isNumeric(lapping_nos))
+                    lapping_nos = 0;
+
+                if (clear_cover == '' || clear_cover < 0 || !$.isNumeric(clear_cover))
+                    clear_cover = 0;
+
                 if (layer == '' || layer < 0 || !$.isNumeric(layer))
                     layer = 0;
 
-                var rft = ((length / spacing) * type_length * layer);
-
-                $('.total-kg:eq('+i+')').html(parseFloat((rft * kg_by_rft)).toFixed(2));
-                $('.total-ton:eq('+i+')').html(parseFloat(((rft * kg_by_rft)/kg_by_ton)).toFixed(3));
+                var rft = ((length / spacing) +1);
+                var item = (type_length - ((clear_cover / 12) * 2));
+                var data = (rft * item);
+                var sub_total =  (lapping_lenght * lapping_nos) * kg_by_rft;
+                var total_main_rod = ((data *  kg_by_rft) + sub_total) * layer;
+              
+                $('.total-kg:eq('+i+')').html(parseFloat((total_main_rod)).toFixed(2));
+                $('.total-ton:eq('+i+')').html(parseFloat(((total_main_rod)/kg_by_ton)).toFixed(3));
                 //total += rft_by_ton;
             });
 

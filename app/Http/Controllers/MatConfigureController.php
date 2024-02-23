@@ -23,7 +23,7 @@ class MatConfigureController extends Controller
         return view('estimate.mat_configure.add',compact('estimateProjects',
             'costingSegments','columnCost'));
     }
-
+   
     public function matConfigureAddPost(Request $request) {
         // dd($request->all());
         $request->validate([
@@ -68,16 +68,16 @@ class MatConfigureController extends Controller
         ]);
 
         $total_dry_volume = (($request->segment_length * $request->segment_width) * $request->segment_thickness) * 1.5;
-        // dd($total_dry_volume);
+        
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
-        // dd($totalRatio);
+        
         $totalCement = ($total_dry_volume * $request->first_ratio/$totalRatio);
         $totalCementBag = ($totalCement/1.25);
-        // dd($totalCementBag);
+       
         $totalSands = ($total_dry_volume * $request->second_ratio/$totalRatio);
-        // dd($totalSands);
+        
         $totalAggregate = ($total_dry_volume * $request->third_ratio/$totalRatio);
-        // dd($totalAggregate);
+       
         if ($request->course_aggregate_type == 2){
             $totalPiked = ($totalAggregate * 11.11);
         }else{
@@ -85,50 +85,97 @@ class MatConfigureController extends Controller
         }
 
 
-        $commonConfigure = new MatConfigure();
-        $commonConfigure->estimate_project_id = $request->estimate_project;
-        $commonConfigure->costing_segment_id = $request->costing_segment;
-        $commonConfigure->costing_segment_quantity = $request->costing_segment_quantity;
-        $commonConfigure->first_ratio = $request->first_ratio;
-        $commonConfigure->second_ratio = $request->second_ratio;
-        $commonConfigure->third_ratio = $request->third_ratio;
-        $commonConfigure->date = $request->date;
-        $commonConfigure->note = $request->note;
-        $commonConfigure->total_ton = 0;
-        $commonConfigure->total_kg = 0;
-        $commonConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
-        $commonConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
-        $commonConfigure->total_sands = $totalSands * $request->costing_segment_quantity;
-        $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
-        $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
-
+        $matConfigure = new MatConfigure();
+        $matConfigure->estimate_project_id = $request->estimate_project;
+        $matConfigure->costing_segment_id = $request->costing_segment;
+        $matConfigure->costing_segment_quantity = $request->costing_segment_quantity;
+        $matConfigure->course_aggregate_type = $request->course_aggregate_type;
+        $matConfigure->first_ratio = $request->first_ratio;
+        $matConfigure->second_ratio = $request->second_ratio;
+        $matConfigure->third_ratio = $request->third_ratio;
+        $matConfigure->slab_length = $request->segment_length;
+        $matConfigure->slab_width = $request->segment_width;
+        $matConfigure->slab_thickness = $request->segment_thickness;
+        $matConfigure->total_volume = $request->total_volume * $request->costing_segment_quantity;
+        $matConfigure->dry_volume = $request->dry_volume * $request->costing_segment_quantity;
+        $matConfigure->total_dry_volume = $request->total_dry_volume * $request->costing_segment_quantity;
+        $matConfigure->date = $request->date;
+        $matConfigure->note = $request->note;
+        $matConfigure->total_ton = 0;
+        $matConfigure->total_kg = 0;
+        $matConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
+        $matConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+        if($request->course_aggregate_type == 3){
+            $matConfigure->total_cement_bag = 0;
+            $matConfigure->total_cement = 0;
+            $matConfigure->total_sands = 0;
+            $matConfigure->total_s_sands = 0;
+            $matConfigure->total_aggregate = 0;
+            $matConfigure->total_picked = 0;
+        }else if($request->course_aggregate_type == 2){
+            $matConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $matConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
+            $matConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $matConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $matConfigure->total_aggregate = 0;
+            $matConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
+        }else{
+            $matConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $matConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
+            $matConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $matConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $matConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
+        }
+        
         //price
-        $commonConfigure->common_bar_per_cost = $request->common_bar_costing;
-        $commonConfigure->common_cement_per_cost = $request->common_cement_costing;
-        $commonConfigure->common_sands_per_cost = $request->common_sands_costing;
-        $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
-        $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
+        $matConfigure->common_bar_per_cost = $request->common_bar_costing;
+        $matConfigure->common_cement_per_cost = $request->common_cement_costing;
+        $matConfigure->common_sands_per_cost = $request->common_sands_costing;
+        $matConfigure->s_sands_costing = $request->s_sands_costing;
         //Total Price
-        $commonConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
-        // dd($commonConfigure->total_common_cement_bag_price);
-        $commonConfigure->total_common_sands_price = ($totalSands * $request->costing_segment_quantity) * $request->common_sands_costing;
-        $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
-        $commonConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
-        $commonConfigure->total_common_bar_price = 0;
+    
+        if($request->course_aggregate_type == 3){
+            $matConfigure->total_common_cement_bag_price = 0;
+            $matConfigure->total_common_sands_price = 0;
+            $matConfigure->total_slab_s_sands_price = 0;
+            $matConfigure->total_mat_rmc_price = $request->total_volume * $request->rmc_costing;
+            $matConfigure->common_aggregate_per_cost = 0;
+            $matConfigure->common_picked_per_cost = 0;
+        }else if($request->course_aggregate_type == 2){
+            $matConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $matConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $matConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $matConfigure->total_mat_rmc_price = $request->total_volume * $request->rmc_costing;
+            $matConfigure->total_common_aggregate_price = 0;
+            $matConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;;
+        }else{
+            $matConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $matConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $matConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $matConfigure->total_mat_rmc_price = 0;
+            $matConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;;
+            $matConfigure->total_common_picked_price = 0;
+        }
+        
+        $matConfigure->total_common_bar_price = 0;
 
-        $commonConfigure->save();
-        $commonConfigure->common_configure_no = str_pad($commonConfigure->id, 5, "0", STR_PAD_LEFT);
-        $commonConfigure->save();
+        $matConfigure->save();
+        $matConfigure->common_configure_no = str_pad($matConfigure->id, 5, "0", STR_PAD_LEFT);
+        $matConfigure->save();
 
         $counter = 0;
         $totalTon = 0;
         $totalKg = 0;
         foreach ($request->product as $key => $reqProduct) {
 
-            $division = $request->length[$counter]/$request->spacing[$counter];
-
+            $rft = ($request->length[$counter]/$request->spacing[$counter]) + 1;
+            $item = ($request->type_length[$counter] - (($request->clear_cover[$counter] / 12) * 2));
+            $data = $rft *  $item;
+            $sub_total =  ($request->lapping_lenght[$counter] * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter];
+            $total_main_rod = (($data *  $request->kg_by_rft[$counter]) + $sub_total) * $request->layer[$counter];
+           
             MatConfigureProduct::create([
-                'common_configure_id' => $commonConfigure->id,
+                'common_configure_id' => $matConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
                 'costing_segment_id' => $request->costing_segment,
                 'bar_type' => $reqProduct,
@@ -142,14 +189,13 @@ class MatConfigureController extends Controller
                 'spacing' => $request->spacing[$counter] * $request->costing_segment_quantity,
                 'type_length' => $request->type_length[$counter] * $request->costing_segment_quantity,
                 'layer' => $request->layer[$counter] * $request->costing_segment_quantity,
-                'sub_total_kg' => ((($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter] * $request->costing_segment_quantity),
-                'sub_total_ton' => ((((($division * $request->type_length[$counter]) * $request->layer[$counter])
-                        * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]) * $request->costing_segment_quantity),
+                'sub_total_kg' => $total_main_rod,
+                'sub_total_ton' => (($total_main_rod / $request->kg_by_ton[$counter]) * $request->costing_segment_quantity),
             ]);
 
-            $totalKg += (($division * $request->type_length[$counter]) *  $request->layer[$counter]) * $request->kg_by_rft[$counter];
+            $totalKg +=$total_main_rod;
             // dd($totalKg);
-            $totalTon += (((($division * $request->type_length[$counter]) * $request->layer[$counter]) * $request->kg_by_rft[$counter])/$request->kg_by_ton[$counter]);
+            $totalTon += ($total_main_rod / $request->kg_by_ton[$counter]);
 
             $counter++;
         }
@@ -159,7 +205,7 @@ class MatConfigureController extends Controller
         foreach ($request->extra_product as $key => $reqProduct) {
 
             MatConfigureProduct::create([
-                'common_configure_id' => $commonConfigure->id,
+                'common_configure_id' => $matConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
                 'costing_segment_id' => $request->costing_segment,
                 'bar_type' => $reqProduct,
@@ -184,39 +230,40 @@ class MatConfigureController extends Controller
         }
 
 
-        $commonConfigure->total_ton = $totalTon * $request->costing_segment_quantity;
-        $commonConfigure->total_kg = $totalKg * $request->costing_segment_quantity;
-        // dd($commonConfigure->total_kg);
-        $commonConfigure->total_common_bar_price = ($totalKg * $request->costing_segment_quantity) * $request->common_bar_costing;
-        $commonConfigure->save();
+        $matConfigure->total_ton = $totalTon * $request->costing_segment_quantity;
+        $matConfigure->total_kg = $totalKg * $request->costing_segment_quantity;
+        $matConfigure->total_common_bar_price = ($totalKg * $request->costing_segment_quantity) * $request->common_bar_costing;
+        $matConfigure->save();
 
-        return redirect()->route('mat_configure.details', ['commonConfigure' => $commonConfigure->id]);
+        return redirect()->route('mat_configure.details', ['matConfigure' => $matConfigure->id]);
     }
 
-    public function matConfigureDetails(MatConfigure $commonConfigure){
-        return view('estimate.mat_configure.details',compact('commonConfigure'));
+    public function matConfigureDetails(MatConfigure $matConfigure){
+        return view('estimate.mat_configure.details',compact('matConfigure'));
     }
-    public function matConfigurePrint(MatConfigure $commonConfigure){
-        return view('estimate.mat_configure.print',compact('commonConfigure'));
+    public function matConfigurePrint(MatConfigure $matConfigure){
+        return view('estimate.mat_configure.print',compact('matConfigure'));
     }
 
     public function matConfigureDatatable() {
         $query = MatConfigure::with('project','costingSegment');
 
         return DataTables::eloquent($query)
-            ->addColumn('project_name', function(MatConfigure $commonConfigure) {
-                return $commonConfigure->project->name??'';
+            ->addColumn('project_name', function(MatConfigure $matConfigure) {
+                return $matConfigure->project->name??'';
             })
-            ->addColumn('segment_name', function(MatConfigure $commonConfigure) {
-                return $commonConfigure->costingSegment->name??'';
+            ->addColumn('segment_name', function(MatConfigure $matConfigure) {
+                return $matConfigure->costingSegment->name??'';
             })
-            ->addColumn('action', function(MatConfigure $commonConfigure) {
+            ->addColumn('action', function(MatConfigure $matConfigure) {
+                $btn = '';
+                $btn = '<a href="'.route('mat_configure.details', ['matConfigure' => $matConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('mat_configure.details', ['matConfigure' => $matConfigure->id]).'" class="btn btn-danger btn-sm" style="margin-left: 3px;">Delete</a>';
+                return $btn;
 
-                return '<a href="'.route('mat_configure.details', ['commonConfigure' => $commonConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
             })
-            ->editColumn('date', function(MatConfigure $commonConfigure) {
-                return $commonConfigure->date;
+            ->editColumn('date', function(MatConfigure $matConfigure) {
+                return $matConfigure->date;
             })
             ->rawColumns(['action'])
             ->toJson();

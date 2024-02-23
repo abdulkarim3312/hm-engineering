@@ -13,7 +13,7 @@ class ReturningWallConfigure extends Model
     protected $table = 'returning_wall_configures';
     protected $guarded = [];
 
-    public function commonConfigureProducts() {
+    public function returningWallConfigureProducts() {
         return $this->hasMany(ReturningWallConfigureProduct::class,'common_configure_id','id');
     }
     public function project(){
