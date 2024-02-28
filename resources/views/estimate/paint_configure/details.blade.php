@@ -76,7 +76,7 @@
                                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                                 </div>
                             </div>
-                            <div class="col-xs-8 text-center">
+                            <div class="col-xs-8 text-center" style="margin-left: -123px;">
                                 <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                                 <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                                 <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -193,8 +193,14 @@
                                             <td>
                                                 @if($product->paint_type == 1)
                                                     Wheathar Code
-                                                @else
+                                                @elseif($product->paint_type == 2)    
                                                     Dis-Temper
+                                                @elseif($product->paint_type == 3)    
+                                                    Plastic
+                                                @elseif($product->paint_type == 4)    
+                                                    Enamel
+                                                @else
+                                                    Polish
                                                 @endif
                                             </td>
                                             <td>{{ $product->length }}</td>

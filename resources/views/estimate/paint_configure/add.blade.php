@@ -289,6 +289,8 @@
                                                         <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Code</option>
                                                         <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Dis-Temper</option>
                                                         <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Plastic</option>
+                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Enamel</option>
+                                                        <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>Polish</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -376,6 +378,9 @@
                                                 <select class="form-control select2 paint_type" name="paint_type[]" data-placeholder="Select Paint Type" required>
                                                     <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Code</option>
                                                     <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Dis-Temper</option>
+                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Plastic</option>
+                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Enamel</option>
+                                                    <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>Polish</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -489,6 +494,9 @@
                     <select class="form-control select2 paint_type" name="paint_type[]" data-placeholder="Select Paint Type" required>
                         <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Code</option>
                         <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Dis-Temper</option>
+                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Plastic</option>
+                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Enamel</option>
+                        <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>Polish</option>
                     </select>
                 </div>
             </td>

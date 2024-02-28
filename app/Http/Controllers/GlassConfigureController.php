@@ -38,6 +38,7 @@ class GlassConfigureController extends Controller
             'date' => 'required',
             'note' => 'nullable',
             'grill_costing' => 'required|numeric|min:0',
+            'thai_costing' => 'required|numeric|min:0',
             'product.*' => 'required',
             'length.*' => 'required|numeric|min:0',
             'height.*' => 'required|numeric|min:0',
@@ -56,6 +57,7 @@ class GlassConfigureController extends Controller
         $grillGlassTilesConfigure->total_area_without_floor = 0;
         //Price
         $grillGlassTilesConfigure->grill_costing = $request->grill_costing;
+        $grillGlassTilesConfigure->thai_costing = $request->thai_costing;
         $grillGlassTilesConfigure->tiles_glass_costing = $request->tiles_glass_costing;
         //Total Price
         $grillGlassTilesConfigure->total_grill_cost = 0;
@@ -67,10 +69,12 @@ class GlassConfigureController extends Controller
 
         $counter = 0;
         $totalArea = 0;
+        $totalRft = 0;
         foreach ($request->product as $key => $reqProduct) {
 
             
             $subTotalArea = (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
+            $subTotalRft = (((($request->length[$counter] + $request->height[$counter])) * 2) * $request->quantity[$counter]);
             
 
             GlassConfigureProduct::create([
@@ -83,15 +87,20 @@ class GlassConfigureController extends Controller
                 'height' => $request->height[$counter],
                 'quantity' => $request->quantity[$counter],
                 'sub_total_area' => $subTotalArea,
+                'sub_total_rft' => $subTotalRft,
             ]);
 
             $totalArea += (($request->length[$counter] * $request->height[$counter]) * $request->quantity[$counter]);
+            // $counter++;
+            $totalRft += $subTotalRft;
             $counter++;
         }
 
         $grillGlassTilesConfigure->total_area_with_floor = $totalArea * $request->floor_number;
+        $grillGlassTilesConfigure->total_rft_with_floor = $totalRft * $request->floor_number;
         $grillGlassTilesConfigure->total_area_without_floor = $totalArea;
         $grillGlassTilesConfigure->total_grill_cost = ($totalArea * $request->floor_number) * $request->grill_costing;
+        $grillGlassTilesConfigure->total_thai_cost = $totalRft * $request->thai_costing;
         
         $grillGlassTilesConfigure->save();
 

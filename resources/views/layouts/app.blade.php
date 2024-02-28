@@ -228,7 +228,7 @@
                     'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details',
                     'batch','batch.add','batch.edit','grade_of_concrete','grade_of_concrete.add','grade_of_concrete.edit',
                     'costing_report','estimation_costing_summary','mobilization_work','mobilization_work.add','mobilization_work.details','mobilization_work_product', 'returning_wall_configure.add', 'returning_wall_configure.details',
-                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure', 'glass_configure', 'tiles_configure', 'bricks_soling_configure.add', 'bricks_soling_configure.details', 'sand_filling_configure.add', 'sand_filling_configure.details'];
+                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure', 'glass_configure','glass_configure.add','glass_configure.details', 'tiles_configure', 'bricks_soling_configure.add', 'bricks_soling_configure.details', 'sand_filling_configure.add', 'sand_filling_configure.details'];
                 ?>
 
                 @can('estimation_and_costing')
@@ -250,9 +250,7 @@
                                 <a href="{{ route('estimate_floor') }}"><i class="fa fa-circle-o"></i>Estimate Floor</a>
                             </li>
                             @endcan
-                            <li class="{{ Route::currentRouteName() == 'estimate_floor_configure' ? 'active' : '' }}">
-                                <a href="{{ route('estimate_floor_configure') }}"><i class="fa fa-circle-o"></i>Estimate Floor Configure</a>
-                            </li>
+
                             @can('floor_unit')
                             <li class="{{ Route::currentRouteName() == 'estimate_floor_unit' ? 'active' : '' }}">
                                 <a href="{{ route('estimate_floor_unit') }}"><i class="fa fa-circle-o"></i>Floor Unit</a>
@@ -283,11 +281,11 @@
                                 <a href="{{ route('footing_configure') }}"><i class="fa fa-circle-o"></i>Footing Type Configure</a>
                             </li>
 
-                            @can('grade_of_concrete_type')
+                            {{-- @can('grade_of_concrete_type')
                              <li class="{{ Route::currentRouteName() == 'grade_of_concrete_type' ? 'active' : '' }}">
                                 <a href="{{ route('grade_of_concrete_type') }}"><i class="fa fa-circle-o"></i>Grade Concrete Type</a>
                             </li>
-                            @endcan
+                            @endcan --}}
                               @can('grade_of_concrete_type')
                              <li class="{{ Route::currentRouteName() == 'grade_beam_type' ? 'active' : '' }}">
                                 <a href="{{ route('grade_beam_type') }}"><i class="fa fa-circle-o"></i>Grade Beam Type</a>
@@ -404,11 +402,11 @@
                                     <a href="{{ route('mobilization_work') }}"><i class="fa fa-circle-o"></i>Mobilization Work</a>
                                 </li>
                                 @endcan
-                                @can('grade_of_concrete')
+                                {{-- @can('grade_of_concrete')
                              <li class="{{ Route::currentRouteName() == 'grade_of_concrete' ? 'active' : '' }}">
                                  <a href="{{ route('grade_of_concrete') }}"><i class="fa fa-circle-o"></i>Grade Of Concrete</a>
                              </li>
-                                @endcan
+                                @endcan --}}
                                 @can('estimate_report')
                             <li class="{{ Route::currentRouteName() == 'estimate_report' ? 'active' : '' }}">
                                 <a href="{{ route('estimate_report') }}"><i class="fa fa-circle-o"></i>Estimate Report</a>

@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Glass Configure Details
+    Glass & Thai Configure Details
 @endsection
 
 @section('content')
@@ -88,19 +88,19 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th> Glass Configure No.</th>
+                                        <th> Glass & Thai Configure No.</th>
                                         <td>{{ $glassConfigure->grill_glass_tiles_configure_no }}</td>
                                     </tr>
                                     <tr>
-                                        <th> Glass Configure No</th>
+                                        <th> Glass & Thai Configure No</th>
                                         <td>{{ $glassConfigure->floor_number }}</td>
                                     </tr>
                                     <tr>
-                                        <th> Glass Configure Date</th>
+                                        <th> Glass & Thai Configure Date</th>
                                         <td>{{ $glassConfigure->date }}</td>
                                     </tr>
                                     <tr>
-                                        <th> Glass Configure Type Name</th>
+                                        <th> Glass & Thai Configure Type Name</th>
                                         <td><b>{{ $glassConfigure->configure_type }}</b></td>
                                     </tr>
                                     <tr>
@@ -132,8 +132,8 @@
                                         <td>{{ $glassConfigure->total_area_without_floor }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Glass Area(All Floor)</th>
-                                        <td>{{ $glassConfigure->total_area_with_floor }}</td>
+                                        <th>Total Thai Rft</th>
+                                        <td>{{ $glassConfigure->total_rft_with_floor }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -149,9 +149,13 @@
                                         <th>Height/Width</th>
                                         <th>Quantity</th>
                                         <th>Sub Total Area</th>
+                                        <th>Sub Total Rft</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $totalRft = 0;
+                                        @endphp
                                     @foreach($glassConfigure->grillGlassTilesConfigureProducts as $product)
                                         <tr>
                                             <td>{{ $product->unitSection->name }}</td>
@@ -159,29 +163,29 @@
                                             <td> {{ $product->height }}</td>
                                             <td> {{ number_format($product->quantity, 2) }}</td>
                                             <td> {{ number_format($product->sub_total_area, 2) }}</td>
+                                            <td> {{ number_format($product->sub_total_rft, 2) }}</td>
                                         </tr>
+                                        @php
+                                            $totalRft += $product->sub_total_rft;
+                                        @endphp
                                     @endforeach
                                     </tbody>
                                     <tr>
                                         <th class="text-right" colspan="4">Single Floor Total</th>
-                                        @if($glassConfigure->configure_type == 1)
-                                        <td> {{ number_format($glassConfigure->total_area_without_floor, 2) }} KG</td>
-                                        @else
-                                            <td> {{ number_format($glassConfigure->total_area_without_floor, 2) }} Sft</td>
-                                        @endif
+                                        <td> {{ number_format($glassConfigure->total_area_without_floor, 2) }} Sft</td>
+                                        <td> {{ number_format($totalRft, 2) }} Rft</td>
+                                      
                                     </tr>
                                     <tr>
                                         <th class="text-right" colspan="4">All Floor Total</th>
-                                        @if($glassConfigure->configure_type == 1)
-                                            <td> {{ number_format($glassConfigure->total_area_with_floor, 2) }} KG</td>
-                                        @else
                                             <td> {{ number_format($glassConfigure->total_area_with_floor, 2) }} Sft</td>
-                                        @endif
+                                            <td> {{ number_format($totalRft, 2) }} Rft</td>
+                                      
                                     </tr>
                                     <tr>
-                                        <th class="text-right" colspan="4">Total Cost</th>
+                                        <th class="text-right" colspan="4">Total Glass and Thai Cost</th>
                                             <td>৳ {{ number_format($glassConfigure->total_grill_cost, 2) }} Taka</td>
-                                       
+                                            <td>৳ {{ number_format($glassConfigure->total_thai_cost, 2) }} Taka</td>
                                     </tr>
                                 </table>
                             </div>

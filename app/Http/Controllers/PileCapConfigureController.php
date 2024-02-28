@@ -215,6 +215,12 @@ class PileCapConfigureController extends Controller
         return view('estimate.pile_cap_configure.print',compact('pileCapConfigure'));
     }
 
+    public function pileCapConfigureDelete(PileCapConfigure $pileCapConfigure){
+        PileCapConfigure::find($pileCapConfigure->id)->delete();
+        PileCapConfigureProduct::where('common_configure_id', $pileCapConfigure->id)->delete();
+        return redirect()->back();
+    }
+
     public function pileCapConfigureDatatable() {
         $query = PileCapConfigure::with('project','costingSegment', 'footingType');
 
@@ -230,8 +236,10 @@ class PileCapConfigureController extends Controller
             })
             ->addColumn('action', function(PileCapConfigure $pileCapConfigure) {
 
-                return '<a href="'.route('pile_cap_configure.details', ['pileCapConfigure' => $pileCapConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('pile_cap_configure.details', ['pileCapConfigure' => $pileCapConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('pile_cap_configure.delete', ['pileCapConfigure' => $pileCapConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(PileCapConfigure $pileCapConfigure) {
                 return $pileCapConfigure->date;

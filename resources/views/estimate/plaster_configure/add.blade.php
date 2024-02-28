@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <div method="POST" action="{{ route('plaster_configure.add') }}">
+                <form method="POST" action="{{ route('plaster_configure.add') }}">
                     @csrf
 
                     <div class="box-body">
@@ -93,37 +93,6 @@
 
                         <div class="row">
 
-                            {{-- <div class="col-md-2">
-                                <div class="form-group {{ $errors->has('color_paint_per_cft') ? 'has-error' :'' }}">
-                                    <label>Color Paint Per Cft</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="color_paint_per_cft" step="any"
-                                               name="color_paint_per_cft" value="{{ old('color_paint_per_cft',0.01111) }}" readonly>
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('color_paint_per_cft')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group {{ $errors->has('seller_paint_per_cft') ? 'has-error' :'' }}">
-                                    <label>Seller Paint Per Cft</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="seller_paint_per_cft" step="any"
-                                               name="seller_paint_per_cft" value="{{ old('seller_paint_per_cft',0.01111) }}" readonly>
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('seller_paint_per_cft')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div> --}}
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('first_ratio') ? 'has-error' :'' }}">
                                     <label>First Ratio</label>
@@ -222,7 +191,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                         <u><i><h3>Costing Area</h3></i></u>
                         <div class="row">
                             <div class="col-md-3">
@@ -257,7 +226,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -290,32 +259,7 @@
                                                         <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
                                                         <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
                                                         <option value="4" {{ old('wall_direction') == 4 ? 'selected' : '' }}>South</option>
-                                                        {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
-                                                            <option value="{{ $brickConfigureProduct->id }}" {{ old('product.'.$loop->parent->index) == $brickConfigureProduct->id ? 'selected' : '' }}>
-                                                                @if($brickConfigureProduct->wall_direction == 1)
-                                                                    East
-                                                                @elseif($brickConfigureProduct->wall_direction == 2)
-                                                                    West
-                                                                @elseif($brickConfigureProduct->wall_direction == 3)
-                                                                    North
-                                                                @else
-                                                                    South
-                                                                @endif
-                                                            </option>
-                                                        @endforeach --}}
-                                                        {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
-                                                            <option value="{{ $brickConfigureProduct->id }}" {{ old('product.'.$loop->parent->index) == $brickConfigureProduct->id ? 'selected' : '' }}>
-                                                                @if($brickConfigureProduct->wall_direction == 1)
-                                                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-East
-                                                                @elseif($brickConfigureProduct->wall_direction == 2)
-                                                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-West
-                                                                @elseif($brickConfigureProduct->wall_direction == 3)
-                                                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-North
-                                                                @else
-                                                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-South
-                                                                @endif
-                                                            </option>
-                                                        @endforeach --}}
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -392,32 +336,7 @@
                                                     <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
                                                     <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
                                                     <option value="4" {{ old('wall_direction') == 4 ? 'selected' : '' }}>South</option>
-                                                    {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
-                                                        <option value="{{ $brickConfigureProduct->id }}">
-                                                            @if($brickConfigureProduct->wall_direction == 1)
-                                                                East
-                                                            @elseif($brickConfigureProduct->wall_direction == 2)
-                                                                West
-                                                            @elseif($brickConfigureProduct->wall_direction == 3)
-                                                                North
-                                                            @else
-                                                                South
-                                                            @endif
-                                                        </option>
-                                                    @endforeach --}}
-                                                    {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
-                                                        <option value="{{ $brickConfigureProduct->id }}">
-                                                            @if($brickConfigureProduct->wall_direction == 1)
-                                                                {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-East
-                                                            @elseif($brickConfigureProduct->wall_direction == 2)
-                                                                {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-West
-                                                            @elseif($brickConfigureProduct->wall_direction == 3)
-                                                                {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-North
-                                                            @else
-                                                                {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-South
-                                                            @endif
-                                                        </option>
-                                                    @endforeach --}}
+
                                                 </select>
                                             </div>
                                         </td>
@@ -518,19 +437,7 @@
                         <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
                         <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
                         <option value="4" {{ old('wall_direction') == 4 ? 'selected' : '' }}>South</option>
-                        {{-- @foreach($brickConfigureProducts as $brickConfigureProduct)
-                            <option value="{{ $brickConfigureProduct->id }}">
-                                @if($brickConfigureProduct->wall_direction == 1)
-                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-East
-                                @elseif($brickConfigureProduct->wall_direction == 2)
-                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-West
-                                @elseif($brickConfigureProduct->wall_direction == 3)
-                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-North
-                                @else
-                                    {{$brickConfigureProduct->project->name}}-{{$brickConfigureProduct->estimateFloor->name}}-{{$brickConfigureProduct->estimateFloorUnit->name}} - {{$brickConfigureProduct->unitSection->name}}-South
-                                @endif
-                            </option>
-                        @endforeach --}}
+
                     </select>
                 </div>
             </td>
@@ -752,7 +659,7 @@
 
                 var item = parseFloat(total_area - totalDeduction);
                 $('#plaster_area:eq('+i+')').val(item);
-                // console.log($('#plaster_area:eq('+i+')').val(item));
+
                 $('.sub-total-plaster-morters:eq('+i+')').html(parseFloat(((item * plaster_side) * plaster_thickness).toFixed(2)));
 
                 totalPlasterMorters += parseFloat((((item * plaster_side)) * plaster_thickness).toFixed(2));

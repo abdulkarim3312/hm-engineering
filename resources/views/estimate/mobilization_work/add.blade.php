@@ -81,9 +81,12 @@
                                 <thead>
                                 <tr>
                                     <th width="20%">Product Name</th>
-                                    <th width="20%">Amount</th>
+                                    <th width="15%">Unit</th>
+                                    <th width="15%">Quantity</th>
+                                    <th width="15%">Amount</th>
+                                    <th width="15%">Remark</th>
                                     <th width="20%">Total Cost</th>
-                                    <th width="5%"></th>
+                                    <th width="10%"></th>
                                 </tr>
                                 </thead>
 
@@ -102,8 +105,23 @@
                                             </td>
 
                                             <td>
+                                                <div class="form-group {{ $errors->has('unit.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" class="form-control unit" name="unit[]" value="{{ old('unit.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('quantity.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" class="form-control quantity" name="quantity[]" value="{{ old('quantity.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <div class="form-group {{ $errors->has('cost_amount.'.$loop->index) ? 'has-error' :'' }}">
                                                     <input type="text" class="form-control cost_amount" name="cost_amount[]" value="{{ old('cost_amount.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('remark.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" class="form-control remark" name="remark[]" value="{{ old('remark.'.$loop->index) }}">
                                                 </div>
                                             </td>
 
@@ -128,7 +146,22 @@
 
                                         <td>
                                             <div class="form-group">
+                                                <input type="text" class="form-control unit" name="unit[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control quantity" name="quantity[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
                                                 <input type="text" class="form-control cost_amount" name="cost_amount[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control remark" name="remark[]">
                                             </div>
                                         </td>
 
@@ -176,7 +209,22 @@
             </td>
             <td>
                 <div class="form-group">
+                    <input type="text" class="form-control unit" name="unit[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control quantity" name="quantity[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
                     <input type="text" class="form-control cost_amount" name="cost_amount[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control remark" name="remark[]">
                 </div>
             </td>
 
@@ -226,7 +274,7 @@
                 }
             });
 
-            $('body').on('keyup', '.quantity, .cost_amount', function () {
+            $('body').on('keyup', '.quantity, .cost_amount, .unit', function () {
                 calculate();
             });
 
@@ -246,6 +294,7 @@
             $('.product-item').each(function(i, obj) {
                 var cost_amount = $('.cost_amount:eq('+i+')').val();
                 var quantity = $('.quantity:eq('+i+')').val();
+                var unit = $('.unit:eq('+i+')').val();
 
                 if (cost_amount == '' || cost_amount < 0 || !$.isNumeric(cost_amount))
                     cost_amount = 0;
@@ -253,8 +302,11 @@
                 if (quantity == '' || quantity < 0 || !$.isNumeric(quantity))
                     quantity = 0;
 
-                $('.total-cost:eq('+i+')').html('৳ ' + parseFloat(cost_amount ).toFixed(2));
-                total += parseFloat(cost_amount);
+                if (unit == '' || unit < 0 || !$.isNumeric(unit))
+                    unit = 0;
+
+                $('.total-cost:eq('+i+')').html('৳ ' + parseFloat(cost_amount * quantity * unit).toFixed(2));
+                total += parseFloat(cost_amount * quantity * unit);
             });
 
             $('#total-amount').html('৳ ' + total.toFixed(2));

@@ -787,6 +787,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('common-configure/add', [CommonConfigureController::class, 'commonConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
     Route::get('common-configure-details/{commonConfigure}', [CommonConfigureController::class, 'commonConfigureDetails'])->name('common_configure.details')->middleware('permission:slab_cap_wall_configure');
     Route::get('common-configure-print/{commonConfigure}', [CommonConfigureController::class, 'commonConfigurePrint'])->name('common_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('common-configure-delete/{commonConfigure}', [CommonConfigureController::class, 'commonConfigureDelete'])->name('common_configure.delete')->middleware('permission:slab_cap_wall_configure');
 
     //Pile Cap Configure
     Route::get('pile-cap-configure', [PileCapConfigureController::class, 'pileCapConfigureAll'])->name('pile_cap_configure')->middleware('permission:slab_cap_wall_configure');
@@ -795,6 +796,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('pile-cap-configure/add', [PileCapConfigureController::class, 'pileCapConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
     Route::get('pile-cap-configure-details/{pileCapConfigure}', [PileCapConfigureController::class, 'pileCapConfigureDetails'])->name('pile_cap_configure.details')->middleware('permission:slab_cap_wall_configure');
     Route::get('pile-cap-configure-print/{pileCapConfigure}', [PileCapConfigureController::class, 'pileCapConfigurePrint'])->name('pile_cap_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('pile-cap-configure-delete/{pileCapConfigure}', [PileCapConfigureController::class, 'pileCapConfigureDelete'])->name('pile_cap_configure.delete')->middleware('permission:slab_cap_wall_configure');
 
     //Mat Configure
     Route::get('mat-configure', [MatConfigureController::class, 'matConfigureAll'])->name('mat_configure')->middleware('permission:slab_cap_wall_configure');
@@ -803,6 +805,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('mat-configure/add', [MatConfigureController::class, 'matConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
     Route::get('mat-configure-details/{matConfigure}', [MatConfigureController::class, 'matConfigureDetails'])->name('mat_configure.details')->middleware('permission:slab_cap_wall_configure');
     Route::get('mat-configure-print/{matConfigure}', [MatConfigureController::class, 'matConfigurePrint'])->name('mat_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('mat-configure-delete/{matConfigure}', [MatConfigureController::class, 'matConfigureDelete'])->name('mat_configure.delete')->middleware('permission:slab_cap_wall_configure');
 
     //Returning Wall Configure
     Route::get('returning-wall-configure', [ReturningWallConfigureController::class, 'returningWallConfigureAll'])->name('returning_wall_configure')->middleware('permission:slab_cap_wall_configure');
@@ -811,6 +814,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('returning-wall-configure/add', [ReturningWallConfigureController::class, 'returningWallConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
     Route::get('returning-wall-configure-details/{returningWall}', [ReturningWallConfigureController::class, 'returningWallConfigureDetails'])->name('returning_wall_configure.details')->middleware('permission:slab_cap_wall_configure');
     Route::get('returning-wall-configure-print/{returningWall}', [ReturningWallConfigureController::class, 'returningWallConfigurePrint'])->name('returning_wall_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('returning-wall-configure-delete/{returningWall}', [ReturningWallConfigureController::class, 'returningWallConfigureDelete'])->name('returning_wall_configure.delete')->middleware('permission:slab_cap_wall_configure');
 
     //Assign Segment
     Route::get('assign-segment', [AssignSegmentController::class, 'assignSegment'])->name('assign_segment.all');

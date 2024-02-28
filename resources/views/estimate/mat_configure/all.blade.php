@@ -76,6 +76,24 @@
                 //order: [[ 0, "desc" ]],
             });
 
+            $('.btn_delete').on('click',function(){
+                let id = $(this).data('id')
+                
+                swal.fire({ 
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.value) {
+                        $("#deleteForm"+id).submit();
+                    }
+                })
+            });
+
+          
             //Date picker
             $('#date').datepicker({
                 autoclose: true,

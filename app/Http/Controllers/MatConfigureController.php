@@ -23,7 +23,7 @@ class MatConfigureController extends Controller
         return view('estimate.mat_configure.add',compact('estimateProjects',
             'costingSegments','columnCost'));
     }
-   
+
     public function matConfigureAddPost(Request $request) {
         // dd($request->all());
         $request->validate([
@@ -68,16 +68,16 @@ class MatConfigureController extends Controller
         ]);
 
         $total_dry_volume = (($request->segment_length * $request->segment_width) * $request->segment_thickness) * 1.5;
-        
+
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
-        
+
         $totalCement = ($total_dry_volume * $request->first_ratio/$totalRatio);
         $totalCementBag = ($totalCement/1.25);
-       
+
         $totalSands = ($total_dry_volume * $request->second_ratio/$totalRatio);
-        
+
         $totalAggregate = ($total_dry_volume * $request->third_ratio/$totalRatio);
-       
+
         if ($request->course_aggregate_type == 2){
             $totalPiked = ($totalAggregate * 11.11);
         }else{
@@ -126,14 +126,14 @@ class MatConfigureController extends Controller
             $matConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
             $matConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
         }
-        
+
         //price
         $matConfigure->common_bar_per_cost = $request->common_bar_costing;
         $matConfigure->common_cement_per_cost = $request->common_cement_costing;
         $matConfigure->common_sands_per_cost = $request->common_sands_costing;
         $matConfigure->s_sands_costing = $request->s_sands_costing;
         //Total Price
-    
+
         if($request->course_aggregate_type == 3){
             $matConfigure->total_common_cement_bag_price = 0;
             $matConfigure->total_common_sands_price = 0;
@@ -156,7 +156,7 @@ class MatConfigureController extends Controller
             $matConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;;
             $matConfigure->total_common_picked_price = 0;
         }
-        
+
         $matConfigure->total_common_bar_price = 0;
 
         $matConfigure->save();
@@ -173,7 +173,7 @@ class MatConfigureController extends Controller
             $data = $rft *  $item;
             $sub_total =  ($request->lapping_lenght[$counter] * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter];
             $total_main_rod = (($data *  $request->kg_by_rft[$counter]) + $sub_total) * $request->layer[$counter];
-           
+
             MatConfigureProduct::create([
                 'common_configure_id' => $matConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
@@ -244,6 +244,11 @@ class MatConfigureController extends Controller
     public function matConfigurePrint(MatConfigure $matConfigure){
         return view('estimate.mat_configure.print',compact('matConfigure'));
     }
+    public function matConfigureDelete(MatConfigure $matConfigure){
+       MatConfigure::find($matConfigure->id)->delete();
+       MatConfigureProduct::where('common_configure_id', $matConfigure->id)->delete();
+        return redirect()->back();
+    }
 
     public function matConfigureDatatable() {
         $query = MatConfigure::with('project','costingSegment');
@@ -258,9 +263,8 @@ class MatConfigureController extends Controller
             ->addColumn('action', function(MatConfigure $matConfigure) {
                 $btn = '';
                 $btn = '<a href="'.route('mat_configure.details', ['matConfigure' => $matConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-                $btn .= '<a href="'.route('mat_configure.details', ['matConfigure' => $matConfigure->id]).'" class="btn btn-danger btn-sm" style="margin-left: 3px;">Delete</a>';
+                $btn .= '<a href="'.route('mat_configure.delete', ['matConfigure' => $matConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
                 return $btn;
-
             })
             ->editColumn('date', function(MatConfigure $matConfigure) {
                 return $matConfigure->date;

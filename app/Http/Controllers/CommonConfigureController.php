@@ -243,6 +243,13 @@ class CommonConfigureController extends Controller
         return view('estimate.common_configure.print',compact('commonConfigure'));
     }
 
+    public function commonConfigureDelete(CommonConfigure $commonConfigure){
+        CommonConfigure::find($commonConfigure->id)->delete();
+        CommonConfigureProduct::where('common_configure_id', $commonConfigure->id)->delete();
+        return redirect()->back();
+    }
+    
+
     public function commonConfigureDatatable() {
         $query = CommonConfigure::with('project','costingSegment');
 
@@ -255,7 +262,10 @@ class CommonConfigureController extends Controller
             })
             ->addColumn('action', function(CommonConfigure $commonConfigure) {
 
-                return '<a href="'.route('common_configure.details', ['commonConfigure' => $commonConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn = '';
+                $btn = '<a href="'.route('common_configure.details', ['commonConfigure' => $commonConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('common_configure.delete', ['commonConfigure' => $commonConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
 
             })
             ->editColumn('date', function(CommonConfigure $commonConfigure) {

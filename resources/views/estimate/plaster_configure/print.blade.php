@@ -64,8 +64,17 @@
             <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th>Plaster Configure No.</th>
-                        <td>{{ $plasterConfigure->plaster_configure_no }}</td>
+                        <th>Plaster Project Name</th>
+                        <td>{{ $plasterConfigure->project->name ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Floor Name</th>
+                        <td>{{ $plasterConfigure->floor->name ?? '' }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Floor Quantity</th>
+                        <td>{{ $plasterConfigure->floor_number ?? ''}}</td>
                     </tr>
                     <tr>
                         <th>Plaster Configure Date</th>
@@ -81,7 +90,8 @@
             <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th colspan="2" class="text-center">Plaster Info</th>
+                        <th>Floor Unit Name</th>
+                        <td>{{ $plasterConfigure->floorUnit->name ?? ''}}</td>
                     </tr>
                     <tr>
                         <th>Ratio</th>
@@ -108,12 +118,9 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Project Name</th>
-                        <th>Floor</th>
-                        <th>Unit</th>
-                        <th>Unit Section</th>
+                        <th>Lenght</th>
+                        <th>Height</th>
                         <th>Plaster Wall Side</th>
-                        <th>Plaster Side</th>
                         <th>Plaster Thickness</th>
                         <th>Sub Total Area</th>
                         <th>Sub Total Cement</th>
@@ -123,40 +130,25 @@
                     <tbody>
                     @foreach($plasterConfigure->plasterConfigureProducts as $product)
                         <tr>
-                            <td>{{ $product->bricksConfigureProduct->project->name }}</td>
-                            <td>{{ $product->bricksConfigureProduct->estimateFloor->name }}</td>
-                            <td>{{ $product->bricksConfigureProduct->estimateFloorUnit->name }}</td>
-                            <td>{{ $product->bricksConfigureProduct->unitSection->plaster_area }}</td>
-                            <td>
-                                @if($product->bricksConfigureProduct->wall_direction == 1)
-                                    East
-                                @elseif($product->bricksConfigureProduct->wall_direction == 2)
-                                    West
-                                @elseif($product->bricksConfigureProduct->wall_direction == 3)
-                                    North
-                                @elseif($product->bricksConfigureProduct->wall_direction == 4)
-                                    South
-                                @else
-                                @endif
-                            </td>
-                            <td> {{ $product->plaster_side }}</td>
-                            <td> {{ $product->plaster_thickness }}</td>
-                            <td> {{ number_format($product->sub_total_dry_area, 2) }}</td>
-                            <td> {{ number_format($product->sub_total_cement, 2) }}</td>
-                            <td> {{ number_format($product->sub_total_sands, 2) }}</td>
+                            <td>{{ $product->length }}</td>
+                            <td>{{ $product->height }}</td>
+                            <td>{{ $product->plaster_side }}</td>
+                            <td>{{ $product->plaster_thickness }}</td>
+                            <td>{{ number_format($product->sub_total_dry_area, 2) }}</td>
+                            <td>{{ number_format($product->sub_total_cement, 2) }}</td>
+                            <td>{{ number_format($product->sub_total_sands, 2) }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                     <tr>
-                        <th class="text-right" colspan="7">Total</th>
+                        <th class="text-right" colspan="4">Total</th>
                         <td> {{ number_format($plasterConfigure->total_plaster_area, 2) }} Cft</td>
-                        <td> {{ number_format($plasterConfigure->total_cement, 2) }} Cft</td>
+                        <td> {{ number_format($plasterConfigure->total_cement_bag, 2) }} Bag</td>
                         <td> {{ number_format($plasterConfigure->total_sands, 2) }} Cft</td>
                     </tr>
                 </table>
             </div>
         </div>
-
         <u><i><h2>Costing Area</h2></i></u>
         <div class="row">
             <div class="col-md-12">

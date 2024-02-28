@@ -81,9 +81,12 @@
                                 <thead>
                                 <tr>
                                     <th width="20%">Product Name</th>
-                                    <th width="20%">Amount</th>
+                                    <th width="15%">Unit</th>
+                                    <th width="15%">Quantity</th>
+                                    <th width="15%">Amount</th>
+                                    <th width="15%">Remark</th>
                                     <th width="20%">Total Cost</th>
-                                    <th width="5%"></th>
+                                    <th width="10%"></th>
                                 </tr>
                                 </thead>
 
@@ -132,10 +135,24 @@
                                             </div>
                                         </td>
 
-
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control unit" value="{{$product->unit}}" name="unit[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control quantity" value="{{$product->quantity}}" name="quantity[]">
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="form-group">
                                                 <input type="text" class="form-control cost_amount" value="{{$product->amount}}" name="cost_amount[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control remark" value="{{$product->remarks}}" name="remark[]">
                                             </div>
                                         </td>
 
@@ -187,7 +204,22 @@
             </td>
             <td>
                 <div class="form-group">
+                    <input type="text" class="form-control unit" name="unit[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control quantity" name="quantity[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
                     <input type="text" class="form-control cost_amount"  name="cost_amount[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control remark" name="remark[]">
                 </div>
             </td>
 

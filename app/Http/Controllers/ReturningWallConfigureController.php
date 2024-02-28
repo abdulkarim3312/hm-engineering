@@ -245,6 +245,12 @@ class ReturningWallConfigureController extends Controller
         return view('estimate.returning_wall_configure.print',compact('returningWall'));
     }
 
+    public function returningWallConfigureDelete(ReturningWallConfigure $returningWall){
+        ReturningWallConfigure::find($returningWall->id)->delete();
+        ReturningWallConfigureProduct::where('common_configure_id', $returningWall->id)->delete();
+        return redirect()->back();
+    }
+
     public function returningWallConfigureDatatable() {
         $query = ReturningWallConfigure::with('project','costingSegment');
 
@@ -257,8 +263,10 @@ class ReturningWallConfigureController extends Controller
             })
             ->addColumn('action', function(ReturningWallConfigure $returningWall) {
 
-                return '<a href="'.route('returning_wall_configure.details', ['returningWall' => $returningWall->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('returning_wall_configure.details', ['returningWall' => $returningWall->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('returning_wall_configure.delete', ['returningWall' => $returningWall->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(ReturningWallConfigure $returningWall) {
                 return $returningWall->date;

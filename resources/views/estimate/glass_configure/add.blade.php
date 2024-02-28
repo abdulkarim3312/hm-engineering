@@ -8,7 +8,7 @@
 @endsection
 
 @section('title')
-    Glass Configure
+    Thai & Glass Configure
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title"> Glass Configure Information</h3>
+                    <h3 class="box-title"> Thai & Glass Configure Information</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -25,6 +25,21 @@
 
                     <div class="box-body">
                         <div class="row">
+                            {{-- <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('glass_type') ? 'has-error' :'' }}">
+                                    <label>Glass Type</label>
+
+                                    <select class="form-control select2" style="width: 100%;" id="glass_type" name="glass_type" data-placeholder="Select Glass Type">
+                                        
+                                        <option value="1" {{ old('glass_type') == 1 ? 'selected' : '' }}>Glass</option>
+                                        <option value="2" {{ old('glass_type') == 2 ? 'selected' : '' }}>Thai</option>
+                                    </select>
+
+                                    @error('estimate_floor_unit')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div> --}}
                             <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('configure_type') ? 'has-error' :'' }}">
                                     <label>Configure Type Name</label>
@@ -55,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
                                     <label>Estimate Floor</label>
 
@@ -69,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
                                     <label>Estimate Floor Unit</label>
 
@@ -85,7 +100,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="row">
@@ -147,7 +161,7 @@
                                         <label>Glass Costing(Per Sft)</label>
 
                                         <div class="form-group">
-                                            <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->grill_costing??0 }}"
+                                            <input type="number" class="form-control" step="any" value="{{ 0 }}"
                                                    name="grill_costing"  placeholder="Enter Per Kg Costing">
                                         </div>
                                         <!-- /.input group -->
@@ -159,14 +173,31 @@
                                 </div>
                             </div>
 
-                            {{-- <div id="tiles_glass_costing">
+                            <div id="thai_costing">
                                 <div class="col-md-3">
-                                    <div class="form-group {{ $errors->has('tiles_glass_costing') ? 'has-error' :'' }}">
-                                        <label>Glass Costing(Per Sft)</label>
+                                    <div class="form-group {{ $errors->has('thai_costing') ? 'has-error' :'' }}">
+                                        <label>Thai Costing(Per Rft)</label>
 
                                         <div class="form-group">
-                                            <input type="number" class="form-control" step="any" value="{{ $grillGlassTilesCost->tiles_glass_costing??0 }}"
-                                                   name="tiles_glass_costing"  placeholder="Enter Per Sft Costing">
+                                            <input type="number" class="form-control" step="any" value="{{ 0 }}"
+                                                   name="thai_costing"  placeholder="Enter Per Sft Costing">
+                                        </div>
+                                        <!-- /.input group -->
+
+                                        @error('thai_costing')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div id="thai_length" style="display: none;">
+                                <div class="col-md-3">
+                                    <div class="form-group {{ $errors->has('tiles_glass_costing') ? 'has-error' :'' }}">
+                                        <label>Thai Length</label>
+
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" step="any" value=""
+                                                   name="tiles_glass_costing"  placeholder="Enter Thai Length">
                                         </div>
                                         <!-- /.input group -->
 
@@ -178,7 +209,7 @@
                             </div> --}}
                         </div>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="glass_table">
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -186,7 +217,8 @@
                                     <th width="15%">Length</th>
                                     <th width="15%">Height/Width</th>
                                     <th width="15%">Quantity</th>
-                                    <th width="15%">Total Area</th>
+                                    <th width="15%" style="font-size: 15px;">Total Area(Glass Sft)</th>
+                                    <th width="15%" style="font-size: 15px;">Total Thai Rft</th>
                                     <th width="10%"></th>
                                 </tr>
                                 </thead>
@@ -197,7 +229,7 @@
                                         <tr class="product-item">
                                             <td>
                                                 <div class="form-group {{ $errors->has('product.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <select class="form-control select2 product" style="width: 100%;" name="product[]" data-placeholder="Select Unit Section" required>
+                                                    <select class="form-control select2 product" style="width: 70%;" name="product[]" data-placeholder="Select Unit Section" required>
                                                         @foreach($unitSections as $unitSection)
                                                             <option value="{{ $unitSection->id }}" {{ old('product.'.$loop->parent->index) == $unitSection->id ? 'selected' : '' }}>{{ $unitSection->name }}</option>
                                                         @endforeach
@@ -224,6 +256,7 @@
                                             </td>
 
                                             <td class="sub-total-area">0.00</td>
+                                            <td class="sub-total-rft">0.00</td>
                                             <td class="text-center">
                                                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                             </td>
@@ -233,7 +266,7 @@
                                     <tr class="product-item">
                                         <td>
                                             <div class="form-group">
-                                                <select class="form-control select2 product" style="width: 100%;" name="product[]" data-placeholder="Select Unit Section" required>
+                                                <select class="form-control select2 product" style="width: 70%;" name="product[]" data-placeholder="Select Unit Section" required>
                                                     @foreach($unitSections as $unitSection)
                                                         <option value="{{ $unitSection->id }}">{{ $unitSection->name }}</option>
                                                     @endforeach
@@ -260,6 +293,7 @@
                                         </td>
 
                                         <td class="sub-total-area">0.00</td>
+                                        <td class="sub-total-rft">0.00</td>
                                         <td class="text-center">
                                             <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
                                         </td>
@@ -272,8 +306,9 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product">Add More</a>
                                     </td>
-                                    <th colspan="3" class="text-right">Total Area</th>
+                                    <th colspan="3" class="text-right">Total Glass Area & Rft</th>
                                     <th id="total-area"> 0.00 </th>
+                                    <th id="total-area-rft"> 0.00 </th>
                                     <td></td>
                                 </tr>
                                 </tfoot>
@@ -294,7 +329,7 @@
         <tr class="product-item">
             <td>
                 <div class="form-group">
-                    <select class="form-control select2 product" style="width: 100%;" name="product[]" data-placeholder="Select Unit Section" required>
+                    <select class="form-control select2 product" style="width: 70%;" name="product[]" data-placeholder="Select Unit Section" required>
                         @foreach($unitSections as $unitSection)
                             <option value="{{ $unitSection->id }}">{{ $unitSection->name }}</option>
                         @endforeach
@@ -321,6 +356,7 @@
             </td>
 
             <td class="sub-total-area">0.00</td>
+            <td class="sub-total-rft">0.00</td>
             <td class="text-center">
                 <a role="button" class="btn btn-danger btn-sm btn-remove">X</a>
             </td>
@@ -344,15 +380,18 @@
                 format: 'yyyy-mm-dd'
             });
 
-            $('body').on('change','#configure_type', function () {
-                var configureType = $(this).val();
+            $('body').on('change','#glass_type', function () {
+                var glassType = $(this).val();
 
-                if (configureType == 1) {
+                if (glassType == 1) {
                     $('#grill_costing').show();
-                    $('#tiles_glass_costing').hide();
-                }else if(configureType == 2 || configureType == 3){
+                    $('#glass_table').show();
+                    $('#thai_costing').hide();
+                }else if(glassType == 2){
                     $('#grill_costing').hide();
-                    $('#tiles_glass_costing').show();
+                    $('#thai_costing').show();
+                    $('#thai_length').show();
+                    $('#glass_table').hide();
                 }else {
 
                 }
@@ -420,13 +459,14 @@
 
         function calculate() {
             var totalArea = 0;
+            var totalAreaRft = 0;
 
 
             $('.product-item').each(function(i, obj) {
                 var length = $('.length:eq('+i+')').val();
                 var height = $('.height:eq('+i+')').val();
                 var quantity = $('.quantity:eq('+i+')').val();
-
+                // console.log(height);
                 if (length == '' || length < 0 || !$.isNumeric(length))
                     length = 0;
 
@@ -436,12 +476,20 @@
                 if (quantity == '' || quantity < 0 || !$.isNumeric(quantity))
                     quantity = 0;
 
+                var len = parseFloat(length);
+                var hei = parseFloat(height)
+                var rft = (parseFloat(len) + parseFloat(hei)) * 2;
+                // console.log(rft);    
+
                 $('.sub-total-area:eq('+i+')').html(parseFloat((length * height) * quantity).toFixed(2));
+                $('.sub-total-rft:eq('+i+')').html(parseFloat(((rft) * quantity).toFixed(2)));
 
                 totalArea += parseFloat(((length * height) * quantity).toFixed(2));
+                totalAreaRft += parseFloat((((rft) * quantity).toFixed(2)));
             });
 
             $('#total-area').html(parseFloat(totalArea).toFixed(2));
+            $('#total-area-rft').html(parseFloat(totalAreaRft).toFixed(2));
         }
 
         function initProduct() {

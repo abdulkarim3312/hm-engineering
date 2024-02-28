@@ -23,12 +23,10 @@ class MobilizationWorkController extends Controller
 
     public function add() {
         $projects = EstimateProject::where('status', 1)->orderBy('name')->get();
-        // dd($projects);
         return view('estimate.mobilization_work.add', compact('projects'));
     }
 
     public function addPost(Request $request) {
-
         $request->validate([
                 'project_id' => 'required',
                 'product.*' => 'required',
@@ -54,10 +52,13 @@ class MobilizationWorkController extends Controller
             $mobilizationWorkDetails = new MobilizationWorkDetails();
             $mobilizationWorkDetails->mobilization_work_id = $mobilizationWork->id;
             $mobilizationWorkDetails->mobilization_product_id = $product->id;
-            $mobilizationWorkDetails->amount=$request->cost_amount[$counter];
+            $mobilizationWorkDetails->amount= $request->cost_amount[$counter];
+            $mobilizationWorkDetails->unit= $request->unit[$counter];
+            $mobilizationWorkDetails->quantity= $request->quantity[$counter];
+            $mobilizationWorkDetails->remarks=$request->remark[$counter];
             $mobilizationWorkDetails->save();
 
-            $total += $request->cost_amount[$counter];
+            $total += $request->cost_amount[$counter] * $request->unit[$counter] * $request->quantity[$counter];
             $counter++;
         }
         $mobilizationWork->total = $total;
@@ -65,11 +66,6 @@ class MobilizationWorkController extends Controller
 
         return redirect()->route('mobilization_work.details', ['mobilizationWork' => $mobilizationWork->id]);
     }
-//    public function edit(Budget $budget){
-//        $products = PurchaseProduct::where("status",1)->get();
-//        $projects = Project::where('id', $budget->project_id)->orderBy('name')->get();
-//        return view('budget.edit', compact('projects','budget','products'));
-//    }
 
     public function edit(MobilizationWork $mobilizationWork) {
         $products = MobilizationWorkProduct::where('status', 1)->orderBy('name')->get();
@@ -101,6 +97,9 @@ class MobilizationWorkController extends Controller
             $mobilizationWorkDetails->mobilization_work_id = $mobilizationWork->id;
             $mobilizationWorkDetails->mobilization_product_id = $product->id;
             $mobilizationWorkDetails->amount=$request->cost_amount[$counter];
+            $mobilizationWorkDetails->unit= $request->unit[$counter];
+            $mobilizationWorkDetails->quantity= $request->quantity[$counter];
+            $mobilizationWorkDetails->remarks=$request->remark[$counter];
             $mobilizationWorkDetails->save();
 
             $total += $request->cost_amount[$counter];

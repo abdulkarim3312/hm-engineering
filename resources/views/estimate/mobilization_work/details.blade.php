@@ -75,27 +75,47 @@
                     </div>
                 </div>
                 <div class="row" style="border: 2px solid #000;margin-top: 5px !important;background: #ededed;">
-                    <div class="col-xs-6 text-center"><strong>Estimate Product</strong></div>
-                    <div class="col-xs-6 text-center"><strong>Total Amount</strong></div>
+                    <div class="col-xs-4 text-center"><strong>Estimate Product</strong></div>
+                    <div class="col-xs-2 text-center"><strong>Unit</strong></div>
+                    <div class="col-xs-2 text-center"><strong>Quantity</strong></div>
+                    <div class="col-xs-2 text-center"><strong>Remarks</strong></div>
+                    <div class="col-xs-2 text-center"><strong>Total Amount</strong></div>
                 </div>
                 <div class="row" style="padding: 5px;border: 1px solid #000;">
 
-                    <div class="col-xs-6 text-center">
+                    <div class="col-xs-4 text-center">
                         @foreach($mobilizationWork->products as $product)
                             {{$product->product->name}}<br>
                         @endforeach
                     </div>
 
-                    <div class="col-xs-6 text-center">
+                    <div class="col-xs-2 text-center">
+                        @foreach($mobilizationWork->products as $product)
+                            {{$product->unit ?? ''}}<br>
+                        @endforeach
+                    </div>
+                    <div class="col-xs-2 text-center">
+                        @foreach($mobilizationWork->products as $product)
+                            {{$product->quantity ?? ''}}<br>
+                        @endforeach
+                    </div>
+                    <div class="col-xs-2 text-center">
+                        @foreach($mobilizationWork->products as $product)
+                            {{$product->remarks ?? ''}}<br>
+                        @endforeach
+                    </div>
+                    <div class="col-xs-2 text-center">
                         @foreach($mobilizationWork->products as $product)
                             {{$product->amount ?? ''}}<br>
                         @endforeach
                     </div>
                 </div>
                 <div class="row" style="padding: 5px;border: 1px solid #000;">
-                    <div class="col-xs-6 text-right"><strong>Total:</strong></div>
-{{--                    <div class="col-xs-3 text-right"><strong>{{number_format($extraCosting->total,2)}}</strong></div>--}}
-                    <div class="col-xs-6 text-center"><strong>{{number_format($mobilizationWork->total,2)}}</strong></div>
+                    <div class="col-xs-4 text-right"><strong>Total:</strong></div>
+                    <div class="col-xs-2 text-center"><strong>{{$mobilizationWork->products->sum('unit')}}</strong></div>
+                    <div class="col-xs-2 text-center"><strong>{{$mobilizationWork->products->sum('quantity')}}</strong></div>
+                    <div class="col-xs-2 text-center"><strong></strong></div>
+                    <div class="col-xs-2 text-center"><strong>{{number_format($mobilizationWork->total,2)}}</strong></div>
                 </div>
                 <div class="row" style="padding: 5px;border: 1px solid #000;">
                     <div class="col-xs-12"><strong>Amount In Word (in BDT):</strong> {{ $mobilizationWork->amount_in_word }} only.</div>

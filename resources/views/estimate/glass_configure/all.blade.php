@@ -9,7 +9,7 @@
 @endsection
 
 @section('title')
-    Glass Configure
+    Glass & Thai Configure
 @endsection
 
 @section('content')
@@ -24,20 +24,20 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    <a class="btn btn-primary" href="{{ route('glass_configure.add') }}">Add Glass Configure</a>
+                    <a class="btn btn-primary" href="{{ route('glass_configure.add') }}">Add Glass & Thai Configure</a>
                     <hr>
 
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Configure No</th>
                             <th>Configure Type Name</th>
                             <th>Project Name</th>
                             <th>Estimate Floor</th>
                             <th>Estimate Floor Unit</th>
                             <th>Floor Quantity</th>
-                            <th>Total Area/KG</th>
+                            <th>Total Glass Area(Sft)</th>
+                            <th>Total Rft</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -68,13 +68,13 @@
                 ajax: '{{ route('glass_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
-                    {data: 'grill_glass_tiles_configure_no', name: 'grill_glass_tiles_configure_no'},
                     {data: 'configure_type', name: 'configure_type'},
                     {data: 'project_name', name: 'project.name'},
                     {data: 'estimate_floor', name: 'estimateFloor.name'},
                     {data: 'estimate_floor_unit', name: 'estimateFloorUnit.name'},
                     {data: 'floor_number', name: 'floor_number'},
                     {data: 'total_area_with_floor', name: 'total_area_with_floor'},
+                    {data: 'total_rft_with_floor', name: 'total_rft_with_floor'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],
