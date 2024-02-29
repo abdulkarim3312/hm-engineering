@@ -56,7 +56,7 @@
                     <div class="col-xs-6">
                         <div class="text-left">
                             <span  style="border: 1px solid #999;padding: 5px">Voucher No:</span>
-                            <span  style="border: 1px solid #999;padding: 5px">JV#{{ $extraCosting->order_no }}</span>
+                            <span  style="border: 1px solid #999;padding: 5px">JV#{{ $extraCosting->costing_no }}</span>
                         </div>
                     </div>
                     <div class="col-xs-6">
@@ -72,21 +72,27 @@
                     </div>
                 </div>
                 <div class="row" style="border: 2px solid #000;margin-top: 5px !important;background: #ededed;">
-                    <div class="col-xs-3 text-center"><strong>Estimate Product</strong></div>
+                    <div class="col-xs-3 text-center"><strong>Extra C. Product</strong></div>
                     <div class="col-xs-3 text-center"><strong>Costing Amount(Per Unit)</strong></div>
+                    <div class="col-xs-3 text-center"><strong> Unit</strong></div>
                     <div class="col-xs-3 text-center"><strong>Total Amount</strong></div>
                 </div>
                 <div class="row" style="padding: 5px;border: 1px solid #000;">
 
                     <div class="col-xs-3 text-center">
                         @foreach($extraCosting->products as $product)
-                            {{$product->name}}-<b>{{$product->unit->name ?? ''}}</b><br>
+                            <b>{{$product->name ?? ''}}</b><br>
                         @endforeach
                     </div>
 
                     <div class="col-xs-3 text-center">
                         @foreach($extraCosting->products as $product)
                             {{$product->costing_amount_per_unit ?? ''}}<br>
+                        @endforeach
+                    </div>
+                    <div class="col-xs-3 text-center">
+                        @foreach($extraCosting->products as $product)
+                            {{$product->unit_id ?? ''}}<br>
                         @endforeach
                     </div>
 
@@ -98,8 +104,8 @@
                 </div>
                 <div class="row" style="padding: 5px;border: 1px solid #000;">
                     <div class="col-xs-3"></div>
+                    <div class="col-xs-3 text-right"></strong></div>
                     <div class="col-xs-3 text-right"><strong>Total:</strong></div>
-{{--                    <div class="col-xs-3 text-right"><strong>{{number_format($extraCosting->total,2)}}</strong></div>--}}
                     <div class="col-xs-3 text-center"><strong>{{number_format($extraCosting->total,2)}}</strong></div>
                 </div>
                 <div class="row" style="padding: 5px;border: 1px solid #000;">

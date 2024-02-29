@@ -31,7 +31,7 @@
                         <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Configure No</th>
+                            <th>Bricks Wall Type</th>
                             <th>Project Name</th>
                             <th>Estimate Floor</th>
                             <th>Estimate Floor Unit</th>
@@ -67,7 +67,7 @@
                 ajax: '{{ route('bricks_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
-                    {data: 'bricks_configure_no', name: 'bricks_configure_no'},
+                    {data: 'wall_type', name: 'wall_type'},
                     {data: 'project_name', name: 'project.name'},
                     {data: 'estimate_floor', name: 'estimateFloor.name'},
                     {data: 'estimate_floor_unit', name: 'estimateFloorUnit.name'},

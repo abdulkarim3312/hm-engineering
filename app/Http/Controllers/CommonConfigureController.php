@@ -117,7 +117,7 @@ class CommonConfigureController extends Controller
         }else if($request->course_aggregate_type == 2){
             $commonConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
             $commonConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
-            $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
+            $commonConfigure->total_aggregate = 0;
             $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
         }else{
             $commonConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
@@ -143,18 +143,21 @@ class CommonConfigureController extends Controller
             $commonConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $commonConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
             $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
-            $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing ?? 0;
+            $commonConfigure->common_aggregate_per_cost = 0;
             $commonConfigure->common_picked_per_cost = $request->common_picked_costing ?? 0;
+            $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
+            $commonConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_aggregate_costing;
         }else{
             $commonConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $commonConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
             $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
             $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
             $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
+            $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
+            $commonConfigure->total_common_picked_price = 0;
         }
         
-        $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
-        $commonConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
+        
         $commonConfigure->total_common_bar_price = 0;
 
         $commonConfigure->save();

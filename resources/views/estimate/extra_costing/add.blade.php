@@ -242,7 +242,7 @@
                  }
              });
  
-             $('body').on('keyup', '.quantity, .cost_amount', function () {
+             $('body').on('keyup', '.quantity, .cost_amount, .unit_amount', function () {
                  calculate();
              });
  
@@ -273,8 +273,8 @@
                  if (quantity == '' || quantity < 0 || !$.isNumeric(quantity))
                      quantity = 0;
  
-                 $('.total-cost:eq('+i+')').html('৳ ' + parseFloat(cost_amount ).toFixed(2));
-                 total += parseFloat(cost_amount);
+                 $('.total-cost:eq('+i+')').html('৳ ' + parseFloat(cost_amount * unit_amount ).toFixed(2));
+                 total += parseFloat(cost_amount * unit_amount);
              });
  
              $('#total-amount').html('৳ ' + total.toFixed(2));

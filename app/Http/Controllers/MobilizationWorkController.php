@@ -136,7 +136,7 @@ class MobilizationWorkController extends Controller
     }
 
     public function extraCostingDatatable() {
-        $query = MobilizationWork::with('estimateProject');
+        $query = MobilizationWork::with('estimateProject', 'products');
 
         return DataTables::eloquent($query)
             ->addColumn('project', function(MobilizationWork $mobilizationWork) {

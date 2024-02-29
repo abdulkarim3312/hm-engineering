@@ -26,7 +26,7 @@ class BricksConfigureController extends Controller
             'estimateFloorUnits','unitSections','commonCost'));
     }
     public function bricksConfigureAddPost(Request $request) {
-        //dd($request->all());
+        // dd($request->all());
 
         $request->validate([
             'estimate_project' => 'required',
@@ -62,6 +62,7 @@ class BricksConfigureController extends Controller
         $bricksConfigure->estimate_project_id = $request->estimate_project;
         $bricksConfigure->estimate_floor_id = $request->estimate_floor;
         $bricksConfigure->estimate_floor_unit_id = $request->estimate_floor_unit;
+        $bricksConfigure->wall_type = $request->wall_type;
         $bricksConfigure->floor_number = $request->floor_number;
         $bricksConfigure->brick_size = $request->brick_size * $request->floor_number;
         $bricksConfigure->morter = $request->morter * $request->floor_number;
@@ -97,7 +98,8 @@ class BricksConfigureController extends Controller
         foreach ($request->product as $key => $reqProduct) {
 
             $area = ($request->length[$counter] * $request->height[$counter]) * $request->wall_number[$counter];
-
+            // $area = ($request->length[$counter] * $request->height[$counter]) * 0.42 * $request->wall_number[$counter];
+            // dd($area);
             $firstDeduction = $request->deduction_length_one[$counter] * $request->deduction_height_one[$counter];
             $secondDeduction = $request->deduction_length_two[$counter] * $request->deduction_height_two[$counter];
             $thirdDeduction = $request->deduction_length_three[$counter] * $request->deduction_height_three[$counter];
@@ -107,6 +109,7 @@ class BricksConfigureController extends Controller
             $totalArea = $area - $subTotalDeduction;
 
             $subTotalMorters = (($totalArea/$request->brick_size * $request->morter) * $request->dry_morter);
+            // $subTotalMorters = ($area * $request->dry_morter);
 
             $subTotalCement = $subTotalMorters * $request->first_ratio/$totalRatio;
             $subTotalSands = $subTotalMorters * $request->second_ratio/$totalRatio;
@@ -183,14 +186,20 @@ class BricksConfigureController extends Controller
                 return $bricksConfigure->unitSection->name??'';
             })
             ->addColumn('action', function(BricksConfigure $bricksConfigure) {
-
                 return '<a href="'.route('bricks_configure.details', ['bricksConfigure' => $bricksConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
             })
             ->editColumn('date', function(BricksConfigure $bricksConfigure) {
                 return $bricksConfigure->date;
             })
-            ->rawColumns(['action'])
+            ->addColumn('wall_type', function(BricksConfigure $bricksConfigure) {
+                if ($bricksConfigure->wall_type == 1)
+                    return '<span class="badge badge-dark" style="background: #8f1ec9; font-size: 14px;">3" wall</span>';
+                else if($bricksConfigure->wall_type == 2)
+                    return '<span class="badge badge-success" style="background: #04D89D; font-size: 14px;">5" wall</span>';
+                else
+                    return '<span class="badge badge-warning" style="background: #FFC107; color:#000000; font-size: 14px;">10" wall</span>';
+            })
+            ->rawColumns(['action', 'wall_type'])
             ->toJson();
     }
 }

@@ -177,6 +177,44 @@
                                     </div>
                                 </div>
                             @endif
+                            @if($gradeBeamConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Grade Beam Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Grade Beam Quantity</th>
+                                                <th class="text-center">Total Bar/Rod Kg</th>
+                                                <th class="text-center">Total Cement</th>
+                                                <th class="text-center">Total Sands</th>
+                                                <th class="text-center">Total Aggregate</th>
+                                                <th class="text-center">Total Picked</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$gradeBeamConfigures->sum('beam_quantity')}}</td>
+                                                <td class="text-center">{{$gradeBeamConfigures->sum('total_kg')}} Kg</td>
+                                                <td class="text-center">{{$gradeBeamConfigures->sum('total_cement_bag')}} Bag</td>
+                                                <td class="text-center">{{$gradeBeamConfigures->sum('total_sands')}} Cft</td>
+                                                <td class="text-center">{{$gradeBeamConfigures->sum('total_aggregate')}} Cft</td>
+                                                <td class="text-center">{{$gradeBeamConfigures->sum('total_picked')}} Pcs</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$gradeBeamConfigures->sum('beam_quantity')}}</td>
+                                                <td class="text-center">৳ {{number_format($gradeBeamConfigures->sum('total_beam_bar_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($gradeBeamConfigures->sum('total_beam_cement_bag_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($gradeBeamConfigures->sum('total_beam_sands_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($gradeBeamConfigures->sum('total_beam_aggregate_price')),2}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($gradeBeamConfigures->sum('total_beam_picked_price')),2}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
                             @if($columnConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-10">
@@ -215,16 +253,54 @@
                                     </div>
                                 </div>
                             @endif
+                            @if($footingConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Footing Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Column Quantity</th>
+                                                <th class="text-center">Total Bar/Rod Kg</th>
+                                                <th class="text-center">Total Cement</th>
+                                                <th class="text-center">Total Sands</th>
+                                                <th class="text-center">Total Aggregate</th>
+                                                <th class="text-center">Total Picked</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$footingConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">{{$footingConfigures->sum('total_kg')}} Kg</td>
+                                                <td class="text-center">{{$footingConfigures->sum('total_cement_bag')}} Bag</td>
+                                                <td class="text-center">{{$footingConfigures->sum('total_sands')}} Cft</td>
+                                                <td class="text-center">{{$footingConfigures->sum('total_aggregate')}} Cft</td>
+                                                <td class="text-center">{{$footingConfigures->sum('total_picked')}} Pcs</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$footingConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">৳ {{number_format($footingConfigures->sum('total_common_bar_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($footingConfigures->sum('total_common_cement_bag_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($footingConfigures->sum('total_common_sands_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($footingConfigures->sum('total_common_aggregate_price')),2}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($footingConfigures->sum('total_common_picked_price')),2}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
                             @if($commonConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-10">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th colspan="7" class="text-center">Slab/P.Cap/Mat/R.Wall Estimate And Costing</th>
+                                                <th colspan="7" class="text-center">Slab Estimate And Costing</th>
                                             </tr>
                                             <tr>
                                                 <th class="text-center">Type</th>
-                                                <th class="text-center">Slab/P.Cap/Mat/R.Wall Quantity</th>
+                                                <th class="text-center">Slab Quantity</th>
                                                 <th class="text-center">Total Bar/Rod Kg</th>
                                                 <th class="text-center">Total Cement</th>
                                                 <th class="text-center">Total Sands</th>
@@ -248,6 +324,120 @@
                                                 <td class="text-center">৳ {{number_format($commonConfigures->sum('total_common_sands_price'),2)}} Taka</td>
                                                 <td class="text-center">৳ {{number_format($commonConfigures->sum('total_common_aggregate_price')),2}} Taka</td>
                                                 <td class="text-center">৳ {{number_format($commonConfigures->sum('total_common_picked_price')),2}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($pileCapConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Pile Cap Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Pile Cap Quantity</th>
+                                                <th class="text-center">Total Bar/Rod Kg</th>
+                                                <th class="text-center">Total Cement</th>
+                                                <th class="text-center">Total Sands</th>
+                                                <th class="text-center">Total Aggregate</th>
+                                                <th class="text-center">Total Picked</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$pileCapConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">{{$pileCapConfigures->sum('total_kg')}} Kg</td>
+                                                <td class="text-center">{{$pileCapConfigures->sum('total_cement_bag')}} Bag</td>
+                                                <td class="text-center">{{$pileCapConfigures->sum('total_sands')}} Cft</td>
+                                                <td class="text-center">{{$pileCapConfigures->sum('total_aggregate')}} Cft</td>
+                                                <td class="text-center">{{$pileCapConfigures->sum('total_picked')}} Pcs</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$pileCapConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">৳ {{number_format($pileCapConfigures->sum('total_common_bar_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($pileCapConfigures->sum('total_common_cement_bag_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($pileCapConfigures->sum('total_common_sands_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($pileCapConfigures->sum('total_common_aggregate_price')),2}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($pileCapConfigures->sum('total_common_picked_price')),2}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($matConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Mat Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Mat Quantity</th>
+                                                <th class="text-center">Total Bar/Rod Kg</th>
+                                                <th class="text-center">Total Cement</th>
+                                                <th class="text-center">Total Sands</th>
+                                                <th class="text-center">Total Aggregate</th>
+                                                <th class="text-center">Total Picked</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$matConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">{{$matConfigures->sum('total_kg')}} Kg</td>
+                                                <td class="text-center">{{$matConfigures->sum('total_cement_bag')}} Bag</td>
+                                                <td class="text-center">{{$matConfigures->sum('total_sands')}} Cft</td>
+                                                <td class="text-center">{{$matConfigures->sum('total_aggregate')}} Cft</td>
+                                                <td class="text-center">{{$matConfigures->sum('total_picked')}} Pcs</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$matConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">৳ {{number_format($matConfigures->sum('total_common_bar_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($matConfigures->sum('total_common_cement_bag_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($matConfigures->sum('total_common_sands_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($matConfigures->sum('total_common_aggregate_price')),2}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($matConfigures->sum('total_common_picked_price')),2}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($returningWallConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Returing Wall Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">R. Wall Quantity</th>
+                                                <th class="text-center">Total Bar/Rod Kg</th>
+                                                <th class="text-center">Total Cement</th>
+                                                <th class="text-center">Total Sands</th>
+                                                <th class="text-center">Total Aggregate</th>
+                                                <th class="text-center">Total Picked</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$returningWallConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">{{$returningWallConfigures->sum('total_kg')}} Kg</td>
+                                                <td class="text-center">{{$returningWallConfigures->sum('total_cement_bag')}} Bag</td>
+                                                <td class="text-center">{{$returningWallConfigures->sum('total_sands')}} Cft</td>
+                                                <td class="text-center">{{$returningWallConfigures->sum('total_aggregate')}} Cft</td>
+                                                <td class="text-center">{{$returningWallConfigures->sum('total_picked')}} Pcs</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$returningWallConfigures->sum('costing_segment_quantity')}}</td>
+                                                <td class="text-center">৳ {{number_format($returningWallConfigures->sum('total_common_bar_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($returningWallConfigures->sum('total_common_cement_bag_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($returningWallConfigures->sum('total_common_sands_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($returningWallConfigures->sum('total_common_aggregate_price')),2}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($returningWallConfigures->sum('total_common_picked_price')),2}} Taka</td>
                                             </tr>
                                         </table>
                                     </div>

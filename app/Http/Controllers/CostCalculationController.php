@@ -16,12 +16,17 @@ use App\Models\CommonConfigure;
 use App\Models\EarthWorkConfigure;
 use App\Models\EstimateProductType;
 use App\Models\ExtraCosting;
+use App\Models\FootingConfigure;
+use App\Models\GradeBeamConfigure;
 use App\Models\GrillGlassTilesConfigure;
+use App\Models\MatConfigure;
 use App\Models\PaintConfigure;
 use App\Models\PileConfigure;
 use App\Models\MobilizationWork;
+use App\Models\PileCapConfigure;
 use App\Models\PlasterConfigure;
 use App\Models\PlasterConfigureProduct;
+use App\Models\ReturningWallConfigure;
 use App\Models\SegmentConfigure;
 use Illuminate\Http\Request;
 
@@ -235,7 +240,11 @@ class CostCalculationController extends Controller
         $projectName = '';
         $pileConfigures = [];
         $beamConfigures = [];
+        $gradeBeamConfigures = [];
         $columnConfigures = [];
+        $footingConfigures = [];
+        $pileCapConfigures = [];
+        $matConfigures = [];
         $commonConfigures = [];
         $bricksConfigures = [];
         $plasterConfigures = [];
@@ -257,12 +266,32 @@ class CostCalculationController extends Controller
                 ->with('beamConfigureProducts')
                 ->get();
 
+            $gradeBeamConfigures = GradeBeamConfigure::where('estimate_project_id',$request->project)
+                ->with('gradeBeamConfigureProducts')
+                ->get();
+
             $columnConfigures = ColumnCofigure::where('estimate_project_id',$request->project)
                 ->with('columnConfigureProducts')
+                ->get();
+            $footingConfigures = FootingConfigure::where('estimate_project_id',$request->project)
+                ->with('footingConfigureProducts')
                 ->get();
 
             $commonConfigures = CommonConfigure::where('estimate_project_id',$request->project)
                 ->with('commonConfigureProducts','costingSegment')
+                ->orderBy('costing_segment_id')
+                ->get();
+
+            $pileCapConfigures = PileCapConfigure::where('estimate_project_id',$request->project)
+                ->with('pileCapConfigureProducts','costingSegment')
+                ->orderBy('costing_segment_id')
+                ->get();
+            $matConfigures = MatConfigure::where('estimate_project_id',$request->project)
+                ->with('matConfigureProducts','costingSegment')
+                ->orderBy('costing_segment_id')
+                ->get();
+            $returningWallConfigures = ReturningWallConfigure::where('estimate_project_id',$request->project)
+                ->with('returningWallConfigureProducts','costingSegment')
                 ->orderBy('costing_segment_id')
                 ->get();
             //dd($commonConfigures);
@@ -320,8 +349,9 @@ class CostCalculationController extends Controller
                 'plasterConfigures','grillGlassTilesConfigures',
                 'paintConfigures','earthWorkConfigures',
                 'extraCostingConfigures','grillConfigures',
-                'tilesConfigures','glassConfigures'
-
+                'tilesConfigures','glassConfigures', 'gradeBeamConfigures',
+                'footingConfigures', 'pileCapConfigures','matConfigures',
+                'returningWallConfigures'
             ));
     }
 

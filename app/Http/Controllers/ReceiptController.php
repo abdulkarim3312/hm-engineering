@@ -138,9 +138,9 @@ class ReceiptController extends Controller
             ->addColumn('payment_step', function(ReceiptPayment $receiptPayment) {
                     $btn = '';
                     if ($receiptPayment->payment_step == 1){
-                        $btn .= 'Booking Money';
+                        $btn .= '<span class="badge badge-success" style="background: #04D89D; font-size: 13px;">Booking Money</span>';
                     }else if($receiptPayment->payment_step == 2){
-                        $btn .= 'Down Payment';
+                        $btn .= '<span class="badge badge-warning" style="background: #FFC107; color:#000000; font-size: 13px;">Down Payment</span>';
                     }else{
                         $btn .= $receiptPayment->installment_name;
                     }
@@ -163,7 +163,7 @@ class ReceiptController extends Controller
             ->editColumn('date', function(ReceiptPayment $receiptPayment) {
                 return $receiptPayment->date->format('d-m-Y');
             })
-            ->rawColumns(['action','expenses_code','transaction_type'])
+            ->rawColumns(['action','expenses_code','transaction_type', 'payment_step'])
             ->toJson();
     }
     public function purchasePaymentDatatable() {

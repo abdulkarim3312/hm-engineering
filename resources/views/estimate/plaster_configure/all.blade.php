@@ -31,7 +31,9 @@
                         <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Configure No</th>
+                            <th>Project Name</th>
+                            <th>Floor Name</th>
+                            <th>Unit Name</th>
                             <th>Total Plaster Area(Dry)</th>
                             <th>Total Cement(Bag)</th>
                             <th>Total Sands(Cft)</th>
@@ -65,11 +67,9 @@
                 ajax: '{{ route('plaster_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
-                    {data: 'plaster_configure_no', name: 'plaster_configure_no'},
-                    // {data: 'project_name', name: 'project.name'},
-                    // {data: 'estimate_floor', name: 'estimateFloor.name'},
-                    // {data: 'estimate_floor_unit', name: 'estimateFloorUnit.name'},
-                    // {data: 'unit_section', name: 'unitSection.name'},
+                    {data: 'project_name', name: 'project.name'},
+                    {data: 'estimate_floor', name: 'floor.name'},
+                    {data: 'estimate_floor_unit', name: 'floorUnit.name'},
                     {data: 'total_plaster_area', name: 'total_plaster_area'},
                     {data: 'total_cement_bag', name: 'total_cement_bag'},
                     {data: 'total_sands', name: 'total_sands'},

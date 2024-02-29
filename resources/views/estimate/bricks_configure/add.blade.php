@@ -37,7 +37,22 @@
 
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <div class="form-group {{ $errors->has('estimate_project') ? 'has-error' :'' }}">
+                                    <label>Bricks Wall Type</label>
+                                    <select class="form-control select2" style="width: 100%;" id="wall_type" name="wall_type" data-placeholder="Select Wall Type">
+                                        <option value="">Select Wall Type</option>
+                                        <option value="1" {{ old('wall_type') == 1 ? 'selected' : '' }}>3 Inch wall</option>
+                                        <option value="2" {{ old('wall_type') == 2 ? 'selected' : '' }}>5 Inch wall</option>
+                                        <option value="3" {{ old('wall_type') == 3 ? 'selected' : '' }}>10 Inch wall</option>
+                                    </select>
+
+                                    @error('estimate_project')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('estimate_project') ? 'has-error' :'' }}">
                                     <label>Estimate Projects</label>
 
@@ -55,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
                                     <label>Estimate Floor</label>
 
@@ -69,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
                                     <label>Estimate Floor Unit</label>
 
@@ -110,7 +125,7 @@
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="brick_size" step="any"
-                                               name="brick_size" value="{{ old('brick_size') }}" >
+                                               name="brick_size" value="{{ old('brick_size') }}">
                                     </div>
                                     <!-- /.input group -->
 
@@ -242,7 +257,7 @@
                                     <label>Cement Cost(Per Bag)</label>
 
                                     <div class="form-group">
-                                        <input type="number" class="form-control" step="any" value="{{ $commonCost->common_cement_per_cost??0 }}"
+                                        <input type="number" class="form-control" step="any" value="{{ 0 }}"
                                                name="bricks_cement_costing"  placeholder="Enter Per Bag Cement Costing">
                                     </div>
                                     <!-- /.input group -->
@@ -602,6 +617,24 @@
                 }
             });
 
+
+            $('body').on('change','#wall_type', function () {
+                var wallType = $(this).val();
+                var threeInch = 0.334;
+                var fiveInch = 0.20;
+                var tenInch = 0.087;
+
+                if (wallType == 1) {
+                    $('#brick_size').val(threeInch);
+                }else if(wallType == 2){
+                    $('#brick_size').val(fiveInch);
+                }else {
+                    $('#brick_size').val(tenInch);
+                }
+            })
+
+
+
             var selectedFloor = '{{ old('estimate_floor') }}';
 
             $('body').on('change', '#estimate_project', function () {
@@ -715,9 +748,9 @@
                 if (deduction_height_three == '' || deduction_height_three < 0 || !$.isNumeric(deduction_height_three))
                     deduction_height_three = 0;
 
-                var deduction_one = parseFloat(deduction_length_one * deduction_height_one);
-                var deduction_two = parseFloat(deduction_length_two * deduction_height_two);
-                var deduction_three = parseFloat(deduction_length_three * deduction_height_three);
+                var deduction_one = parseFloat((deduction_length_one) * (deduction_height_one));
+                var deduction_two = parseFloat((deduction_length_two) * (deduction_height_two));
+                var deduction_three = parseFloat((deduction_length_three) * (deduction_height_three));
 
                 var totalDeduction = deduction_one + deduction_two + deduction_three;
 

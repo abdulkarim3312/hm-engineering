@@ -96,19 +96,18 @@ class ExtraCostingController extends Controller
         $counter = 0;
         $total = 0;
         foreach ($request->product as $reqProduct) {
-            $product = EstimateProduct::find($reqProduct);
+            $product = ExtraCostProduct::find($reqProduct);
 
             ExtraCostingProduct::create([
                 'extra_costing_id' => $extraCosting->id,
                 'estimate_product_id' => $product->id,
                 'name' => $product->name,
-                'unit_id' => $product->unit_amount,
-                // 'quantity' => $request->quantity[$counter],
-                // 'costing_amount_per_unit' => $request->extra_costing_per_unit[$counter],
-                'total' => $request->cost_amount[$counter]
+                'unit_id' => $request->unit_amount[$counter],
+                'costing_amount_per_unit' => $request->cost_amount[$counter],
+                'total' => $request->cost_amount[$counter] * $request->unit_amount[$counter]
             ]);
 
-            $total += $request->cost_amount[$counter];
+            $total += $request->cost_amount[$counter] * $request->unit_amount[$counter];
             $counter++;
         }
         $extraCosting->total = $total;

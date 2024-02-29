@@ -151,18 +151,15 @@ class PlasterConfigureController extends Controller
         $query = PlasterConfigure::query();
 
         return DataTables::eloquent($query)
-//            ->addColumn('project_name', function(PlasterConfigure $plasterConfigure) {
-//                return $plasterConfigure->project->name??'';
-//            })
-//            ->addColumn('estimate_floor', function(PlasterConfigure $plasterConfigure) {
-//                return $plasterConfigure->estimateFloor->name??'';
-//            })
-//            ->addColumn('estimate_floor_unit', function(PlasterConfigure $plasterConfigure) {
-//                return $plasterConfigure->estimateFloorUnit->name??'';
-//            })
-//            ->addColumn('unit_section', function(PlasterConfigure $plasterConfigure) {
-//                return $plasterConfigure->unitSection->name??'';
-//            })
+           ->addColumn('project_name', function(PlasterConfigure $plasterConfigure) {
+               return $plasterConfigure->project->name??'';
+           })
+           ->addColumn('estimate_floor', function(PlasterConfigure $plasterConfigure) {
+               return $plasterConfigure->floor->name??'';
+           })
+           ->addColumn('estimate_floor_unit', function(PlasterConfigure $plasterConfigure) {
+               return $plasterConfigure->floorUnit->name??'';
+           })
             ->addColumn('action', function(PlasterConfigure $plasterConfigure) {
 
                 return '<a href="'.route('plaster_configure.details', ['plasterConfigure' => $plasterConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';

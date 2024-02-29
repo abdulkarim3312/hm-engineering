@@ -30,7 +30,7 @@
                                     <label>Glass Type</label>
 
                                     <select class="form-control select2" style="width: 100%;" id="glass_type" name="glass_type" data-placeholder="Select Glass Type">
-                                        
+
                                         <option value="1" {{ old('glass_type') == 1 ? 'selected' : '' }}>Glass</option>
                                         <option value="2" {{ old('glass_type') == 2 ? 'selected' : '' }}>Thai</option>
                                     </select>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
                                     <label>Estimate Floor</label>
 
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
                                     <label>Estimate Floor Unit</label>
 
@@ -479,7 +479,7 @@
                 var len = parseFloat(length);
                 var hei = parseFloat(height)
                 var rft = (parseFloat(len) + parseFloat(hei)) * 2;
-                // console.log(rft);    
+                // console.log(rft);
 
                 $('.sub-total-area:eq('+i+')').html(parseFloat((length * height) * quantity).toFixed(2));
                 $('.sub-total-rft:eq('+i+')').html(parseFloat(((rft) * quantity).toFixed(2)));
