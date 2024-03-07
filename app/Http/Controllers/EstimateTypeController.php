@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BeamType;
 use App\Models\ColumnType;
 use App\Models\GradeBeamType;
+use App\Models\ShortColumnType;
 use Illuminate\Http\Request;
 
 class EstimateTypeController extends Controller
@@ -88,7 +89,47 @@ class EstimateTypeController extends Controller
         $columnType->status = $request->status;
         $columnType->save();
 
-        return redirect()->route('grade_beam_type')->with('message', 'Column Type edit successfully.');
+        return redirect()->route('column_type')->with('message', 'Column Type edit successfully.');
+    }
+
+    public function shortColumnType() {
+        $shortColumnTypes = ShortColumnType::get();
+        return view('estimate.short_column_type.all', compact('shortColumnTypes'));
+    }
+    public function shortColumnTypeAdd() {
+        return view('estimate.short_column_type.add');
+    }
+
+    public function shortColumnTypeAddPost(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required'
+        ]);
+
+        $shortColumnType = new ShortColumnType();
+        $shortColumnType->name = $request->name;
+        $shortColumnType->status = $request->status;
+        $shortColumnType->save();
+
+        return redirect()->route('short_column_type')->with('message', 'Short Column Type add successfully.');
+    }
+
+    public function shortColumnTypeEdit(ShortColumnType $shortColumnType) {
+        return view('estimate.short_column_type.edit', compact( 'shortColumnType'));
+    }
+
+    public function shortColumnTypeEditPost(ShortColumnType $shortColumnType, Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required'
+        ]);
+
+        $shortColumnType->name = $request->name;
+        $shortColumnType->status = $request->status;
+        $shortColumnType->save();
+
+        return redirect()->route('short_column_type')->with('message', 'Short Column Type edit successfully.');
     }
 
     public function gradeBeamType() {

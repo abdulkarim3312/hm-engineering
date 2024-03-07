@@ -35,6 +35,7 @@ use App\Http\Controllers\CostingSegmentController;
 use App\Http\Controllers\EstimateProductController;
 use App\Http\Controllers\SegmentConfigureController;
 use App\Http\Controllers\ColumnConfigureController;
+use App\Http\Controllers\ShortColumnConfigureController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MobilizationWorkController;
 use App\Http\Controllers\MobilizationWorkProductController;
@@ -634,6 +635,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('column-type/edit/{columnType}', [EstimateTypeController::class, 'columnTypeEdit'])->name('column_type.edit')->middleware('permission:column_type');
     Route::post('column-type/edit/{columnType}', [EstimateTypeController::class, 'columnTypeEditPost'])->middleware('permission:column_type');
 
+    //Short Column Type
+    Route::get('short-column-type', [EstimateTypeController::class, 'shortColumnType'])->name('short_column_type')->middleware('permission:column_type');
+    Route::get('short-column-type/add', [EstimateTypeController::class, 'shortColumnTypeAdd'])->name('short_column_type.add')->middleware('permission:column_type');
+    Route::post('short-column-type/add', [EstimateTypeController::class, 'shortColumnTypeAddPost'])->middleware('permission:column_type');
+    Route::get('short-column-type/edit/{shortColumnType}', [EstimateTypeController::class, 'shortColumnTypeEdit'])->name('short_column_type.edit')->middleware('permission:column_type');
+    Route::post('short-column-type/edit/{shortColumnType}', [EstimateTypeController::class, 'shortColumnTypeEditPost'])->middleware('permission:column_type');
+
     //Grade Beam Type
     Route::get('grade-beam-type', [EstimateTypeController::class, 'gradeBeamType'])->name('grade_beam_type')->middleware('permission:column_type');
     Route::get('grade-beam-type/add', [EstimateTypeController::class, 'gradeBeamTypeAdd'])->name('grade_beam_type.add')->middleware('permission:column_type');
@@ -779,6 +787,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('column-configure/add', [ColumnConfigureController::class, 'columnConfigureAddPost'])->middleware('permission:column_configure');
     Route::get('column-configure-details/{columnConfigure}', [ColumnConfigureController::class, 'columnConfigureDetails'])->name('column_configure.details')->middleware('permission:column_configure');
     Route::get('column-configure-print/{columnConfigure}', [ColumnConfigureController::class, 'columnConfigurePrint'])->name('column_configure.print')->middleware('permission:column_configure');
+
+    //Short Column Configure
+    Route::get('short-column-configure', [ShortColumnConfigureController::class, 'shortColumnConfigure'])->name('short_column_configure')->middleware('permission:column_configure');
+    Route::get('short-column-configure-datatable', [ShortColumnConfigureController::class, 'shortColumnConfigureDatatable'])->name('short_column_configure.datatable');
+    Route::get('short-column-configure/add', [ShortColumnConfigureController::class, 'shortColumnConfigureAdd'])->name('short_column_configure.add')->middleware('permission:column_configure');
+    Route::post('short-column-configure/add', [ShortColumnConfigureController::class, 'shortColumnConfigureAddPost'])->middleware('permission:column_configure');
+    Route::get('short-column-configure-details/{shortColumnConfigure}', [ShortColumnConfigureController::class, 'shortColumnConfigureDetails'])->name('short_column_configure.details')->middleware('permission:column_configure');
+    Route::get('short-column-configure-print/{shortColumnConfigure}', [ShortColumnConfigureController::class, 'shortColumnConfigurePrint'])->name('short_column_configure.print')->middleware('permission:column_configure');
 
     //Slab Configure
     Route::get('common-configure', [CommonConfigureController::class, 'configureAll'])->name('common_configure')->middleware('permission:slab_cap_wall_configure');

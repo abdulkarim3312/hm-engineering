@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-   Pile Configure Details
+   Short Column Configure Details
 @endsection
 
 @section('content')
@@ -63,7 +63,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a target="_blank" href="{{ route('pile_configure.print', ['pileConfigure' => $pileConfigure->id]) }}" class="btn btn-primary">Print</a>
+                            <a target="_blank" href="{{ route('short_column_configure.print', ['shortColumnConfigure' => $shortColumnConfigure->id]) }}" class="btn btn-primary">Print</a>
                         </div>
                     </div>
                     <div id="prinarea">
@@ -88,52 +88,48 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>Pile Configure No.</th>
-                                        <td>{{ $pileConfigure->pile_configure_no }}</td>
+                                        <th>Short Column Configure No.</th>
+                                        <td>{{ $shortColumnConfigure->column_configure_no }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Pile Configure Date</th>
-                                        <td>{{ $pileConfigure->date }}</td>
+                                        <th>Short Column Configure Date</th>
+                                        <td>{{ $shortColumnConfigure->date }}</td>
                                     </tr>
                                     <tr>
                                         <th>Estimate Project</th>
-                                        <td>{{ $pileConfigure->project->name }}</td>
+                                        <td>{{ $shortColumnConfigure->project->name }}</td>
                                     </tr>
                                     <tr>
                                         <th>Total Ton</th>
-                                        <td>{{ $pileConfigure->total_ton }} Rod</td>
+                                        <td>{{ $shortColumnConfigure->total_ton }} Rod</td>
                                     </tr>
                                     <tr>
                                         <th>Total Kg</th>
-                                        <td>{{ $pileConfigure->total_kg }} Rod</td>
+                                        <td>{{ $shortColumnConfigure->total_kg }} Rod</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Cement(Cft)</th>
-                                        <td>{{ $pileConfigure->total_cement }} Cft</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Cement(Bag)</th>
-                                        <td>{{ $pileConfigure->total_cement_bag }} Bag</td>
+                                        <th>Total Cement</th>
+                                        <td>{{ $shortColumnConfigure->total_cement_bag }} Bag</td>
                                     </tr>
                                     <tr>
                                         <th>Total Local Sands</th>
-                                        <td>{{ $pileConfigure->total_sands }} Cft</td>
+                                        <td>{{ $shortColumnConfigure->total_sands }} Cft</td>
                                     </tr>
                                     <tr>
                                         <th>Total Sylhet Sands</th>
-                                        <td>{{ $pileConfigure->total_s_sands }} Cft</td>
+                                        <td>{{ $shortColumnConfigure->total_s_sands }} Cft</td>
                                     </tr>
                                     <tr>
                                         <th>Total Aggregate</th>
-                                        <td>{{ $pileConfigure->total_aggregate }} Cft</td>
+                                        <td>{{ $shortColumnConfigure->total_aggregate }} Cft</td>
                                     </tr>
                                     <tr>
                                         <th>Total Piked</th>
-                                        <td>{{ $pileConfigure->total_picked }} Pcs</td>
+                                        <td>{{ $shortColumnConfigure->total_picked }} Pcs</td>
                                     </tr>
                                     <tr>
                                         <th>Note </th>
-                                        <td>{{ $pileConfigure->note??'' }}</td>
+                                        <td>{{ $shortColumnConfigure->note??'' }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -141,47 +137,49 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th colspan="2" class="text-center">Pilling Info</th>
+                                        <th colspan="2" class="text-center">Column Info</th>
                                     </tr>
                                     <tr>
-                                        <th>Spiral Bar</th>
-                                        <td>{{ $pileConfigure->spiral_bar }}</td>
+                                        <th>Total Ring</th>
+                                        <td>{{ $shortColumnConfigure->ring_quantity }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Spiral Interval</th>
-                                        <td>{{ $pileConfigure->spiral_interval }}</td>
+                                        <th>Tie Interval</th>
+                                        <td>{{ $shortColumnConfigure->tie_interval }}</td>
                                     </tr>
                                     <tr>
                                         <th>Ratio</th>
-                                        <td>{{ $pileConfigure->first_ratio }}:{{ $pileConfigure->second_ratio }}:{{ $pileConfigure->third_ratio }}</td>
+                                        <td>{{ $shortColumnConfigure->first_ratio }}:{{ $shortColumnConfigure->second_ratio }}:{{ $shortColumnConfigure->third_ratio }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Height</th>
-                                        <td>{{ $pileConfigure->pile_height }}</td>
+                                        <th>Short Column Height</th>
+                                        <td>{{ $shortColumnConfigure->column_length }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Radius</th>
-                                        <td>{{ $pileConfigure->radius }}</td>
+                                        <th>Short Column Length</th>
+                                        <td>{{ $shortColumnConfigure->tie_length_volume }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Pile Quantity</th>
-                                        <td>{{ $pileConfigure->pile_quantity }}</td>
+                                        <th>Column Width</th>
+                                        <td>{{ $shortColumnConfigure->tie_width_volume }}</td>
                                     </tr>
                                     <tr>
                                         <th>Total Volume</th>
-                                        <td>{{ $pileConfigure->total_volume }}</td>
+                                        <td>{{ $shortColumnConfigure->total_volume }}</td>
                                     </tr>
                                     <tr>
                                         <th>Total Dry Volume</th>
-                                        <td>{{ $pileConfigure->total_dry_volume }}</td>
+                                        <td>{{ $shortColumnConfigure->total_dry_volume }}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
 
                         @php
-                        $sub_total_kg = 0;
-                        $sub_total_ton = 0;
+                        $tieTotalKg = 0;
+                        $tieTotalTon = 0;
+                        $straightTotalKg = 0;
+                        $straightTotalTon = 0;
                         @endphp
 
                         <div class="row">
@@ -195,26 +193,26 @@
                                         <th>Value of Bar</th>
                                         <th>Kg/Rft</th>
                                         <th>Kg/Ton</th>
-                                        <th>Rft/Ton</th>
                                         <th>Sub Total Kg</th>
                                         <th>Sub Total Ton</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <h4>Main Bar Description</h4>
-                                    @foreach($pileConfigure->pileConfigureProducts as $product)
-                                        @if ($product->bar_type != null)
+                                    <h4>Main Rod Description</h4>
+                                    @foreach($shortColumnConfigure->shortColumnConfigureProducts as $product)
+                                        @if($product->bar_type != null)
 
-                                            <?php
-                                                $sub_total_kg += $product->sub_total_kg;
-                                                $sub_total_ton += $product->sub_total_ton;
-                                            ?>
+
+                                        <?php
+                                        $straightTotalKg += $product->sub_total_kg_straight;
+                                        $straightTotalTon += $product->sub_total_ton_straight;
+                                        ?>
                                             <tr>
                                                 <td>
-                                                @if($product->bar_type == 6)
-                                                    6mm
+                                                    @if($product->bar_type == 6)
+                                                        6mm
                                                     @elseif($product->bar_type == 8)
-                                                    8mm
+                                                        8mm
                                                     @elseif($product->bar_type == 10)
                                                         10mm
                                                     @elseif($product->bar_type == 12)
@@ -243,29 +241,21 @@
                                                 <td> {{ number_format($product->value_of_bar, 2) }}</td>
                                                 <td> {{ number_format($product->kg_by_rft, 2) }}</td>
                                                 <td> {{ number_format($product->kg_by_ton, 2) }}</td>
-                                                <td> {{ number_format($product->rft_by_ton, 2) }}</td>
-                                                <td> {{ number_format($product->sub_total_kg, 2) }}</td>
-                                                <td> {{ number_format($product->sub_total_ton, 3) }}</td>
+                                                <td> {{ number_format($product->sub_total_kg_straight, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_ton_straight, 3) }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
                                     </tbody>
                                     <tr>
-                                        <th colspan="7" class="text-right">Sub Total</th>
-                                        <th> {{ number_format($sub_total_kg, 2) }}</th>
-                                        <th> {{ number_format($sub_total_ton, 3) }}</th>
+                                        <th colspan="6" class="text-right">Sub Total</th>
+                                        <th> {{ number_format($straightTotalKg, 2) }}</th>
+                                        <th> {{ number_format($straightTotalTon, 3) }}</th>
                                     </tr>
+
                                 </table>
                             </div>
                         </div>
-
-                        @php
-                        $tieTotalKg = 0;
-                        $tieTotalTon = 0;
-                        $sub_total_kg_tie = 0;
-                        $sub_total_ton_tie = 0;
-                        @endphp
-
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-bordered table-striped">
@@ -282,12 +272,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <h4>Tie Bar Description</h4>
-                                    @foreach($pileConfigure->pileConfigureProducts as $product)
-                                        @if($product->tie_bar_type != null)
+                                    <h4>Tie Rod Description</h4>
+                                    @foreach($shortColumnConfigure->shortColumnConfigureProducts as $product)
+                                        @if($product->tie_bar_type != null )
+
                                             <?php
-                                            $sub_total_kg_tie += $product->sub_total_kg_tie;
-                                            $sub_total_ton_tie += $product->sub_total_ton_tie;
+                                            $tieTotalKg += $product->sub_total_kg_tie;
+                                            $tieTotalTon += $product->sub_total_ton_tie;
                                             ?>
                                             <tr>
                                                 <td>
@@ -318,7 +309,7 @@
                                                     @endif
 
                                                 </td>
-                                                <td>{{ $product->tie_bar_type }}</td>
+                                                <td>{{ $product->tie_dia }}</td>
                                                 <td> {{ $product->tie_dia_square }}</td>
                                                 <td> {{ number_format($product->tie_value_of_bar, 2) }}</td>
                                                 <td> {{ number_format($product->tie_kg_by_rft, 2) }}</td>
@@ -332,14 +323,13 @@
 
                                     <tr>
                                         <th colspan="6" class="text-right">Sub Total</th>
-                                        <th> {{ number_format($sub_total_kg_tie, 2) }}</th>
-                                        <th> {{ number_format($sub_total_ton_tie, 3) }}</th>
+                                        <th> {{ number_format($tieTotalKg, 2) }}</th>
+                                        <th> {{ number_format($tieTotalTon, 3) }}</th>
                                     </tr>
-
                                     <tr>
-                                        <th colspan="6" class="text-right" >Total KG/Ton</th>
-                                        <td> {{ number_format($pileConfigure->total_kg, 2) }}</td>
-                                        <td> {{ number_format($pileConfigure->total_ton, 3) }}</td>
+                                        <th colspan="6" class="text-right">Total Ton/KG</th>
+                                        <th> {{ number_format($shortColumnConfigure->total_kg, 2) }}</th>
+                                        <th> {{ number_format($shortColumnConfigure->total_ton, 3) }}</th>
                                     </tr>
                                 </table>
                             </div>
@@ -351,11 +341,11 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Bar(Rod) Price (Kg)</th>
-                                        <td>৳ {{ $pileConfigure->total_pile_bar_price }} Taka</td>
+                                        <td>৳ {{ $shortColumnConfigure->total_column_bar_price }} Taka</td>
                                     </tr>
                                     <tr>
                                         <th>Cement Price(Bag)</th>
-                                        <td>৳ {{ $pileConfigure->total_pile_cement_bag_price }} Taka</td>
+                                        <td>৳ {{ number_format($shortColumnConfigure->total_column_cement_bag_price,2) }} Taka</td>
                                     </tr>
                                 </table>
                             </div>
@@ -364,17 +354,17 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Sands Price (Cft)</th>
-                                        <td>৳ {{ $pileConfigure->total_pile_sands_price }} Taka</td>
+                                        <td>৳ {{ $shortColumnConfigure->total_column_sands_price }} Taka</td>
                                     </tr>
-                                    @if($pileConfigure->total_picked == 0)
+                                    @if($shortColumnConfigure->total_picked == 0)
                                         <tr>
                                             <th>Aggregate Price (Cft)</th>
-                                            <td>৳ {{ $pileConfigure->total_pile_aggregate_price }} Taka</td>
+                                            <td>৳ {{ $shortColumnConfigure->total_column_aggregate_price }} Taka</td>
                                         </tr>
                                     @else
                                         <tr>
                                             <th>Picked Price (Pcs)</th>
-                                            <td>৳ {{ $pileConfigure->total_pile_picked_price }} Taka</td>
+                                            <td>৳ {{ $shortColumnConfigure->total_column_picked_price }} Taka</td>
                                         </tr>
                                     @endif
                                 </table>
@@ -383,7 +373,7 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Sylhet Sands Price (Cft)</th>
-                                        <td>৳ {{ $pileConfigure->total_pile_s_sands_price }} Taka</td>
+                                        <td>৳ {{ $shortColumnConfigure->total_column_s_sands_price }} Taka</td>
                                     </tr>
                                 </table>
                             </div>

@@ -210,10 +210,10 @@
                     'estimate_product_type.add','estimate_product_type.edit','segment_configure',
                     'segment_configure.add','segment_configure.details','assign_segment.all',
                     'assign_segment.add','assign_segment.details','cost_calculation',
-                    'pile_configure','pile_configure.add','pile_configure.details',
-                    'common_configure','common_configure.add','common_configure.details',
-                    'beam_configure','beam_configure.add','beam_configure.details',
-                    'column_configure','column_configure.add','column_configure.details',
+                    'pile_configure','pile_configure.add','pile_configure.details','short_column_type', 'short_column_type.add',
+                    'common_configure','common_configure.add','common_configure.details', 'short_column_type.edit',
+                    'beam_configure','beam_configure.add','beam_configure.details', 'short_column_configure.add', 'short_column_configure',
+                    'column_configure','column_configure.add','column_configure.details', 'short_column_configure.details',
                     'bricks_configure','bricks_configure.add','bricks_configure.details',
                     'plaster_configure','plaster_configure.add','plaster_configure.details',
                     'earth_work_configure','earth_work_configure.add','earth_work_configure.details',
@@ -271,6 +271,11 @@
                                 <a href="{{ route('column_type') }}"><i class="fa fa-circle-o"></i> Column Type</a>
                             </li>
                             @endcan
+                            @can('column_type')
+                            <li class="{{ Route::currentRouteName() == 'short_column_type' ? 'active' : '' }}">
+                                <a href="{{ route('short_column_type') }}"><i class="fa fa-circle-o"></i>Short Column Type</a>
+                            </li>
+                            @endcan
                             @can('batch')
                              <li class="{{ Route::currentRouteName() == 'batch' ? 'active' : '' }}">
                                  <a href="{{ route('batch') }}"><i class="fa fa-circle-o"></i>Footing Type</a>
@@ -317,6 +322,11 @@
                             @can('column_configure')
                             <li class="{{ Route::currentRouteName() == 'column_configure' ? 'active' : '' }}">
                                 <a href="{{ route('column_configure') }}"><i class="fa fa-circle-o"></i>Column Configure</a>
+                            </li>
+                             @endcan
+                            @can('column_configure')
+                            <li class="{{ Route::currentRouteName() == 'short_column_configure' ? 'active' : '' }}">
+                                <a href="{{ route('short_column_configure') }}"><i class="fa fa-circle-o"></i>Short Column Configure</a>
                             </li>
                              @endcan
                              @can('slab_cap_wall_configure')

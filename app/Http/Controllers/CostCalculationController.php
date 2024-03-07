@@ -11,9 +11,12 @@ use App\Models\AssignSegmentProduct;
 use App\Models\BeamConfigure;
 use App\Models\BricksConfigure;
 use App\Models\BricksConfigureProduct;
+use App\Models\BrickSolingConfigure;
+use App\Models\BricksSoling;
 use App\Models\ColumnCofigure;
+use App\Models\GlassConfigure;
 use App\Models\CommonConfigure;
-use App\Models\EarthWorkConfigure;
+use App\Models\EarthWork;
 use App\Models\EstimateProductType;
 use App\Models\ExtraCosting;
 use App\Models\FootingConfigure;
@@ -28,6 +31,11 @@ use App\Models\PlasterConfigure;
 use App\Models\PlasterConfigureProduct;
 use App\Models\ReturningWallConfigure;
 use App\Models\SegmentConfigure;
+use App\Models\TilesConfigure;
+use App\Models\EarthWorkConfigure;
+use App\Models\SandFilling;
+use App\Models\SandFillingConfigure;
+use App\Models\ShortColumnConfigure;
 use Illuminate\Http\Request;
 
 class CostCalculationController extends Controller
@@ -96,13 +104,25 @@ class CostCalculationController extends Controller
         $projectName = '';
         $pileConfigures = [];
         $beamConfigures = [];
+        $gradeBeamConfigures = [];
         $columnConfigures = [];
+        $shortColumnConfigures = [];
+        $footingConfigures = [];
         $commonConfigures = [];
+        $pileCapConfigures = [];
+        $matConfigures = [];
+        $returningConfigures = [];
         $bricksConfigures = [];
         $plasterConfigures = [];
         $grillGlassTilesConfigures = [];
         $paintConfigures = [];
         $earthWorkConfigures = [];
+        $glassConfigures = [];
+        $tilesConfigures = [];
+        $sandFillings = [];
+        $bricksSolings = [];
+        $extraCostings = [];
+        $mobilizations = [];
 
         if ($request->project){
             $projectName = EstimateProject::where('id',$request->project)->first();
@@ -113,13 +133,38 @@ class CostCalculationController extends Controller
             $beamConfigures = BeamConfigure::where('estimate_project_id',$request->project)
                 ->with('beamConfigureProducts')
                 ->get();
+            $gradeBeamConfigures = GradeBeamConfigure::where('estimate_project_id',$request->project)
+                ->with('gradeBeamConfigureProducts')
+                ->get();
 
             $columnConfigures = ColumnCofigure::where('estimate_project_id',$request->project)
                 ->with('columnConfigureProducts')
                 ->get();
+            $shortColumnConfigures = ShortColumnConfigure::where('estimate_project_id',$request->project)
+                ->with('shortColumnConfigureProducts')
+                ->get();
+
+            $footingConfigures = FootingConfigure::where('estimate_project_id',$request->project)
+                ->with('footingConfigureProducts')
+                ->get();
 
             $commonConfigures = CommonConfigure::where('estimate_project_id',$request->project)
                 ->with('commonConfigureProducts','costingSegment')
+                ->orderBy('costing_segment_id')
+                ->get();
+
+            $pileCapConfigures = PileCapConfigure::where('estimate_project_id',$request->project)
+                ->with('pileCapConfigureProducts','costingSegment')
+                ->orderBy('costing_segment_id')
+                ->get();
+
+            $matConfigures = MatConfigure::where('estimate_project_id',$request->project)
+                ->with('matConfigureProducts','costingSegment')
+                ->orderBy('costing_segment_id')
+                ->get();
+
+            $returningConfigures = ReturningWallConfigure::where('estimate_project_id',$request->project)
+                ->with('returningWallConfigureProducts','costingSegment')
                 ->orderBy('costing_segment_id')
                 ->get();
 
@@ -130,31 +175,46 @@ class CostCalculationController extends Controller
             $bricksConfigureProducts = BricksConfigureProduct::where('estimate_project_id',$request->project)
                 ->pluck('id');
 
-            $plasterConfigureIds = PlasterConfigureProduct::whereIn('bricks_configure_product_id',$bricksConfigureProducts)
-            ->select('plaster_configure_id')
-            ->groupBy('plaster_configure_id')
+            $plasterConfigures = PlasterConfigure::where('estimate_project_id',$request->project)
             ->get();
 
-            $plasterConfigures = PlasterConfigure::whereIn('id',$plasterConfigureIds)->get();
+            // $plasterConfigures = PlasterConfigure::whereIn('id',$plasterConfigures)->get();
 
             $grillGlassTilesConfigures = GrillGlassTilesConfigure::where('estimate_project_id',$request->project)
                 ->get();
 
+            $glassConfigures = GlassConfigure::where('estimate_project_id',$request->project)
+            ->get();
+
+            $tilesConfigures = TilesConfigure::where('estimate_project_id',$request->project)
+            ->get();
+
+            $sandFillings = SandFilling::where('estimate_project_id',$request->project)
+            ->get();
+            $bricksSolings = BricksSoling::where('estimate_project_id',$request->project)
+            ->get();
+
             $paintConfigures = PaintConfigure::where('estimate_project_id',$request->project)
                 ->get();
 
-            $earthWorkConfigures = EarthWorkConfigure::where('estimate_project_id',$request->project)
+            $earthWorkConfigures = EarthWork::where('estimate_project_id',$request->project)
+                ->get();
+
+            $extraCostings = ExtraCosting::where('estimate_project_id',$request->project)
+                ->get();
+
+            $mobilizations = MobilizationWork::where('mobilization_project_id',$request->project)
                 ->get();
 
         }
         return view('estimate.report.estimate_report',
             compact(
-                'projects',
-            'projectName','pileConfigures',
-                      'beamConfigures','columnConfigures',
-                      'commonConfigures','bricksConfigures',
-                      'plasterConfigures','grillGlassTilesConfigures',
-                      'paintConfigures','earthWorkConfigures'
+            'projects','pileCapConfigures', 'matConfigures','glassConfigures',
+            'projectName','pileConfigures', 'gradeBeamConfigures','bricksSolings',
+            'beamConfigures','columnConfigures', 'shortColumnConfigures','mobilizations',
+            'commonConfigures','bricksConfigures','footingConfigures', 'extraCostings',
+            'plasterConfigures','grillGlassTilesConfigures', 'tilesConfigures',
+            'paintConfigures','earthWorkConfigures', 'returningConfigures','sandFillings'
         ));
     }
    public function costingReport(Request $request){
@@ -170,6 +230,7 @@ class CostCalculationController extends Controller
         $grillGlassTilesConfigures = [];
         $paintConfigures = [];
         $earthWorkConfigures = [];
+        $sandFilling = [];
         $extraCostingConfigures = [];
         $mobilizationWorkConfigures = [];
 
@@ -242,19 +303,26 @@ class CostCalculationController extends Controller
         $beamConfigures = [];
         $gradeBeamConfigures = [];
         $columnConfigures = [];
+        $shortColumnConfigures = [];
         $footingConfigures = [];
         $pileCapConfigures = [];
         $matConfigures = [];
+        $returningWallConfigures = [];
+        $returningWallConfigures = [];
         $commonConfigures = [];
         $bricksConfigures = [];
         $plasterConfigures = [];
         $grillGlassTilesConfigures = [];
         $paintConfigures = [];
         $earthWorkConfigures = [];
+        $sandFilling = [];
+        $bricksSoling = [];
         $extraCostingConfigures = [];
         $grillConfigures = [];
         $glassConfigures = [];
         $tilesConfigures = [];
+        $mobilization = [];
+
 
         if ($request->project){
             $projectName = EstimateProject::where('id',$request->project)->first();
@@ -273,6 +341,10 @@ class CostCalculationController extends Controller
             $columnConfigures = ColumnCofigure::where('estimate_project_id',$request->project)
                 ->with('columnConfigureProducts')
                 ->get();
+            $shortColumnConfigures = ShortColumnConfigure::where('estimate_project_id',$request->project)
+                ->with('shortColumnConfigureProducts')
+                ->get();
+                // dd($shortColumnConfigures);
             $footingConfigures = FootingConfigure::where('estimate_project_id',$request->project)
                 ->with('footingConfigureProducts')
                 ->get();
@@ -290,16 +362,11 @@ class CostCalculationController extends Controller
                 ->with('matConfigureProducts','costingSegment')
                 ->orderBy('costing_segment_id')
                 ->get();
+
             $returningWallConfigures = ReturningWallConfigure::where('estimate_project_id',$request->project)
                 ->with('returningWallConfigureProducts','costingSegment')
                 ->orderBy('costing_segment_id')
                 ->get();
-            //dd($commonConfigures);
-
-//            $commonConfigures = CommonConfigure::whereIn('costing_segment_id',$commonConfiguresId)
-//                ->where('estimate_project_id',$request->project)
-//                ->get();
-//            dd($commonConfigures);
 
             $bricksConfigures = BricksConfigure::where('estimate_project_id',$request->project)
                 ->with('bricksConfigureProducts','estimateFloor','estimateFloorUnit','unitSection')
@@ -318,23 +385,28 @@ class CostCalculationController extends Controller
             $grillGlassTilesConfigures = GrillGlassTilesConfigure::where('estimate_project_id',$request->project)
                 ->get();
             $grillConfigures = GrillGlassTilesConfigure::where('estimate_project_id',$request->project)
-                ->where('configure_type',1)
                 ->get();
 
-            $glassConfigures = GrillGlassTilesConfigure::where('estimate_project_id',$request->project)
-                ->where('configure_type',2)
+            $glassConfigures = GlassConfigure::where('estimate_project_id',$request->project)
                 ->get();
 
-            $tilesConfigures = GrillGlassTilesConfigure::where('estimate_project_id',$request->project)
-                ->where('configure_type',3)
+            $tilesConfigures = TilesConfigure::where('estimate_project_id',$request->project)
                 ->get();
 
             $paintConfigures = PaintConfigure::where('estimate_project_id',$request->project)
                 ->get();
 
             $earthWorkConfigures = EarthWorkConfigure::where('estimate_project_id',$request->project)
+                ->orderBy('id')
                 ->get();
+            $sandFilling = SandFillingConfigure::where('estimate_project_id',$request->project)
+            ->get();
+            $bricksSoling = BrickSolingConfigure::where('estimate_project_id',$request->project)
+            ->get();
 
+            $mobilization = MobilizationWork::where('mobilization_project_id',$request->project)
+            ->first();
+            // dd($mobilization);
             $extraCostingConfigures = ExtraCosting::where('estimate_project_id',$request->project)
                 ->get();
 
@@ -342,8 +414,8 @@ class CostCalculationController extends Controller
 
         return view('estimate.report.estimation_costing_summary',
             compact(
-                'projects',
-                'projectName','pileConfigures',
+                'projects','bricksSoling', 'mobilization',
+                'projectName','pileConfigures','sandFilling',
                 'beamConfigures','columnConfigures',
                 'commonConfigures','bricksConfigures',
                 'plasterConfigures','grillGlassTilesConfigures',
@@ -351,7 +423,7 @@ class CostCalculationController extends Controller
                 'extraCostingConfigures','grillConfigures',
                 'tilesConfigures','glassConfigures', 'gradeBeamConfigures',
                 'footingConfigures', 'pileCapConfigures','matConfigures',
-                'returningWallConfigures'
+                'returningWallConfigures','shortColumnConfigures'
             ));
     }
 

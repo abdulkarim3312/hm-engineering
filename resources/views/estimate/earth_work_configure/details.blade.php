@@ -140,7 +140,6 @@
                                             <td><b>৳ {{ number_format($totalPrice, 2) }} Taka</b></td>
                                     </tr>
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>

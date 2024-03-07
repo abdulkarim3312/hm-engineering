@@ -163,7 +163,7 @@ class ColumnConfigureController extends Controller
 
             $counter++;
         }
-        
+
         $counter = 0;
         $totalTonTie = 0;
         $totalKgTie = 0;

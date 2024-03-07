@@ -83,7 +83,7 @@
                                         <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                                     </div>
                                 </div>
-                                <div class="col-xs-8 text-center">
+                                <div class="col-xs-8 text-center" style="margin-left: -140px;">
                                     <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                                     <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                                     <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
@@ -248,6 +248,44 @@
                                                 <td class="text-center">৳ {{number_format($columnConfigures->sum('total_column_sands_price'),2)}} Taka</td>
                                                 <td class="text-center">৳ {{number_format($columnConfigures->sum('total_column_aggregate_price')),2}} Taka</td>
                                                 <td class="text-center">৳ {{number_format($columnConfigures->sum('total_column_picked_price')),2}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($shortColumnConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Short Column Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Column Quantity</th>
+                                                <th class="text-center">Total Bar/Rod Kg</th>
+                                                <th class="text-center">Total Cement</th>
+                                                <th class="text-center">Total Sands</th>
+                                                <th class="text-center">Total Aggregate</th>
+                                                <th class="text-center">Total Picked</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$shortColumnConfigures->sum('column_quantity')}}</td>
+                                                <td class="text-center">{{$shortColumnConfigures->sum('total_kg')}} Kg</td>
+                                                <td class="text-center">{{$shortColumnConfigures->sum('total_cement_bag')}} Bag</td>
+                                                <td class="text-center">{{$shortColumnConfigures->sum('total_sands')}} Cft</td>
+                                                <td class="text-center">{{$shortColumnConfigures->sum('total_aggregate')}} Cft</td>
+                                                <td class="text-center">{{$shortColumnConfigures->sum('total_picked')}} Pcs</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$shortColumnConfigures->sum('column_quantity')}}</td>
+                                                <td class="text-center">৳ {{number_format($shortColumnConfigures->sum('total_column_bar_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($shortColumnConfigures->sum('total_column_cement_bag_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($shortColumnConfigures->sum('total_column_sands_price'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($shortColumnConfigures->sum('total_column_aggregate_price')),2}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($shortColumnConfigures->sum('total_column_picked_price')),2}} Taka</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -504,12 +542,12 @@
                                     </div>
                                 </div>
                             @endif
-                            @if($grillConfigures || $glassConfigures || $tilesConfigures)
+                            @if($grillConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-10">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th colspan="7" class="text-center">Grill/Glass/Tiles Estimate And Costing</th>
+                                                <th colspan="7" class="text-center">Grill Estimate And Costing</th>
                                             </tr>
                                             <tr>
                                                 <th class="text-center">Type</th>
@@ -521,25 +559,62 @@
                                                 <td class="text-center">Estimation</td>
                                                 <td class="text-center">Grill</td>
                                                 <td class="text-center">{{$grillConfigures->sum('floor_number')}}</td>
-                                                <td class="text-center">{{$grillConfigures->sum('total_area_with_floor')}} Kg</td>
+                                                <td class="text-center">{{$grillConfigures->sum('total_area_with_floor')}} Sft</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Costing</td>
                                                 <td class="text-center">Grill</td>
                                                 <td class="text-center">{{$grillConfigures->sum('floor_number')}}</td>
-                                                <td class="text-center">৳ {{number_format($grillConfigures->sum('total_grill_cost'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($grillConfigures->sum('total_tiles_glass_cost'),2)}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($glassConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Glass Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Floor Quantity</th>
+                                                <th class="text-center">Total Area</th>
+                                                <th class="text-center">Total Rft</th>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Estimation</td>
                                                 <td class="text-center">Glass</td>
                                                 <td class="text-center">{{$glassConfigures->sum('floor_number')}}</td>
                                                 <td class="text-center">{{$glassConfigures->sum('total_area_with_floor')}} Sft</td>
+                                                <td class="text-center">{{$glassConfigures->sum('total_rft_with_floor')}} Rft</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Costing</td>
                                                 <td class="text-center">Glass</td>
                                                 <td class="text-center">{{$glassConfigures->sum('floor_number')}}</td>
-                                                <td class="text-center">৳ {{number_format($glassConfigures->sum('total_tiles_glass_cost'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($glassConfigures->sum('total_grill_cost'),2)}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($glassConfigures->sum('total_thai_cost'),2)}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($tilesConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Tiles Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Floor Quantity</th>
+                                                <th class="text-center">Total Area</th>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Estimation</td>
@@ -557,6 +632,35 @@
                                     </div>
                                 </div>
                             @endif
+                            {{-- @if($tilesConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Earth Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Floor Quantity</th>
+                                                <th class="text-center">Total Area</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">Tiles</td>
+                                                <td class="text-center">{{$tilesConfigures->sum('floor_number')}}</td>
+                                                <td class="text-center">{{$tilesConfigures->sum('total_area_with_floor')}} Sft</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">Tiles</td>
+                                                <td class="text-center">{{$tilesConfigures->sum('floor_number')}}</td>
+                                                <td class="text-center">৳ {{number_format($tilesConfigures->sum('total_tiles_glass_cost'),2)}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif --}}
                             @if($paintConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-10">
@@ -591,7 +695,59 @@
                                     <div class="col-md-offset-1 col-md-10">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th colspan="7" class="text-center">Paint Estimate And Costing</th>
+                                                <th colspan="7" class="text-center">Earth Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Quantity</th>
+                                                <th class="text-center">Total Area</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$earthWorkConfigures->sum('quantity')}}</td>
+                                                <td class="text-center">{{$earthWorkConfigures->sum('total_area')}} Cft</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$earthWorkConfigures->sum('quantity')}}</td>
+                                                <td class="text-center">৳ {{$earthWorkConfigures->sum('total_price')}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($sandFilling)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Sand Filling Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Quantity</th>
+                                                <th class="text-center">Total Area</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{$sandFilling->sum('quantity')}}</td>
+                                                <td class="text-center">{{number_format($sandFilling->sum('total_area'),2)}} Cft</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">{{$sandFilling->sum('quantity')}}</td>
+                                                <td class="text-center">৳ {{number_format($sandFilling->sum('total_price'),2)}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($bricksSoling)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Bricks Soling Estimate And Costing</th>
                                             </tr>
                                             <tr>
                                                 <th class="text-center">Type</th>
@@ -599,11 +755,34 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Estimation</td>
-                                                <td class="text-center">{{$earthWorkConfigures->sum('total_area')}} Sft</td>
+                                                <td class="text-center">{{number_format($bricksSoling->sum('total_area'),2)}} Cft</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Costing</td>
-                                                <td class="text-center">৳ {{$earthWorkConfigures->sum('total_price')}} Taka</td>
+                                                <td class="text-center">৳ {{number_format($bricksSoling->sum('total_price'),2)}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($mobilization)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Mobilization Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Total Area</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{number_format($mobilization->total)}} Cft</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">৳ {{number_format($mobilization->total)}} Taka</td>
                                             </tr>
                                         </table>
                                     </div>
