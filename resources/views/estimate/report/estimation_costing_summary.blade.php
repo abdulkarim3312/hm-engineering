@@ -788,6 +788,30 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @if($extraCostingConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="7" class="text-center">Extra Cost Estimate And Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Total Area</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Estimation</td>
+                                                <td class="text-center">{{number_format($extraCostingConfigures->total)}} Taka</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Costing</td>
+                                                <td class="text-center">৳ {{number_format($extraCostingConfigures->total)}} Taka</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </section>

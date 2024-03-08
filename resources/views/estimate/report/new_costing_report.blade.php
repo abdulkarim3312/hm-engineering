@@ -118,10 +118,10 @@
                                             @foreach($pileConfigures as $pileConfigure)
                                                 @php
                                                     $totalPileCost += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
-                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_aggregate_price +
+                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price + $pileConfigure->total_pile_aggregate_price +
                                                                      $pileConfigure->total_pile_picked_price;
                                                     $grandTotal += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
-                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_aggregate_price +
+                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_aggregate_price +
                                                                      $pileConfigure->total_pile_picked_price;
 
                                                 @endphp
@@ -132,12 +132,13 @@
                                                         <br>
                                                         <span>Bar(Rod) Cost: <b>{{$pileConfigure->total_pile_bar_price}}</b></span><br>
                                                         <span>Cement Cost: <b>{{$pileConfigure->total_pile_cement_bag_price}}</b></span><br>
-                                                        <span>Sands Cost: <b>{{$pileConfigure->total_pile_sands_price}}</b></span><br>
+                                                        <span>Local Sands Cost: <b>{{$pileConfigure->total_pile_sands_price}}</b></span><br>
+                                                        <span>Shylet Sands Cost: <b>{{$pileConfigure->total_pile_s_sands_price}}</b></span><br>
                                                         <span>Aggregate Cost: <b>{{$pileConfigure->total_pile_aggregate_price}}</b></span><br>
                                                         <span>Picked Cost: <b>{{$pileConfigure->total_pile_picked_price}}</b></span><br>
                                                         <hr>
                                                         <span>Total:<b>{{$pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
-                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_aggregate_price +
+                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_aggregate_price +
                                                                      $pileConfigure->total_pile_picked_price}}
                                                         </b></span><br>
                                                         <hr>
@@ -166,10 +167,10 @@
                                             @foreach($beamConfigures as $beamConfigure)
                                                 @php
                                                     $totalBeamCost += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
-                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_aggregate_price +
+                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price + $beamConfigure->total_beam_aggregate_price +
                                                                      $beamConfigure->total_beam_picked_price;
                                                     $grandTotal += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
-                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_aggregate_price +
+                                                                     + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price +
                                                                      $beamConfigure->total_beam_picked_price;
                                                 @endphp
                                                 <tr>
@@ -179,12 +180,62 @@
                                                         <br>
                                                         <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
                                                         <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
-                                                        <span>Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
+                                                        <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
+                                                        <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
                                                         <span>Aggregate Cost: <b>{{$beamConfigure->total_beam_aggregate_price}}</b></span><br>
                                                         <span>Picked Cost: <b>{{$beamConfigure->total_beam_picked_price}}</b></span><br>
                                                         <hr>
                                                         <span>Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
-                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_aggregate_price +
+                                                                     + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price +
+                                                                     $beamConfigure->total_beam_picked_price}}
+                                                        </b></span><br>
+                                                        <hr>
+                                                        <span>Beam Total:<b> {{number_format($totalBeamCost,2)}}</b></span><br>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($gradeBeamConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Grade Beam Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Grade Beam No</th>
+                                                <th class="text-center">Grade Beam Costing Item</th>
+                                            </tr>
+                                            @php
+                                                $totalBeamCost = 0;
+                                            @endphp
+                                            @foreach($gradeBeamConfigures as $beamConfigure)
+                                                @php
+                                                    $totalBeamCost += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price + $beamConfigure->total_beam_aggregate_price +
+                                                                     $beamConfigure->total_beam_picked_price;
+                                                    $grandTotal += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                     + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price +
+                                                                     $beamConfigure->total_beam_picked_price;
+                                                @endphp
+                                                <tr>
+                                                    <th>Grade Beam Configure No-{{$beamConfigure->beam_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
+                                                        <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
+                                                        <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
+                                                        <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                        <span>Aggregate Cost: <b>{{$beamConfigure->total_beam_aggregate_price}}</b></span><br>
+                                                        <span>Picked Cost: <b>{{$beamConfigure->total_beam_picked_price}}</b></span><br>
+                                                        <hr>
+                                                        <span>Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price+$beamConfigure->total_beam_aggregate_price +
                                                                      $beamConfigure->total_beam_picked_price}}
                                                         </b></span><br>
                                                         <hr>
@@ -245,16 +296,113 @@
                                 </div>
                             @endif
 
+                            @if($shortColumnConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Short Column Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Short Column No</th>
+                                                <th class="text-center">Short Column Costing Item</th>
+                                            </tr>
+                                            @php
+                                                $totalColumnCost = 0;
+                                            @endphp
+                                            @foreach($shortColumnConfigures as $columnConfigure)
+                                                @php
+                                                    $totalColumnCost += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                         + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
+                                                                         $columnConfigure->total_column_picked_price;
+                                                    $grandTotal += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                         + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
+                                                                         $columnConfigure->total_column_picked_price;
+                                                @endphp
+                                                <tr>
+                                                    <th>Column Configure No-{{$columnConfigure->column_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
+                                                        <span>Cement Cost: <b>{{$columnConfigure->total_column_cement_bag_price}}</b></span><br>
+                                                        <span>Sands Cost: <b>{{$columnConfigure->total_column_sands_price}}</b></span><br>
+                                                        <span>Aggregate Cost: <b>{{$columnConfigure->total_column_aggregate_price}}</b></span><br>
+                                                        <span>Picked Cost: <b>{{$columnConfigure->total_column_picked_price}}</b></span><br>
+                                                        <hr>
+                                                        <span>Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                     + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
+                                                                     $columnConfigure->total_column_picked_price}}
+                                                        </b></span><br>
+                                                        <hr>
+                                                        <span>Column Total:<b> {{number_format($totalColumnCost,2)}}</b></span><br>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($footingConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Footing Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Footing No</th>
+                                                <th class="text-center">Footing Costing Item</th>
+                                            </tr>
+                                            @php
+                                                $totalColumnCost = 0;
+                                            @endphp
+                                            @foreach($footingConfigures as $columnConfigure)
+                                                @php
+                                                    $totalColumnCost += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                                     $columnConfigure->total_common_picked_price;
+                                                    $grandTotal += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                                     $columnConfigure->total_common_picked_price;
+                                                @endphp
+                                                <tr>
+                                                    <th>Column Configure No-{{$columnConfigure->column_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                        <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                        <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                        <span>Shylet Sands Cost: <b>{{$columnConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                        <span>Aggregate Cost: <b>{{$columnConfigure->total_common_aggregate_price}}</b></span><br>
+                                                        <span>Picked Cost: <b>{{$columnConfigure->total_common_picked_price}}</b></span><br>
+                                                        <hr>
+                                                        <span>Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                                     $columnConfigure->total_common_picked_price}}
+                                                        </b></span><br>
+                                                        <hr>
+                                                        <span>Column Total:<b> {{number_format($totalColumnCost,2)}}</b></span><br>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
                             @if($commonConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-2 col-md-8">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th colspan="2" class="text-center">Common Costing</th>
+                                                <th colspan="2" class="text-center">Slab Costing</th>
                                             </tr>
                                             <tr>
-                                                <th class="text-center">Common No</th>
-                                                <th class="text-center">Common Costing Item</th>
+                                                <th class="text-center">Slab No</th>
+                                                <th class="text-center">Slab Costing Item</th>
                                             </tr>
                                             @php
                                                 $totalCommonCost = 0;
@@ -288,6 +436,257 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($pileCapConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Pile Cap Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Pile Cap No</th>
+                                                <th class="text-center">Pile Cap Costing Item</th>
+                                            </tr>
+                                            @php
+                                                $totalColumnCost = 0;
+                                                $totalChip = 0;
+                                                $totalRmc = 0;
+                                            @endphp
+                                            @foreach($pileCapConfigures as $columnConfigure)
+                                                @php
+                                                    if ($columnConfigure->course_aggregate_type == 1) {
+                                                        $totalColumnCost += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price
+                                                                     ;
+                                                    }elseif ($columnConfigure->course_aggregate_type == 2) {
+                                                        $totalChip += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+
+                                                                     $columnConfigure->total_common_picked_price;
+                                                    }else {
+                                                        $totalRmc += $columnConfigure->total_common_bar_price +$columnConfigure->total_pile_cap_rmc_price ;
+
+                                                    }
+                                                    $grandTotal += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                                     $columnConfigure->total_common_picked_price+$columnConfigure->total_pile_cap_rmc_price;
+                                                @endphp
+                                                <tr>
+                                                    <th>Pile Cap Configure No-{{$columnConfigure->common_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$columnConfigure->total_common_aggregate_price}}</b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$columnConfigure->total_common_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$columnConfigure->total_pile_cap_rmc_price}}</b></span>
+                                                        @endif
+
+
+                                                        <hr>
+                                                       @if ($columnConfigure->course_aggregate_type == 1)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                       @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                       @else
+                                                        <span>Total RMC Cost:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_pile_cap_rmc_price}}
+                                                            </b></span><br>
+                                                       @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                                <tr>
+                                                    <th>Total Cost:</th>
+                                                    <td> <span>Pile Cap Total:<b> {{number_format($totalColumnCost+$totalChip+$totalRmc,2)}}</b></span></td>
+                                                </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($matConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Mat Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Mat No</th>
+                                                <th class="text-center">Mat Costing Item</th>
+                                            </tr>
+                                            @php
+                                                $totalColumnCost = 0;
+                                                $totalChip = 0;
+                                                $totalRmc = 0;
+                                            @endphp
+                                            @foreach($matConfigures as $columnConfigure)
+                                                @php
+                                                    if ($columnConfigure->course_aggregate_type == 1) {
+                                                        $totalColumnCost += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price
+                                                                     ;
+                                                    }elseif ($columnConfigure->course_aggregate_type == 2) {
+                                                        $totalChip += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+
+                                                                     $columnConfigure->total_common_picked_price;
+                                                    }else {
+                                                        $totalRmc += $columnConfigure->total_common_bar_price +$columnConfigure->total_mat_rmc_price ;
+
+                                                    }
+                                                    $grandTotal += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                                     $columnConfigure->total_common_picked_price+$columnConfigure->total_mat_rmc_price;
+                                                @endphp
+                                                <tr>
+                                                    <th>Mat Configure No-{{$columnConfigure->common_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_slab_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$columnConfigure->total_common_aggregate_price}}</b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_slab_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$columnConfigure->total_common_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$columnConfigure->total_mat_rmc_price}}</b></span>
+                                                        @endif
+
+
+                                                        <hr>
+                                                       @if ($columnConfigure->course_aggregate_type == 1)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                       @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                       @else
+                                                        <span>Total RMC Cost:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_mat_rmc_price}}
+                                                            </b></span><br>
+                                                       @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                                <tr>
+                                                    <th>Total Cost:</th>
+                                                    <td> <span>Mat Total:<b> {{number_format($totalColumnCost+$totalChip+$totalRmc,2)}}</b></span></td>
+                                                </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($returningConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Returning Wall Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Returning Wall No</th>
+                                                <th class="text-center">Returning Wall Costing Item</th>
+                                            </tr>
+                                            @php
+                                                $totalColumnCost = 0;
+                                                $totalChip = 0;
+                                                $totalRmc = 0;
+                                            @endphp
+                                            @foreach($returningConfigures as $columnConfigure)
+                                                @php
+                                                    if ($columnConfigure->course_aggregate_type == 1) {
+                                                        $totalColumnCost += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price
+                                                                     ;
+                                                    }elseif ($columnConfigure->course_aggregate_type == 2) {
+                                                        $totalChip += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+
+                                                                     $columnConfigure->total_common_picked_price;
+                                                    }else {
+                                                        $totalRmc += $columnConfigure->total_common_bar_price +$columnConfigure->total_mat_rmc_price ;
+
+                                                    }
+                                                    $grandTotal += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                                     $columnConfigure->total_common_picked_price+$columnConfigure->total_mat_rmc_price;
+                                                @endphp
+                                                <tr>
+                                                    <th>Returning Wall Configure No-{{$columnConfigure->common_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_slab_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$columnConfigure->total_common_aggregate_price}}</b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_slab_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$columnConfigure->total_common_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$columnConfigure->total_mat_rmc_price}}</b></span>
+                                                        @endif
+
+
+                                                        <hr>
+                                                       @if ($columnConfigure->course_aggregate_type == 1)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                       @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                       @else
+                                                        <span>Total RMC Cost:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_mat_rmc_price}}
+                                                            </b></span><br>
+                                                       @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                                <tr>
+                                                    <th>Total Cost:</th>
+                                                    <td> <span>Returning Wall Total:<b> {{number_format($totalColumnCost+$totalChip+$totalRmc,2)}}</b></span></td>
+                                                </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -373,57 +772,40 @@
                                     </div>
                                 </div>
                             @endif
+
                             @if($grillGlassTilesConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-2 col-md-8">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th colspan="2" class="text-center">Grill/Glass/Tiles Costing</th>
+                                                <th colspan="2" class="text-center">Grill Costing</th>
                                             </tr>
                                             <tr>
                                                 <th class="text-center"> No</th>
-                                                <th class="text-center">Grill/Glass/Tiles Item</th>
+                                                <th class="text-center">Grill Item</th>
                                             </tr>
                                             @php
                                                 $totalGrillGlassTilesCost = 0;
                                             @endphp
                                             @foreach($grillGlassTilesConfigures as $grillGlassTilesConfigure)
                                                 @php
-                                                    if($grillGlassTilesConfigure->configure_type == 1){
-                                                      $totalGrillGlassTilesCost += $grillGlassTilesConfigure->total_grill_cost;
-                                                      $grandTotal += $grillGlassTilesConfigure->total_grill_cost;
-                                                      }else{
-                                                      $totalGrillGlassTilesCost += $grillGlassTilesConfigure->total_tiles_glass_cost;
-                                                      $grandTotal += $grillGlassTilesConfigure->total_tiles_glass_cost;
-                                                      }
+                                                    $totalGrillGlassTilesCost += $grillGlassTilesConfigure->total_tiles_glass_cost;
+                                                    $grandTotal += $grillGlassTilesConfigure->total_tiles_glass_cost;
+
                                                 @endphp
                                                 <tr>
-                                                    <th>@if($grillGlassTilesConfigure->configure_type == 1)
-                                                            Grill
-                                                        @elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                            Glass
-                                                        @else
-                                                            Tiles
-                                                        @endif
+                                                    <th>  Grill
+
                                                         Configure No-{{$grillGlassTilesConfigure->grill_glass_tiles_configure_no}}</th>
 
                                                     <td class="text-right">
                                                         <br>
-                                                        <span>@if($grillGlassTilesConfigure->configure_type == 1)
-                                                                Grill Cost: <b>{{$grillGlassTilesConfigure->total_grill_cost}}</b></span><br>
-                                                        <span>@elseif($grillGlassTilesConfigure->configure_type == 2)
-                                                                Glass Cost: <b>{{$grillGlassTilesConfigure->total_tiles_glass_cost}}</b></span><br>
-                                                        @else
-                                                            Tiles Cost: <b>{{$grillGlassTilesConfigure->total_tiles_glass_cost}}</b></span><br>
-                                                        @endif
+                                                            Grill Cost: <b>{{$grillGlassTilesConfigure->total_tiles_glass_cost}}</b></span><br>
+
                                                         <hr>
-                                                        @if($grillGlassTilesConfigure->configure_type == 1)
-                                                            <span>Total:<b>{{$grillGlassTilesConfigure->total_grill_cost}}
-                                                                </b></span><br>
-                                                        @else
                                                             <span>Total:<b>{{$grillGlassTilesConfigure->total_tiles_glass_cost}}
-                                                        </b></span><br>
-                                                        @endif
+                                                                </b></span><br>
+
                                                         <hr>
                                                         <span>Total Cost:<b> {{number_format($totalGrillGlassTilesCost,2)}}</b></span><br>
                                                     </td>
@@ -433,6 +815,94 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @if($glassConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Glass Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center"> No</th>
+                                                <th class="text-center">Glass Item</th>
+                                            </tr>
+                                            @php
+                                                $totalGrillGlassTilesCost = 0;
+                                            @endphp
+                                            @foreach($glassConfigures as $grillGlassTilesConfigure)
+                                                @php
+                                                    $totalGrillGlassTilesCost += $grillGlassTilesConfigure->total_grill_cost + $grillGlassTilesConfigure->total_thai_cost;
+                                                    $grandTotal += $grillGlassTilesConfigure->total_grill_cost + $grillGlassTilesConfigure->total_thai_cost;
+
+                                                @endphp
+                                                <tr>
+                                                    <th>  Glass
+
+                                                        Configure No-{{$grillGlassTilesConfigure->grill_glass_tiles_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                            Glass Cost: <b>{{$grillGlassTilesConfigure->total_grill_cost}}</b></span><br>
+                                                        <hr>
+                                                            Thai Cost: <b>{{$grillGlassTilesConfigure->total_thai_cost}}</b></span><br>
+
+                                                        <hr>
+                                                            <span>Total:<b>{{$grillGlassTilesConfigure->total_grill_cost + $grillGlassTilesConfigure->total_thai_cost}}
+                                                                </b></span><br>
+
+                                                        <hr>
+                                                        <span>Total Cost:<b> {{number_format($totalGrillGlassTilesCost,2)}}</b></span><br>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($tilesConfigures)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Tiles Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center"> No</th>
+                                                <th class="text-center">Tiles Item</th>
+                                            </tr>
+                                            @php
+                                                $totalGrillGlassTilesCost = 0;
+                                            @endphp
+                                            @foreach($tilesConfigures as $grillGlassTilesConfigure)
+                                                @php
+                                                    $totalGrillGlassTilesCost += $grillGlassTilesConfigure->total_tiles_glass_cost;
+                                                    $grandTotal += $grillGlassTilesConfigure->total_tiles_glass_cost;
+
+                                                @endphp
+                                                <tr>
+                                                    <th>  Tiles
+
+                                                        Configure No-{{$grillGlassTilesConfigure->grill_glass_tiles_configure_no}}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                            Tiles Cost: <b>{{$grillGlassTilesConfigure->total_tiles_glass_cost}}</b></span><br>
+                                                        <hr>
+                                                            <span>Total:<b>{{$grillGlassTilesConfigure->total_tiles_glass_cost}}
+                                                                </b></span><br>
+
+                                                        <hr>
+                                                        <span>Total Cost:<b> {{number_format($totalGrillGlassTilesCost,2)}}</b></span><br>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
                             @if($paintConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-2 col-md-8">
@@ -492,7 +962,11 @@
                                                     $grandTotal += $earthWorkConfigure->total_price;
                                                 @endphp
                                                 <tr>
-                                                    <th>Earth Work Configure No-{{$earthWorkConfigure->id}}</th>
+                                                    @if ($earthWorkConfigure->earth_work_type == 1)
+                                                        <th>Earth Work Configure For Cutting</th>
+                                                    @else
+                                                        <th>Earth Work Configure For Filling</th>
+                                                    @endif
 
                                                     <td class="text-right">
                                                         <br>
@@ -509,6 +983,85 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @if($sandFillings)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Sand Filling Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Sand Filling No</th>
+                                                <th class="text-center">Sand Filling Amount</th>
+                                            </tr>
+                                            @php
+                                                $totalEarthWorkCost = 0;
+                                            @endphp
+                                            @foreach($sandFillings as $sandFilling)
+                                                @php
+                                                    $totalEarthWorkCost += $sandFilling->total_price;
+                                                    $grandTotal += $sandFilling->total_price;
+                                                @endphp
+                                                <tr>
+
+                                                        <th>Sand Filling No: 0{{ $sandFilling->id }}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        <span>Sand Filling Cost: <b>{{$sandFilling->total_price}}</b></span><br>
+                                                        <hr>
+                                                        <span>Total:<b>{{$sandFilling->total_price}}
+                                                        </b></span><br>
+                                                        <hr>
+                                                        <span>Earth Work Total Cost:<b> {{number_format($totalEarthWorkCost,2)}}</b></span><br>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($bricksSolings)
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th colspan="2" class="text-center">Bricks Soling Costing</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Bricks Soling No</th>
+                                                <th class="text-center">Bricks Soling Amount</th>
+                                            </tr>
+                                            @php
+                                                $totalEarthWorkCost = 0;
+                                            @endphp
+                                            @foreach($bricksSolings as $bricksSoling)
+                                                @php
+                                                    $totalEarthWorkCost += $bricksSoling->total_price;
+                                                    $grandTotal += $bricksSoling->total_price;
+                                                @endphp
+                                                <tr>
+
+                                                        <th>Bricks Soling No: 0{{ $bricksSoling->id }}</th>
+
+                                                    <td class="text-right">
+                                                        <br>
+                                                        <span>Sand Filling Cost: <b>{{$bricksSoling->total_price}}</b></span><br>
+                                                        <hr>
+                                                        <span>Total:<b>{{$bricksSoling->total_price}}
+                                                        </b></span><br>
+                                                        <hr>
+                                                        <span> Total Cost:<b> {{number_format($totalEarthWorkCost,2)}}</b></span><br>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+
                             @if($extraCostingConfigures)
                                 <div class="row">
                                     <div class="col-md-offset-2 col-md-8">

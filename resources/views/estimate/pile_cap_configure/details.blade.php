@@ -104,7 +104,7 @@
                                         <td>{{ $pileCapConfigure->costingSegment->name }}</td>
                                     </tr>
                                     @if ($pileCapConfigure->course_aggregate_type == 3)
-                                        
+
                                     @elseif ($pileCapConfigure->course_aggregate_type == 2)
                                         <tr>
                                             <th>Total Cement</th>
@@ -118,8 +118,8 @@
                                             <th>Sylhet Sands</th>
                                             <td>{{ $pileCapConfigure->total_s_sands }} Cft</td>
                                         </tr>
-                                        
-                                    @else    
+
+                                    @else
                                         <tr>
                                             <th>Total Cement</th>
                                             <td>{{ $pileCapConfigure->total_cement_bag }} Bag</td>
@@ -297,7 +297,7 @@
                                             <th>Bar(Rod) Price (Kg)</th>
                                             <td>৳ {{ $pileCapConfigure->total_common_bar_price }} Taka</td>
                                         </tr>
-                                    @else  
+                                    @else
                                         <tr>
                                             <th>Bar(Rod) Price (Kg)</th>
                                             <td>৳ {{ $pileCapConfigure->total_common_bar_price }} Taka</td>
@@ -305,7 +305,7 @@
                                         <tr>
                                             <th>Cement Price(Bag)</th>
                                             <td>৳ {{ number_format($pileCapConfigure->total_common_cement_bag_price,2) }} Taka</td>
-                                        </tr>  
+                                        </tr>
                                     @endif
                                 </table>
                             </div>
@@ -331,7 +331,7 @@
                                             <td>৳ {{ $pileCapConfigure->total_common_picked_price }} Taka</td>
                                         </tr>
                                     @else
-                                      
+
                                     @endif
                                 </table>
                             </div>
@@ -342,7 +342,7 @@
                                             <th>RMC Price (Cft)</th>
                                             <td>৳ {{ $pileCapConfigure->total_pile_cap_rmc_price }} Taka</td>
                                         </tr>
-                                    @else    
+                                    @else
                                         <tr>
                                             <th>Sylhet Sands Price (Cft)</th>
                                             <td>৳ {{ $pileCapConfigure->total_beam_s_sands_price }} Taka</td>

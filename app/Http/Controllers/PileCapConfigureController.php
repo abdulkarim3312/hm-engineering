@@ -107,7 +107,7 @@ class PileCapConfigureController extends Controller
         $pileCapConfigure->total_volume = $request->total_volume * $request->costing_segment_quantity;
         $pileCapConfigure->dry_volume = $request->dry_volume * $request->costing_segment_quantity;
         $pileCapConfigure->total_dry_volume = $request->total_dry_volume * $request->costing_segment_quantity;
-        
+
         if($request->course_aggregate_type == 1){
             $pileCapConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
             $pileCapConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
@@ -137,7 +137,7 @@ class PileCapConfigureController extends Controller
         $pileCapConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
         $pileCapConfigure->common_picked_per_cost = $request->common_picked_costing??0;
         //Total Price
-       
+
         if($request->course_aggregate_type == 1){
             $pileCapConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $pileCapConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;

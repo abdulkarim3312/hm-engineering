@@ -73,16 +73,16 @@ class CommonConfigureController extends Controller
         ]);
 
         $total_dry_volume = (($request->segment_length * $request->segment_width) * $request->segment_thickness) * 1.5;
-        
+
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
-        
+
         $totalCement = ($total_dry_volume * $request->first_ratio/$totalRatio);
         $totalCementBag = ($totalCement/1.25);
-       
+
         $totalSands = ($total_dry_volume * $request->second_ratio/$totalRatio);
-        
+
         $totalAggregate = ($total_dry_volume * $request->third_ratio/$totalRatio);
-       
+
         if ($request->course_aggregate_type == 2){
             $totalPiked = ($totalAggregate * 11.11);
         }else{
@@ -108,12 +108,14 @@ class CommonConfigureController extends Controller
         $commonConfigure->note = $request->note;
         $commonConfigure->total_ton = 0;
         $commonConfigure->total_kg = 0;
-        $commonConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
-        $commonConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+
         if($request->course_aggregate_type == 3){
             $commonConfigure->total_sands = 0;
             $commonConfigure->total_s_sands = 0;
             $commonConfigure->total_aggregate = 0;
+            $commonConfigure->total_cement = 0;
+            $commonConfigure->total_cement_bag = 0;
+            $commonConfigure->total_picked = 0;
         }else if($request->course_aggregate_type == 2){
             $commonConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
             $commonConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
@@ -125,7 +127,7 @@ class CommonConfigureController extends Controller
             $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
             $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
         }
-        
+
         //price
         $commonConfigure->common_bar_per_cost = $request->common_bar_costing;
         $commonConfigure->common_cement_per_cost = $request->common_cement_costing;
@@ -156,8 +158,8 @@ class CommonConfigureController extends Controller
             $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
             $commonConfigure->total_common_picked_price = 0;
         }
-        
-        
+
+
         $commonConfigure->total_common_bar_price = 0;
 
         $commonConfigure->save();
@@ -174,7 +176,7 @@ class CommonConfigureController extends Controller
             $data = $rft *  $item;
             $sub_total =  ($request->lapping_lenght[$counter] * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter];
             $total_main_rod = (($data *  $request->kg_by_rft[$counter]) + $sub_total) * $request->layer[$counter];
-           
+
             CommonConfigureProduct::create([
                 'common_configure_id' => $commonConfigure->id,
                 'estimate_project_id' => $request->estimate_project,
@@ -251,7 +253,7 @@ class CommonConfigureController extends Controller
         CommonConfigureProduct::where('common_configure_id', $commonConfigure->id)->delete();
         return redirect()->back();
     }
-    
+
 
     public function commonConfigureDatatable() {
         $query = CommonConfigure::with('project','costingSegment');
@@ -443,7 +445,7 @@ class CommonConfigureController extends Controller
                     'status' => 2,
                 ]);
             }
-            
+
             if ($key == 0){
                 $totalKg += (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter])));
                 $totalTon+= (((($request->number_of_bar[$counter] * $request->kg_by_rft[$counter]) * $request->beam_length) + (($request->lapping_length[$counter]  * $request->lapping_nos[$counter]) * $request->kg_by_rft[$counter]))) / ($request->kg_by_ton[$counter] * $request->beam_quantity);
@@ -491,9 +493,9 @@ class CommonConfigureController extends Controller
         foreach ($request->tie_product as $key => $reqProduct) {
 
             $length_tie_total = $request->tie_length[$counter] / 12;
-            
+
             $width_tie_total = $request->tie_width[$counter] / 12;
-           
+
             $pre_tie_bar = (($length_tie_total + $width_tie_total) * 2) + 0.42;
             BeamConfogureProduct::create([
                 'beam_configure_id' => $beamConfigure->id,
