@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('grade_of_concrete_types', function (Blueprint $table) {
+        Schema::create('electric_costing_products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->float('first_ratio',8,2);
-            $table->float('second_ratio',8,2);
-            $table->float('third_ratio',8,2);
-            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grade_of_concretes');
+        Schema::dropIfExists('electric_costing_products');
     }
 };

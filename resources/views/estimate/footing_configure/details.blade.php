@@ -111,26 +111,43 @@
                                         <th>Total Kg</th>
                                         <td>{{ $footingConfigure->total_kg }} Rod</td>
                                     </tr>
-                                    <tr>
-                                        <th>Total Cement</th>
-                                        <td>{{ $footingConfigure->total_cement_bag }} Bag</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Local Sands</th>
-                                        <td>{{ $footingConfigure->total_sands }} Cft</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Sylhet Sands</th>
-                                        <td>{{ $footingConfigure->total_s_sands }} Cft</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Aggregate</th>
-                                        <td>{{ $footingConfigure->total_aggregate }} Cft</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Piked</th>
-                                        <td>{{ $footingConfigure->total_picked }} Pcs</td>
-                                    </tr>
+                                    @if ($footingConfigure->course_aggregate_type == 1)
+                                        <tr>
+                                            <th>Total Cement</th>
+                                            <td>{{ $footingConfigure->total_cement_bag }} Bag</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Local Sands</th>
+                                            <td>{{ $footingConfigure->total_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Sylhet Sands</th>
+                                            <td>{{ $footingConfigure->total_s_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Aggregate</th>
+                                            <td>{{ $footingConfigure->total_aggregate }} Cft</td>
+                                        </tr>
+                                    @elseif ($footingConfigure->course_aggregate_type == 2)  
+                                        <tr>
+                                            <th>Total Cement</th>
+                                            <td>{{ $footingConfigure->total_cement_bag }} Bag</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Local Sands</th>
+                                            <td>{{ $footingConfigure->total_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Sylhet Sands</th>
+                                            <td>{{ $footingConfigure->total_s_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Piked</th>
+                                            <td>{{ $footingConfigure->total_picked }} Pcs</td>
+                                        </tr>
+                                    @else
+                                          
+                                    @endif
                                     <tr>
                                         <th>Note </th>
                                         <td>{{ $footingConfigure->note??'' }}</td>
@@ -276,42 +293,62 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <table class="table table-bordered">
-                                    <tr>
-                                        <th>Bar(Rod) Price (Kg)</th>
-                                        <td>৳ {{ $footingConfigure->total_common_bar_price }} Taka</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Cement Price(Bag)</th>
-                                        <td>৳ {{ number_format($footingConfigure->total_common_cement_bag_price,2) }} Taka</td>
-                                    </tr>
+                                    @if ($footingConfigure->course_aggregate_type == 3)
+                                        <tr>
+                                            <th>Bar(Rod) Price (Kg)</th>
+                                            <td>৳ {{ $footingConfigure->total_common_bar_price }} Taka</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <th>Bar(Rod) Price (Kg)</th>
+                                            <td>৳ {{ $footingConfigure->total_common_bar_price }} Taka</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Cement Price(Bag)</th>
+                                            <td>৳ {{ number_format($footingConfigure->total_common_cement_bag_price,2) }} Taka</td>
+                                        </tr>
+                                    @endif
                                 </table>
                             </div>
 
                             <div class="col-md-4">
                                 <table class="table table-bordered">
+                                    @if($footingConfigure->course_aggregate_type == 1)
                                     <tr>
                                         <th>Sands Price (Cft)</th>
                                         <td>৳ {{ $footingConfigure->total_common_sands_price }} Taka</td>
                                     </tr>
-                                    @if($footingConfigure->total_picked == 0)
+                                    <tr>
+                                        <th>Aggregate Price (Cft)</th>
+                                        <td>৳ {{ $footingConfigure->total_common_aggregate_price }} Taka</td>
+                                    </tr>
+                                    @elseif ($footingConfigure->course_aggregate_type == 2)
                                         <tr>
-                                            <th>Aggregate Price (Cft)</th>
-                                            <td>৳ {{ $footingConfigure->total_common_aggregate_price }} Taka</td>
+                                            <th>Sands Price (Cft)</th>
+                                            <td>৳ {{ $footingConfigure->total_common_sands_price }} Taka</td>
                                         </tr>
-                                    @else
                                         <tr>
                                             <th>Picked Price (Pcs)</th>
                                             <td>৳ {{ $footingConfigure->total_common_picked_price }} Taka</td>
                                         </tr>
+                                    @else
+
                                     @endif
                                 </table>
                             </div>
                             <div class="col-md-4">
                                 <table class="table table-bordered">
-                                    <tr>
-                                        <th>Sylhet Sands Price (Cft)</th>
-                                        <td>৳ {{ $footingConfigure->total_beam_s_sands_price }} Taka</td>
-                                    </tr>
+                                    @if ($footingConfigure->course_aggregate_type == 3)
+                                        <tr>
+                                            <th>RMC Price (Cft)</th>
+                                            <td>৳ {{ $footingConfigure->total_footing_rmc_price }} Taka</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <th>Sylhet Sands Price (Cft)</th>
+                                            <td>৳ {{ $footingConfigure->total_beam_s_sands_price }} Taka</td>
+                                        </tr>
+                                    @endif
                                 </table>
                             </div>
                         </div>

@@ -83,26 +83,42 @@
                         <th>Total Kg</th>
                         <td>{{ $beamConfigure->total_kg }} Rod</td>
                     </tr>
-                    <tr>
-                        <th>Total Cement</th>
-                        <td>{{ $beamConfigure->total_cement_bag }} Bag</td>
-                    </tr>
-                    <tr>
-                        <th>Total Local Sands</th>
-                        <td>{{ $beamConfigure->total_sands }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Sylhet Sands</th>
-                        <td>{{ $beamConfigure->total_s_sands }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Aggregate</th>
-                        <td>{{ $beamConfigure->total_aggregate }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Piked</th>
-                        <td>{{ $beamConfigure->total_picked }} Pcs</td>
-                    </tr>
+                    @if ($beamConfigure->course_aggregate_type == 1)
+                        <tr>
+                            <th>Total Cement</th>
+                            <td>{{ $beamConfigure->total_cement_bag }} Bag</td>
+                        </tr>
+                        <tr>
+                            <th>Total Local Sands</th>
+                            <td>{{ $beamConfigure->total_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Sylhet Sands</th>
+                            <td>{{ $beamConfigure->total_s_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Aggregate</th>
+                            <td>{{ $beamConfigure->total_aggregate }} Cft</td>
+                        </tr>
+                    @elseif ($beamConfigure->course_aggregate_type == 2)
+                        <tr>
+                            <th>Total Cement</th>
+                            <td>{{ $beamConfigure->total_cement_bag }} Bag</td>
+                        </tr>
+                        <tr>
+                            <th>Total Local Sands</th>
+                            <td>{{ $beamConfigure->total_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Sylhet Sands</th>
+                            <td>{{ $beamConfigure->total_s_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Piked</th>
+                            <td>{{ $beamConfigure->total_picked }} Pcs</td>
+                        </tr>
+                    @else    
+                    @endif
                     <tr>
                         <th>Note </th>
                         <td>{{ $beamConfigure->note??'' }}</td>
@@ -392,42 +408,62 @@
         <div class="row">
             <div class="col-md-4">
                 <table class="table table-bordered">
-                    <tr>
-                        <th>Bar(Rod) Price (Kg)</th>
-                        <td>৳ {{ $beamConfigure->total_beam_bar_price }} Taka</td>
-                    </tr>
-                    <tr>
-                        <th>Cement Price(Bag)</th>
-                        <td>৳ {{ $beamConfigure->total_beam_cement_bag_price }} Taka</td>
-                    </tr>
+                    @if ($beamConfigure->course_aggregate_type == 3)
+                        <tr>
+                            <th>Bar(Rod) Price (Kg)</th>
+                            <td>৳ {{ $beamConfigure->total_beam_bar_price }} Taka</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <th>Bar(Rod) Price (Kg)</th>
+                            <td>৳ {{ $beamConfigure->total_beam_bar_price }} Taka</td>
+                        </tr>
+                        <tr>
+                            <th>Cement Price(Bag)</th>
+                            <td>৳ {{ number_format($beamConfigure->total_beam_cement_bag_price,2) }} Taka</td>
+                        </tr>
+                    @endif
                 </table>
             </div>
 
             <div class="col-md-4">
                 <table class="table table-bordered">
+                    @if($beamConfigure->course_aggregate_type == 1)
                     <tr>
-                        <th>Local Sands Price (Cft)</th>
+                        <th>Sands Price (Cft)</th>
                         <td>৳ {{ $beamConfigure->total_beam_sands_price }} Taka</td>
                     </tr>
-                    @if($beamConfigure->total_picked == 0)
+                    <tr>
+                        <th>Aggregate Price (Cft)</th>
+                        <td>৳ {{ $beamConfigure->total_beam_aggregate_price }} Taka</td>
+                    </tr>
+                    @elseif ($beamConfigure->course_aggregate_type == 2)
                         <tr>
-                            <th>Aggregate Price (Cft)</th>
-                            <td>৳ {{ $beamConfigure->total_beam_aggregate_price }} Taka</td>
+                            <th>Sands Price (Cft)</th>
+                            <td>৳ {{ $beamConfigure->total_beam_sands_price }} Taka</td>
                         </tr>
-                    @else
                         <tr>
                             <th>Picked Price (Pcs)</th>
                             <td>৳ {{ $beamConfigure->total_beam_picked_price }} Taka</td>
                         </tr>
+                    @else
+
                     @endif
                 </table>
             </div>
             <div class="col-md-4">
                 <table class="table table-bordered">
-                    <tr>
-                        <th>Sylhet Sands Price (Cft)</th>
-                        <td>৳ {{ $beamConfigure->total_beam_s_sands_price }} Taka</td>
-                    </tr>
+                    @if ($beamConfigure->course_aggregate_type == 3)
+                        <tr>
+                            <th>RMC Price (Cft)</th>
+                            <td>৳ {{ $beamConfigure->total_beam_rmc_price }} Taka</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <th>Sylhet Sands Price (Cft)</th>
+                            <td>৳ {{ $beamConfigure->total_beam_s_sands_price }} Taka</td>
+                        </tr>
+                    @endif
                 </table>
             </div>
         </div>

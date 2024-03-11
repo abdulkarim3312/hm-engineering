@@ -61,11 +61,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 text-center">
-{{--                <h4 style="padding: 10px;"><span style="font-weight: 700" class="pull-left">Serial No: {{ $order->id+10000 }}</span> <u><span style="font-size: 30px;font-weight: bold;text-transform: uppercase; margin-right: 100px;"> Purchase Receipt </span></u><span style="text-align: center; font-weight: normal;font-size: 16px;position: absolute;text-transform: capitalize;right: 20px;"><b>Date: </b> {{ date('j F, Y') }}</span></h4>--}}
-
-            </div>
-            <div class="col-xs-6">
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
                         <th>Pile Configure No.</th>
@@ -80,40 +76,66 @@
                         <td>{{ $pileConfigure->project->name }}</td>
                     </tr>
                     <tr>
-                        <th>Total Rft/Ton</th>
+                        <th>Total Ton</th>
                         <td>{{ $pileConfigure->total_ton }} Rod</td>
                     </tr>
                     <tr>
                         <th>Total Kg</th>
                         <td>{{ $pileConfigure->total_kg }} Rod</td>
                     </tr>
+                    @if($pileConfigure->course_aggregate_type == 1)
                     <tr>
-                        <th>Total Cement</th>
-                        <td>{{ $pileConfigure->total_cement }} Bag</td>
+                        <th>Total Cement(Cft)</th>
+                        <td>{{ $pileConfigure->total_cement }} Cft</td>
                     </tr>
-                    <tr>
-                        <th>Total Local Sands</th>
-                        <td>{{ $pileConfigure->total_sands }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Sylhet Sands</th>
-                        <td>{{ $pileConfigure->total_s_sands }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Aggregate</th>
-                        <td>{{ $pileConfigure->total_aggregate }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Piked</th>
-                        <td>{{ $pileConfigure->total_picked }} Pcs</td>
-                    </tr>
+                        <tr>
+                            <th>Total Cement(Bag)</th>
+                            <td>{{ $pileConfigure->total_cement_bag }} Bag</td>
+                        </tr>
+                        <tr>
+                            <th>Total Local Sands</th>
+                            <td>{{ $pileConfigure->total_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Sylhet Sands</th>
+                            <td>{{ $pileConfigure->total_s_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Aggregate</th>
+                            <td>{{ $pileConfigure->total_aggregate }} Cft</td>
+                        </tr>
+                    @elseif ($pileConfigure->course_aggregate_type == 2)
+                        <tr>
+                            <th>Total Cement(Cft)</th>
+                            <td>{{ $pileConfigure->total_cement }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Cement(Bag)</th>
+                            <td>{{ $pileConfigure->total_cement_bag }} Bag</td>
+                        </tr>
+                        <tr>
+                            <th>Total Local Sands</th>
+                            <td>{{ $pileConfigure->total_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Sylhet Sands</th>
+                            <td>{{ $pileConfigure->total_s_sands }} Cft</td>
+                        </tr>
+                        <tr>
+                            <th>Total Piked</th>
+                            <td>{{ $pileConfigure->total_picked }} Pcs</td>
+                        </tr>
+                    @else    
+
+                    @endif
                     <tr>
                         <th>Note </th>
                         <td>{{ $pileConfigure->note??'' }}</td>
                     </tr>
                 </table>
             </div>
-            <div class="col-xs-6">
+
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
                         <th colspan="2" class="text-center">Pilling Info</th>
@@ -321,44 +343,64 @@
         </div>
         <u><i><h2>Costing Area</h2></i></u>
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <table class="table table-bordered">
+                    @if ($pileConfigure->course_aggregate_type == 3)
                     <tr>
                         <th>Bar(Rod) Price (Kg)</th>
                         <td>৳ {{ $pileConfigure->total_pile_bar_price }} Taka</td>
                     </tr>
-                    <tr>
-                        <th>Cement Price(Bag)</th>
-                        <td>৳ {{ $pileConfigure->total_pile_cement_bag_price }} Taka</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="col-xs-4">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Sands Price (Cft)</th>
-                        <td>৳ {{ $pileConfigure->total_pile_sands_price }} Taka</td>
-                    </tr>
-                    @if($pileConfigure->total_picked == 0)
-                        <tr>
-                            <th>Aggregate Price (Cft)</th>
-                            <td>৳ {{ $pileConfigure->total_pile_aggregate_price }} Taka</td>
-                        </tr>
                     @else
                         <tr>
-                            <th>Picked Price (Pcs)</th>
-                            <td>৳ {{ $pileConfigure->total_pile_picked_price }} Taka</td>
+                            <th>Bar(Rod) Price (Kg)</th>
+                            <td>৳ {{ $pileConfigure->total_pile_bar_price }} Taka</td>
+                        </tr>
+                        <tr>
+                            <th>Cement Price(Bag)</th>
+                            <td>৳ {{ number_format($pileConfigure->total_pile_cement_bag_price,2) }} Taka</td>
                         </tr>
                     @endif
                 </table>
             </div>
-            <div class="col-xs-4">
+
+            <div class="col-md-4">
                 <table class="table table-bordered">
+                    @if($pileConfigure->course_aggregate_type == 1)
                     <tr>
-                        <th>Sylhet Sands Price (Cft)</th>
-                        <td>৳ {{ $pileConfigure->total_pile_s_sands_price }} Taka</td>
+                        <th>Sands Price (Cft)</th>
+                        <td>৳ {{ $pileConfigure->total_pile_sands_price }} Taka</td>
                     </tr>
+                    <tr>
+                        <th>Aggregate Price (Cft)</th>
+                        <td>৳ {{ $pileConfigure->total_pile_aggregate_price }} Taka</td>
+                    </tr>
+                    @elseif ($pileConfigure->course_aggregate_type == 2)
+                        <tr>
+                            <th>Sands Price (Cft)</th>
+                            <td>৳ {{ $pileConfigure->total_pile_sands_price }} Taka</td>
+                        </tr>
+                        <tr>
+                            <th>Picked Price (Pcs)</th>
+                            <td>৳ {{ $pileConfigure->total_pile_picked_price }} Taka</td>
+                        </tr>
+                    @else
+
+                    @endif
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table table-bordered">
+                    @if ($pileConfigure->course_aggregate_type == 3)
+                        <tr>
+                            <th>RMC Price (Cft)</th>
+                            <td>৳ {{ $pileConfigure->total_pile_rmc_price }} Taka</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <th>Sylhet Sands Price (Cft)</th>
+                            <td>৳ {{ $pileConfigure->total_pile_s_sands_price }} Taka</td>
+                        </tr>
+                    @endif
                 </table>
             </div>
         </div>

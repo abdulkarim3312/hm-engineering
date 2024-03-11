@@ -34,7 +34,7 @@
                             <th>Bricks Wall Type</th>
                             <th>Project Name</th>
                             <th>Estimate Floor</th>
-                            <th>Estimate Floor Unit</th>
+                            <th>Floor Unit</th>
                             <th>Total Bricks</th>
                             <th>Total Morter(Dry)</th>
                             <th>Action</th>

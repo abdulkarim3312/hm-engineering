@@ -245,9 +245,9 @@
 
                                     <select class="form-control select2" style="width: 100%;" name="course_aggregate_type"
                                             data-placeholder="Select Course Aggregate Type" id="course_aggregate_type">
-{{--                                        <option value="">Select Course Aggregate Type</option>--}}
-                                        <option value="1" {{ old('course_aggregate_type') == 1 ? 'selected' : '' }}>Stone</option>
-                                        <option value="2" {{ old('course_aggregate_type') == 2 ? 'selected' : '' }}>Brick Chips</option>
+                                            <option value="1" {{ old('course_aggregate_type') == 1 ? 'selected' : '' }}>Stone</option>
+                                            <option value="2" {{ old('course_aggregate_type') == 2 ? 'selected' : '' }}>Brick Chips</option>
+                                            <option value="3" {{ old('course_aggregate_type') == 3 ? 'selected' : '' }}>RMC</option>
                                     </select>
 
                                     @error('course_aggregate_type')
@@ -293,87 +293,99 @@
                         <u><i><h3>Costing Area</h3></i></u>
 
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('pile_bar_costing') ? 'has-error' :'' }}">
-                                    <label>Bar Cost(Per Kg)</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" step="any"
-                                               name="pile_bar_costing" value="{{ old('pile_bar_costing',0) }}" placeholder="Enter Per Kg Bar Costing">
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('pile_bar_costing')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('pile_cement_costing') ? 'has-error' :'' }}">
-                                    <label>Cement Cost(Per Bag)</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" step="any"
-                                               name="pile_cement_costing" value="{{ old('pile_cement_costing',0) }}" placeholder="Enter Per Bag Cement Costing ">
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('pile_cement_costing')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group {{ $errors->has('pile_sands_costing') ? 'has-error' :'' }}">
-                                    <label>L.Sands Cost(Per Cft)</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" step="any"
-                                               name="pile_sands_costing" value="{{ old('pile_sands_costing',0) }}" placeholder="Enter Per Cft Sands Costing">
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('pile_sands_costing')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group {{ $errors->has('s_sands_costing') ? 'has-error' :'' }}">
-                                    <label>S.Sands Cost(Per Cft)</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" step="any" value="{{ $pileCost->s_sands_costing??0 }}"
-                                               name="s_sands_costing"  placeholder="Enter Per Cft S.Sands Costing">
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('s_sands_costing')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div id="pile_aggregate_costing">
-                                <div class="col-md-2" id="pile_aggregate_costing">
-                                    <div class="form-group {{ $errors->has('pile_aggregate_costing') ? 'has-error' :'' }}">
-                                        <label>Aggregate Cost(Cft)</label>
-
+                            <div id="common_bar_costing">
+                                <div class="col-md-3">
+                                    <div class="form-group {{ $errors->has('pile_bar_costing') ? 'has-error' :'' }}">
+                                        <label>Bar Cost(Per Kg)</label>
+    
                                         <div class="form-group">
                                             <input type="number" class="form-control" step="any"
-                                                   name="pile_aggregate_costing" value="{{ old('pile_aggregate_costing',0) }}" placeholder="Enter Per Cft Aggregates Costing">
+                                                   name="pile_bar_costing" value="{{ old('pile_bar_costing',0) }}" placeholder="Enter Per Kg Bar Costing">
                                         </div>
                                         <!-- /.input group -->
-
-                                        @error('pile_aggregate_costing')
+    
+                                        @error('pile_bar_costing')
                                         <span class="help-block">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="pile_picked_costing">
+                            <div id="common_cement_costing">
+                                <div class="col-md-3">
+                                    <div class="form-group {{ $errors->has('pile_cement_costing') ? 'has-error' :'' }}">
+                                        <label>Cement Cost(Per Bag)</label>
+    
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" step="any"
+                                                   name="pile_cement_costing" value="{{ old('pile_cement_costing',0) }}" placeholder="Enter Per Bag Cement Costing ">
+                                        </div>
+                                        <!-- /.input group -->
+    
+                                        @error('pile_cement_costing')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="common_sands_costing">
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('pile_sands_costing') ? 'has-error' :'' }}">
+                                        <label>L.Sands Cost(Per Cft)</label>
+    
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" step="any"
+                                                   name="pile_sands_costing" value="{{ old('pile_sands_costing',0) }}" placeholder="Enter Per Cft Sands Costing">
+                                        </div>
+                                        <!-- /.input group -->
+    
+                                        @error('pile_sands_costing')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="s_sands_costing">
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('s_sands_costing') ? 'has-error' :'' }}">
+                                        <label>S.Sands Cost(Per Cft)</label>
+    
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" step="any" value="{{ 0 }}"
+                                                   name="s_sands_costing"  placeholder="Enter Per Cft S.Sands Costing">
+                                        </div>
+                                        <!-- /.input group -->
+    
+                                        @error('s_sands_costing')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="common_aggregate_costing">
+                                <div id="pile_aggregate_costing">
+                                    <div class="col-md-2" id="pile_aggregate_costing">
+                                        <div class="form-group {{ $errors->has('pile_aggregate_costing') ? 'has-error' :'' }}">
+                                            <label>Aggregate Cost(Cft)</label>
+    
+                                            <div class="form-group">
+                                                <input type="number" class="form-control" step="any"
+                                                       name="pile_aggregate_costing" value="{{ old('pile_aggregate_costing',0) }}" placeholder="Enter Per Cft Aggregates Costing">
+                                            </div>
+                                            <!-- /.input group -->
+    
+                                            @error('pile_aggregate_costing')
+                                            <span class="help-block">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="common_picked_costing">
                                 <div class="col-md-2">
                                     <div class="form-group {{ $errors->has('pile_picked_costing') ? 'has-error' :'' }}">
                                         <label>Picked Cost(Per Cft)</label>
@@ -385,6 +397,23 @@
                                         <!-- /.input group -->
 
                                         @error('pile_picked_costing')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="rmc_costing">
+                                <div class="col-md-4">
+                                    <div class="form-group {{ $errors->has('rmc_costing') ? 'has-error' :'' }}">
+                                        <label>RMC Cost(Per Cft)</label>
+
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" step="any" value="{{ 0 }}"
+                                                   name="rmc_costing"  placeholder="Enter Rmc Costing">
+                                        </div>
+                                        <!-- /.input group -->
+
+                                        @error('rmc_costing')
                                         <span class="help-block">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -972,11 +1001,29 @@
 
 
                 if (courseType == 1) {
-                    $('#pile_picked_costing').hide();
-                    $('#pile_aggregate_costing').show();
+                    $('#common_picked_costing').hide();
+                    $('#rmc_costing').hide();
+                    $('#common_aggregate_costing').show();
+                    $('#common_bar_costing').show();
+                    $('#s_sands_costing').show();
+                    $('#common_cement_costing').show();
+                    $('#common_sands_costing').show();
                 }else if(courseType == 2){
-                    $('#pile_picked_costing').show();
-                    $('#pile_aggregate_costing').hide();
+                    $('#common_picked_costing').show();
+                    $('#common_bar_costing').show();
+                    $('#s_sands_costing').show();
+                    $('#common_cement_costing').show();
+                    $('#common_sands_costing').show();
+                    $('#common_aggregate_costing').hide();
+                    $('#rmc_costing').hide();
+                }else if(courseType == 3){
+                    $('#rmc_costing').show();
+                    $('#common_bar_costing').show();
+                    $('#common_aggregate_costing').hide();
+                    $('#s_sands_costing').hide();
+                    $('#common_cement_costing').hide();
+                    $('#common_sands_costing').hide();
+                    $('#common_picked_costing').hide();
                 }else {
 
                 }

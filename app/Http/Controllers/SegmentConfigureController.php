@@ -194,6 +194,7 @@ class SegmentConfigureController extends Controller
         $pileConfigure->estimate_project_id = $request->estimate_project;
         $pileConfigure->spiral_bar = $request->spiral_bar * $request->pile_quantity;
         $pileConfigure->spiral_interval = $request->spiral_interval * $request->pile_quantity;
+        $pileConfigure->course_aggregate_type = $request->course_aggregate_type;
         $pileConfigure->pile_quantity = $request->pile_quantity;
         $pileConfigure->first_ratio = $request->first_ratio;
         $pileConfigure->second_ratio = $request->second_ratio;
@@ -208,12 +209,28 @@ class SegmentConfigureController extends Controller
         $pileConfigure->note = $request->note;
         $pileConfigure->total_ton = 0;
         $pileConfigure->total_kg = 0;
-        $pileConfigure->total_cement = $totalCementCft * $request->pile_quantity;
-        $pileConfigure->total_cement_bag = $totalCementBag * $request->pile_quantity;
-        $pileConfigure->total_sands = (($totalSands)/2 * $request->pile_quantity);
-        $pileConfigure->total_s_sands =(($totalSands)/2 * $request->pile_quantity);
-        $pileConfigure->total_aggregate = $totalAggregate * $request->pile_quantity;
-        $pileConfigure->total_picked = $totalPiked * $request->pile_quantity;
+        if($request->course_aggregate_type == 1){
+            $pileConfigure->total_cement = $totalCementCft * $request->pile_quantity;
+            $pileConfigure->total_cement_bag = $totalCementBag * $request->pile_quantity;
+            $pileConfigure->total_sands = (($totalSands)/2 * $request->pile_quantity);
+            $pileConfigure->total_s_sands =(($totalSands)/2 * $request->pile_quantity);
+            $pileConfigure->total_aggregate = $totalAggregate * $request->pile_quantity;
+            $pileConfigure->total_picked = 0;
+        }else if($request->course_aggregate_type == 2){
+            $pileConfigure->total_cement = $totalCementCft * $request->pile_quantity;
+            $pileConfigure->total_cement_bag = $totalCementBag * $request->pile_quantity;
+            $pileConfigure->total_sands = (($totalSands)/2 * $request->pile_quantity);
+            $pileConfigure->total_s_sands =(($totalSands)/2 * $request->pile_quantity);
+            $pileConfigure->total_aggregate = 0;
+            $pileConfigure->total_picked = $totalPiked * $request->pile_quantity;
+        }else{
+            $pileConfigure->total_cement = 0;
+            $pileConfigure->total_cement_bag = 0;
+            $pileConfigure->total_sands = 0;
+            $pileConfigure->total_s_sands =0;
+            $pileConfigure->total_aggregate = 0;
+            $pileConfigure->total_picked = 0;
+        }
         //price
         $pileConfigure->pile_bar_per_cost = $request->pile_bar_costing;
         $pileConfigure->pile_cement_per_cost = $request->pile_cement_costing;
@@ -222,11 +239,30 @@ class SegmentConfigureController extends Controller
         $pileConfigure->pile_aggregate_per_cost = $request->pile_aggregate_costing??0;
         $pileConfigure->pile_picked_per_cost = $request->pile_picked_costing??0;
         //Total Price
-        $pileConfigure->total_pile_cement_bag_price = ($totalCementBag * $request->pile_quantity) * $request->pile_cement_costing;
-        $pileConfigure->total_pile_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->pile_sands_costing;
-        $pileConfigure->total_pile_s_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->s_sands_costing;
-        $pileConfigure->total_pile_aggregate_price = ($totalAggregate * $request->pile_quantity) * $request->pile_aggregate_costing;
-        $pileConfigure->total_pile_picked_price = ($totalPiked * $request->pile_quantity) * $request->pile_picked_costing;
+        if($request->course_aggregate_type == 1){
+            $pileConfigure->total_pile_cement_bag_price = ($totalCementBag * $request->pile_quantity) * $request->pile_cement_costing;
+            $pileConfigure->total_pile_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->pile_sands_costing;
+            $pileConfigure->total_pile_rmc_price = $request->total_volume * $request->pile_sands_costing;
+            $pileConfigure->total_pile_s_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->s_sands_costing;
+            $pileConfigure->total_pile_aggregate_price = ($totalAggregate * $request->pile_quantity) * $request->pile_aggregate_costing;
+            $pileConfigure->total_pile_picked_price = 0;
+            $pileConfigure->total_pile_rmc_price = 0;
+        }else if($request->course_aggregate_type == 2){
+            $pileConfigure->total_pile_cement_bag_price = ($totalCementBag * $request->pile_quantity) * $request->pile_cement_costing;
+            $pileConfigure->total_pile_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->pile_sands_costing;
+            $pileConfigure->total_pile_rmc_price = $request->total_volume * $request->pile_sands_costing;
+            $pileConfigure->total_pile_s_sands_price = (($totalSands/2) * $request->pile_quantity) * $request->s_sands_costing;
+            $pileConfigure->total_pile_aggregate_price = 0;
+            $pileConfigure->total_pile_picked_price = ($totalPiked * $request->pile_quantity) * $request->pile_picked_costing;
+            $pileConfigure->total_pile_rmc_price = 0;
+        }else{
+            $pileConfigure->total_pile_rmc_price = $request->total_volume * $request->pile_sands_costing;
+            $pileConfigure->total_pile_cement_bag_price = 0;
+            $pileConfigure->total_pile_sands_price = 0;
+            $pileConfigure->total_pile_s_sands_price = 0;
+            $pileConfigure->total_pile_aggregate_price = 0;
+            $pileConfigure->total_pile_picked_price = 0;
+        }
         $pileConfigure->total_pile_bar_price = 0;
         $pileConfigure->save();
         $pileConfigure->pile_configure_no = str_pad($pileConfigure->id, 5, "0", STR_PAD_LEFT);
@@ -320,6 +356,12 @@ class SegmentConfigureController extends Controller
         return view('estimate.pile_configure.print',compact('pileConfigure'));
     }
 
+    public function pileConfigureDelete(PileConfigure $pileConfigure){
+        PileConfigure::find($pileConfigure->id)->delete();
+        PileConfigureProduct::where('pile_configure_id', $pileConfigure->id)->delete();
+        return redirect()->route('pile_configure')->with('message', 'Pile Info Deleted Successfully.');
+    }
+
     public function pileConfigureDatatable() {
         $query = PileConfigure::with('project');
 
@@ -328,9 +370,10 @@ class SegmentConfigureController extends Controller
                 return $pileConfigure->project->name??'';
             })
             ->addColumn('action', function(PileConfigure $pileConfigure) {
-
-                return '<a href="'.route('pile_configure.details', ['pileConfigure' => $pileConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('pile_configure.details', ['pileConfigure' => $pileConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('pile_configure.delete', ['pileConfigure' => $pileConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(PileConfigure $pileConfigure) {
                 return $pileConfigure->date;

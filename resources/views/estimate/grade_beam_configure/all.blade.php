@@ -33,7 +33,7 @@
                             <th>Date</th>
                             <th>Configure No</th>
                             <th>Project</th>
-                            <th>Estimate Floor</th>
+                            <th>Floor Name</th>
                             <th>Beam Type</th>
                             <th>Total Volume</th>
                             <th>Dry Volume</th>

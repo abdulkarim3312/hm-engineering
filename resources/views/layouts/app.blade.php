@@ -214,8 +214,8 @@
                     'common_configure','common_configure.add','common_configure.details', 'short_column_type.edit',
                     'beam_configure','beam_configure.add','beam_configure.details', 'short_column_configure.add', 'short_column_configure',
                     'column_configure','column_configure.add','column_configure.details', 'short_column_configure.details',
-                    'bricks_configure','bricks_configure.add','bricks_configure.details',
-                    'plaster_configure','plaster_configure.add','plaster_configure.details',
+                    'bricks_configure','bricks_configure.add','bricks_configure.details', 'water_tank_configure', 'water_tank_configure.add',
+                    'plaster_configure','plaster_configure.add','plaster_configure.details', 'water_tank_configure.details',
                     'earth_work_configure','earth_work_configure.add','earth_work_configure.details',
                     'grill_glass_tiles_configure','grill_glass_tiles_configure.add','grill_glass_tiles_configure.details',
                     'paint_configure','paint_configure.add','paint_configure.details',
@@ -228,7 +228,7 @@
                     'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details',
                     'batch','batch.add','batch.edit','grade_of_concrete','grade_of_concrete.add','grade_of_concrete.edit',
                     'costing_report','estimation_costing_summary','mobilization_work','mobilization_work.add','mobilization_work.details','mobilization_work_product', 'returning_wall_configure.add', 'returning_wall_configure.details',
-                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure', 'glass_configure','glass_configure.add','glass_configure.details', 'tiles_configure', 'bricks_soling_configure.add', 'bricks_soling_configure.details', 'sand_filling_configure.add', 'sand_filling_configure.details'];
+                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure', 'glass_configure','glass_configure.add','glass_configure.details', 'tiles_configure', 'bricks_soling_configure.add', 'bricks_soling_configure.details', 'sand_filling_configure.add', 'sand_filling_configure.details', 'electric_product', 'electric_product.add', 'electric_product.edit', 'electric_product.datatable', 'electric_costing', 'electric_costing.add', 'sanitary_product','sanitary_product.add','sanitary_product.edit', 'sanitary_costing','sanitary_costing.add','sanitary_costing.details'];
                 ?>
 
                 @can('estimation_and_costing')
@@ -261,6 +261,26 @@
                                 <a href="{{ route('unit_section') }}"><i class="fa fa-circle-o"></i>Unit Section</a>
                             </li>
                             @endcan
+                            @can('unit_section')
+                            <li class="{{ Route::currentRouteName() == 'electric_product' ? 'active' : '' }}">
+                                <a href="{{ route('electric_product') }}"><i class="fa fa-circle-o"></i>Electric Product</a>
+                            </li>
+                            @endcan
+                            @can('unit_section')
+                            <li class="{{ Route::currentRouteName() == 'electric_costing' ? 'active' : '' }}">
+                                <a href="{{ route('electric_costing') }}"><i class="fa fa-circle-o"></i>Electric Product Costing</a>
+                            </li>
+                            @endcan
+                            @can('unit_section')
+                            <li class="{{ Route::currentRouteName() == 'sanitary_product' ? 'active' : '' }}">
+                                <a href="{{ route('sanitary_product') }}"><i class="fa fa-circle-o"></i>Sanitary Product</a>
+                            </li>
+                            @endcan
+                            @can('unit_section')
+                            <li class="{{ Route::currentRouteName() == 'sanitary_costing' ? 'active' : '' }}">
+                                <a href="{{ route('sanitary_costing') }}"><i class="fa fa-circle-o"></i>Sanitary Product Costing</a>
+                            </li>
+                            @endcan
                             @can('beam_type')
                             <li class="{{ Route::currentRouteName() == 'beam_type' ? 'active' : '' }}">
                                 <a href="{{ route('beam_type') }}"><i class="fa fa-circle-o"></i> Beam Type</a>
@@ -284,6 +304,10 @@
 
                             <li class="{{ Route::currentRouteName() == 'footing_configure' ? 'active' : '' }}">
                                 <a href="{{ route('footing_configure') }}"><i class="fa fa-circle-o"></i>Footing Type Configure</a>
+                            </li>
+
+                            <li class="{{ Route::currentRouteName() == 'water_tank_configure' ? 'active' : '' }}">
+                                <a href="{{ route('water_tank_configure') }}"><i class="fa fa-circle-o"></i>Water Tank Configure</a>
                             </li>
 
                             {{-- @can('grade_of_concrete_type')
@@ -1137,7 +1161,7 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Design & Developed By <a target="_blank" href="http://2aitlimited.com">2A IT LTD</a></b>
+            <b>Design & Developed By <a target="_blank" href="https://binaryrecontech.com/">BR TECH</a></b>
         </div>
         <strong>Copyright &copy; {{ date('Y') }} <a href="{{ route('dashboard') }}">{{ config('app.name') }}</a>.</strong> All rights
         reserved.

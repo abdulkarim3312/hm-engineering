@@ -34,10 +34,10 @@
                             <th>Project Name</th>
                             <th>Floor Name</th>
                             <th>Unit Name</th>
-                            <th>Total Plaster Area(Dry)</th>
+                            <th>Plaster Area(Dry)</th>
                             <th>Total Cement(Bag)</th>
                             <th>Total Sands(Cft)</th>
-                            <th>Action</th>
+                            <th width="15%">Action</th>
                         </tr>
                         </thead>
                     </table>

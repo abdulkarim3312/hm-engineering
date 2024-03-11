@@ -147,7 +147,7 @@
 
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="dry_morter" step="any"
-                                               name="dry_morter" value="{{ old('dry_morter',1.35) }}" placeholder="Dry Morter">
+                                               name="dry_morter" value="{{ old('dry_morter',1.50) }}" readonly placeholder="Dry Morter">
                                     </div>
                                     <!-- /.input group -->
 

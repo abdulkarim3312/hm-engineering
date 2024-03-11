@@ -311,7 +311,7 @@ class CostCalculationController extends Controller
                 ->groupBy('plaster_configure_id')
                 ->get();
 
-            $plasterConfigures = PlasterConfigure::whereIn('id',$plasterConfigureIds)->get();
+            $plasterConfigures = PlasterConfigure::where('estimate_project_id',$request->project)->get();
 
             $grillGlassTilesConfigures = GrillGlassTilesConfigure::where('estimate_project_id',$request->project)
                 ->get();
@@ -426,7 +426,7 @@ class CostCalculationController extends Controller
                 ->groupBy('plaster_configure_id')
                 ->get();
 
-            $plasterConfigures = PlasterConfigure::whereIn('id',$plasterConfigureIds)->get();
+            $plasterConfigures = PlasterConfigure::where('estimate_project_id',$request->project)->get();
 
             $grillGlassTilesConfigures = GrillGlassTilesConfigure::where('estimate_project_id',$request->project)
                 ->get();

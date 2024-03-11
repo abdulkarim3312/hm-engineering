@@ -147,7 +147,7 @@ class MatConfigureController extends Controller
             $matConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
             $matConfigure->total_mat_rmc_price = $request->total_volume * $request->rmc_costing;
             $matConfigure->total_common_aggregate_price = 0;
-            $matConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;;
+            $matConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
         }else{
             $matConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
             $matConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
@@ -247,7 +247,7 @@ class MatConfigureController extends Controller
     public function matConfigureDelete(MatConfigure $matConfigure){
        MatConfigure::find($matConfigure->id)->delete();
        MatConfigureProduct::where('common_configure_id', $matConfigure->id)->delete();
-        return redirect()->back();
+       return redirect()->route('mat_configure')->with('message', 'Mat Info Deleted Successfully.');
     }
 
     public function matConfigureDatatable() {

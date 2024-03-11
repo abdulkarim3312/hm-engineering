@@ -118,10 +118,10 @@
                                             @foreach($pileConfigures as $pileConfigure)
                                                 @php
                                                     $totalPileCost += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
-                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price + $pileConfigure->total_pile_aggregate_price +
+                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price +$pileConfigure->total_pile_rmc_price+ $pileConfigure->total_pile_aggregate_price +
                                                                      $pileConfigure->total_pile_picked_price;
                                                     $grandTotal += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
-                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_aggregate_price +
+                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_rmc_price+$pileConfigure->total_pile_aggregate_price +
                                                                      $pileConfigure->total_pile_picked_price;
 
                                                 @endphp
@@ -130,12 +130,22 @@
 
                                                     <td class="text-right">
                                                         <br>
-                                                        <span>Bar(Rod) Cost: <b>{{$pileConfigure->total_pile_bar_price}}</b></span><br>
-                                                        <span>Cement Cost: <b>{{$pileConfigure->total_pile_cement_bag_price}}</b></span><br>
-                                                        <span>Local Sands Cost: <b>{{$pileConfigure->total_pile_sands_price}}</b></span><br>
-                                                        <span>Shylet Sands Cost: <b>{{$pileConfigure->total_pile_s_sands_price}}</b></span><br>
-                                                        <span>Aggregate Cost: <b>{{$pileConfigure->total_pile_aggregate_price}}</b></span><br>
-                                                        <span>Picked Cost: <b>{{$pileConfigure->total_pile_picked_price}}</b></span><br>
+                                                        @if ($pileConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$pileConfigure->total_pile_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$pileConfigure->total_pile_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$pileConfigure->total_pile_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$pileConfigure->total_pile_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$pileConfigure->total_pile_aggregate_price}}</b></span><br>
+                                                        @elseif ($pileConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$pileConfigure->total_pile_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$pileConfigure->total_pile_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$pileConfigure->total_pile_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$pileConfigure->total_pile_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$pileConfigure->total_pile_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$pileConfigure->total_pile_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$pileConfigure->total_pile_rmc_price}}</b></span>
+                                                        @endif
                                                         <hr>
                                                         <span>Total:<b>{{$pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
                                                                      + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_aggregate_price +
@@ -754,7 +764,7 @@
                                                     $grandTotal += $plasterConfigure->total_plaster_cement_cost + $plasterConfigure->total_plaster_sands_cost;
                                                 @endphp
                                                 <tr>
-                                                    <th>Plaster Configure No-{{$plasterConfigure->bricks_configure_no}}</th>
+                                                    <th>Plaster Configure No-{{$plasterConfigure->plaster_configure_no}}</th>
 
                                                     <td class="text-right">
                                                         <br>

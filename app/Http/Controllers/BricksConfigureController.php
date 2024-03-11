@@ -169,6 +169,12 @@ class BricksConfigureController extends Controller
         return view('estimate.bricks_configure.print',compact('bricksConfigure'));
     }
 
+    public function bricksConfigureDelete(BricksConfigure $bricksConfigure){
+        BricksConfigure::find($bricksConfigure->id)->delete();
+        BricksConfigureProduct::where('bricks_configure_id', $bricksConfigure->id)->delete();
+        return redirect()->route('bricks_configure')->with('message', 'Bricks Info Deleted Successfully.');
+    }
+
     public function bricksConfigureDatatable() {
         $query = BricksConfigure::with('project','estimateFloor','estimateFloorUnit','unitSection');
 
@@ -186,7 +192,10 @@ class BricksConfigureController extends Controller
                 return $bricksConfigure->unitSection->name??'';
             })
             ->addColumn('action', function(BricksConfigure $bricksConfigure) {
-                return '<a href="'.route('bricks_configure.details', ['bricksConfigure' => $bricksConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn = '';
+                $btn = '<a href="'.route('bricks_configure.details', ['bricksConfigure' => $bricksConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('bricks_configure.delete', ['bricksConfigure' => $bricksConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(BricksConfigure $bricksConfigure) {
                 return $bricksConfigure->date;

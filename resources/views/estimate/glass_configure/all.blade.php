@@ -38,7 +38,7 @@
                             <th>Floor Quantity</th>
                             <th>Total Glass Area(Sft)</th>
                             <th>Total Rft</th>
-                            <th>Action</th>
+                            <th width="15%">Action</th>
                         </tr>
                         </thead>
                     </table>

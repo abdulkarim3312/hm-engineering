@@ -87,6 +87,7 @@ class ShortColumnConfigureController extends Controller
         $shortColumnConfigure->estimate_project_id = $request->estimate_project;
         $shortColumnConfigure->estimate_floor_id = $request->estimate_floor;
         $shortColumnConfigure->column_type_id = $request->column_type;
+        $shortColumnConfigure->course_aggregate_type = $request->course_aggregate_type;
         $shortColumnConfigure->ring_quantity = $request->ring_quantity * $request->column_quantity;
         $shortColumnConfigure->tie_interval = $request->tie_interval * $request->column_quantity;
         $shortColumnConfigure->column_quantity = $request->column_quantity;
@@ -107,25 +108,61 @@ class ShortColumnConfigureController extends Controller
         $shortColumnConfigure->total_kg_tie = 0;
         $shortColumnConfigure->total_kg = 0;
         $shortColumnConfigure->total_ton = 0;
-        $shortColumnConfigure->total_cement = $totalCement * $request->column_quantity;
-        $shortColumnConfigure->total_cement_bag = $totalCementBag * $request->column_quantity;
-        $shortColumnConfigure->total_sands = (($totalSands)/2 * $request->column_quantity);
-        $shortColumnConfigure->total_s_sands =(($totalSands)/2 * $request->column_quantity);
-        $shortColumnConfigure->total_aggregate = $totalAggregate * $request->column_quantity;
-        $shortColumnConfigure->total_picked = $totalPiked * $request->column_quantity;
+        if($request->course_aggregate_type == 1){
+            $shortColumnConfigure->total_cement = $totalCement * $request->column_quantity;
+            $shortColumnConfigure->total_cement_bag = $totalCementBag * $request->column_quantity;
+            $shortColumnConfigure->total_sands = (($totalSands)/2 * $request->column_quantity);
+            $shortColumnConfigure->total_s_sands =(($totalSands)/2 * $request->column_quantity);
+            $shortColumnConfigure->total_aggregate = $totalAggregate * $request->column_quantity;
+            $shortColumnConfigure->total_picked = 0;
+        }else if($request->course_aggregate_type == 2){
+            $shortColumnConfigure->total_cement = $totalCement * $request->column_quantity;
+            $shortColumnConfigure->total_cement_bag = $totalCementBag * $request->column_quantity;
+            $shortColumnConfigure->total_sands = (($totalSands)/2 * $request->column_quantity);
+            $shortColumnConfigure->total_s_sands =(($totalSands)/2 * $request->column_quantity);
+            $shortColumnConfigure->total_aggregate = 0;
+            $shortColumnConfigure->total_picked = $totalPiked * $request->column_quantity;
+        }else{
+            $shortColumnConfigure->total_cement = 0;
+            $shortColumnConfigure->total_cement_bag = 0;
+            $shortColumnConfigure->total_sands = 0;
+            $shortColumnConfigure->total_s_sands =0;
+            $shortColumnConfigure->total_aggregate = 0;
+            $shortColumnConfigure->total_picked = 0;
+        }
+        
         //price
         $shortColumnConfigure->column_bar_per_cost = $request->column_bar_costing;
         $shortColumnConfigure->column_cement_per_cost = $request->column_cement_costing;
         $shortColumnConfigure->column_sands_per_cost = $request->column_sands_costing;
         $shortColumnConfigure->column_s_sands_costing = $request->s_sands_costing;
+        $shortColumnConfigure->short_column_rms_costing = $request->rmc_costing;
         $shortColumnConfigure->column_aggregate_per_cost = $request->column_aggregate_costing??0;
         $shortColumnConfigure->column_picked_per_cost = $request->column_picked_costing??0;
         //Total Price
-        $shortColumnConfigure->total_column_cement_bag_price = ($totalCementBag * $request->column_quantity) * $request->column_cement_costing;
-        $shortColumnConfigure->total_column_sands_price = (($totalSands/2) * $request->column_quantity) * $request->column_sands_costing;
-        $shortColumnConfigure->total_column_s_sands_price = (($totalSands/2) * $request->column_quantity) * $request->s_sands_costing;
-        $shortColumnConfigure->total_column_aggregate_price = ($totalAggregate * $request->column_quantity) * $request->column_aggregate_costing;
-        $shortColumnConfigure->total_column_picked_price = ($totalPiked * $request->column_quantity) * $request->column_picked_costing;
+        if($request->course_aggregate_type == 1){
+            $shortColumnConfigure->total_column_cement_bag_price = ($totalCementBag * $request->column_quantity) * $request->column_cement_costing;
+            $shortColumnConfigure->total_column_sands_price = (($totalSands/2) * $request->column_quantity) * $request->column_sands_costing;
+            $shortColumnConfigure->total_column_s_sands_price = (($totalSands/2) * $request->column_quantity) * $request->s_sands_costing;
+            $shortColumnConfigure->total_column_aggregate_price = ($totalAggregate * $request->column_quantity) * $request->column_aggregate_costing;
+            $shortColumnConfigure->total_column_picked_price = 0;
+            $shortColumnConfigure->total_short_column_rmc_price = 0;
+        }else if($request->course_aggregate_type == 2){
+            $shortColumnConfigure->total_column_cement_bag_price = ($totalCementBag * $request->column_quantity) * $request->column_cement_costing;
+            $shortColumnConfigure->total_column_sands_price = (($totalSands/2) * $request->column_quantity) * $request->column_sands_costing;
+            $shortColumnConfigure->total_column_s_sands_price = (($totalSands/2) * $request->column_quantity) * $request->s_sands_costing;
+            $shortColumnConfigure->total_column_aggregate_price = 0;
+            $shortColumnConfigure->total_column_picked_price = ($totalPiked * $request->column_quantity) * $request->column_picked_costing;
+            $shortColumnConfigure->total_short_column_rmc_price = 0;
+        }else{
+            $shortColumnConfigure->total_short_column_rmc_price = $request->total_volume * $request->rmc_costing;
+            $shortColumnConfigure->total_column_cement_bag_price = 0;
+            $shortColumnConfigure->total_column_sands_price = 0;
+            $shortColumnConfigure->total_column_s_sands_price = 0;
+            $shortColumnConfigure->total_column_aggregate_price = 0;
+            $shortColumnConfigure->total_column_picked_price = 0;
+        }
+      
         $shortColumnConfigure->total_column_bar_price = 0;
 
         $shortColumnConfigure->save();
@@ -213,6 +250,12 @@ class ShortColumnConfigureController extends Controller
         return view('estimate.short_column_configure.print',compact('shortColumnConfigure'));
     }
 
+    public function shortColumnConfigureDelete(ShortColumnConfigure $shortColumnConfigure){
+        ShortColumnConfigure::find($shortColumnConfigure->id)->delete();
+        ShortColumnConfigureProduct::where('column_configure_id', $shortColumnConfigure->id)->delete();
+        return redirect()->route('short_column_configure')->with('message', 'Short Column Info Deleted Successfully.');
+    }
+
     public function shortColumnConfigureDatatable() {
         $query = ShortColumnConfigure::with('project', 'columnType', 'columnFloor');
 
@@ -227,9 +270,10 @@ class ShortColumnConfigureController extends Controller
                 return $shortColumnConfigure->columnType->name ?? '';
             })
             ->addColumn('action', function(ShortColumnConfigure $shortColumnConfigure) {
-
-                return '<a href="'.route('short_column_configure.details', ['shortColumnConfigure' => $shortColumnConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('short_column_configure.details', ['shortColumnConfigure' => $shortColumnConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('short_column_configure.delete', ['shortColumnConfigure' => $shortColumnConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(ShortColumnConfigure $shortColumnConfigure) {
                 return $shortColumnConfigure->date;

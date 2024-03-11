@@ -39,7 +39,7 @@
                             <th>Estimate Floor Unit</th>
                             <th>Floor Quantity</th>
                             <th>Total Area/KG</th>
-                            <th>Action</th>
+                            <th width="15%">Action</th>
                         </tr>
                         </thead>
                     </table>

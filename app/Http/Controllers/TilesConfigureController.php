@@ -112,6 +112,12 @@ class TilesConfigureController extends Controller
         return view('estimate.tiles_configure.print',compact('tilesConfigure'));
     }
 
+    public function tilesConfigureDelete(TilesConfigure $tilesConfigure){
+        TilesConfigure::find($tilesConfigure->id)->delete();
+        TilesConfigureProduct::where('grill_glass_tiles_configure_id', $tilesConfigure->id)->delete();
+        return redirect()->route('tiles_configure')->with('message', 'Tiles Info Deleted Successfully.');
+    }
+
     public function tilesConfigureDatatable() {
         $query = TilesConfigure::with('project','estimateFloor','estimateFloorUnit');
 
@@ -136,9 +142,10 @@ class TilesConfigureController extends Controller
 
             })
             ->addColumn('action', function(TilesConfigure $tilesConfigure) {
-
-                return '<a href="'.route('tiles_configure.details', ['tilesConfigure' => $tilesConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('tiles_configure.details', ['tilesConfigure' => $tilesConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('tiles_configure.delete', ['tilesConfigure' => $tilesConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(TilesConfigure $tilesConfigure) {
                 return $tilesConfigure->date;

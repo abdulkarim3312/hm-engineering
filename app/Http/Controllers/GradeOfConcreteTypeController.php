@@ -153,6 +153,7 @@ class GradeOfConcreteTypeController extends Controller
         $gradeBeamConfigure->estimate_project_id = $request->estimate_project;
         $gradeBeamConfigure->estimate_floor_id = $request->estimate_floor;
         $gradeBeamConfigure->beam_type_id = $request->beam_type;
+        $gradeBeamConfigure->course_aggregate_type = $request->course_aggregate_type;
         $gradeBeamConfigure->tie_bar = $request->tie_bar * $request->beam_quantity;
         $gradeBeamConfigure->tie_interval = $request->tie_interval * $request->beam_quantity;
         $gradeBeamConfigure->beam_quantity = $request->beam_quantity;
@@ -170,12 +171,28 @@ class GradeOfConcreteTypeController extends Controller
         $gradeBeamConfigure->note = $request->note;
         $gradeBeamConfigure->total_ton = 0;
         $gradeBeamConfigure->total_kg = 0;
-        $gradeBeamConfigure->total_cement = $totalCement * $request->beam_quantity;
-        $gradeBeamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
-        $gradeBeamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
-        $gradeBeamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
-        $gradeBeamConfigure->total_aggregate = $totalAggregate * $request->beam_quantity;
-        $gradeBeamConfigure->total_picked = $totalPiked * $request->beam_quantity;
+        if($request->course_aggregate_type == 1){
+            $gradeBeamConfigure->total_cement = $totalCement * $request->beam_quantity;
+            $gradeBeamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
+            $gradeBeamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
+            $gradeBeamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
+            $gradeBeamConfigure->total_aggregate = $totalAggregate * $request->beam_quantity;
+            $gradeBeamConfigure->total_picked = 0;
+        }else if($request->course_aggregate_type == 2){
+            $gradeBeamConfigure->total_cement = $totalCement * $request->beam_quantity;
+            $gradeBeamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
+            $gradeBeamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
+            $gradeBeamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
+            $gradeBeamConfigure->total_aggregate = 0;
+            $gradeBeamConfigure->total_picked = $totalPiked * $request->beam_quantity;
+        }else{
+            $gradeBeamConfigure->total_cement = 0;
+            $gradeBeamConfigure->total_cement_bag = 0;
+            $gradeBeamConfigure->total_sands = 0;
+            $gradeBeamConfigure->total_s_sands = 0;
+            $gradeBeamConfigure->total_aggregate = 0;
+            $gradeBeamConfigure->total_picked = 0;
+        }
         //price
         $gradeBeamConfigure->beam_bar_per_cost = $request->beam_bar_costing;
         $gradeBeamConfigure->beam_cement_per_cost = $request->beam_cement_costing;
@@ -184,11 +201,28 @@ class GradeOfConcreteTypeController extends Controller
         $gradeBeamConfigure->beam_aggregate_per_cost = $request->beam_aggregate_costing ?? 0;
         $gradeBeamConfigure->beam_picked_per_cost = $request->beam_picked_costing ?? 0;
         //Total Price
-        $gradeBeamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
-        $gradeBeamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
-        $gradeBeamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
-        $gradeBeamConfigure->total_beam_aggregate_price = ($totalAggregate * $request->beam_quantity) * $request->beam_aggregate_costing;
-        $gradeBeamConfigure->total_beam_picked_price = ($totalPiked * $request->beam_quantity) * $request->beam_picked_costing;
+        if($request->course_aggregate_type == 1){
+            $gradeBeamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
+            $gradeBeamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
+            $gradeBeamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
+            $gradeBeamConfigure->total_beam_aggregate_price = ($totalAggregate * $request->beam_quantity) * $request->beam_aggregate_costing;
+            $gradeBeamConfigure->total_beam_picked_price = 0;
+            $gradeBeamConfigure->total_grade_beam_rmc_price = 0;
+        }else if($request->course_aggregate_type == 2){
+            $gradeBeamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
+            $gradeBeamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
+            $gradeBeamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
+            $gradeBeamConfigure->total_beam_aggregate_price = 0;
+            $gradeBeamConfigure->total_beam_picked_price = ($totalPiked * $request->beam_quantity) * $request->beam_picked_costing;
+            $gradeBeamConfigure->total_grade_beam_rmc_price = 0;
+        }else{
+            $gradeBeamConfigure->total_grade_beam_rmc_price = $request->total_volume * $request->rmc_costing;
+            $gradeBeamConfigure->total_beam_cement_bag_price = 0;
+            $gradeBeamConfigure->total_beam_sands_price = 0;
+            $gradeBeamConfigure->total_beam_s_sands_price = 0;
+            $gradeBeamConfigure->total_beam_aggregate_price = 0;
+            $gradeBeamConfigure->total_beam_picked_price = 0;
+        }
         $gradeBeamConfigure->total_beam_bar_price = 0;
         $gradeBeamConfigure->save();
         $gradeBeamConfigure->beam_configure_no = str_pad($gradeBeamConfigure->id, 4, "0", STR_PAD_LEFT);
@@ -334,9 +368,10 @@ class GradeOfConcreteTypeController extends Controller
                 return $gradeBeamConfigure->gradeBeamType->name??'';
             })
             ->addColumn('action', function(GradeBeamConfigure $gradeBeamConfigure) {
-
-                return '<a href="'.route('grade_beam_configure.details', ['gradeBeamConfigure' => $gradeBeamConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('grade_beam_configure.details', ['gradeBeamConfigure' => $gradeBeamConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('grade_beam_configure.delete', ['gradeBeamConfigure' => $gradeBeamConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(GradeBeamConfigure $gradeBeamConfigure) {
                 return $gradeBeamConfigure->date;
@@ -349,5 +384,11 @@ class GradeOfConcreteTypeController extends Controller
     }
     public function gradeBeamConfigurePrint(GradeBeamConfigure $gradeBeamConfigure){
         return view('estimate.grade_beam_configure.print',compact('gradeBeamConfigure'));
+    }
+
+    public function gradeBeamConfigureDelete(GradeBeamConfigure $gradeBeamConfigure){
+        GradeBeamConfigure::find($gradeBeamConfigure->id)->delete();
+        GradeBeamConfigureProduct::where('beam_configure_id', $gradeBeamConfigure->id)->delete();
+        return redirect()->route('grade_beam_type_configure')->with('message', 'Grade Beam Info Deleted Successfully.');
     }
 }

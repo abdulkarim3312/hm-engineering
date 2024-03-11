@@ -139,7 +139,8 @@ class BatchController extends Controller
         $footingConfigure->estimate_project_id = $request->estimate_project;
         $footingConfigure->costing_segment_id = $request->costing_segment;
         $footingConfigure->costing_segment_quantity = $request->costing_segment_quantity;
-        $footingConfigure->footing_type_id = $request->footing_type_id;
+        $footingConfigure->footing_type_id = $request->footing_type;
+        $footingConfigure->course_aggregate_type = $request->course_aggregate_type;
         $footingConfigure->first_ratio = $request->first_ratio;
         $footingConfigure->second_ratio = $request->second_ratio;
         $footingConfigure->third_ratio = $request->third_ratio;
@@ -153,12 +154,29 @@ class BatchController extends Controller
         $footingConfigure->total_volume = $request->total_volume * $request->costing_segment_quantity;
         $footingConfigure->dry_volume = $request->dry_volume * $request->costing_segment_quantity;
         $footingConfigure->total_dry_volume = $request->total_dry_volume * $request->costing_segment_quantity;
-        $footingConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
-        $footingConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
-        $footingConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
-        $footingConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
-        $footingConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
-        $footingConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
+        if($request->course_aggregate_type == 1){
+            $footingConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
+            $footingConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $footingConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $footingConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $footingConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
+            $footingConfigure->total_picked = 0;
+        }else if($request->course_aggregate_type == 2){
+            $footingConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
+            $footingConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $footingConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $footingConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $footingConfigure->total_aggregate = 0;
+            $footingConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
+        }else{
+            $footingConfigure->total_cement = 0;
+            $footingConfigure->total_cement_bag = 0;
+            $footingConfigure->total_sands = 0;
+            $footingConfigure->total_s_sands =0;
+            $footingConfigure->total_aggregate = 0;
+            $footingConfigure->total_picked = 0;
+        }
+       
 
         //price
         $footingConfigure->common_bar_per_cost = $request->common_bar_costing;
@@ -168,11 +186,28 @@ class BatchController extends Controller
         $footingConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
         $footingConfigure->common_picked_per_cost = $request->common_picked_costing??0;
         //Total Price
-        $footingConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
-        $footingConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
-        $footingConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
-        $footingConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
-        $footingConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
+        if($request->course_aggregate_type == 1){
+            $footingConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $footingConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $footingConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $footingConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
+            $footingConfigure->total_common_picked_price = 0;
+            $footingConfigure->total_footing_rmc_price = 0;
+        }else if($request->course_aggregate_type == 2){
+            $footingConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $footingConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $footingConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $footingConfigure->total_common_aggregate_price = 0;
+            $footingConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
+            $footingConfigure->total_footing_rmc_price = 0;
+        }else{
+            $footingConfigure->total_footing_rmc_price = $request->total_volume * $request->rmc_costing;
+            $footingConfigure->total_common_cement_bag_price = 0;
+            $footingConfigure->total_common_sands_price = 0;
+            $footingConfigure->total_beam_s_sands_price = 0;
+            $footingConfigure->total_common_aggregate_price = 0;
+            $footingConfigure->total_common_picked_price = 0;
+        }
         $footingConfigure->total_common_bar_price = 0;
 
         $footingConfigure->save();
@@ -235,8 +270,10 @@ class BatchController extends Controller
                 return $footingConfigure->footingType->name ??'';
             })
             ->addColumn('action', function(FootingConfigure $footingConfigure) {
-
-                return '<a href="'.route('footing_configure.details', ['footingConfigure' => $footingConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn = '';
+                $btn = '<a href="'.route('footing_configure.details', ['footingConfigure' => $footingConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('footing_configure.delete', ['footingConfigure' => $footingConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
 
             })
             ->editColumn('date', function(FootingConfigure $footingConfigure) {
@@ -252,5 +289,11 @@ class BatchController extends Controller
 
     public function footingConfigurePrint(FootingConfigure $footingConfigure){
         return view('estimate.footing_configure.print',compact('footingConfigure'));
+    }
+
+    public function footingConfigureDelete(FootingConfigure $footingConfigure){
+        FootingConfigure::find($footingConfigure->id)->delete();
+        FootingConfigureProduct::where('common_configure_id', $footingConfigure->id)->delete();
+        return redirect()->route('footing_configure')->with('message', 'Footing Info Deleted Successfully.');
     }
 }

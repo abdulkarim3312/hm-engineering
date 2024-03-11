@@ -88,6 +88,7 @@ class ColumnConfigureController extends Controller
         $columnConfigure->estimate_project_id = $request->estimate_project;
         $columnConfigure->estimate_floor_id = $request->estimate_floor;
         $columnConfigure->column_type_id = $request->column_type;
+        $columnConfigure->course_aggregate_type = $request->course_aggregate_type;
         $columnConfigure->ring_quantity = $request->ring_quantity * $request->column_quantity;
         $columnConfigure->tie_interval = $request->tie_interval * $request->column_quantity;
         $columnConfigure->column_quantity = $request->column_quantity;
@@ -108,25 +109,59 @@ class ColumnConfigureController extends Controller
         $columnConfigure->total_kg_tie = 0;
         $columnConfigure->total_kg = 0;
         $columnConfigure->total_ton = 0;
-        $columnConfigure->total_cement = $totalCement * $request->column_quantity;
-        $columnConfigure->total_cement_bag = $totalCementBag * $request->column_quantity;
-        $columnConfigure->total_sands = (($totalSands)/2 * $request->column_quantity);
-        $columnConfigure->total_s_sands =(($totalSands)/2 * $request->column_quantity);
-        $columnConfigure->total_aggregate = $totalAggregate * $request->column_quantity;
-        $columnConfigure->total_picked = $totalPiked * $request->column_quantity;
+        if($request->course_aggregate_type == 1){
+            $columnConfigure->total_cement = $totalCement * $request->column_quantity;
+            $columnConfigure->total_cement_bag = $totalCementBag * $request->column_quantity;
+            $columnConfigure->total_sands = (($totalSands)/2 * $request->column_quantity);
+            $columnConfigure->total_s_sands =(($totalSands)/2 * $request->column_quantity);
+            $columnConfigure->total_aggregate = $totalAggregate * $request->column_quantity;
+            $columnConfigure->total_picked = 0;
+        }else if($request->course_aggregate_type == 2){
+            $columnConfigure->total_cement = $totalCement * $request->column_quantity;
+            $columnConfigure->total_cement_bag = $totalCementBag * $request->column_quantity;
+            $columnConfigure->total_sands = (($totalSands)/2 * $request->column_quantity);
+            $columnConfigure->total_s_sands =(($totalSands)/2 * $request->column_quantity);
+            $columnConfigure->total_aggregate = 0;
+            $columnConfigure->total_picked = $totalPiked * $request->column_quantity;
+        }else{
+            $columnConfigure->total_cement = 0;
+            $columnConfigure->total_cement_bag = 0;
+            $columnConfigure->total_sands = 0;
+            $columnConfigure->total_s_sands =0;
+            $columnConfigure->total_aggregate = 0;
+            $columnConfigure->total_picked = 0;
+        }
         //price
         $columnConfigure->column_bar_per_cost = $request->column_bar_costing;
         $columnConfigure->column_cement_per_cost = $request->column_cement_costing;
         $columnConfigure->column_sands_per_cost = $request->column_sands_costing;
         $columnConfigure->column_s_sands_costing = $request->s_sands_costing;
+        $columnConfigure->column_rms_costing = $request->rmc_costing;
         $columnConfigure->column_aggregate_per_cost = $request->column_aggregate_costing??0;
         $columnConfigure->column_picked_per_cost = $request->column_picked_costing??0;
         //Total Price
-        $columnConfigure->total_column_cement_bag_price = ($totalCementBag * $request->column_quantity) * $request->column_cement_costing;
-        $columnConfigure->total_column_sands_price = (($totalSands/2) * $request->column_quantity) * $request->column_sands_costing;
-        $columnConfigure->total_column_s_sands_price = (($totalSands/2) * $request->column_quantity) * $request->s_sands_costing;
-        $columnConfigure->total_column_aggregate_price = ($totalAggregate * $request->column_quantity) * $request->column_aggregate_costing;
-        $columnConfigure->total_column_picked_price = ($totalPiked * $request->column_quantity) * $request->column_picked_costing;
+        if($request->course_aggregate_type == 1){
+            $columnConfigure->total_column_cement_bag_price = ($totalCementBag * $request->column_quantity) * $request->column_cement_costing;
+            $columnConfigure->total_column_sands_price = (($totalSands/2) * $request->column_quantity) * $request->column_sands_costing;
+            $columnConfigure->total_column_s_sands_price = (($totalSands/2) * $request->column_quantity) * $request->s_sands_costing;
+            $columnConfigure->total_column_aggregate_price = ($totalAggregate * $request->column_quantity) * $request->column_aggregate_costing;
+            $columnConfigure->total_column_picked_price = 0;
+            $columnConfigure->total_column_rmc_price = 0;
+        }else if($request->course_aggregate_type == 2){
+            $columnConfigure->total_column_cement_bag_price = ($totalCementBag * $request->column_quantity) * $request->column_cement_costing;
+            $columnConfigure->total_column_sands_price = (($totalSands/2) * $request->column_quantity) * $request->column_sands_costing;
+            $columnConfigure->total_column_s_sands_price = (($totalSands/2) * $request->column_quantity) * $request->s_sands_costing;
+            $columnConfigure->total_column_aggregate_price = 0;
+            $columnConfigure->total_column_picked_price = ($totalPiked * $request->column_quantity) * $request->column_picked_costing;
+            $columnConfigure->total_column_rmc_price = 0;
+        }else{
+            $columnConfigure->total_column_rmc_price = $request->total_volume * $request->rmc_costing;
+            $columnConfigure->total_column_cement_bag_price = 0;
+            $columnConfigure->total_column_sands_price = 0;
+            $columnConfigure->total_column_s_sands_price = 0;
+            $columnConfigure->total_column_aggregate_price = 0;
+            $columnConfigure->total_column_picked_price = 0;
+        }
         $columnConfigure->total_column_bar_price = 0;
 
         $columnConfigure->save();
@@ -214,6 +249,12 @@ class ColumnConfigureController extends Controller
         return view('estimate.column_configure.print',compact('columnConfigure'));
     }
 
+    public function columnConfigureDelete(ColumnCofigure $columnConfigure){
+        ColumnCofigure::find($columnConfigure->id)->delete();
+        ColumnConfigureProduct::where('column_configure_id', $columnConfigure->id)->delete();
+        return redirect()->route('column_configure')->with('message', 'Column Info Deleted Successfully.');
+    }
+
     public function columnConfigureDatatable() {
         $query = ColumnCofigure::with('project', 'columnType', 'columnFloor');
 
@@ -228,9 +269,10 @@ class ColumnConfigureController extends Controller
                 return $columnConfigure->columnType->name ?? '';
             })
             ->addColumn('action', function(ColumnCofigure $columnConfigure) {
-
-                return '<a href="'.route('column_configure.details', ['columnConfigure' => $columnConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('column_configure.details', ['columnConfigure' => $columnConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('column_configure.delete', ['columnConfigure' => $columnConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(ColumnCofigure $columnConfigure) {
                 return $columnConfigure->date;

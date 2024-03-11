@@ -117,15 +117,19 @@ class CommonConfigureController extends Controller
             $commonConfigure->total_cement_bag = 0;
             $commonConfigure->total_picked = 0;
         }else if($request->course_aggregate_type == 2){
+            $commonConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $commonConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
             $commonConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
             $commonConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
             $commonConfigure->total_aggregate = 0;
             $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
         }else{
+            $commonConfigure->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $commonConfigure->total_cement = $totalCement * $request->costing_segment_quantity;
             $commonConfigure->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
             $commonConfigure->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
             $commonConfigure->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
-            $commonConfigure->total_picked = $totalPiked * $request->costing_segment_quantity;
+            $commonConfigure->total_picked = 0;
         }
 
         //price
@@ -134,28 +138,27 @@ class CommonConfigureController extends Controller
         $commonConfigure->common_sands_per_cost = $request->common_sands_costing;
         $commonConfigure->s_sands_costing = $request->s_sands_costing;
         //Total Price
-        $commonConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+       
         if($request->course_aggregate_type == 3){
+            $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
+            $commonConfigure->total_common_cement_bag_price = 0;
             $commonConfigure->total_common_sands_price = 0;
             $commonConfigure->total_slab_s_sands_price = 0;
-            $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
             $commonConfigure->common_aggregate_per_cost = 0;
-            $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
+            $commonConfigure->common_picked_per_cost = 0;
         }else if($request->course_aggregate_type == 2){
+            $commonConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
             $commonConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $commonConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
-            $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
-            $commonConfigure->common_aggregate_per_cost = 0;
-            $commonConfigure->common_picked_per_cost = $request->common_picked_costing ?? 0;
-            $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
-            $commonConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_aggregate_costing;
+            $commonConfigure->total_slab_rmc_price = 0;
+            $commonConfigure->total_common_aggregate_price = 0;
+            $commonConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
         }else{
+            $commonConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
             $commonConfigure->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $commonConfigure->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
-            $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
-            $commonConfigure->common_aggregate_per_cost = $request->common_aggregate_costing??0;
-            $commonConfigure->common_picked_per_cost = $request->common_picked_costing??0;
-            $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
+            $commonConfigure->total_slab_rmc_price = 0;
+            $commonConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;;
             $commonConfigure->total_common_picked_price = 0;
         }
 
@@ -251,7 +254,7 @@ class CommonConfigureController extends Controller
     public function commonConfigureDelete(CommonConfigure $commonConfigure){
         CommonConfigure::find($commonConfigure->id)->delete();
         CommonConfigureProduct::where('common_configure_id', $commonConfigure->id)->delete();
-        return redirect()->back();
+        return redirect()->route('common_configure')->with('message', 'Slab Info Deleted Successfully.');
     }
 
 
@@ -266,7 +269,6 @@ class CommonConfigureController extends Controller
                 return $commonConfigure->costingSegment->name??'';
             })
             ->addColumn('action', function(CommonConfigure $commonConfigure) {
-
                 $btn = '';
                 $btn = '<a href="'.route('common_configure.details', ['commonConfigure' => $commonConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
                 $btn .= '<a href="'.route('common_configure.delete', ['commonConfigure' => $commonConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
@@ -360,6 +362,7 @@ class CommonConfigureController extends Controller
         $beamConfigure->estimate_project_id = $request->estimate_project;
         $beamConfigure->estimate_floor_id = $request->estimate_floor;
         $beamConfigure->beam_type_id = $request->beam_type;
+        $beamConfigure->course_aggregate_type = $request->course_aggregate_type;
         $beamConfigure->tie_bar = $request->tie_bar * $request->beam_quantity;
         $beamConfigure->tie_interval = $request->tie_interval * $request->beam_quantity;
         $beamConfigure->beam_quantity = $request->beam_quantity;
@@ -377,25 +380,61 @@ class CommonConfigureController extends Controller
         $beamConfigure->note = $request->note;
         $beamConfigure->total_ton = 0;
         $beamConfigure->total_kg = 0;
-        $beamConfigure->total_cement = $totalCement * $request->beam_quantity;
-        $beamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
-        $beamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
-        $beamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
-        $beamConfigure->total_aggregate = $totalAggregate * $request->beam_quantity;
-        $beamConfigure->total_picked = $totalPiked * $request->beam_quantity;
+        if($request->course_aggregate_type == 1){
+            $beamConfigure->total_cement = $totalCement * $request->beam_quantity;
+            $beamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
+            $beamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
+            $beamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
+            $beamConfigure->total_aggregate = $totalAggregate * $request->beam_quantity;
+            $beamConfigure->total_picked = 0;
+        }else if($request->course_aggregate_type == 2){
+            $beamConfigure->total_cement = $totalCement * $request->beam_quantity;
+            $beamConfigure->total_cement_bag = $totalCementBag * $request->beam_quantity;
+            $beamConfigure->total_sands = (($totalSands)/2 * $request->beam_quantity);
+            $beamConfigure->total_s_sands =(($totalSands)/2 * $request->beam_quantity);
+            $beamConfigure->total_aggregate = 0;
+            $beamConfigure->total_picked = $totalPiked * $request->beam_quantity;
+        }else{
+            $beamConfigure->total_cement = 0;
+            $beamConfigure->total_cement_bag = 0;
+            $beamConfigure->total_sands = 0;
+            $beamConfigure->total_s_sands = 0;
+            $beamConfigure->total_aggregate = 0;
+            $beamConfigure->total_picked = 0;
+        }
+      
         //price
         $beamConfigure->beam_bar_per_cost = $request->beam_bar_costing;
         $beamConfigure->beam_cement_per_cost = $request->beam_cement_costing;
         $beamConfigure->beam_sands_per_cost = $request->beam_sands_costing;
         $beamConfigure->s_sands_costing = $request->s_sands_costing;
+        $beamConfigure->s_sands_costing = $request->s_sands_costing;
         $beamConfigure->beam_aggregate_per_cost = $request->beam_aggregate_costing ?? 0;
         $beamConfigure->beam_picked_per_cost = $request->beam_picked_costing ?? 0;
         //Total Price
-        $beamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
-        $beamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
-        $beamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
-        $beamConfigure->total_beam_aggregate_price = ($totalAggregate * $request->beam_quantity) * $request->beam_aggregate_costing;
-        $beamConfigure->total_beam_picked_price = ($totalPiked * $request->beam_quantity) * $request->beam_picked_costing;
+        if($request->course_aggregate_type == 1){
+            $beamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
+            $beamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
+            $beamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
+            $beamConfigure->total_beam_aggregate_price = ($totalAggregate * $request->beam_quantity) * $request->beam_aggregate_costing;
+            $beamConfigure->total_beam_picked_price = 0;
+            $beamConfigure->total_beam_rmc_price = 0;
+        }else if($request->course_aggregate_type == 2){
+            $beamConfigure->total_beam_cement_bag_price = ($totalCementBag * $request->beam_quantity) * $request->beam_cement_costing;
+            $beamConfigure->total_beam_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->beam_sands_costing;
+            $beamConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->beam_quantity) * $request->s_sands_costing;
+            $beamConfigure->total_beam_aggregate_price = 0;
+            $beamConfigure->total_beam_picked_price = ($totalPiked * $request->beam_quantity) * $request->beam_picked_costing;
+            $beamConfigure->total_beam_rmc_price = 0;
+        }else{
+            $beamConfigure->total_beam_rmc_price = $request->total_volume * $request->rmc_costing;
+            $beamConfigure->total_beam_cement_bag_price = 0;
+            $beamConfigure->total_beam_sands_price = 0;
+            $beamConfigure->total_beam_s_sands_price = 0;
+            $beamConfigure->total_beam_aggregate_price = 0;
+            $beamConfigure->total_beam_picked_price = 0;
+        }
+       
         $beamConfigure->total_beam_bar_price = 0;
         $beamConfigure->save();
         $beamConfigure->beam_configure_no = str_pad($beamConfigure->id, 4, "0", STR_PAD_LEFT);
@@ -534,6 +573,12 @@ class CommonConfigureController extends Controller
         return view('estimate.beam_configure.print',compact('beamConfigure'));
     }
 
+    public function beamConfigureDelete(BeamConfigure $beamConfigure){
+        BeamConfigure::find($beamConfigure->id)->delete();
+        BeamConfogureProduct::where('beam_configure_id', $beamConfigure->id)->delete();
+        return redirect()->route('beam_configure')->with('message', 'Beam Info Deleted Successfully.');
+    }
+
     public function beamConfigureDatatable() {
         $query = BeamConfigure::with('project', 'estimateFloor', 'beamType', 'beamConfigureProducts');
 
@@ -551,8 +596,10 @@ class CommonConfigureController extends Controller
                 return $beamConfigure->total_kg ??'';
             })
             ->addColumn('action', function(BeamConfigure $beamConfigure) {
-
-                return '<a href="'.route('beam_configure.details', ['beamConfigure' => $beamConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn = '';
+                $btn = '<a href="'.route('beam_configure.details', ['beamConfigure' => $beamConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('beam_configure.delete', ['beamConfigure' => $beamConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
 
             })
             ->editColumn('date', function(BeamConfigure $beamConfigure) {

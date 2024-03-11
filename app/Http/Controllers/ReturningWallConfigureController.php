@@ -145,7 +145,7 @@ class ReturningWallConfigureController extends Controller
             $returningWall->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
             $returningWall->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $returningWall->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
-            $returningWall->total_mat_rmc_price = $request->total_volume * $request->rmc_costing;
+            $returningWall->total_mat_rmc_price = 0;
             $returningWall->total_common_aggregate_price = 0;
             $returningWall->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;;
         }else{
@@ -248,7 +248,7 @@ class ReturningWallConfigureController extends Controller
     public function returningWallConfigureDelete(ReturningWallConfigure $returningWall){
         ReturningWallConfigure::find($returningWall->id)->delete();
         ReturningWallConfigureProduct::where('common_configure_id', $returningWall->id)->delete();
-        return redirect()->back();
+        return redirect()->route('returning_wall_configure')->with('message', 'Returning Wall Info Deleted Successfully.');
     }
 
     public function returningWallConfigureDatatable() {
@@ -262,7 +262,6 @@ class ReturningWallConfigureController extends Controller
                 return $returningWall->costingSegment->name??'';
             })
             ->addColumn('action', function(ReturningWallConfigure $returningWall) {
-
                 $btn = '';
                 $btn = '<a href="'.route('returning_wall_configure.details', ['returningWall' => $returningWall->id]).'" class="btn btn-primary btn-sm">Details</a>';
                 $btn .= '<a href="'.route('returning_wall_configure.delete', ['returningWall' => $returningWall->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';

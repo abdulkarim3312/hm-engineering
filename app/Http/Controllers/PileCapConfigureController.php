@@ -143,7 +143,7 @@ class PileCapConfigureController extends Controller
             $pileCapConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
             $pileCapConfigure->total_beam_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
             $pileCapConfigure->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;
-            $pileCapConfigure->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
+            $pileCapConfigure->total_common_picked_price = 0;
             $pileCapConfigure->total_pile_cap_rmc_price = 0;
         }else if($request->course_aggregate_type == 2){
             $pileCapConfigure->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
@@ -218,7 +218,7 @@ class PileCapConfigureController extends Controller
     public function pileCapConfigureDelete(PileCapConfigure $pileCapConfigure){
         PileCapConfigure::find($pileCapConfigure->id)->delete();
         PileCapConfigureProduct::where('common_configure_id', $pileCapConfigure->id)->delete();
-        return redirect()->back();
+        return redirect()->route('pile_cap_configure')->with('message', 'Pile Cap Info Deleted Successfully.');
     }
 
     public function pileCapConfigureDatatable() {

@@ -107,26 +107,50 @@
                                         <th>Total Kg</th>
                                         <td>{{ $shortColumnConfigure->total_kg }} Rod</td>
                                     </tr>
-                                    <tr>
-                                        <th>Total Cement</th>
-                                        <td>{{ $shortColumnConfigure->total_cement_bag }} Bag</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Local Sands</th>
-                                        <td>{{ $shortColumnConfigure->total_sands }} Cft</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Sylhet Sands</th>
-                                        <td>{{ $shortColumnConfigure->total_s_sands }} Cft</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Aggregate</th>
-                                        <td>{{ $shortColumnConfigure->total_aggregate }} Cft</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Piked</th>
-                                        <td>{{ $shortColumnConfigure->total_picked }} Pcs</td>
-                                    </tr>
+                                    @if ($shortColumnConfigure->course_aggregate_type == 1)
+                                        <tr>
+                                            <th>Total Cement</th>
+                                            <td>{{ $shortColumnConfigure->total_cement_bag }} Bag</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Local Sands</th>
+                                            <td>{{ $shortColumnConfigure->total_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Sylhet Sands</th>
+                                            <td>{{ $shortColumnConfigure->total_s_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Aggregate</th>
+                                            <td>{{ $shortColumnConfigure->total_aggregate }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Piked</th>
+                                            <td>{{ $shortColumnConfigure->total_picked }} Pcs</td>
+                                        </tr>
+                                    @elseif ($shortColumnConfigure->course_aggregate_type == 2)
+                                        <tr>
+                                            <th>Total Cement</th>
+                                            <td>{{ $shortColumnConfigure->total_cement_bag }} Bag</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Local Sands</th>
+                                            <td>{{ $shortColumnConfigure->total_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Sylhet Sands</th>
+                                            <td>{{ $shortColumnConfigure->total_s_sands }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Aggregate</th>
+                                            <td>{{ $shortColumnConfigure->total_aggregate }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Piked</th>
+                                            <td>{{ $shortColumnConfigure->total_picked }} Pcs</td>
+                                        </tr>
+                                    @else    
+                                    @endif
                                     <tr>
                                         <th>Note </th>
                                         <td>{{ $shortColumnConfigure->note??'' }}</td>
@@ -339,42 +363,62 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <table class="table table-bordered">
-                                    <tr>
-                                        <th>Bar(Rod) Price (Kg)</th>
-                                        <td>৳ {{ $shortColumnConfigure->total_column_bar_price }} Taka</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Cement Price(Bag)</th>
-                                        <td>৳ {{ number_format($shortColumnConfigure->total_column_cement_bag_price,2) }} Taka</td>
-                                    </tr>
+                                    @if ($shortColumnConfigure->course_aggregate_type == 3)
+                                        <tr>
+                                            <th>Bar(Rod) Price (Kg)</th>
+                                            <td>৳ {{ $shortColumnConfigure->total_column_bar_price }} Taka</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <th>Bar(Rod) Price (Kg)</th>
+                                            <td>৳ {{ $shortColumnConfigure->total_column_bar_price }} Taka</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Cement Price(Bag)</th>
+                                            <td>৳ {{ number_format($shortColumnConfigure->total_column_cement_bag_price,2) }} Taka</td>
+                                        </tr>
+                                    @endif
                                 </table>
                             </div>
 
                             <div class="col-md-4">
                                 <table class="table table-bordered">
+                                    @if($shortColumnConfigure->course_aggregate_type == 1)
                                     <tr>
                                         <th>Sands Price (Cft)</th>
                                         <td>৳ {{ $shortColumnConfigure->total_column_sands_price }} Taka</td>
                                     </tr>
-                                    @if($shortColumnConfigure->total_picked == 0)
+                                    <tr>
+                                        <th>Aggregate Price (Cft)</th>
+                                        <td>৳ {{ $shortColumnConfigure->total_column_aggregate_price }} Taka</td>
+                                    </tr>
+                                    @elseif ($shortColumnConfigure->course_aggregate_type == 2)
                                         <tr>
-                                            <th>Aggregate Price (Cft)</th>
-                                            <td>৳ {{ $shortColumnConfigure->total_column_aggregate_price }} Taka</td>
+                                            <th>Sands Price (Cft)</th>
+                                            <td>৳ {{ $shortColumnConfigure->total_column_sands_price }} Taka</td>
                                         </tr>
-                                    @else
                                         <tr>
                                             <th>Picked Price (Pcs)</th>
                                             <td>৳ {{ $shortColumnConfigure->total_column_picked_price }} Taka</td>
                                         </tr>
+                                    @else
+
                                     @endif
                                 </table>
                             </div>
                             <div class="col-md-4">
                                 <table class="table table-bordered">
+                                    @if ($shortColumnConfigure->course_aggregate_type == 3)
                                     <tr>
-                                        <th>Sylhet Sands Price (Cft)</th>
-                                        <td>৳ {{ $shortColumnConfigure->total_column_s_sands_price }} Taka</td>
+                                        <th>RMC Price (Cft)</th>
+                                        <td>৳ {{ $shortColumnConfigure->total_short_column_rmc_price }} Taka</td>
                                     </tr>
+                                    @else
+                                        <tr>
+                                            <th>Sylhet Sands Price (Cft)</th>
+                                            <td>৳ {{ $shortColumnConfigure->total_column_s_sands_price }} Taka</td>
+                                        </tr>
+                                    @endif
                                 </table>
                             </div>
                         </div>

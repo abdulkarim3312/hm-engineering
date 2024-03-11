@@ -17,10 +17,11 @@ use App\Http\Controllers\PileCapConfigureController;
 use App\Http\Controllers\MatConfigureController;
 use App\Http\Controllers\ReturningWallConfigureController;
 use App\Http\Controllers\JournalVoucherController;
-use App\Http\Controllers\TradingSaleController;
+use App\Http\Controllers\SanitaryController;
 use App\Http\Controllers\PaintConfigureController;
 use App\Http\Controllers\PlasterConfigureController;
 use App\Http\Controllers\GradeOfConcreteController;
+use App\Http\Controllers\ElectricCalculationController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ReportController;
@@ -45,6 +46,7 @@ use App\Http\Controllers\DesignConstructionController;
 use App\Http\Controllers\InteriorDesignController;
 use App\Http\Controllers\SteelStructureController;
 use App\Http\Controllers\ChemicalTreatmentController;
+use App\Http\Controllers\WaterTankController;
 
 /*
 |--------------------------------------------------------------------------
@@ -572,6 +574,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('estimate-floor/edit/{estimateFloor}', [EstimateFloorController::class, 'editPost'])->middleware('permission:estimate_floor');
     Route::get('estimate-floor-datatable', [EstimateFloorController::class, 'datatable'])->name('estimate_floor.datatable');
     Route::get('estimate-floor/get-floors', [EstimateFloorController::class, 'getFloors'])->name('estimate_floor.get_floor')->middleware('permission:estimate_floor');
+
     // Estimate Floor Configure
     Route::get('estimate-floor-configure', [EstimateFloorController::class, 'floorConfigureIndex'])->name('estimate_floor_configure')->middleware('permission:estimate_floor');
     Route::get('estimate-floor/add', [EstimateFloorController::class, 'add'])->name('estimate_floor.add')->middleware('permission:estimate_floor');
@@ -588,6 +591,39 @@ Route::middleware(['auth'])->group(function () {
     Route::get('estimate-floor-unit/edit/{estimateFloorUnit}', [EstimateFloorController::class, 'unitEdit'])->name('estimate_floor_unit.edit')->middleware('permission:floor_unit');
     Route::post('estimate-floor-unit/edit/{estimateFloorUnit}', [EstimateFloorController::class, 'unitEditPost'])->middleware('permission:floor_unit');
     Route::get('estimate-floor-unit-datatable', [EstimateFloorController::class, 'unitDatatable'])->name('estimate_floor_unit.datatable');
+     // Electric Product
+    Route::get('electric-product', [ElectricCalculationController::class, 'electricProduct'])->name('electric_product')->middleware('permission:floor_unit');
+    Route::get('electric-product/add', [ElectricCalculationController::class, 'electricProductAdd'])->name('electric_product.add')->middleware('permission:floor_unit');
+    Route::post('electric-product/add', [ElectricCalculationController::class, 'electricProductAddPost'])->middleware('permission:floor_unit');
+    Route::get('electric-product/edit/{electricProduct}', [ElectricCalculationController::class, 'electricProductEdit'])->name('electric_product.edit')->middleware('permission:floor_unit');
+    Route::post('electric-product/edit/{electricProduct}', [ElectricCalculationController::class, 'electricProductEditPost'])->middleware('permission:floor_unit');
+    Route::get('electric-product-datatable', [ElectricCalculationController::class, 'electricProductDatatable'])->name('electric_product.datatable');
+
+     // Sanitary Product
+    Route::get('sanitary-product', [SanitaryController::class, 'sanitaryProduct'])->name('sanitary_product')->middleware('permission:floor_unit');
+    Route::get('sanitary-product/add', [SanitaryController::class, 'sanitaryProductAdd'])->name('sanitary_product.add')->middleware('permission:floor_unit');
+    Route::post('sanitary-product/add', [SanitaryController::class, 'sanitaryProductAddPost'])->middleware('permission:floor_unit');
+    Route::get('sanitary-product/edit/{sanitaryProduct}', [SanitaryController::class, 'sanitaryProductEdit'])->name('sanitary_product.edit')->middleware('permission:floor_unit');
+    Route::post('sanitary-product/edit/{sanitaryProduct}', [SanitaryController::class, 'sanitaryProductEditPost'])->middleware('permission:floor_unit');
+    Route::get('sanitary-product-datatable', [SanitaryController::class, 'sanitaryProductDatatable'])->name('sanitary_product.datatable');
+
+    // Electric Calculation Costing
+    Route::get('electric-product-costing', [ElectricCalculationController::class, 'electricCostingAll'])->name('electric_costing')->middleware('permission:floor_unit');
+    Route::get('electric-product-costing/add', [ElectricCalculationController::class, 'electricCostingAdd'])->name('electric_costing.add')->middleware('permission:floor_unit');
+    Route::post('electric-product-costing/add', [ElectricCalculationController::class, 'electricCostingAddPost'])->middleware('permission:floor_unit');
+    Route::get('electric-product-costing-datatable', [ElectricCalculationController::class, 'electricCostingDatatable'])->name('electric_costing.datatable');
+    Route::get('electric-product-costing-details/{electricCosting}', [ElectricCalculationController::class, 'electricCostingDetails'])->name('electric_costing.details')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('electric-product-costing-print/{electricCosting}', [ElectricCalculationController::class, 'electricCostingPrint'])->name('electric_costing.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('electric-product-costing-delete/{electricCosting}', [ElectricCalculationController::class, 'electricCostingDelete'])->name('electric_costing.delete')->middleware('permission:grill_glass_tiles_configure');
+
+    // Sanitary Calculation Costing
+    Route::get('sanitary-product-costing', [SanitaryController::class, 'sanitaryCostingAll'])->name('sanitary_costing')->middleware('permission:floor_unit');
+    Route::get('sanitary-product-costing/add', [SanitaryController::class, 'sanitaryCostingAdd'])->name('sanitary_costing.add')->middleware('permission:floor_unit');
+    Route::post('sanitary-product-costing/add', [SanitaryController::class, 'sanitaryCostingAddPost'])->middleware('permission:floor_unit');
+    Route::get('sanitary-product-costing-datatable', [SanitaryController::class, 'sanitaryCostingDatatable'])->name('sanitary_costing.datatable');
+    Route::get('sanitary-product-costing-details/{sanitaryConfigure}', [SanitaryController::class, 'sanitaryCostingDetails'])->name('sanitary_costing.details')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('sanitary-product-costing-print/{sanitaryConfigure}', [SanitaryController::class, 'sanitaryCostingPrint'])->name('sanitary_costing.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('sanitary-product-costing-delete/{sanitaryConfigure}', [SanitaryController::class, 'sanitaryCostingDelete'])->name('sanitary_costing.delete')->middleware('permission:grill_glass_tiles_configure');
 
 
     // Estimate Floor Unit
@@ -657,6 +693,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('grade-beam-configure-datatable', [GradeOfConcreteTypeController::class, 'gradeBeamConfigureDatatable'])->name('grade_beam_configure.datatable');
     Route::get('grade-beam-configure-details/{gradeBeamConfigure}', [GradeOfConcreteTypeController::class, 'gradeBeamConfigureDetails'])->name('grade_beam_configure.details')->middleware('permission:beam_configure');
     Route::get('grade-beam-configure-print/{gradeBeamConfigure}', [GradeOfConcreteTypeController::class, 'gradeBeamConfigurePrint'])->name('grade_beam_configure.print')->middleware('permission:beam_configure');
+    Route::get('grade-beam-configure-delete/{gradeBeamConfigure}', [GradeOfConcreteTypeController::class, 'gradeBeamConfigureDelete'])->name('grade_beam_configure.delete')->middleware('permission:beam_configure');
 
     Route::get('grade-of-concrete-type/add', [GradeOfConcreteTypeController::class, 'gradeOfConcreteTypeAdd'])->name('grade_of_concrete_type.add')->middleware('permission:grade_of_concrete_type');
     Route::post('grade-of-concrete-type/add', [GradeOfConcreteTypeController::class, 'gradeOfConcreteTypeAddPost'])->middleware('permission:grade_of_concrete_type');
@@ -675,6 +712,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('footing-configure-datatable', [BatchController::class, 'footingConfigureDatatable'])->name('footing_configure.datatable');
     Route::get('footing-configure-details/{footingConfigure}', [BatchController::class, 'footingConfigureDetails'])->name('footing_configure.details');
     Route::get('footing-configure-print/{footingConfigure}', [BatchController::class, 'footingConfigurePrint'])->name('footing_configure.print')->middleware('permission:batch');
+    Route::get('footing-configure-delete/{footingConfigure}', [BatchController::class, 'footingConfigureDelete'])->name('footing_configure.delete')->middleware('permission:batch');
+
+    // Water Tank Configure
+    Route::get('water-tank-configure', [WaterTankController::class, 'waterTankConfigure'])->name('water_tank_configure')->middleware('permission:bricks_configure');
+    Route::get('water-tank-configure-datatable', [WaterTankController::class, 'waterTankConfigureDatatable'])->name('water_tank_configure.datatable');
+    Route::get('water-tank-configure/add', [WaterTankController::class, 'waterTankConfigureAdd'])->name('water_tank_configure.add')->middleware('permission:bricks_configure');
+    Route::post('water-tank-configure/add', [WaterTankController::class, 'waterTankConfigureAddPost'])->middleware('permission:bricks_configure');
+    Route::get('water-tank-configure-details/{bricksConfigure}', [WaterTankController::class, 'waterTankConfigureDetails'])->name('water_tank_configure.details')->middleware('permission:bricks_configure');
+    Route::get('water-tank-configure-print/{bricksConfigure}', [WaterTankController::class, 'waterTankConfigurePrint'])->name('water_tank_configure.print')->middleware('permission:bricks_configure');
+    Route::get('water-tank-configure-delete/{bricksConfigure}', [WaterTankController::class, 'waterTankConfigureDelete'])->name('water_tank_configure.delete')->middleware('permission:bricks_configure');
 
     //Grade of Concrete
     Route::get('grade-of-concrete', [GradeOfConcreteController::class, 'gradeOfConcrete'])->name('grade_of_concrete')->middleware('permission:grade_of_concrete');
@@ -699,6 +746,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('bricks-configure/add', [BricksConfigureController::class, 'bricksConfigureAddPost'])->middleware('permission:bricks_configure');
     Route::get('bricks-configure-details/{bricksConfigure}', [BricksConfigureController::class, 'bricksConfigureDetails'])->name('bricks_configure.details')->middleware('permission:bricks_configure');
     Route::get('bricks-configure-print/{bricksConfigure}', [BricksConfigureController::class, 'bricksConfigurePrint'])->name('bricks_configure.print')->middleware('permission:bricks_configure');
+    Route::get('bricks-configure-delete/{bricksConfigure}', [BricksConfigureController::class, 'bricksConfigureDelete'])->name('bricks_configure.delete')->middleware('permission:bricks_configure');
 
     //Grill Configure
     Route::get('grill-glass-tiles-configure', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigure'])->name('grill_glass_tiles_configure')->middleware('permission:grill_glass_tiles_configure');
@@ -707,6 +755,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('grill-glass-tiles-configure/add', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('grill-glass-tiles-configure-details/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigureDetails'])->name('grill_glass_tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('grill-glass-tiles-configure-print/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillGlassTilesConfigurePrint'])->name('grill_glass_tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('grill-glass-tiles-configure-delete/{grillGlassTilesConfigure}', [GrillGlassTilesConfigureController::class, 'grillConfigureDelete'])->name('grill_glass_tiles_configure.delete')->middleware('permission:grill_glass_tiles_configure');
 
     //Glass Configure
     Route::get('glass-configure', [GlassConfigureController::class, 'glassConfigure'])->name('glass_configure')->middleware('permission:grill_glass_tiles_configure');
@@ -714,6 +763,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('glass-configure/add', [GlassConfigureController::class, 'glassConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure-details/{glassConfigure}', [GlassConfigureController::class, 'glassConfigureDetails'])->name('glass_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure-print/{glassConfigure}', [GlassConfigureController::class, 'glassConfigurePrint'])->name('glass_configure.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('glass-configure-delete/{glassConfigure}', [GlassConfigureController::class, 'glassConfigureDelete'])->name('glass_configure.delete')->middleware('permission:grill_glass_tiles_configure');
     Route::get('glass-configure-datatable', [GlassConfigureController::class, 'glassConfigureDatatable'])->name('glass_configure.datatable');
 
     //Tiles Configure
@@ -722,6 +772,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('tiles-configure/add', [TilesConfigureController::class, 'tilesConfigureAddPost'])->middleware('permission:grill_glass_tiles_configure');
     Route::get('tiles-configure-details/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigureDetails'])->name('tiles_configure.details')->middleware('permission:grill_glass_tiles_configure');
     Route::get('tiles-configure-print/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigurePrint'])->name('tiles_configure.print')->middleware('permission:grill_glass_tiles_configure');
+    Route::get('tiles-configure-delete/{tilesConfigure}', [TilesConfigureController::class, 'tilesConfigureDelete'])->name('tiles_configure.delete')->middleware('permission:grill_glass_tiles_configure');
     Route::get('tiles-configure-datatable', [TilesConfigureController::class, 'tilesConfigureDatatable'])->name('tiles_configure.datatable');
 
     //Paint Configure
@@ -739,6 +790,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('plaster-configure/add', [PlasterConfigureController::class, 'plasterConfigureAddPost'])->middleware('permission:plaster_configure');
     Route::get('plaster-configure-details/{plasterConfigure}', [PlasterConfigureController::class, 'plasterConfigureDetails'])->name('plaster_configure.details')->middleware('permission:plaster_configure');
     Route::get('plaster-configure-print/{plasterConfigure}', [PlasterConfigureController::class, 'plasterConfigurePrint'])->name('plaster_configure.print')->middleware('permission:plaster_configure');
+    Route::get('plaster-configure-delete/{plasterConfigure}', [PlasterConfigureController::class, 'plasterConfigureDelete'])->name('plaster_configure.delete')->middleware('permission:plaster_configure');
 
     //Earth Work Configure
     Route::get('earth-work-configure', [EarthWorkConfigureController::class, 'earthWorkConfigure'])->name('earth_work_configure')->middleware('permission:earth_work_configure');
@@ -771,6 +823,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('pile-configure/add', [SegmentConfigureController::class, 'pileConfigureAddPost'])->middleware('permission:pile_configure');
     Route::get('pile-configure-details/{pileConfigure}', [SegmentConfigureController::class, 'pileConfigureDetails'])->name('pile_configure.details')->middleware('permission:pile_configure');
     Route::get('pile-configure-print/{pileConfigure}', [SegmentConfigureController::class, 'pileConfigurePrint'])->name('pile_configure.print')->middleware('permission:pile_configure');
+    Route::get('pile-configure-delete/{pileConfigure}', [SegmentConfigureController::class, 'pileConfigureDelete'])->name('pile_configure.delete')->middleware('permission:pile_configure');
 
     //Beam Configure
     Route::get('beam-configure', [CommonConfigureController::class, 'beamConfigure'])->name('beam_configure')->middleware('permission:beam_configure');
@@ -779,6 +832,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('beam-configure/add', [CommonConfigureController::class, 'beamConfigureAddPost'])->middleware('permission:beam_configure');
     Route::get('beam-configure-details/{beamConfigure}', [CommonConfigureController::class, 'beamConfigureDetails'])->name('beam_configure.details')->middleware('permission:beam_configure');
     Route::get('beam-configure-print/{beamConfigure}', [CommonConfigureController::class, 'beamConfigurePrint'])->name('beam_configure.print')->middleware('permission:beam_configure');
+    Route::get('beam-configure-delete/{beamConfigure}', [CommonConfigureController::class, 'beamConfigureDelete'])->name('beam_configure.delete')->middleware('permission:beam_configure');
 
     //Column Configure
     Route::get('column-configure', [ColumnConfigureController::class, 'columnConfigure'])->name('column_configure')->middleware('permission:column_configure');
@@ -787,6 +841,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('column-configure/add', [ColumnConfigureController::class, 'columnConfigureAddPost'])->middleware('permission:column_configure');
     Route::get('column-configure-details/{columnConfigure}', [ColumnConfigureController::class, 'columnConfigureDetails'])->name('column_configure.details')->middleware('permission:column_configure');
     Route::get('column-configure-print/{columnConfigure}', [ColumnConfigureController::class, 'columnConfigurePrint'])->name('column_configure.print')->middleware('permission:column_configure');
+    Route::get('column-configure-delete/{columnConfigure}', [ColumnConfigureController::class, 'columnConfigureDelete'])->name('column_configure.delete')->middleware('permission:column_configure');
 
     //Short Column Configure
     Route::get('short-column-configure', [ShortColumnConfigureController::class, 'shortColumnConfigure'])->name('short_column_configure')->middleware('permission:column_configure');
@@ -795,15 +850,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('short-column-configure/add', [ShortColumnConfigureController::class, 'shortColumnConfigureAddPost'])->middleware('permission:column_configure');
     Route::get('short-column-configure-details/{shortColumnConfigure}', [ShortColumnConfigureController::class, 'shortColumnConfigureDetails'])->name('short_column_configure.details')->middleware('permission:column_configure');
     Route::get('short-column-configure-print/{shortColumnConfigure}', [ShortColumnConfigureController::class, 'shortColumnConfigurePrint'])->name('short_column_configure.print')->middleware('permission:column_configure');
+    Route::get('short-column-configure-delete/{shortColumnConfigure}', [ShortColumnConfigureController::class, 'shortColumnConfigureDelete'])->name('short_column_configure.delete')->middleware('permission:column_configure');
 
     //Slab Configure
-    Route::get('common-configure', [CommonConfigureController::class, 'configureAll'])->name('common_configure')->middleware('permission:slab_cap_wall_configure');
-    Route::get('common-configure-datatable', [CommonConfigureController::class, 'commonConfigureDatatable'])->name('common_configure.datatable');
-    Route::get('common-configure/add', [CommonConfigureController::class, 'commonConfigureAdd'])->name('common_configure.add')->middleware('permission:slab_cap_wall_configure');
-    Route::post('common-configure/add', [CommonConfigureController::class, 'commonConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
-    Route::get('common-configure-details/{commonConfigure}', [CommonConfigureController::class, 'commonConfigureDetails'])->name('common_configure.details')->middleware('permission:slab_cap_wall_configure');
-    Route::get('common-configure-print/{commonConfigure}', [CommonConfigureController::class, 'commonConfigurePrint'])->name('common_configure.print')->middleware('permission:slab_cap_wall_configure');
-    Route::get('common-configure-delete/{commonConfigure}', [CommonConfigureController::class, 'commonConfigureDelete'])->name('common_configure.delete')->middleware('permission:slab_cap_wall_configure');
+    Route::get('slab-configure', [CommonConfigureController::class, 'configureAll'])->name('common_configure')->middleware('permission:slab_cap_wall_configure');
+    Route::get('slab-configure-datatable', [CommonConfigureController::class, 'commonConfigureDatatable'])->name('common_configure.datatable');
+    Route::get('slab-configure/add', [CommonConfigureController::class, 'commonConfigureAdd'])->name('common_configure.add')->middleware('permission:slab_cap_wall_configure');
+    Route::post('slab-configure/add', [CommonConfigureController::class, 'commonConfigureAddPost'])->middleware('permission:slab_cap_wall_configure');
+    Route::get('slab-configure-details/{commonConfigure}', [CommonConfigureController::class, 'commonConfigureDetails'])->name('common_configure.details')->middleware('permission:slab_cap_wall_configure');
+    Route::get('slab-configure-print/{commonConfigure}', [CommonConfigureController::class, 'commonConfigurePrint'])->name('common_configure.print')->middleware('permission:slab_cap_wall_configure');
+    Route::get('slab-configure-delete/{commonConfigure}', [CommonConfigureController::class, 'commonConfigureDelete'])->name('common_configure.delete')->middleware('permission:slab_cap_wall_configure');
 
     //Pile Cap Configure
     Route::get('pile-cap-configure', [PileCapConfigureController::class, 'pileCapConfigureAll'])->name('pile_cap_configure')->middleware('permission:slab_cap_wall_configure');

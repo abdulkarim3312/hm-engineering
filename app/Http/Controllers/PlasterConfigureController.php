@@ -147,6 +147,12 @@ class PlasterConfigureController extends Controller
         return view('estimate.plaster_configure.print',compact('plasterConfigure'));
     }
 
+    public function plasterConfigureDelete(PlasterConfigure $plasterConfigure){
+        PlasterConfigure::find($plasterConfigure->id)->delete();
+        PlasterConfigureProduct::where('plaster_configure_id', $plasterConfigure->id)->delete();
+        return redirect()->route('plaster_configure')->with('message', 'Plaster Info Deleted Successfully.');
+    }
+
     public function plasterConfigureDatatable() {
         $query = PlasterConfigure::query();
 
@@ -161,9 +167,10 @@ class PlasterConfigureController extends Controller
                return $plasterConfigure->floorUnit->name??'';
            })
             ->addColumn('action', function(PlasterConfigure $plasterConfigure) {
-
-                return '<a href="'.route('plaster_configure.details', ['plasterConfigure' => $plasterConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('plaster_configure.details', ['plasterConfigure' => $plasterConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('plaster_configure.delete', ['plasterConfigure' => $plasterConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(PlasterConfigure $plasterConfigure) {
                 return $plasterConfigure->date;

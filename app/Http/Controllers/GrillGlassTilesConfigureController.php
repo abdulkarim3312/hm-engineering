@@ -113,6 +113,12 @@ class GrillGlassTilesConfigureController extends Controller
         return view('estimate.grill_glass_tiles_configure.print',compact('grillGlassTilesConfigure'));
     }
 
+    public function grillConfigureDelete(GrillGlassTilesConfigure $grillGlassTilesConfigure){
+        GrillGlassTilesConfigure::find($grillGlassTilesConfigure->id)->delete();
+        GrillGlassTilesConfigureProduct::where('grill_glass_tiles_configure_id', $grillGlassTilesConfigure->id)->delete();
+        return redirect()->route('grill_glass_tiles_configure')->with('message', 'Grill Info Deleted Successfully.');
+    }
+
     public function grillGlassTilesConfigureDatatable() {
         $query = GrillGlassTilesConfigure::with('project','estimateFloor','estimateFloorUnit');
 
@@ -135,9 +141,10 @@ class GrillGlassTilesConfigureController extends Controller
                   
             })
             ->addColumn('action', function(GrillGlassTilesConfigure $grillGlassTilesConfigure) {
-
-                return '<a href="'.route('grill_glass_tiles_configure.details', ['grillGlassTilesConfigure' => $grillGlassTilesConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('grill_glass_tiles_configure.details', ['grillGlassTilesConfigure' => $grillGlassTilesConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('grill_glass_tiles_configure.delete', ['grillGlassTilesConfigure' => $grillGlassTilesConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(GrillGlassTilesConfigure $grillGlassTilesConfigure) {
                 return $grillGlassTilesConfigure->date;

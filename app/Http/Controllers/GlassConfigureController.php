@@ -115,6 +115,12 @@ class GlassConfigureController extends Controller
         return view('estimate.glass_configure.print',compact('glassConfigure'));
     }
 
+    public function glassConfigureDelete(GlassConfigure $glassConfigure){
+        GlassConfigure::find($glassConfigure->id)->delete();
+        GlassConfigureProduct::where('grill_glass_tiles_configure_id', $glassConfigure->id)->delete();
+        return redirect()->route('glass_configure')->with('message', 'Glass Info Deleted Successfully.');
+    }
+
     public function glassConfigureDatatable() {
         $query = GlassConfigure::with('project','estimateFloor','estimateFloorUnit');
 
@@ -132,9 +138,10 @@ class GlassConfigureController extends Controller
                 return $glassConfigure->configure_type ?? '';
             })
             ->addColumn('action', function(GlassConfigure $glassConfigure) {
-
-                return '<a href="'.route('glass_configure.details', ['glassConfigure' => $glassConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
-
+                $btn = '';
+                $btn = '<a href="'.route('glass_configure.details', ['glassConfigure' => $glassConfigure->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('glass_configure.delete', ['glassConfigure' => $glassConfigure->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                return $btn;
             })
             ->editColumn('date', function(GlassConfigure $glassConfigure) {
                 return $glassConfigure->date;
