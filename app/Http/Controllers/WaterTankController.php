@@ -24,7 +24,7 @@ class WaterTankController extends Controller
     }
 
     public function waterTankConfigureAddPost(Request $request) {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'estimate_project' => 'required',
             'costing_segment' => 'required',
@@ -132,7 +132,7 @@ class WaterTankController extends Controller
         $waterTank->common_sands_per_cost = $request->common_sands_costing;
         $waterTank->s_sands_costing = $request->s_sands_costing;
         //Total Price
-       
+
         if($request->course_aggregate_type == 3){
             $waterTank->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
             $waterTank->total_common_cement_bag_price = 0;
@@ -194,8 +194,43 @@ class WaterTankController extends Controller
             ]);
 
             $totalKg +=$total_main_rod;
-            // dd($totalKg);
             $totalTon += ($total_main_rod / $request->kg_by_ton[$counter]);
+
+            $counter++;
+        }
+
+
+        $counter = 0;
+        foreach ($request->product_two as $key => $reqProduct) {
+
+            $rft = ($request->length_two[$counter]/$request->spacing_two[$counter]) + 1;
+            $item = ($request->type_length_two[$counter] - (($request->clear_cover_two[$counter] / 12) * 2));
+            $data = $rft *  $item;
+            $sub_total =  ($request->lapping_lenght_two[$counter] * $request->lapping_nos_two[$counter]) * $request->kg_by_rft_two[$counter];
+            $total_main_rod = (($data *  $request->kg_by_rft_two[$counter]) + $sub_total) * $request->layer_two[$counter];
+
+            WaterTankConfigureProduct::create([
+                'common_configure_id' => $waterTank->id,
+                'estimate_project_id' => $request->estimate_project,
+                'costing_segment_id' => $request->costing_segment,
+                'bar_type' => $reqProduct,
+                'dia' => $request->dia_two[$counter],
+                'dia_square' => $request->dia_square_two[$counter],
+                'value_of_bar' => $request->value_of_bar_two[$counter],
+                'kg_by_rft' => $request->kg_by_rft_two[$counter],
+                'kg_by_ton' => $request->kg_by_ton_two[$counter],
+                'length_type' => $request->length_type_two[$counter] * $request->costing_segment_quantity,
+                'length' => $request->length_two[$counter] * $request->costing_segment_quantity,
+                'spacing' => $request->spacing_two[$counter] * $request->costing_segment_quantity,
+                'type_length' => $request->type_length_two[$counter] * $request->costing_segment_quantity,
+                'layer' => $request->layer_two[$counter] * $request->costing_segment_quantity,
+                'sub_total_kg' => $total_main_rod,
+                'sub_total_ton' => (($total_main_rod / $request->kg_by_ton_two[$counter]) * $request->costing_segment_quantity),
+                'status' => 3,
+            ]);
+
+            $totalKg +=$total_main_rod;
+            $totalTon += ($total_main_rod / $request->kg_by_ton_two[$counter]);
 
             $counter++;
         }
@@ -229,30 +264,59 @@ class WaterTankController extends Controller
             $counter++;
         }
 
+        $counter = 0;
+
+        foreach ($request->extra_product_two as $key => $reqProduct) {
+
+            WaterTankConfigureProduct::create([
+                'common_configure_id' => $waterTank->id,
+                'estimate_project_id' => $request->estimate_project,
+                'costing_segment_id' => $request->costing_segment,
+                'bar_type' => $reqProduct,
+                'dia' => $request->extra_dia_two[$counter],
+                'dia_square' => $request->extra_dia_square_two[$counter],
+                'value_of_bar' => $request->extra_value_of_bar_two[$counter],
+                'kg_by_rft' => $request->extra_kg_by_rft_two[$counter],
+                'kg_by_ton' => $request->extra_kg_by_ton_two[$counter],
+                'number_of_bar' => $request->extra_number_of_bar_two[$counter] * $request->costing_segment_quantity,
+                'extra_length' => $request->extra_length_two[$counter]??0 * $request->costing_segment_quantity,
+                'sub_total_kg' => ((($request->extra_number_of_bar_two[$counter] *
+                        $request->extra_kg_by_rft_two[$counter]) * $request->extra_length_two[$counter]??0) * $request->costing_segment_quantity),
+                'sub_total_ton' => (((($request->extra_number_of_bar_two[$counter] * $request->extra_kg_by_rft_two[$counter])
+                        * $request->extra_length_two[$counter]??0)/$request->extra_kg_by_ton_two[$counter]) * $request->costing_segment_quantity),
+                'status' => 2,
+            ]);
+
+            $totalKg += (($request->extra_number_of_bar_two[$counter] * $request->extra_kg_by_rft_two[$counter]) * $request->extra_length_two[$counter]??0);
+            $totalTon += ((($request->extra_number_of_bar_two[$counter] * $request->extra_kg_by_rft_two[$counter]) * $request->extra_length_two[$counter]??0)/$request->extra_kg_by_ton_two[$counter]);
+
+            $counter++;
+        }
+
 
         $waterTank->total_ton = $totalTon * $request->costing_segment_quantity;
         $waterTank->total_kg = $totalKg * $request->costing_segment_quantity;
         $waterTank->total_common_bar_price = ($totalKg * $request->costing_segment_quantity) * $request->common_bar_costing;
         $waterTank->save();
 
-        return redirect()->route('common_configure.details', ['waterTank' => $waterTank->id]);
+        return redirect()->route('water_tank_configure.details', ['waterTank' => $waterTank->id]);
     }
 
-    public function waterTankDetails(WaterTankConfigure $waterTank){
-        return view('estimate.common_configure.details',compact('waterTank'));
+    public function waterTankConfigureDetails(WaterTankConfigure $waterTank){
+        return view('estimate.water_tank_configure.details',compact('waterTank'));
     }
-    public function waterTankPrint(WaterTankConfigure $waterTank){
-        return view('estimate.common_configure.print',compact('waterTank'));
+    public function waterTankConfigurePrint(WaterTankConfigure $waterTank){
+        return view('estimate.water_tank_configure.print',compact('waterTank'));
     }
 
-    public function waterTankDelete(WaterTankConfigure $waterTank){
+    public function waterTankConfigureDelete(WaterTankConfigure $waterTank){
         WaterTankConfigure::find($waterTank->id)->delete();
         WaterTankConfigureProduct::where('common_configure_id', $waterTank->id)->delete();
-        return redirect()->route('common_configure')->with('message', 'Slab Info Deleted Successfully.');
+        return redirect()->route('water_tank_configure')->with('message', 'Slab Info Deleted Successfully.');
     }
 
 
-    public function waterTankDatatable() {
+    public function waterTankConfigureDatatable() {
         $query = WaterTankConfigure::with('project','costingSegment');
 
         return DataTables::eloquent($query)
@@ -264,8 +328,8 @@ class WaterTankController extends Controller
             })
             ->addColumn('action', function(WaterTankConfigure $waterTank) {
                 $btn = '';
-                $btn = '<a href="'.route('common_configure.details', ['waterTank' => $waterTank->id]).'" class="btn btn-primary btn-sm">Details</a>';
-                $btn .= '<a href="'.route('common_configure.delete', ['waterTank' => $waterTank->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                $btn = '<a href="'.route('water_tank_configure.details', ['waterTank' => $waterTank->id]).'" class="btn btn-primary btn-sm">Details</a>';
+                $btn .= '<a href="'.route('water_tank_configure.delete', ['waterTank' => $waterTank->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
                 return $btn;
 
             })

@@ -719,9 +719,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('water-tank-configure-datatable', [WaterTankController::class, 'waterTankConfigureDatatable'])->name('water_tank_configure.datatable');
     Route::get('water-tank-configure/add', [WaterTankController::class, 'waterTankConfigureAdd'])->name('water_tank_configure.add')->middleware('permission:bricks_configure');
     Route::post('water-tank-configure/add', [WaterTankController::class, 'waterTankConfigureAddPost'])->middleware('permission:bricks_configure');
-    Route::get('water-tank-configure-details/{bricksConfigure}', [WaterTankController::class, 'waterTankConfigureDetails'])->name('water_tank_configure.details')->middleware('permission:bricks_configure');
-    Route::get('water-tank-configure-print/{bricksConfigure}', [WaterTankController::class, 'waterTankConfigurePrint'])->name('water_tank_configure.print')->middleware('permission:bricks_configure');
-    Route::get('water-tank-configure-delete/{bricksConfigure}', [WaterTankController::class, 'waterTankConfigureDelete'])->name('water_tank_configure.delete')->middleware('permission:bricks_configure');
+    Route::get('water-tank-configure-details/{waterTank}', [WaterTankController::class, 'waterTankConfigureDetails'])->name('water_tank_configure.details')->middleware('permission:bricks_configure');
+    Route::get('water-tank-configure-print/{waterTank}', [WaterTankController::class, 'waterTankConfigurePrint'])->name('water_tank_configure.print')->middleware('permission:bricks_configure');
+    Route::get('water-tank-configure-delete/{waterTank}', [WaterTankController::class, 'waterTankConfigureDelete'])->name('water_tank_configure.delete')->middleware('permission:bricks_configure');
 
     //Grade of Concrete
     Route::get('grade-of-concrete', [GradeOfConcreteController::class, 'gradeOfConcrete'])->name('grade_of_concrete')->middleware('permission:grade_of_concrete');

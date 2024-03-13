@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-    Slab Configure Details
+    Water Tank Configure Details
 @endsection
 
 @section('content')
@@ -63,7 +63,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a target="_blank" href="{{ route('common_configure.print', ['commonConfigure' => $commonConfigure->id]) }}" class="btn btn-primary">Print</a>
+                            <a target="_blank" href="{{ route('water_tank_configure.print', ['waterTank' => $waterTank->id]) }}" class="btn btn-primary">Print</a>
                         </div>
                     </div>
                     <div id="prinarea">
@@ -88,49 +88,49 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>Slab Configure No.</th>
-                                        <td>{{ $commonConfigure->common_configure_no }}</td>
+                                        <th>Water Tank Configure No.</th>
+                                        <td>{{ $waterTank->common_configure_no }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Slab Configure Date</th>
-                                        <td>{{ $commonConfigure->date }}</td>
+                                        <th>Water Tank Configure Date</th>
+                                        <td>{{ $waterTank->date }}</td>
                                     </tr>
                                     <tr>
                                         <th>Estimate Project Name</th>
-                                        <td>{{ $commonConfigure->project->name }}</td>
+                                        <td>{{ $waterTank->project->name }}</td>
                                     </tr>
                                     <tr>
                                         <th>Costing Segment Name</th>
-                                        <td>{{ $commonConfigure->costingSegment->name }}</td>
+                                        <td>{{ $waterTank->costingSegment->name }}</td>
                                     </tr>
-                                    @if ($commonConfigure->course_aggregate_type == 3)
-                                        
+                                    @if ($waterTank->course_aggregate_type == 3)
+
                                     @else
                                         <tr>
                                             <th>Total Cement(Cft)</th>
-                                            <td>{{ $commonConfigure->total_cement }} Cft</td>
+                                            <td>{{ $waterTank->total_cement }} Cft</td>
                                         </tr>
                                         <tr>
                                             <th>Total Cement</th>
-                                            <td>{{ $commonConfigure->total_cement_bag }} Bag</td>
+                                            <td>{{ $waterTank->total_cement_bag }} Bag</td>
                                         </tr>
                                         <tr>
                                             <th>Total Local Sands</th>
-                                            <td>{{ $commonConfigure->total_sands }} Cft</td>
+                                            <td>{{ $waterTank->total_sands }} Cft</td>
                                         </tr>
                                         <tr>
                                             <th>Total Sylhet Sands</th>
-                                            <td>{{ $commonConfigure->total_s_sands }} Cft</td>
+                                            <td>{{ $waterTank->total_s_sands }} Cft</td>
                                         </tr>
                                         <tr>
                                             <th>Total Aggregate</th>
-                                            <td>{{ $commonConfigure->total_aggregate }} Cft</td>
-                                        </tr>    
+                                            <td>{{ $waterTank->total_aggregate }} Cft</td>
+                                        </tr>
                                     @endif
 
                                     <tr>
                                         <th>Note </th>
-                                        <td>{{ $commonConfigure->note??'' }}</td>
+                                        <td>{{ $waterTank->note??'' }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -138,45 +138,45 @@
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th colspan="2" class="text-center">{{$commonConfigure->costingSegment->name}} Info</th>
+                                        <th colspan="2" class="text-center">{{$waterTank->costingSegment->name}} Info</th>
                                     </tr>
                                     <tr>
-                                        <th>{{$commonConfigure->costingSegment->name}} Quantity</th>
-                                        <td>{{ $commonConfigure->costing_segment_quantity }}</td>
+                                        <th>{{$waterTank->costingSegment->name}} Quantity</th>
+                                        <td>{{ $waterTank->costing_segment_quantity }}</td>
                                     </tr>
                                     <tr>
                                         <th>Total Ton</th>
-                                        <td>{{ $commonConfigure->total_ton }} Rod</td>
+                                        <td>{{ $waterTank->total_ton }} Rod</td>
                                     </tr>
                                     <tr>
                                         <th>Total Kg</th>
-                                        <td>{{ $commonConfigure->total_kg }} Rod</td>
+                                        <td>{{ $waterTank->total_kg }} Rod</td>
                                     </tr>
-                                   @if ($commonConfigure->course_aggregate_type == 2)
+                                   @if ($waterTank->course_aggregate_type == 2)
                                     <tr>
                                         <th>Total Piked</th>
-                                        <td>{{ $commonConfigure->total_picked }} Pcs</td>
+                                        <td>{{ $waterTank->total_picked }} Pcs</td>
                                     </tr>
                                    @endif
                                     <tr>
-                                        <th>Slab Length</th>
-                                        <td>{{ $commonConfigure->slab_length }}</td>
+                                        <th>Water Tank Length</th>
+                                        <td>{{ $waterTank->slab_length }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Slab Width</th>
-                                        <td>{{ $commonConfigure->slab_width }} </td>
+                                        <th>Water Tank Width</th>
+                                        <td>{{ $waterTank->slab_width }} </td>
                                     </tr>
                                     <tr>
-                                        <th>Slab Thickness</th>
-                                        <td>{{ $commonConfigure->slab_thickness }} </td>
+                                        <th>Water Tank Thickness</th>
+                                        <td>{{ $waterTank->slab_thickness }} </td>
                                     </tr>
                                     <tr>
                                         <th>Total Volume</th>
-                                        <td>{{ $commonConfigure->total_volume }} </td>
+                                        <td>{{ $waterTank->total_volume }} </td>
                                     </tr>
                                     <tr>
                                         <th>Total Dry Volume</th>
-                                        <td>{{ $commonConfigure->total_dry_volume }} </td>
+                                        <td>{{ $waterTank->total_dry_volume }} </td>
                                     </tr>
 
                                 </table>
@@ -185,14 +185,18 @@
 
                         @php
                             $mainTotalKg = 0;
+                            $mainTotalKgTwo = 0;
                             $mainTotalTon = 0;
+                            $mainTotalTonTwo = 0;
                             $extraTotalKg = 0;
+                            $extraTotalKgTwo = 0;
                             $extraTotalTon = 0;
+                            $extraTotalTonTwo = 0;
                         @endphp
 
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Main Bar Calculation</h4>
+                                <h4>Main Bar Calculation For Slab</h4>
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
@@ -212,7 +216,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($commonConfigure->commonConfigureProducts as $product)
+                                    @foreach($waterTank->waterTankConfigureProducts as $product)
 
                                         @if($product->status == null)
                                             <?php
@@ -278,10 +282,98 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Main Bar Calculation For Returing Wall</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Bar</th>
+                                        <th>Dia</th>
+                                        <th>Dia(D^2)</th>
+                                        <th>Value of Bar</th>
+                                        <th>Kg/Rft</th>
+                                        <th>Kg/Ton</th>
+                                        <th>Length Type</th>
+                                        <th>Length</th>
+                                        <th>Spacing</th>
+                                        <th>Type Length</th>
+                                        <th>Layer</th>
+                                        <th>Sub Total Kg</th>
+                                        <th>Sub Total Ton</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($waterTank->waterTankConfigureProducts as $product)
+
+                                        @if($product->status == 3)
+                                            <?php
+                                            $mainTotalKgTwo += $product->sub_total_kg;
+                                            $mainTotalTonTwo += $product->sub_total_ton;
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                @if($product->bar_type == 6)
+                                                    6mm
+                                                    @elseif($product->bar_type == 8)
+                                                    8mm
+                                                    @elseif($product->bar_type == 10)
+                                                        10mm
+                                                    @elseif($product->bar_type == 12)
+                                                        12mm
+                                                    @elseif($product->bar_type == 16)
+                                                        16mm
+                                                    @elseif($product->bar_type == 18)
+                                                        18mm
+                                                    @elseif($product->bar_type == 20)
+                                                        20mm
+                                                    @elseif($product->bar_type == 22)
+                                                        22mm
+                                                    @elseif($product->bar_type == 25)
+                                                        25mm
+                                                    @elseif($product->bar_type == 28)
+                                                        28mm
+                                                    @elseif($product->bar_type == 32)
+                                                        32mm
+                                                    @elseif($product->bar_type == 36)
+                                                        36mm
+                                                    @endif
+
+                                                </td>
+                                                <td>{{ $product->dia }}</td>
+                                                <td> {{ $product->dia_square }}</td>
+                                                <td> {{ number_format($product->value_of_bar, 2) }}</td>
+                                                <td> {{ number_format($product->kg_by_rft, 3) }}</td>
+                                                <td> {{ number_format($product->kg_by_ton, 3) }}</td>
+                                                <td>
+                                                    @if($product->length_type == 1)
+                                                       Horizontal
+                                                    @else
+                                                        Vertical
+                                                    @endif
+                                                </td>
+                                                <td> {{ number_format($product->length, 2) }}</td>
+                                                <td> {{ number_format($product->spacing, 2) }}</td>
+                                                <td> {{ number_format($product->type_length, 2) }}</td>
+                                                <td> {{ number_format($product->layer, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_kg, 3) }}</td>
+                                                <td> {{ number_format($product->sub_total_ton, 3) }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+                                    <tr>
+                                        <th colspan="11" class="text-right">Main Bar Total</th>
+                                        <th> {{ number_format($mainTotalKgTwo, 2) }}</th>
+                                        <th> {{ number_format($mainTotalTonTwo, 3) }}</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Extra Bar Calculation</h4>
+                                <h4>Extra Bar Calculation For Slab</h4>
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
@@ -298,7 +390,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($commonConfigure->commonConfigureProducts as $product)
+                                    @foreach($waterTank->waterTankConfigureProducts as $product)
 
                                         @if($product->status == 1)
                                             <?php
@@ -352,11 +444,87 @@
                                         <td><b>{{ number_format($extraTotalKg, 2) }}</b></td>
                                         <td><b>{{ number_format($extraTotalTon, 3) }}</b></td>
                                     </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Extra Bar Calculation For Returning Wall</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Bar</th>
+                                        <th>Dia</th>
+                                        <th>Dia(D^2)</th>
+                                        <th>Value of Bar</th>
+                                        <th>Kg/Rft</th>
+                                        <th>Kg/Ton</th>
+                                        <th>Extra Bar</th>
+                                        <th>Extra Length</th>
+                                        <th>Sub Total Kg</th>
+                                        <th>Sub Total Ton</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($waterTank->waterTankConfigureProducts as $product)
+
+                                        @if($product->status == 2)
+                                            <?php
+                                            $extraTotalKgTwo += $product->sub_total_kg;
+                                            $extraTotalTonTwo += $product->sub_total_ton;
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    @if($product->bar_type == 6)
+                                                        6mm
+                                                    @elseif($product->bar_type == 8)
+                                                        8mm
+                                                    @elseif($product->bar_type == 10)
+                                                        10mm
+                                                    @elseif($product->bar_type == 12)
+                                                        12mm
+                                                    @elseif($product->bar_type == 16)
+                                                        16mm
+                                                    @elseif($product->bar_type == 18)
+                                                        18mm
+                                                    @elseif($product->bar_type == 20)
+                                                        20mm
+                                                    @elseif($product->bar_type == 22)
+                                                        22mm
+                                                    @elseif($product->bar_type == 25)
+                                                        25mm
+                                                    @elseif($product->bar_type == 28)
+                                                        28mm
+                                                    @elseif($product->bar_type == 32)
+                                                        32mm
+                                                    @elseif($product->bar_type == 36)
+                                                        36mm
+                                                    @endif
+
+                                                </td>
+                                                <td>{{ $product->dia }}</td>
+                                                <td> {{ $product->dia_square }}</td>
+                                                <td> {{ number_format($product->value_of_bar, 2) }}</td>
+                                                <td> {{ number_format($product->kg_by_rft, 2) }}</td>
+                                                <td> {{ number_format($product->kg_by_ton, 2) }}</td>
+                                                <td> {{ number_format($product->number_of_bar, 2) }}</td>
+                                                <td> {{ number_format($product->extra_length, 2) }}</td>
+                                                <td> {{ number_format($product->sub_total_kg, 3) }}</td>
+                                                <td> {{ number_format($product->sub_total_ton, 3) }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+                                    <tr>
+                                        <th colspan="8" class="text-right" >Extra Bar Total</th>
+                                        <td><b>{{ number_format($extraTotalKgTwo, 2) }}</b></td>
+                                        <td><b>{{ number_format($extraTotalTonTwo, 3) }}</b></td>
+                                    </tr>
 
                                     <tr>
                                         <th colspan="8" class="text-right" >Total Ton/KG</th>
-                                        <td><b>{{ number_format($commonConfigure->total_kg, 3) }}</b></td>
-                                        <td><b>{{ number_format($commonConfigure->total_ton, 3) }}</b></td>
+                                        <td><b>{{ number_format($waterTank->total_kg, 3) }}</b></td>
+                                        <td><b>{{ number_format($waterTank->total_ton, 3) }}</b></td>
                                     </tr>
                                 </table>
                             </div>
@@ -365,60 +533,60 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <table class="table table-bordered">
-                                    @if ($commonConfigure->course_aggregate_type == 3)
+                                    @if ($waterTank->course_aggregate_type == 3)
                                         <tr>
                                             <th>Bar(Rod) Price (Kg)</th>
-                                            <td>৳ {{ $commonConfigure->total_common_bar_price }} Taka</td>
+                                            <td>৳ {{ $waterTank->total_common_bar_price }} Taka</td>
                                         </tr>
-                                    @else  
+                                    @else
                                         <tr>
                                             <th>Bar(Rod) Price (Kg)</th>
-                                            <td>৳ {{ $commonConfigure->total_common_bar_price }} Taka</td>
+                                            <td>৳ {{ $waterTank->total_common_bar_price }} Taka</td>
                                         </tr>
                                         <tr>
                                             <th>Cement Price(Bag)</th>
-                                            <td>৳ {{ number_format($commonConfigure->total_common_cement_bag_price,2) }} Taka</td>
-                                        </tr>  
+                                            <td>৳ {{ number_format($waterTank->total_common_cement_bag_price,2) }} Taka</td>
+                                        </tr>
                                     @endif
                                 </table>
                             </div>
 
                             <div class="col-md-4">
                                 <table class="table table-bordered">
-                                    @if($commonConfigure->course_aggregate_type == 1)
+                                    @if($waterTank->course_aggregate_type == 1)
                                     <tr>
                                         <th>Sands Price (Cft)</th>
-                                        <td>৳ {{ $commonConfigure->total_common_sands_price }} Taka</td>
+                                        <td>৳ {{ $waterTank->total_common_sands_price }} Taka</td>
                                     </tr>
                                     <tr>
                                         <th>Aggregate Price (Cft)</th>
-                                        <td>৳ {{ $commonConfigure->total_common_aggregate_price }} Taka</td>
+                                        <td>৳ {{ $waterTank->total_common_aggregate_price }} Taka</td>
                                     </tr>
-                                    @elseif ($commonConfigure->course_aggregate_type == 2)
+                                    @elseif ($waterTank->course_aggregate_type == 2)
                                         <tr>
                                             <th>Sands Price (Cft)</th>
-                                            <td>৳ {{ $commonConfigure->total_common_sands_price }} Taka</td>
+                                            <td>৳ {{ $waterTank->total_common_sands_price }} Taka</td>
                                         </tr>
                                         <tr>
                                             <th>Picked Price (Pcs)</th>
-                                            <td>৳ {{ $commonConfigure->total_common_picked_price }} Taka</td>
+                                            <td>৳ {{ $waterTank->total_common_picked_price }} Taka</td>
                                         </tr>
                                     @else
-                                      
+
                                     @endif
                                 </table>
                             </div>
                             <div class="col-md-4">
                                 <table class="table table-bordered">
-                                    @if ($commonConfigure->course_aggregate_type == 3)
+                                    @if ($waterTank->course_aggregate_type == 3)
                                         <tr>
                                             <th>RMC Price (Cft)</th>
-                                            <td>৳ {{ $commonConfigure->total_slab_rmc_price }} Taka</td>
+                                            <td>৳ {{ $waterTank->total_slab_rmc_price }} Taka</td>
                                         </tr>
-                                    @else    
+                                    @else
                                         <tr>
                                             <th>Sylhet Sands Price (Cft)</th>
-                                            <td>৳ {{ $commonConfigure->total_slab_s_sands_price }} Taka</td>
+                                            <td>৳ {{ $waterTank->total_slab_s_sands_price }} Taka</td>
                                         </tr>
                                     @endif
                                 </table>

@@ -114,12 +114,23 @@
                                             </tr>
                                             @php
                                                 $totalPileCost = 0;
+                                                $totalBricksChips = 0;
+                                                $totalRmc = 0;
                                             @endphp
                                             @foreach($pileConfigures as $pileConfigure)
                                                 @php
-                                                    $totalPileCost += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
-                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price +$pileConfigure->total_pile_rmc_price+ $pileConfigure->total_pile_aggregate_price +
+                                                    if ($pileConfigure->course_aggregate_type == 1){
+                                                        $totalPileCost += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
+                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price + $pileConfigure->total_pile_aggregate_price;
+                                                    }elseif($pileConfigure->course_aggregate_type == 2){
+                                                        $totalBricksChips += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
+                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price +$pileConfigure->total_pile_rmc_price +
                                                                      $pileConfigure->total_pile_picked_price;
+                                                    }else{
+                                                        $totalRmc += $pileConfigure->total_pile_bar_price
+                                                                    +$pileConfigure->total_pile_rmc_price;
+                                                    }
+
                                                     $grandTotal += $pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
                                                                      + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_rmc_price+$pileConfigure->total_pile_aggregate_price +
                                                                      $pileConfigure->total_pile_picked_price;
@@ -147,15 +158,26 @@
                                                             <span>RMC(Cft) Cost: <b>{{$pileConfigure->total_pile_rmc_price}}</b></span>
                                                         @endif
                                                         <hr>
-                                                        <span>Total:<b>{{$pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
-                                                                     + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_aggregate_price +
-                                                                     $pileConfigure->total_pile_picked_price}}
-                                                        </b></span><br>
-                                                        <hr>
-                                                        <span>Pile Total:<b> {{number_format($totalPileCost,2)}}</b></span><br>
+                                                        @if ($pileConfigure->course_aggregate_type == 1)
+                                                            <span>Sub Total:<b>{{$pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
+                                                                + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+$pileConfigure->total_pile_aggregate_price}}
+                                                            </b></span><br>
+                                                        @elseif ($pileConfigure->course_aggregate_type == 2)
+                                                            <span>Sub Total:<b>{{$pileConfigure->total_pile_bar_price + $pileConfigure->total_pile_cement_bag_price
+                                                                + $pileConfigure->total_pile_sands_price + $pileConfigure->total_pile_s_sands_price+
+                                                                $pileConfigure->total_pile_picked_price}}
+                                                            </b></span><br>
+                                                        @else
+                                                            <span>Sub Total:<b>{{$pileConfigure->total_pile_bar_price +                 $pileConfigure->total_pile_rmc_price}}
+                                                            </b></span><br>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            <tr>
+                                                <th>Total Cost:</th>
+                                                <td> <span>Pile Total:<b> {{number_format($totalPileCost + $totalBricksChips + $totalRmc,2)}}</b></span></td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -173,37 +195,69 @@
                                             </tr>
                                             @php
                                                 $totalBeamCost = 0;
+                                                $totalBricksChips = 0;
+                                                $totalRmc = 0;
                                             @endphp
                                             @foreach($beamConfigures as $beamConfigure)
                                                 @php
-                                                    $totalBeamCost += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
-                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price + $beamConfigure->total_beam_aggregate_price +
+                                                    if($beamConfigure->course_aggregate_type == 1){
+                                                        $totalBeamCost += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price + $beamConfigure->total_beam_aggregate_price;
+                                                    }elseif ($beamConfigure->course_aggregate_type == 2) {
+                                                        $totalBricksChips += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price +
                                                                      $beamConfigure->total_beam_picked_price;
+                                                    }else {
+                                                        $totalRmc += $beamConfigure->total_beam_bar_price +
+                                                                     $beamConfigure->total_beam_rmc_price;
+                                                    }
                                                     $grandTotal += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
                                                                      + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price +
-                                                                     $beamConfigure->total_beam_picked_price;
+                                                                     $beamConfigure->total_beam_picked_price+
+                                                                     $beamConfigure->total_beam_rmc_price;
                                                 @endphp
                                                 <tr>
                                                     <th>Beam Configure No-{{$beamConfigure->beam_configure_no}}</th>
 
                                                     <td class="text-right">
                                                         <br>
-                                                        <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
-                                                        <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
-                                                        <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
-                                                        <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
-                                                        <span>Aggregate Cost: <b>{{$beamConfigure->total_beam_aggregate_price}}</b></span><br>
-                                                        <span>Picked Cost: <b>{{$beamConfigure->total_beam_picked_price}}</b></span><br>
+                                                        @if ($beamConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$beamConfigure->total_beam_aggregate_price}}</b></span><br>
+                                                        @elseif ($beamConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$beamConfigure->total_beam_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$beamConfigure->total_beam_rmc_price}}</b></span>
+                                                        @endif
                                                         <hr>
-                                                        <span>Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
-                                                                     + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price +
-                                                                     $beamConfigure->total_beam_picked_price}}
-                                                        </b></span><br>
-                                                        <hr>
-                                                        <span>Beam Total:<b> {{number_format($totalBeamCost,2)}}</b></span><br>
+                                                        @if ($beamConfigure->course_aggregate_type == 1)
+                                                            <span>Sub Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price}}
+                                                            </b></span><br>
+                                                        @elseif ($beamConfigure->course_aggregate_type == 2)
+                                                            <span>Sub Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price +
+                                                                $beamConfigure->total_beam_picked_price}}
+                                                            </b></span><br>
+                                                        @else
+                                                            <span>Sub Total RMC:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_rmc_price}}
+                                                            </b></span><br>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            <tr>
+                                                <th>Total Cost:</th>
+                                                <td> <span>Beam Total:<b> {{number_format($totalBeamCost + $totalBricksChips + $totalRmc,2)}}</b></span></td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -222,37 +276,69 @@
                                             </tr>
                                             @php
                                                 $totalBeamCost = 0;
+                                                $totalBricksChips = 0;
+                                                $totalRmc = 0;
                                             @endphp
                                             @foreach($gradeBeamConfigures as $beamConfigure)
                                                 @php
-                                                    $totalBeamCost += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
-                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price + $beamConfigure->total_beam_aggregate_price +
+                                                    if($beamConfigure->course_aggregate_type == 1){
+                                                        $totalBeamCost += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price + $beamConfigure->total_beam_aggregate_price;
+                                                    }elseif ($beamConfigure->course_aggregate_type == 2) {
+                                                        $totalBricksChips += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price +
                                                                      $beamConfigure->total_beam_picked_price;
+                                                    }else {
+                                                        $totalRmc += $beamConfigure->total_beam_bar_price +
+                                                                     $beamConfigure->total_grade_beam_rmc_price;
+                                                    }
+
                                                     $grandTotal += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
                                                                      + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price +
-                                                                     $beamConfigure->total_beam_picked_price;
+                                                                     $beamConfigure->total_beam_picked_price+
+                                                                     $beamConfigure->total_grade_beam_rmc_price;
                                                 @endphp
                                                 <tr>
                                                     <th>Grade Beam Configure No-{{$beamConfigure->beam_configure_no}}</th>
 
                                                     <td class="text-right">
-                                                        <br>
-                                                        <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
-                                                        <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
-                                                        <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
-                                                        <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
-                                                        <span>Aggregate Cost: <b>{{$beamConfigure->total_beam_aggregate_price}}</b></span><br>
-                                                        <span>Picked Cost: <b>{{$beamConfigure->total_beam_picked_price}}</b></span><br>
+                                                        @if ($beamConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$beamConfigure->total_beam_aggregate_price}}</b></span><br>
+                                                        @elseif ($beamConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$beamConfigure->total_beam_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$beamConfigure->total_beam_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$beamConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$beamConfigure->total_beam_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$beamConfigure->total_beam_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$beamConfigure->total_grade_beam_rmc_price}}</b></span>
+                                                        @endif
                                                         <hr>
-                                                        <span>Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
-                                                                     + $beamConfigure->total_beam_sands_price + $beamConfigure->total_beam_s_sands_price+$beamConfigure->total_beam_aggregate_price +
-                                                                     $beamConfigure->total_beam_picked_price}}
-                                                        </b></span><br>
-                                                        <hr>
-                                                        <span>Beam Total:<b> {{number_format($totalBeamCost,2)}}</b></span><br>
+                                                        @if ($beamConfigure->course_aggregate_type == 1)
+                                                            <span>Sub Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price+ $beamConfigure->total_beam_aggregate_price}}
+                                                            </b></span><br>
+                                                        @elseif ($beamConfigure->course_aggregate_type == 2)
+                                                            <span>Sub Total:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
+                                                                + $beamConfigure->total_beam_sands_price +$beamConfigure->total_beam_s_sands_price +
+                                                                $beamConfigure->total_beam_picked_price}}
+                                                            </b></span><br>
+                                                        @else
+                                                            <span>Sub Total RMC:<b>{{$beamConfigure->total_beam_bar_price + $beamConfigure->total_grade_beam_rmc_price}}
+                                                            </b></span><br>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            <tr>
+                                                <th>Total Cost:</th>
+                                                <td> <span>Grade Beam Total:<b> {{number_format($totalBeamCost + $totalBricksChips + $totalRmc,2)}}</b></span></td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -271,36 +357,68 @@
                                             </tr>
                                             @php
                                                 $totalColumnCost = 0;
+                                                $totalBricksChips = 0;
+                                                $totalRmc = 0;
                                             @endphp
                                             @foreach($columnConfigures as $columnConfigure)
                                                 @php
-                                                    $totalColumnCost += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
-                                                                         + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
+                                                    if($columnConfigure->course_aggregate_type == 1){
+                                                        $totalColumnCost += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                         + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_s_sands_price+$columnConfigure->total_column_aggregate_price;
+                                                    }elseif ($columnConfigure->course_aggregate_type == 2) {
+                                                        $totalBricksChips += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                         + $columnConfigure->total_column_sands_price +$columnConfigure->total_column_s_sands_price+
                                                                          $columnConfigure->total_column_picked_price;
+                                                    }else {
+                                                        $totalRmc += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_rmc_price;
+                                                    }
                                                     $grandTotal += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
                                                                          + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
-                                                                         $columnConfigure->total_column_picked_price;
+                                                                         $columnConfigure->total_column_picked_price+$columnConfigure->total_column_rmc_price;
                                                 @endphp
                                                 <tr>
                                                     <th>Column Configure No-{{$columnConfigure->column_configure_no}}</th>
 
                                                     <td class="text-right">
                                                         <br>
-                                                        <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
-                                                        <span>Cement Cost: <b>{{$columnConfigure->total_column_cement_bag_price}}</b></span><br>
-                                                        <span>Sands Cost: <b>{{$columnConfigure->total_column_sands_price}}</b></span><br>
-                                                        <span>Aggregate Cost: <b>{{$columnConfigure->total_column_aggregate_price}}</b></span><br>
-                                                        <span>Picked Cost: <b>{{$columnConfigure->total_column_picked_price}}</b></span><br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_column_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_column_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_column_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$columnConfigure->total_column_aggregate_price}}</b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_column_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_column_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_column_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$columnConfigure->total_column_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$columnConfigure->total_column_rmc_price}}</b></span><br>
+                                                        @endif
                                                         <hr>
-                                                        <span>Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
-                                                                     + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
-                                                                     $columnConfigure->total_column_picked_price}}
-                                                        </b></span><br>
-                                                        <hr>
-                                                        <span>Column Total:<b> {{number_format($totalColumnCost,2)}}</b></span><br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Sub Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
+                                                                $columnConfigure->total_column_s_sands_price}}
+                                                            </b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Sub Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_s_sands_price +
+                                                                $columnConfigure->total_column_picked_price}}
+                                                            </b></span><br>
+                                                        @else
+                                                            <span>Sub Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_rmc_price}}
+                                                            </b></span><br>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            <tr>
+                                                <th>Total Cost:</th>
+                                                <td> <span>Column Total:<b> {{number_format($totalColumnCost + $totalBricksChips + $totalRmc,2)}}</b></span></td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -319,12 +437,21 @@
                                             </tr>
                                             @php
                                                 $totalColumnCost = 0;
+                                                $totalBricksChips = 0;
+                                                $totalRmc = 0;
                                             @endphp
                                             @foreach($shortColumnConfigures as $columnConfigure)
                                                 @php
-                                                    $totalColumnCost += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
-                                                                         + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
+                                                     if($columnConfigure->course_aggregate_type == 1){
+                                                        $totalColumnCost += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                         + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_s_sands_price+$columnConfigure->total_column_aggregate_price;
+                                                    }elseif ($columnConfigure->course_aggregate_type == 2) {
+                                                        $totalBricksChips += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                         + $columnConfigure->total_column_sands_price +$columnConfigure->total_column_s_sands_price+
                                                                          $columnConfigure->total_column_picked_price;
+                                                    }else {
+                                                        $totalRmc += $columnConfigure->total_column_bar_price + $columnConfigure->total_short_column_rmc_price;
+                                                    }
                                                     $grandTotal += $columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
                                                                          + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
                                                                          $columnConfigure->total_column_picked_price;
@@ -334,21 +461,44 @@
 
                                                     <td class="text-right">
                                                         <br>
-                                                        <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
-                                                        <span>Cement Cost: <b>{{$columnConfigure->total_column_cement_bag_price}}</b></span><br>
-                                                        <span>Sands Cost: <b>{{$columnConfigure->total_column_sands_price}}</b></span><br>
-                                                        <span>Aggregate Cost: <b>{{$columnConfigure->total_column_aggregate_price}}</b></span><br>
-                                                        <span>Picked Cost: <b>{{$columnConfigure->total_column_picked_price}}</b></span><br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_column_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_column_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_column_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$columnConfigure->total_column_aggregate_price}}</b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_column_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_column_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_column_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$columnConfigure->total_column_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_column_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$columnConfigure->total_short_column_rmc_price}}</b></span><br>
+                                                        @endif
                                                         <hr>
-                                                        <span>Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
-                                                                     + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
-                                                                     $columnConfigure->total_column_picked_price}}
-                                                        </b></span><br>
-                                                        <hr>
-                                                        <span>Column Total:<b> {{number_format($totalColumnCost,2)}}</b></span><br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Sub Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_aggregate_price +
+                                                                $columnConfigure->total_column_s_sands_price}}
+                                                            </b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Sub Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_column_cement_bag_price
+                                                                + $columnConfigure->total_column_sands_price + $columnConfigure->total_column_s_sands_price +
+                                                                $columnConfigure->total_column_picked_price}}
+                                                            </b></span><br>
+                                                        @else
+                                                            <span>Sub Total:<b>{{$columnConfigure->total_column_bar_price + $columnConfigure->total_short_column_rmc_price}}
+                                                            </b></span><br>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            <tr>
+                                                <th>Total Cost:</th>
+                                                <td> <span>Column Total:<b> {{number_format($totalColumnCost + $totalBricksChips + $totalRmc,2)}}</b></span></td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -367,37 +517,72 @@
                                             </tr>
                                             @php
                                                 $totalColumnCost = 0;
+                                                $totalChip = 0;
+                                                $totalRmc = 0;
                                             @endphp
                                             @foreach($footingConfigures as $columnConfigure)
                                                 @php
-                                                    $totalColumnCost += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
-                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
-                                                                     $columnConfigure->total_common_picked_price;
+                                                    if ($columnConfigure->course_aggregate_type == 1) {
+                                                        $totalColumnCost += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                    + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price
+                                                                    ;
+                                                    }elseif ($columnConfigure->course_aggregate_type == 2) {
+                                                        $totalChip += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                                    + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+
+                                                                    $columnConfigure->total_common_picked_price;
+                                                    }else {
+                                                        $totalRmc += $columnConfigure->total_common_bar_price +$columnConfigure->total_pile_cap_rmc_price ;
+
+                                                    }
                                                     $grandTotal += $columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
-                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
-                                                                     $columnConfigure->total_common_picked_price;
+                                                                    + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                                    $columnConfigure->total_common_picked_price+$columnConfigure->total_pile_cap_rmc_price;
                                                 @endphp
                                                 <tr>
-                                                    <th>Column Configure No-{{$columnConfigure->column_configure_no}}</th>
+                                                    <th>Footing Configure No-{{$columnConfigure->common_configure_no}}</th>
 
                                                     <td class="text-right">
                                                         <br>
-                                                        <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
-                                                        <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
-                                                        <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
-                                                        <span>Shylet Sands Cost: <b>{{$columnConfigure->total_beam_s_sands_price}}</b></span><br>
-                                                        <span>Aggregate Cost: <b>{{$columnConfigure->total_common_aggregate_price}}</b></span><br>
-                                                        <span>Picked Cost: <b>{{$columnConfigure->total_common_picked_price}}</b></span><br>
+                                                        @if ($columnConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$columnConfigure->total_common_aggregate_price}}</b></span><br>
+                                                        @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$columnConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$columnConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$columnConfigure->total_beam_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$columnConfigure->total_common_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$columnConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$columnConfigure->total_footing_rmc_price}}</b></span>
+                                                        @endif
+
+
                                                         <hr>
-                                                        <span>Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
-                                                                     + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
-                                                                     $columnConfigure->total_common_picked_price}}
-                                                        </b></span><br>
-                                                        <hr>
-                                                        <span>Column Total:<b> {{number_format($totalColumnCost,2)}}</b></span><br>
+                                                    @if ($columnConfigure->course_aggregate_type == 1)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                    @elseif ($columnConfigure->course_aggregate_type == 2)
+                                                        <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price +
+                                                            $columnConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                    @else
+                                                        <span>Total RMC Cost:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_pile_cap_rmc_price}}
+                                                            </b></span><br>
+                                                    @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                                <tr>
+                                                    <th>Total Cost:</th>
+                                                    <td> <span>Footing Total:<b> {{number_format($totalColumnCost+$totalChip+$totalRmc,2)}}</b></span></td>
+                                                </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -416,36 +601,73 @@
                                             </tr>
                                             @php
                                                 $totalCommonCost = 0;
+                                                $totalBricksChips = 0;
+                                                $totalRmc = 0;
                                             @endphp
                                             @foreach($commonConfigures as $commonConfigure)
                                                 @php
+                                                   if($commonConfigure->course_aggregate_type == 1){
+                                                    $totalBricksChips += $commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
+                                                                         + $commonConfigure->total_common_sands_price + $commonConfigure->total_common_aggregate_price +
+                                                                         $commonConfigure->total_common_picked_price;
+                                                   }elseif ($commonConfigure->course_aggregate_type == 2) {
                                                     $totalCommonCost += $commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
                                                                          + $commonConfigure->total_common_sands_price + $commonConfigure->total_common_aggregate_price +
                                                                          $commonConfigure->total_common_picked_price;
-                                                    $grandTotal += $commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
+                                                   }else {
+                                                    $totalRmc += $commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
                                                                          + $commonConfigure->total_common_sands_price + $commonConfigure->total_common_aggregate_price +
                                                                          $commonConfigure->total_common_picked_price;
+                                                   }
+                                                    $grandTotal += $commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
+                                                                         + $commonConfigure->total_common_sands_price + $commonConfigure->total_common_aggregate_price +
+                                                                         $commonConfigure->total_common_picked_price+
+                                                                         $commonConfigure->total_slab_rmc_price;
                                                 @endphp
                                                 <tr>
                                                     <th>{{$commonConfigure->costingSegment->name}} Configure No-{{$commonConfigure->common_configure_no}}</th>
 
                                                     <td class="text-right">
                                                         <br>
-                                                        <span>Bar(Rod) Cost: <b>{{$commonConfigure->total_common_bar_price}}</b></span><br>
-                                                        <span>Cement Cost: <b>{{$commonConfigure->total_common_cement_bag_price}}</b></span><br>
-                                                        <span>Sands Cost: <b>{{$commonConfigure->total_common_sands_price}}</b></span><br>
-                                                        <span>Aggregate Cost: <b>{{$commonConfigure->total_common_aggregate_price}}</b></span><br>
-                                                        <span>Picked Cost: <b>{{$commonConfigure->total_common_picked_price}}</b></span><br>
+                                                        @if ($commonConfigure->course_aggregate_type == 1)
+                                                            <span>Bar(Rod) Cost: <b>{{$commonConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$commonConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$commonConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$commonConfigure->total_slab_s_sands_price}}</b></span><br>
+                                                            <span>Aggregate Cost: <b>{{$commonConfigure->total_common_aggregate_price}}</b></span><br>
+                                                        @elseif ($commonConfigure->course_aggregate_type == 2)
+                                                            <span>Bar(Rod) Cost: <b>{{$commonConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>Cement Cost: <b>{{$commonConfigure->total_common_cement_bag_price}}</b></span><br>
+                                                            <span>Local Sands Cost: <b>{{$commonConfigure->total_common_sands_price}}</b></span><br>
+                                                            <span>Shylet Sands Cost: <b>{{$commonConfigure->total_slab_s_sands_price}}</b></span><br>
+                                                            <span>Picked Cost: <b>{{$commonConfigure->total_common_picked_price}}</b></span><br>
+                                                        @else
+                                                            <span>Bar(Rod) Cost: <b>{{$commonConfigure->total_common_bar_price}}</b></span><br>
+                                                            <span>RMC(Cft) Cost: <b>{{$commonConfigure->total_slab_rmc_price}}</b></span><br>
+
+                                                        @endif
                                                         <hr>
-                                                        <span>Total:<b>{{$commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
-                                                                     + $commonConfigure->total_common_sands_price + $commonConfigure->total_common_aggregate_price +
-                                                                     $commonConfigure->total_common_picked_price}}
-                                                        </b></span><br>
-                                                        <hr>
-                                                        <span>{{$commonConfigure->costingSegment->name}} Total:<b> {{number_format($totalCommonCost,2)}}</b></span><br>
+                                                        @if ($commonConfigure->course_aggregate_type == 1)
+                                                            <span>Sub Total:<b>{{$commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
+                                                                + $commonConfigure->total_common_sands_price + $commonConfigure->total_common_aggregate_price +
+                                                                $commonConfigure->total_slab_s_sands_price}}
+                                                            </b></span><br>
+                                                        @elseif ($commonConfigure->course_aggregate_type == 2)
+                                                            <span>Sub Total:<b>{{$commonConfigure->total_common_bar_price + $commonConfigure->total_common_cement_bag_price
+                                                                + $commonConfigure->total_common_sands_price + $commonConfigure->total_slab_s_sands_price +
+                                                                $commonConfigure->total_common_picked_price}}
+                                                            </b></span><br>
+                                                        @else
+                                                            <span>Sub Total:<b>{{$commonConfigure->total_common_bar_price + $commonConfigure->total_slab_rmc_price}}
+                                                            </b></span><br>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                                <tr>
+                                                    <th>Total Cost:</th>
+                                                    <td> <span>Slab Total:<b> {{number_format($totalCommonCost + $totalBricksChips + $totalRmc,2)}}</b></span></td>
+                                                </tr>
                                         </table>
                                     </div>
                                 </div>
@@ -594,7 +816,7 @@
                                                         <hr>
                                                        @if ($columnConfigure->course_aggregate_type == 1)
                                                         <span>Sub Total:<b>{{$columnConfigure->total_common_bar_price + $columnConfigure->total_common_cement_bag_price
-                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price+$columnConfigure->total_common_aggregate_price +
+                                                            + $columnConfigure->total_common_sands_price + $columnConfigure->total_beam_s_sands_price +
                                                             $columnConfigure->total_common_picked_price}}
                                                             </b></span><br>
                                                        @elseif ($columnConfigure->course_aggregate_type == 2)

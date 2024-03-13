@@ -63,7 +63,7 @@
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('common_configure.datatable') }}',
+                ajax: '{{ route('water_tank_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
                     {data: 'common_configure_no', name: 'common_configure_no'},

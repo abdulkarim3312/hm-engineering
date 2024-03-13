@@ -31,46 +31,46 @@ class CommonConfigureController extends Controller
 
     public function commonConfigureAddPost(Request $request) {
         // dd($request->all());
-        $request->validate([
-            'estimate_project' => 'required',
-            'costing_segment' => 'required',
-            'course_aggregate_type' => 'required',
-            'costing_segment_quantity' => 'required',
-            'segment_length' => 'required|numeric|min:1',
-            'segment_width' => 'required|numeric|min:1',
-            'segment_thickness' => 'required|numeric|min:.01',
-            'dry_volume' => 'required|numeric|min:.01',
-            'first_ratio' => 'required',
-            'second_ratio' => 'required',
-            'third_ratio' => 'required',
-            'date' => 'required',
-            'note' => 'nullable',
-            'common_bar_costing' => 'required|numeric|min:0',
-            'common_cement_costing' => 'required|numeric|min:0',
-            'common_sands_costing' => 'required|numeric|min:0',
-            'common_aggregate_costing' => 'required|numeric|min:0',
-            'common_picked_costing' => 'required|numeric|min:0',
-            'product.*' => 'required',
-            'dia.*' => 'required|numeric|min:0',
-            'dia_square.*' => 'required|numeric|min:0',
-            'value_of_bar.*' => 'required|numeric|min:0',
-            'kg_by_rft.*' => 'required|numeric|min:0',
-            'kg_by_ton.*' => 'required|numeric|min:0',
-            'length_type.*' => 'required|numeric|min:0',
-            'length.*' => 'required|numeric|min:0',
-            'spacing.*' => 'required|numeric|min:0',
-            'type_length.*' => 'required|numeric|min:0',
-            'layer.*' => 'required|numeric|min:0',
+        // $request->validate([
+        //     'estimate_project' => 'required',
+        //     'costing_segment' => 'required',
+        //     'course_aggregate_type' => 'required',
+        //     'costing_segment_quantity' => 'required',
+        //     'segment_length' => 'required|numeric|min:1',
+        //     'segment_width' => 'required|numeric|min:1',
+        //     'segment_thickness' => 'required|numeric|min:.01',
+        //     'dry_volume' => 'required|numeric|min:.01',
+        //     'first_ratio' => 'required',
+        //     'second_ratio' => 'required',
+        //     'third_ratio' => 'required',
+        //     'date' => 'required',
+        //     'note' => 'nullable',
+        //     'common_bar_costing' => 'required|numeric|min:0',
+        //     'common_cement_costing' => 'required|numeric|min:0',
+        //     'common_sands_costing' => 'required|numeric|min:0',
+        //     'common_aggregate_costing' => 'required|numeric|min:0',
+        //     'common_picked_costing' => 'required|numeric|min:0',
+        //     'product.*' => 'required',
+        //     'dia.*' => 'required|numeric|min:0',
+        //     'dia_square.*' => 'required|numeric|min:0',
+        //     'value_of_bar.*' => 'required|numeric|min:0',
+        //     'kg_by_rft.*' => 'required|numeric|min:0',
+        //     'kg_by_ton.*' => 'required|numeric|min:0',
+        //     'length_type.*' => 'required|numeric|min:0',
+        //     'length.*' => 'required|numeric|min:0',
+        //     'spacing.*' => 'required|numeric|min:0',
+        //     'type_length.*' => 'required|numeric|min:0',
+        //     'layer.*' => 'required|numeric|min:0',
 
-            'extra_product.*' => 'required',
-            'extra_dia.*' => 'required|numeric|min:0',
-            'extra_dia_square.*' => 'required|numeric|min:0',
-            'extra_value_of_bar.*' => 'required|numeric|min:0',
-            'extra_kg_by_rft.*' => 'required|numeric|min:0',
-            'extra_kg_by_ton.*' => 'required|numeric|min:0',
-            'extra_number_of_bar.*' => 'required|numeric|min:0',
-            'extra_length.*' => 'required|numeric|min:0',
-        ]);
+        //     'extra_product.*' => 'required',
+        //     'extra_dia.*' => 'required|numeric|min:0',
+        //     'extra_dia_square.*' => 'required|numeric|min:0',
+        //     'extra_value_of_bar.*' => 'required|numeric|min:0',
+        //     'extra_kg_by_rft.*' => 'required|numeric|min:0',
+        //     'extra_kg_by_ton.*' => 'required|numeric|min:0',
+        //     'extra_number_of_bar.*' => 'required|numeric|min:0',
+        //     'extra_length.*' => 'required|numeric|min:0',
+        // ]);
 
         $total_dry_volume = (($request->segment_length * $request->segment_width) * $request->segment_thickness) * 1.5;
 
@@ -138,7 +138,7 @@ class CommonConfigureController extends Controller
         $commonConfigure->common_sands_per_cost = $request->common_sands_costing;
         $commonConfigure->s_sands_costing = $request->s_sands_costing;
         //Total Price
-       
+
         if($request->course_aggregate_type == 3){
             $commonConfigure->total_slab_rmc_price = $request->total_volume * $request->rmc_costing;
             $commonConfigure->total_common_cement_bag_price = 0;
@@ -402,7 +402,7 @@ class CommonConfigureController extends Controller
             $beamConfigure->total_aggregate = 0;
             $beamConfigure->total_picked = 0;
         }
-      
+
         //price
         $beamConfigure->beam_bar_per_cost = $request->beam_bar_costing;
         $beamConfigure->beam_cement_per_cost = $request->beam_cement_costing;
@@ -434,7 +434,7 @@ class CommonConfigureController extends Controller
             $beamConfigure->total_beam_aggregate_price = 0;
             $beamConfigure->total_beam_picked_price = 0;
         }
-       
+
         $beamConfigure->total_beam_bar_price = 0;
         $beamConfigure->save();
         $beamConfigure->beam_configure_no = str_pad($beamConfigure->id, 4, "0", STR_PAD_LEFT);
