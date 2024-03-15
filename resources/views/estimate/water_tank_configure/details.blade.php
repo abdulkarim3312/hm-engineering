@@ -85,7 +85,7 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Water Tank Configure No.</th>
@@ -134,8 +134,52 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div class="col-md-4">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>R.W Water Tank Configure Date</th>
+                                        <td>{{ $waterTank->date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Estimate Project Name</th>
+                                        <td>{{ $waterTank->project->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Costing Segment Name</th>
+                                        <td>{{ $waterTank->costingSegment->name }}</td>
+                                    </tr>
+                                    @if ($waterTank->course_aggregate_type == 3)
 
-                            <div class="col-md-6">
+                                    @else
+                                        <tr>
+                                            <th>R.W Total Cement(Cft)</th>
+                                            <td>{{ $waterTank->total_cement_two }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>R.W Total Cement</th>
+                                            <td>{{ $waterTank->total_cement_bag_two }} Bag</td>
+                                        </tr>
+                                        <tr>
+                                            <th>R.W Total Local Sands</th>
+                                            <td>{{ $waterTank->total_sands_two }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>R.W Total Sylhet Sands</th>
+                                            <td>{{ $waterTank->total_s_sands_two }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>R.W Total Aggregate</th>
+                                            <td>{{ $waterTank->total_aggregate_two }} Cft</td>
+                                        </tr>
+                                        <tr>
+                                            <th>R.W Rod:</th>
+                                            <td>{{ number_format($waterTank->total_re_wall_rod, 2) }} Kg</td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
+
+                            <div class="col-md-4">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th colspan="2" class="text-center">{{$waterTank->costingSegment->name}} Info</th>
@@ -192,6 +236,7 @@
                             $extraTotalKgTwo = 0;
                             $extraTotalTon = 0;
                             $extraTotalTonTwo = 0;
+                            $total_re_wall_rod = 0;
                         @endphp
 
                         <div class="row">
@@ -529,7 +574,7 @@
                                 </table>
                             </div>
                         </div>
-                        <u><i><h2>Costing Area</h2></i></u>
+                        <u><i><h2>Costing Area For Slab</h2></i></u>
                         <div class="row">
                             <div class="col-md-4">
                                 <table class="table table-bordered">
@@ -587,6 +632,69 @@
                                         <tr>
                                             <th>Sylhet Sands Price (Cft)</th>
                                             <td>৳ {{ $waterTank->total_slab_s_sands_price }} Taka</td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
+                        </div>
+                        <u><i><h2>Costing Area For Returning Wall</h2></i></u>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <table class="table table-bordered">
+                                    @if ($waterTank->course_aggregate_type == 3)
+                                        <tr>
+                                            <th>R. Wall Bar(Rod) Price (Kg)</th>
+                                            <td>৳ {{ $waterTank->total_common_bar_price_two }} Taka</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <th>R. Wall Bar(Rod) Price (Kg)</th>
+                                            <td>৳ {{ $waterTank->total_common_bar_price_two }} Taka</td>
+                                        </tr>
+                                        <tr>
+                                            <th>R. Wall Cement Price(Bag)</th>
+                                            <td>৳ {{ number_format($waterTank->total_common_cement_bag_price_two,2) }} Taka</td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
+
+                            <div class="col-md-4">
+                                <table class="table table-bordered">
+                                    @if($waterTank->course_aggregate_type == 1)
+                                    <tr>
+                                        <th>R. Wall Sands Price (Cft)</th>
+                                        <td>৳ {{ $waterTank->total_common_sands_price_two }} Taka</td>
+                                    </tr>
+                                    <tr>
+                                        <th>R. Wall Aggregate Price (Cft)</th>
+                                        <td>৳ {{ $waterTank->total_common_aggregate_price_two }} Taka</td>
+                                    </tr>
+                                    @elseif ($waterTank->course_aggregate_type == 2)
+                                        <tr>
+                                            <th>R. Wall Sands Price (Cft)</th>
+                                            <td>৳ {{ $waterTank->total_common_sands_price_two }} Taka</td>
+                                        </tr>
+                                        <tr>
+                                            <th>R. Wall Picked Price (Pcs)</th>
+                                            <td>৳ {{ $waterTank->total_common_picked_price_two }} Taka</td>
+                                        </tr>
+                                    @else
+
+                                    @endif
+                                </table>
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table table-bordered">
+                                    @if ($waterTank->course_aggregate_type == 3)
+                                        <tr>
+                                            <th>R. Wall RMC Price (Cft)</th>
+                                            <td>৳ {{ $waterTank->total_slab_rmc_price_two }} Taka</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <th>R. Wall Sylhet Sands Price (Cft)</th>
+                                            <td>৳ {{ $waterTank->total_slab_s_sands_price_two }} Taka</td>
                                         </tr>
                                     @endif
                                 </table>

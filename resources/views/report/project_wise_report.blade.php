@@ -19,6 +19,33 @@
             width: 400px;
             height: auto;
         }
+        .row{
+            margin: 0;
+        }
+        hr {
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+            border: 0;
+            border-top: 1px solid black;
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+            vertical-align: middle;
+            border-bottom-width: 1px !important;
+            border-left-width: 1px !important;
+            text-align: center;
+            padding: 0.2rem !important;
+        }
+        @media print{
+            @page {
+                size: auto;
+                margin: 20px !important;
+            }
+        }
+        button, html input[type=button], input[type=reset], input[type=submit] {
+            background: #367FA9;
+            color: #fff;
+        }
     </style>
 @endsection
 
@@ -115,7 +142,7 @@
                                 </div>
                                 <div class="col-xs-12 text-center">
                                     <h4><strong>Project Wise Report</strong></h4>
-                                    {{-- <h4><strong>Project Name: {{ $project->name ?? '' }}</strong></h4> --}}
+                                    <h4>Project Name:<strong> {{ $project_single->name }}</strong></h4>
                                 </div>
                             </div>
                             <table class="table table-bordered" style="margin-bottom: 0px">

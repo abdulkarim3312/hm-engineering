@@ -1016,7 +1016,12 @@
                             @endcan
                             @can('receive_and_payment')
                                 <li class="{{ Route::currentRouteName() == 'report.receive_and_payment' ? 'active' : '' }}">
-                                    <a href="{{ route('report.receive_and_payment') }}"><i class="fa fa-circle-o"></i> Receive & Payment</a>
+                                    <a href="{{ route('report.receive_and_payment') }}"><i class="fa fa-circle-o"></i>Receive Report</a>
+                                </li>
+                            @endcan
+                            @can('receive_and_payment')
+                                <li class="{{ Route::currentRouteName() == 'report.payment' ? 'active' : '' }}">
+                                    <a href="{{ route('report.payment') }}"><i class="fa fa-circle-o"></i>Payment Report</a>
                                 </li>
                             @endcan
                         </ul>

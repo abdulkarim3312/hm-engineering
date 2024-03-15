@@ -48,66 +48,32 @@ use SakibRahaman\DecimalToWords\DecimalToWords;
 
 class ReportController extends Controller
 {
-    // public function ledger(Request $request)
-    // {
-
-    //     $startDate = date('Y-m-d', strtotime($request->start_date));
-    //     $endDate = date('Y-m-d', strtotime($request->end_date));
-
-    //      $month = strtotime($startDate);
-    //     $end = strtotime($endDate);
-    //     $monthsArray = [];
-    //     while($month <= $end)
-    //     {
-    //         $monthGenerate = date('Y-m', $month);
-    //         array_push($monthsArray,$monthGenerate);
-    //         $month = strtotime("+1 month", $month);
-
-    //     }
-
-    //     $in_word = new DecimalToWords();
-
-    //     $currentMonth = date('m');
-    //     if ($currentMonth < 7){
-    //         $currentYear = date('Y') - 1;
-    //         $currentDate = date($currentYear.'-07-01');
-    //     }else{
-    //         $currentDate = date('Y-07-01');
-    //     }
-
-    //     $accountHeads = AccountHead::orderBy('account_code')->get();
-
-    //     $query = AccountHead::query();
-
-    //     if ($request->search != '' && $request->account_head != ''){
-    //         $query->where('id',$request->account_head);
-    //     }
-    //     $accountHeadsSearch = $query->orderBy('account_code')
-    //                             ->get();
-
-    //     return view('report.ledger', compact('accountHeadsSearch','accountHeads','monthsArray','currentDate'));
-    // }
     public function ledger(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
 
         $startDate = date('Y-m-d', strtotime($request->start_date));
         $endDate = date('Y-m-d', strtotime($request->end_date));
-
+        // dd($endDate);
         $month = strtotime($startDate);
+        // dd($month);
         $end = strtotime($endDate);
+        // dd($month);
         $monthsArray = [];
         while($month <= $end)
         {
             $monthGenerate = date('Y-m', $month);
+            // dd($monthGenerate);
             array_push($monthsArray,$monthGenerate);
             $month = strtotime("+1 month", $month);
+            // dd($month);
 
         }
 
         $in_word = new DecimalToWords();
 
         $currentMonth = date('m');
+        // dd($currentMonth);
         if ($currentMonth < 7){
             $currentYear = date('Y') - 1;
             $currentDate = date($currentYear.'-07-01');
@@ -116,6 +82,7 @@ class ReportController extends Controller
         }
 
         $accountHeads = AccountHead::orderBy('account_code')->get();
+        $projects = Project::where('status',1)->get();
         $query = AccountHead::query();
 
         if ($request->search != '' && $request->account_head != ''){
@@ -124,7 +91,7 @@ class ReportController extends Controller
         $accountHeadsSearch = $query->orderBy('account_code')
                                 ->get();
 
-        return view('report.ledger', compact('accountHeadsSearch','accountHeads','monthsArray','currentDate'));
+        return view('report.ledger', compact('accountHeadsSearch','accountHeads','monthsArray','currentDate','projects'));
     }
 
     public function trailBalance(Request $request)
@@ -159,12 +126,24 @@ class ReportController extends Controller
     public function receivePayment(Request $request){
 
         $receipts = [];
-        $payments = [];
 
         if ( $request->start!='' && $request->end!='') {
             $receipts = ReceiptPayment::where('transaction_type',1)
                 ->whereBetween('date', [$request->start, $request->end])
                 ->get();
+        }
+//        else{
+//            $receipts = ReceiptPayment::where('transaction_type',1)->get();
+//            $payments = ReceiptPayment::where('transaction_type',2)->get();
+//        }
+        return view('report.receive_payment', compact('receipts'));
+    }
+
+    public function payment(Request $request){
+
+        $payments = [];
+
+        if ( $request->start!='' && $request->end!='') {
 
             $payments = ReceiptPayment::where('transaction_type',2)
                 ->whereBetween('date', [$request->start, $request->end])
@@ -175,7 +154,7 @@ class ReportController extends Controller
 //            $receipts = ReceiptPayment::where('transaction_type',1)->get();
 //            $payments = ReceiptPayment::where('transaction_type',2)->get();
 //        }
-        return view('report.receive_payment', compact('receipts','payments'));
+        return view('report.payment', compact('payments'));
     }
 
 
@@ -322,7 +301,7 @@ class ReportController extends Controller
             $salaries=Salary::with('employee')
                 ->where('year',$request->year)
                 ->where('month',$request->month)->get();
-            
+
             foreach ($salaries as $salary) {
                 $absent = EmployeeAttendance::select(DB::raw('count(*) as absent_count'))
                     ->where('employee_id', $salary->employee_id)
@@ -331,7 +310,7 @@ class ReportController extends Controller
                     ->where('present_or_absent',0)
                     ->first();
                 // dd($absent);
-                
+
                 $late = EmployeeAttendance::select(DB::raw('count(*) as late_count'))
                     ->where('employee_id', $salary->employee_id)
                     ->whereYear('date', $request->year)
@@ -1050,37 +1029,22 @@ class ReportController extends Controller
     }
 
     public function projectwiseReport(Request $request){
-
-        // $projects = Project::where('status',1)->get();
-        // $salepayment = null;
-        // $customers = [];
-        // $project_single  = null;
-
-        // if ($request->project !=null && $request->start !=null && $request->end !=null) {
-        //     $project_single = Project::find($request->project);
-        //     $customers = SalesOrder::where('project_id', $request->project)->whereBetween('date', [$request->start, $request->end])->get();
-        //     $salepayment = Project::where('id',$request->project)->first();
-        // }elseif($request->project !=null && $request->start ==null && $request->end ==null) {
-        //     $customers = SalesOrder::where('project_id', $request->project)->get();
-        //     $salepayment = Project::where('id',$request->project)->first();
-        // }
         $projects = Project::where('status',1)->get();
-        // $project = Project::where('id', $request->project)->first();
-        // dd($project);
         $salepayment = null;
         $customers = [];
         $credits = [];
         $project_single  = null;
 
         if ($request->project !=null && $request->start !=null && $request->end !=null) {
+            $project_single = Project::find($request->project);
             $customers= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',1)->whereBetween('date', [$request->start, $request->end])->get();
             $credits= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',2)->whereBetween('date', [$request->start, $request->end])->get();
         }elseif($request->project != null && $request->start == null && $request->end ==null) {
             $customers= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',1)->whereBetween('date', [$request->start, $request->end])->get();
             $credits= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',2)->whereBetween('date', [$request->start, $request->end])->get();
-            
+
         }
-        // dd($credits);
+
         return view('report.project_wise_report', compact('customers','projects','salepayment','project_single', 'credits'));
     }
 
@@ -1098,7 +1062,7 @@ class ReportController extends Controller
         if ($request->group_summary) {
             $group_summary_info = AccountHeadType::where('id', $request->group_summary)->first();
         }
-    //    dd($group_summary);
+
         $ledgers = AccountHeadSubType::where(['account_head_type_id'=>$request->group_summary])->get();
         return view('report.group_summary', compact('ledgers', 'group_summaries', 'group_summary', 'group_summary_info'));
     }

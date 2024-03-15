@@ -45,7 +45,7 @@
                 <form action="{{ route('report.ledger') }}">
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="start_date">Start Date <span
                                             class="text-danger">*</span></label>
@@ -54,7 +54,7 @@
                                            placeholder="Enter Start Date" value="{{ request()->get('start_date') ?? $currentDate  }}">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="end_date">End Date <span
                                             class="text-danger">*</span></label>
@@ -70,7 +70,18 @@
                                     <select class="form-control select2" name="account_head" id="account_head">
                                         <option value="">All</option>
                                         @foreach($accountHeads as $accountHead)
-                                            <option value="{{ $accountHead->id }}">Account Name: {{ $accountHead->name }}|Account Code {{ $accountHead->account_code }}</option>
+                                            <option value="{{ $accountHead->id }}" {{ request()->get('account_head') == $accountHead->id ? 'selected' : '' }}>Account Name: {{ $accountHead->name }}|Account Code {{ $accountHead->account_code }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="account_head">Project<span class="text-danger">*</span></label>
+                                    <select class="form-control select2" name="project" id="project">
+                                        <option value="">All</option>
+                                        @foreach($projects as $project)
+                                            <option value="{{ $project->id }}">{{ $project->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -114,12 +125,18 @@
                                 </div>
                             </div>
                             @foreach($accountHeadsSearch as $accountHead)
+                            {{-- {{ dd($accountHead) }} --}}
                                 <?php
                                     $previousLedger = previousLedger(request('start_date'),request('end_date'),$accountHead->id);
+                                    // dd($previousLedger);
                                     $incomeExpenses = ledger(request('start_date'),request('end_date'),$accountHead->id);
+                                    // dd($incomeExpenses);
                                     $debitOpening = $previousLedger['debitOpening'];
+                                    // dd($debitOpening);
                                     $creditOpening = $previousLedger['creditOpening'];
+                                    // dd($creditOpening);
                                     $accountOpeningHead = $previousLedger['accountOpeningHead'];
+                                    // dd($accountOpeningHead);
                                  ?>
                                 <div class="table-responsive">
 
@@ -176,6 +193,7 @@
                                          ?>
 
                                         @foreach($incomeExpenses->whereBetween('date',[$start,$end]) as $incomeExpense)
+                                            {{-- {{ dd($incomeExpense); }} --}}
                                             <tr>
                                                 <td>{{ $incomeExpense->date->format('d-m-Y') }}</td>
                                                 <td>

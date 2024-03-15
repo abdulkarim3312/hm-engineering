@@ -67,18 +67,26 @@ class WaterTankController extends Controller
         ]);
 
         $total_dry_volume = (($request->segment_length * $request->segment_width) * $request->segment_thickness) * 1.5;
+        $total_dry_volume_two = (($request->returning_length * $request->returning_width) * $request->returning_thickness) * 1.5;
 
         $totalRatio = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
 
+        $totalRatio_two = ($request->first_ratio + $request->second_ratio + $request->third_ratio);
+
         $totalCement = ($total_dry_volume * $request->first_ratio/$totalRatio);
+        $totalCement_two = ($total_dry_volume_two * $request->first_ratio/$totalRatio_two);
         $totalCementBag = ($totalCement/1.25);
+        $totalCementBag_two = ($totalCement_two/1.25);
 
         $totalSands = ($total_dry_volume * $request->second_ratio/$totalRatio);
+        $totalSands_two = ($total_dry_volume_two * $request->second_ratio/$totalRatio);
 
         $totalAggregate = ($total_dry_volume * $request->third_ratio/$totalRatio);
+        $totalAggregate_two = ($total_dry_volume_two * $request->third_ratio/$totalRatio);
 
         if ($request->course_aggregate_type == 2){
             $totalPiked = ($totalAggregate * 11.11);
+            $totalPiked_two = ($totalAggregate_two * 11.11);
         }else{
             $totalPiked = 0;
         }
@@ -105,25 +113,43 @@ class WaterTankController extends Controller
 
         if($request->course_aggregate_type == 3){
             $waterTank->total_sands = 0;
+            $waterTank->total_sands_two = 0;
             $waterTank->total_s_sands = 0;
+            $waterTank->total_s_sands_two = 0;
             $waterTank->total_aggregate = 0;
+            $waterTank->total_aggregate_two = 0;
             $waterTank->total_cement = 0;
+            $waterTank->total_cement_two = 0;
             $waterTank->total_cement_bag = 0;
+            $waterTank->total_cement_bag_two = 0;
             $waterTank->total_picked = 0;
+            $waterTank->total_picked_two = 0;
         }else if($request->course_aggregate_type == 2){
             $waterTank->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $waterTank->total_cement_bag_two = $totalCementBag_two * $request->costing_segment_quantity;
             $waterTank->total_cement = $totalCement * $request->costing_segment_quantity;
+            $waterTank->total_cement_two = $totalCement_two * $request->costing_segment_quantity;
             $waterTank->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $waterTank->total_sands_two = (($totalSands_two)/2 * $request->costing_segment_quantity);
             $waterTank->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $waterTank->total_s_sands_two =(($totalSands_two)/2 * $request->costing_segment_quantity);
             $waterTank->total_aggregate = 0;
+            $waterTank->total_aggregate_two = 0;
             $waterTank->total_picked = $totalPiked * $request->costing_segment_quantity;
+            $waterTank->total_picked_two = $totalPiked_two * $request->costing_segment_quantity;
         }else{
             $waterTank->total_cement_bag = $totalCementBag * $request->costing_segment_quantity;
+            $waterTank->total_cement_bag_two = $totalCementBag_two * $request->costing_segment_quantity;
             $waterTank->total_cement = $totalCement * $request->costing_segment_quantity;
+            $waterTank->total_cement_two = $totalCement_two * $request->costing_segment_quantity;
             $waterTank->total_sands = (($totalSands)/2 * $request->costing_segment_quantity);
+            $waterTank->total_sands_two = (($totalSands_two)/2 * $request->costing_segment_quantity);
             $waterTank->total_s_sands =(($totalSands)/2 * $request->costing_segment_quantity);
+            $waterTank->total_s_sands_two =(($totalSands_two)/2 * $request->costing_segment_quantity);
             $waterTank->total_aggregate = $totalAggregate * $request->costing_segment_quantity;
+            $waterTank->total_aggregate_two = $totalAggregate_two * $request->costing_segment_quantity;
             $waterTank->total_picked = 0;
+            $waterTank->total_picked_two = 0;
         }
 
         //price
@@ -142,22 +168,35 @@ class WaterTankController extends Controller
             $waterTank->common_picked_per_cost = 0;
         }else if($request->course_aggregate_type == 2){
             $waterTank->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $waterTank->total_common_cement_bag_price_two = ($totalCementBag_two * $request->costing_segment_quantity) * $request->common_cement_costing;
             $waterTank->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $waterTank->total_common_sands_price_two = (($totalSands_two/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $waterTank->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $waterTank->total_slab_s_sands_price_two = (($totalSands_two/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
             $waterTank->total_slab_rmc_price = 0;
+            $waterTank->total_slab_rmc_price_two = 0;
             $waterTank->total_common_aggregate_price = 0;
+            $waterTank->total_common_aggregate_price_two = 0;
             $waterTank->total_common_picked_price = ($totalPiked * $request->costing_segment_quantity) * $request->common_picked_costing;
+            $waterTank->total_common_picked_price_two = ($totalPiked_two * $request->costing_segment_quantity) * $request->common_picked_costing;
         }else{
             $waterTank->total_common_cement_bag_price = ($totalCementBag * $request->costing_segment_quantity) * $request->common_cement_costing;
+            $waterTank->total_common_cement_bag_price_two = ($totalCementBag_two * $request->costing_segment_quantity) * $request->common_cement_costing;
             $waterTank->total_common_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
+            $waterTank->total_common_sands_price_two = (($totalSands_two/2) * $request->costing_segment_quantity) * $request->common_sands_costing;
             $waterTank->total_slab_s_sands_price = (($totalSands/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
+            $waterTank->total_slab_s_sands_price_two = (($totalSands_two/2) * $request->costing_segment_quantity) * $request->s_sands_costing;
             $waterTank->total_slab_rmc_price = 0;
+            $waterTank->total_slab_rmc_price_two = 0;
             $waterTank->total_common_aggregate_price = ($totalAggregate * $request->costing_segment_quantity) * $request->common_aggregate_costing;;
+            $waterTank->total_common_aggregate_price_two = ($totalAggregate_two * $request->costing_segment_quantity) * $request->common_aggregate_costing;;
             $waterTank->total_common_picked_price = 0;
+            $waterTank->total_common_picked_price_two = 0;
         }
 
 
         $waterTank->total_common_bar_price = 0;
+        $waterTank->total_common_bar_price_two = 0;
 
         $waterTank->save();
         $waterTank->common_configure_no = str_pad($waterTank->id, 5, "0", STR_PAD_LEFT);
@@ -165,7 +204,9 @@ class WaterTankController extends Controller
 
         $counter = 0;
         $totalTon = 0;
+        $totalTonTwo = 0;
         $totalKg = 0;
+        $totalKgTwo = 0;
         foreach ($request->product as $key => $reqProduct) {
 
             $rft = ($request->length[$counter]/$request->spacing[$counter]) + 1;
@@ -230,6 +271,7 @@ class WaterTankController extends Controller
             ]);
 
             $totalKg +=$total_main_rod;
+            $totalKgTwo +=$total_main_rod;
             $totalTon += ($total_main_rod / $request->kg_by_ton_two[$counter]);
 
             $counter++;
@@ -288,6 +330,7 @@ class WaterTankController extends Controller
             ]);
 
             $totalKg += (($request->extra_number_of_bar_two[$counter] * $request->extra_kg_by_rft_two[$counter]) * $request->extra_length_two[$counter]??0);
+            $totalKgTwo += (($request->extra_number_of_bar_two[$counter] * $request->extra_kg_by_rft_two[$counter]) * $request->extra_length_two[$counter]??0);
             $totalTon += ((($request->extra_number_of_bar_two[$counter] * $request->extra_kg_by_rft_two[$counter]) * $request->extra_length_two[$counter]??0)/$request->extra_kg_by_ton_two[$counter]);
 
             $counter++;
@@ -297,6 +340,8 @@ class WaterTankController extends Controller
         $waterTank->total_ton = $totalTon * $request->costing_segment_quantity;
         $waterTank->total_kg = $totalKg * $request->costing_segment_quantity;
         $waterTank->total_common_bar_price = ($totalKg * $request->costing_segment_quantity) * $request->common_bar_costing;
+        $waterTank->total_common_bar_price_two = ($totalKgTwo * $request->costing_segment_quantity) * $request->common_bar_costing;
+        $waterTank->total_re_wall_rod = $totalKgTwo;
         $waterTank->save();
 
         return redirect()->route('water_tank_configure.details', ['waterTank' => $waterTank->id]);

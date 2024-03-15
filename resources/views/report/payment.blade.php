@@ -35,7 +35,7 @@
 @endsection
 
 @section('title')
-    Receive Report
+    Payment Report
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
                 <!-- /.box-header -->
 
                 <div class="box-body">
-                    <form action="{{ route('report.receive_and_payment') }}">
+                    <form action="{{ route('report.payment') }}">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -94,7 +94,7 @@
 
     <div class="row">
         <div class="col-sm-12" style="min-height:300px">
-            @if($receipts)
+            @if($payments)
             <section class="panel">
 
                 <div class="panel-body">
@@ -108,7 +108,7 @@
                                         <img height="50px" src="{{ asset('img/logo.png') }}" alt="">
                                         {{ config('app.name') }}
                                     </h1>
-                                    <h3 class="text-center m-0" style="font-size: 25px !important;">Receive Report</h3>
+                                    <h3 class="text-center m-0" style="font-size: 25px !important;">Payment Report</h3>
                                 </div>
                             </div>
                             <table class="table table-bordered" style="margin-bottom: 0px">
@@ -118,26 +118,22 @@
                             </table>
 
                             <div style="clear: both">
-                                <table class="table table-bordered" style="width:100%;">
+                                {{-- <table class="table table-bordered" style="width:50%; float:left">
                                     <tr>
-                                        <th colspan="7" class="text-center">Receipt</th>
+                                        <th colspan="6" class="text-center">Receipt</th>
                                     </tr>
                                     <tr>
-                                        <th class="text-center" width="20%">Date</th>
-                                        <th class="text-center" width="20%">Account Head</th>
-                                        <th class="text-center" width="15%">Receipt No</th>
-                                        <th class="text-center" width="15%">Notes</th>
-                                        <th class="text-center" width="15%">Receipt Type</th>
+                                        <th class="text-center" width="25%">Date</th>
+                                        <th class="text-center" width="25%">Account Head</th>
+                                        <th class="text-center" width="25%">Receipt Type</th>
                                         <th class="text-center" width="25%">Client Name</th>
-                                        <th class="text-center" width="25%">Amount</th>
+                                        <th class="text-center" width="10%">Amount</th>
                                     </tr>
 
                                     @foreach($receipts as $receipt)
                                         <tr>
                                             <td>{{ date('d-m-Y',strtotime($receipt->date)) }}</td>
                                             <td>{{ $receipt->accountHead->name ?? ''}}</td>
-                                            <td>{{ $receipt->receipt_payment_no ?? ''}}</td>
-                                            <td>{{ $receipt->notes ?? ''}}</td>
                                             <td>
                                                 @if($receipt->payment_type == 1)
                                                 Bank
@@ -152,26 +148,30 @@
                                     @endforeach
 
                                     <tr>
-                                        <th colspan="6" class="text-right">Total</th>
+                                        <th colspan="4" class="text-right">Total</th>
                                         <th class="text-center">৳ {{ number_format($receipts->sum('net_amount'),2) }}</th>
                                     </tr>
-                                </table>
-                                {{-- <table class="table table-bordered" style="width:50%; float:left">
+                                </table> --}}
+                                <table class="table table-bordered" style="width:100%;">
                                     <tr>
-                                        <th colspan="6" class="text-center">Payment</th>
+                                        <th colspan="7" class="text-center">Payment</th>
                                     </tr>
                                     <tr>
-                                        <th class="text-center" width="25%">Date</th>
-                                        <th class="text-center" width="25%">Account Head</th>
+                                        <th class="text-center" width="15%">Date</th>
+                                        <th class="text-center" width="20%">Account Head</th>
+                                        <th class="text-center" width="15%">Receipt No</th>
+                                        <th class="text-center" width="15%">Notes</th>
                                         <th class="text-center" width="25%">Payment Type</th>
                                         <th class="text-center" width="25%">Client Name</th>
-                                        <th class="text-center" width="10%">Amount</th>
+                                        <th class="text-center" width="20%">Amount</th>
                                     </tr>
 
                                     @foreach($payments as $payment)
                                         <tr>
                                             <td>{{ date('d-m-Y',strtotime($payment->date)) }}</td>
                                             <td>{{ $payment->accountHead->name ?? ''}}</td>
+                                            <td>{{ $receipt->receipt_payment_no ?? ''}}</td>
+                                            <td>{{ $receipt->notes ?? ''}}</td>
                                             <td>
                                                 @if($receipt->payment_type == 1)
                                                     Bank
@@ -186,10 +186,10 @@
                                     @endforeach
 
                                     <tr>
-                                        <th colspan="4" class="text-right">Total</th>
+                                        <th colspan="6" class="text-right">Total</th>
                                         <th class="text-center">৳ {{ number_format($payments->sum('net_amount'),2) }}</th>
                                     </tr>
-                                </table> --}}
+                                </table>
                             </div>
                         </div>
                     </div>

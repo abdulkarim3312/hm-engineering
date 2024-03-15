@@ -271,7 +271,7 @@ if (! function_exists('generateVoucherReceiptNo')) {
             $end = date('Y-m-d', strtotime($end_date));
 
             $previousDay = date('Y-m-d', strtotime('-1 day', strtotime($start)));
-
+            // dd($previousDay);
             $debitTotal = 0;
             $creditTotal = 0;
             $accountOpeningHead = AccountHead::where('id',$account_head_id)->first();
