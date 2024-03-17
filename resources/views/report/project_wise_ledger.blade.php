@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Ledger Report')
+@section('title','Project Wise Ledger Report')
 @section('style')
     <style>
         .row{
@@ -42,10 +42,10 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form action="{{ route('report.ledger') }}">
+                <form action="{{ route('report.project_wise_ledger') }}">
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="start_date">Start Date <span
                                             class="text-danger">*</span></label>
@@ -54,7 +54,7 @@
                                            placeholder="Enter Start Date" value="{{ request()->get('start_date') ?? $currentDate  }}">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="end_date">End Date <span
                                             class="text-danger">*</span></label>
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="account_head">Account Head <span class="text-danger">*</span></label>
                                     <select class="form-control select2" name="account_head" id="account_head">
@@ -74,8 +74,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
-                            {{-- <div class="col-md-3">
+                            </div> --}}
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="project">Project<span class="text-danger">*</span></label>
                                     <select class="form-control select2" name="project" id="project">
@@ -85,8 +85,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div> --}}
-                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <input type="submit" name="search" class="btn btn-primary form-control" value="Search">
@@ -192,8 +192,9 @@
                                             $creditTotal = 0;
                                          ?>
 
-                                        @foreach($incomeExpenses->whereBetween('date',[$start,$end]) as $incomeExpense)
-                                            {{-- {{ dd($incomeExpense); }} --}}
+                                        {{-- @foreach($incomeExpenses->whereBetween('date',[$start,$end]) as $incomeExpense) --}}
+                                        @foreach($ledger as $incomeExpense)
+                                            {{ dd($ledger); }}
                                             <tr>
                                                 <td>{{ $incomeExpense->date->format('d-m-Y') }}</td>
                                                 <td>

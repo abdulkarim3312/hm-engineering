@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
                                     <label>Estimate Floor Unit</label>
 
@@ -115,13 +115,96 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Main Paint Type</label>
+                                    <select class="form-control select2 wall_direction" id="main_paint_type" name="main_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                        <option>Select Paint</option>
+                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Polish Work</option>
+                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Inside Paint Work</option>
+                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Outside Paint Work</option>
+                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Putty Work</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="polish_work">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Polish Paint Type</label>
+                                        <select class="form-control select2 wall_direction" id="sub_paint_type" name="sub_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                            <option>Select Polish</option>
+                                            <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Spirit</option>
+                                            <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Gala</option>
+                                            <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Markin Cloth</option>
+                                            <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 Paper</option>
+                                            <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>1.5 Paper</option>
+                                            <option value="6" {{ old('paint_type') == 6 ? 'selected' : '' }}>Chalk Paper</option>
+                                            <option value="7" {{ old('paint_type') == 7 ? 'selected' : '' }}>Candle</option>
+                                            <option value="8" {{ old('paint_type') == 8 ? 'selected' : '' }}>Brown</option>
+                                            <option value="9" {{ old('paint_type') == 9 ? 'selected' : '' }}>Sidur</option>
+                                            <option value="10" {{ old('paint_type') == 10 ? 'selected' : '' }}>Elamati</option>
+                                            <option value="11" {{ old('paint_type') == 11? 'selected' : '' }}>Zink Oxaid</option>
+                                            <option value="12" {{ old('paint_type') == 12 ? 'selected' : '' }}>Woodkeeper</option>
+                                            <option value="13" {{ old('paint_type') == 13 ?'selected' : '' }}>T6 Thiner</option>
+                                            <option value="14" {{ old('paint_type') == 14 ? 'selected' : '' }}>NC Thiner</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="inside_paint_work">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Inside Paint Type</label>
+                                        <select class="form-control select2 wall_direction" id="inside_work" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
+                                            <option>Select Inside</option>
+                                            <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Plastic Paint</option>
+                                            <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Enamel</option>
+                                            <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Water Sealer</option>
+                                            <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Snow Seen</option>
+                                           
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="outside_paint_work">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Outside Paint Type</label>
+                                        <select class="form-control select2 wall_direction" id="outside_work" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
+                                            <option>Select Outside</option>
+                                            <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Coat</option>
+                                            <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                                            <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>White Cement</option>
+                                            <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 no Paper</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="putty_paint_work">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Putty Paint Type</label>
+                                        <select class="form-control select2 wall_direction" id="putty_work" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
+                                            <option>Select Putty</option>
+                                            <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
+                                            <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                                            <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('floor_number') ? 'has-error' :'' }}">
-                                    <label>Floor Quantity</label>
+                                    <label>Unit</label>
 
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="floor_number" step="any"
-                                               name="floor_number" value="{{ old('floor_number',1) }}" >
+                                        <input type="text" class="form-control" readonly  id="unit_spirit" step="any"
+                                               name="floor_number" value="" >
                                     </div>
                                     <!-- /.input group -->
 
@@ -130,16 +213,28 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-md-2">
+                                <div class="form-group {{ $errors->has('floor_number') ? 'has-error' :'' }}">
+                                    <label>Quantity</label>
 
-                        <div class="row">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="polish_work_data" step="any"
+                                               name="floor_number" value="{{ old('floor_number') }}" >
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('floor_number')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('color_paint_per_cft') ? 'has-error' :'' }}">
                                     <label>Color Paint Per Cft</label>
 
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="color_paint_per_cft" step="any"
+                                        <input type="number" class="form-control" id="color_paint_per_cft" step="any" 
                                                name="color_paint_per_cft" value="{{ old('color_paint_per_cft',0.01111) }}" readonly>
                                     </div>
                                     <!-- /.input group -->
@@ -183,7 +278,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <div class="form-group {{ $errors->has('note') ? 'has-error' :'' }}">
                                     <label>Note</label>
 
@@ -210,9 +305,6 @@
                                         <input type="number" class="form-control" step="any"
                                                name="paint_costing"  placeholder="Enter Per Liter Costing">
                                     </div>
-{{--                                    value="{{ $grillGlassTilesCost->grill_costing??0 }}"--}}
-                                    <!-- /.input group -->
-
                                     @error('paint_costing')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
@@ -227,8 +319,7 @@
                                         <input type="number" class="form-control" step="any"
                                                name="seller_costing"  placeholder="Enter Per Liter Costing">
                                     </div>
-                                    <!-- /.input group -->
-{{--                                    value="{{ $grillGlassTilesCost->tiles_glass_costing??0 }}"--}}
+                                
 
                                     @error('seller_costing')
                                     <span class="help-block">{{ $message }}</span>
@@ -243,7 +334,7 @@
                                 <tr>
                                     <th width="10%">Unit Section</th>
                                     <th width="10%">Wall Direction</th>
-                                    <th width="10%">Paint Type</th>
+                                    {{-- <th width="10%">Paint Type</th> --}}
                                     <th width="10%">Length</th>
                                     <th width="10%">Height/Width</th>
                                     <th width="10%">Deduction Length(1)</th>
@@ -279,18 +370,6 @@
                                                         <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
                                                         <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
                                                         <option value="4" {{ old('wall_direction') == 4 ? 'selected' : '' }}>South</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-group {{ $errors->has('paint_type.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <select class="form-control select2 paint_type" name="paint_type[]" data-placeholder="Select Paint Type" required>
-                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Code</option>
-                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Dis-Temper</option>
-                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Plastic</option>
-                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Enamel</option>
-                                                        <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>Polish</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -373,17 +452,7 @@
                                             </div>
                                         </td>
 
-                                        <td>
-                                            <div class="form-group">
-                                                <select class="form-control select2 paint_type" name="paint_type[]" data-placeholder="Select Paint Type" required>
-                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Code</option>
-                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Dis-Temper</option>
-                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Plastic</option>
-                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Enamel</option>
-                                                    <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>Polish</option>
-                                                </select>
-                                            </div>
-                                        </td>
+                                       
 
                                         <td>
                                             <div class="form-group">
@@ -489,17 +558,6 @@
                 </div>
             </td>
 
-            <td>
-                <div class="form-group">
-                    <select class="form-control select2 paint_type" name="paint_type[]" data-placeholder="Select Paint Type" required>
-                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Code</option>
-                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Dis-Temper</option>
-                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Plastic</option>
-                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Enamel</option>
-                        <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>Polish</option>
-                    </select>
-                </div>
-            </td>
 
             <td>
                 <div class="form-group">
@@ -574,6 +632,200 @@
                 format: 'yyyy-mm-dd'
             });
 
+
+            $('body').on('change','#main_paint_type', function () {
+                var paintType = $(this).val();
+                // alert(paintType);
+                if (paintType == 1) {
+                    $('#inside_paint_work').hide();
+                    $('#outside_paint_work').hide();
+                    $('#putty_paint_work').hide();
+                    $('#polish_work').show();
+                }else if(paintType == 2){
+                    $('#inside_paint_work').show();
+                    $('#outside_paint_work').hide();
+                    $('#putty_paint_work').hide();
+                    $('#polish_work').hide();
+                }else if(paintType == 3){
+                    $('#outside_paint_work').show();
+                    $('#inside_paint_work').hide();
+                    $('#putty_paint_work').hide();
+                    $('#polish_work').hide();
+                }else if(paintType == 4){
+                    $('#putty_paint_work').show();
+                    $('#inside_paint_work').hide();
+                    $('#outside_paint_work').hide();
+                    $('#polish_work').hide();
+                }else {
+                   
+                }
+            })
+            $('#main_paint_type').trigger("change");
+
+            $('body').on('change','#sub_paint_type', function () {
+                var subPaintType = $(this).val();
+                var spirit_unit = 'ltr';
+                var galan_unit = 'gm';
+                var markin_unit = 'yrds';
+                var papar_one_unit = 'pcs';
+                var paper_two_unit = 'pcs';
+                var chalk_unit = 'gram';
+                var candle_unit = 'gram';
+                var brown_unit = 'gram';
+                var sidur_unit = 'gram';
+                var elamati_unit = 'gram';
+                var zink_unit = 'gram';
+                var wook_unit = 'ltr';
+                var t6_unit = 'ltr';
+                var nc_unit = 'ltr';
+                var spirit = 0.03;
+                var gala = 2.5;
+                var markin = 0.06;
+                var papar_120 = 0.01;
+                var papar_1 = 0.02;
+                var chalk_powder = 2.5;
+                var candle = 0.5;
+                var brown = 0.1;
+                var sidur = 0.1;
+                var elamati = 0.05;
+                var t6_thiner = 0.000375;
+                var nc_thiner = 0.000375;
+                var zink = 2;
+                var woodkeeper = 0.005;
+               
+                if (subPaintType == 1) {
+                    $('#polish_work_data').val(spirit);
+                    $('#unit_spirit').val(spirit_unit);
+                   
+                }else if(subPaintType == 2){
+                    $('#polish_work_data').val(gala);
+                    $('#unit_spirit').val(galan_unit);
+                }else if(subPaintType == 3){
+                    $('#polish_work_data').val(markin);
+                    $('#markin_unit').val(galan_unit);
+                }else if(subPaintType == 4){
+                    $('#polish_work_data').val(papar_120);
+                    $('#unit_spirit').val(papar_one_unit);
+                }else if(subPaintType == 5){
+                    $('#polish_work_data').val(papar_1);
+                    $('#unit_spirit').val(paper_two_unit);
+                }else if(subPaintType == 6){
+                    $('#polish_work_data').val(chalk_powder);
+                    $('#unit_spirit').val(chalk_unit);
+                }else if(subPaintType == 7){
+                    $('#polish_work_data').val(candle);
+                    $('#unit_spirit').val(candle_unit);
+                }else if(subPaintType == 8){
+                    $('#polish_work_data').val(brown);
+                    $('#unit_spirit').val(brown_unit);
+                }else if(subPaintType == 9){
+                    $('#polish_work_data').val(sidur);
+                    $('#unit_spirit').val(sidur_unit);
+                }else if(subPaintType == 10){
+                    $('#polish_work_data').val(elamati);
+                    $('#unit_spirit').val(elamati_unit);
+                }else if(subPaintType == 11){
+                    $('#polish_work_data').val(zink);
+                    $('#unit_spirit').val(zink_unit);
+                }else if(subPaintType == 12){
+                    $('#polish_work_data').val(woodkeeper);
+                    $('#unit_spirit').val(wook_unit);
+                }else if(subPaintType == 13){
+                    $('#polish_work_data').val(t6_thiner);
+                    $('#unit_spirit').val(t6_unit);
+                }else {
+                    $('#polish_work_data').val(nc_thiner);
+                    $('#unit_spirit').val(nc_unit);
+                }
+            })
+            $('#sub_paint_type').trigger("change");
+
+            
+            $('body').on('change','#inside_work', function () {
+                var insidePaintType = $(this).val();
+                // alert(insidePaintType);
+                var plastic_unit = 'galan';
+                var eanmel_unit = 'galan';
+                var water_unit = 'galan';
+                var snow_unit = 'galan';
+                var plastic = 0.00333;
+                var eanmel = 0.00312;
+                var water = 0.002;
+                var snow = 0.002;
+             
+               
+                if (insidePaintType == 1) {
+                    $('#polish_work_data').val(plastic);
+                    $('#unit_spirit').val(plastic_unit);
+                   
+                }else if(insidePaintType == 2){
+                    $('#polish_work_data').val(eanmel);
+                    $('#unit_spirit').val(eanmel_unit);
+                }else if(insidePaintType == 3){
+                    $('#polish_work_data').val(water);
+                    $('#markin_unit').val(water_unit);
+                }else {
+                    $('#polish_work_data').val(snow);
+                    $('#unit_spirit').val(snow_unit);
+                }
+            })
+            $('#inside_work').trigger("change");
+
+            $('body').on('change','#outside_work', function () {
+                var insidePaintType = $(this).val();
+                // alert(insidePaintType);
+                var wather_unit = 'galan';
+                var plastic_unit = 'galan';
+                var white_unit = 'kg';
+                var paper_unit = 'nos';
+                var plastic = 0.005;
+                var wather = 0.001;
+                var white = 0.0333;
+                var paper = 0.005;
+             
+               
+                if (insidePaintType == 1) {
+                    $('#polish_work_data').val(plastic);
+                    $('#unit_spirit').val(plastic_unit);
+                   
+                }else if(insidePaintType == 2){
+                    $('#polish_work_data').val(wather);
+                    $('#unit_spirit').val(wather_unit);
+                }else if(insidePaintType == 3){
+                    $('#polish_work_data').val(white);
+                    $('#markin_unit').val(white_unit);
+                }else {
+                    $('#polish_work_data').val(paper);
+                    $('#unit_spirit').val(paper_unit);
+                }
+            })
+            $('#outside_work').trigger("change");
+
+            $('body').on('change','#putty_work', function () {
+                var puttyPaintType = $(this).val();
+                // alert(insidePaintType);
+                var chalk_unit = 'bag';
+                var plastic_unit = 'liter';
+                var enamel_unit = 'liter';
+                var chalk = 0.00125;
+                var plastic = 0.00312;
+                var enamel = 0.00375;
+             
+               
+                if (puttyPaintType == 1) {
+                    $('#polish_work_data').val(chalk);
+                    $('#unit_spirit').val(chalk_unit);
+                   
+                }else if(puttyPaintType == 2){
+                    $('#polish_work_data').val(plastic);
+                    $('#unit_spirit').val(plastic_unit);
+                }else {
+                    $('#polish_work_data').val(enamel);
+                    $('#unit_spirit').val(enamel_unit);
+                }
+            })
+            $('#putty_work').trigger("change");
+
             $('#btn-add-product').click(function () {
                 var html = $('#template-product').html();
                 var item = $(html);
@@ -620,7 +872,7 @@
             $('#estimate_project').trigger('change');
 
             $('body').on('keyup','.length,.height,.side,.code_nos,.deduction_length_one' +
-                '.deduction_height_one,.deduction_length_two,.deduction_height_two', function () {
+                '.deduction_height_one,.deduction_length_two,.deduction_height_two,#polish_work_data', function () {
                 calculate();
             });
 
@@ -638,7 +890,10 @@
             var totalArea = 0;
             var totalLiter = 0;
             var color_paint_per_cft = $('#color_paint_per_cft').val();
-
+            var unit_spirit = $('#polish_work_data').val();
+            // alert(unit_spirit);
+            if (unit_spirit == '' || unit_spirit < 0 || !$.isNumeric(unit_spirit))
+                unit_spirit = 0;
             $('.product-item').each(function(i, obj) {
                 var length = $('.length:eq('+i+')').val();
                 var height = $('.height:eq('+i+')').val();
@@ -679,12 +934,15 @@
                 var deduction_two = parseFloat(deduction_length_two * deduction_height_two);
 
                 var totalDeduction = deduction_one + deduction_two;
+                // var val1 = unit_spirit / (length * height);
+                var item = unit_spirit * (length * height)
+                console.log(item);
 
                 $('.sub-total-area:eq('+i+')').html(parseFloat(((((length * height) - totalDeduction) * side ) * code_nos).toFixed(2)));
-                $('.sub-total-liter:eq('+i+')').html(parseFloat((((((length * height) - totalDeduction) * side) * code_nos ) * color_paint_per_cft) .toFixed(2)));
+                $('.sub-total-liter:eq('+i+')').html(parseFloat(((((((length * height) * unit_spirit) - totalDeduction) * side) * code_nos )) .toFixed(2)));
 
                 totalArea += parseFloat((((length * height) - totalDeduction) * side) * code_nos);
-                totalLiter += parseFloat(((((length * height) - totalDeduction) * side) * code_nos) * color_paint_per_cft);
+                totalLiter += parseFloat((((((length * height) * unit_spirit) - totalDeduction) * side) * code_nos));
             });
 
             $('#total-area').html(parseFloat(totalArea).toFixed(2));

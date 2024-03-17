@@ -250,11 +250,11 @@ class CostCalculationController extends Controller
                 ->get();
 
             $beamConfigures = BeamConfigure::where('estimate_project_id',$request->project)
-                ->with('beamConfigureProducts')
+                ->with('beamConfigureProducts','estimateFloor','beamType')
                 ->get();
 
             $gradeBeamConfigures = GradeBeamConfigure::where('estimate_project_id',$request->project)
-                ->with('gradeBeamConfigureProducts')
+                ->with('gradeBeamConfigureProducts','estimateFloor','gradeBeamType')
                 ->get();
 
             $columnConfigures = ColumnCofigure::where('estimate_project_id',$request->project)

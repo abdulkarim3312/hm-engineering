@@ -199,6 +199,7 @@
                                                 $totalRmc = 0;
                                             @endphp
                                             @foreach($beamConfigures as $beamConfigure)
+                                            
                                                 @php
                                                     if($beamConfigure->course_aggregate_type == 1){
                                                         $totalBeamCost += $beamConfigure->total_beam_bar_price + $beamConfigure->total_beam_cement_bag_price
@@ -217,7 +218,11 @@
                                                                      $beamConfigure->total_beam_rmc_price;
                                                 @endphp
                                                 <tr>
-                                                    <th>Beam Configure No-{{$beamConfigure->beam_configure_no}}</th>
+                                                    <th>
+                                                        Beam Configure No:-{{$beamConfigure->beam_configure_no}} <br>
+                                                        Beam Floor Name:-{{$beamConfigure->estimateFloor->name ?? ''}} <br>
+                                                        Beam Type:-{{$beamConfigure->beamType->name ?? ''}} <br>
+                                                    </th>
 
                                                     <td class="text-right">
                                                         <br>
@@ -299,7 +304,11 @@
                                                                      $beamConfigure->total_grade_beam_rmc_price;
                                                 @endphp
                                                 <tr>
-                                                    <th>Grade Beam Configure No-{{$beamConfigure->beam_configure_no}}</th>
+                                                    <th>Grade Beam Configure No-{{$beamConfigure->beam_configure_no}} <br>
+                                                        Grade Beam Floor Name:-{{$beamConfigure->estimateFloor->name ?? ''}} <br>
+                                                        Grade Beam Type:-{{$beamConfigure->gradeBeamType->name ?? ''}} <br>
+                                                    </th>
+                                                    
 
                                                     <td class="text-right">
                                                         @if ($beamConfigure->course_aggregate_type == 1)

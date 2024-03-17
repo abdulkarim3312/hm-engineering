@@ -939,6 +939,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('report/purchase', 'ReportController@purchase')->name('report.purchase')->middleware('permission:purchase_report');
     Route::get('report/sale', 'ReportController@sale')->name('report.sale')->middleware('permission:sale_report');
     Route::get('report/ledger', 'ReportController@ledger')->name('report.ledger');
+    Route::get('report/project/wise/ledger', 'ReportController@projectWiseLedger')->name('report.project_wise_ledger');
     Route::get('report/receive', 'ReportController@receivePayment')->name('report.receive_and_payment')->middleware('permission:receive_and_payment');
     Route::get('report/payment', 'ReportController@payment')->name('report.payment')->middleware('permission:receive_and_payment');
     Route::get('report/project-summary', 'ReportController@projectSummary')->name('report.project_summary')->middleware('permission:project_summary_report');

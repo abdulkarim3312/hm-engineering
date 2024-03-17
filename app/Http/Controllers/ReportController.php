@@ -50,7 +50,7 @@ class ReportController extends Controller
 {
     public function ledger(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $startDate = date('Y-m-d', strtotime($request->start_date));
         $endDate = date('Y-m-d', strtotime($request->end_date));
@@ -65,6 +65,7 @@ class ReportController extends Controller
             $monthGenerate = date('Y-m', $month);
             // dd($monthGenerate);
             array_push($monthsArray,$monthGenerate);
+            // dd(array_push($monthsArray,$monthGenerate));
             $month = strtotime("+1 month", $month);
             // dd($month);
 
@@ -84,14 +85,62 @@ class ReportController extends Controller
         $accountHeads = AccountHead::orderBy('account_code')->get();
         $projects = Project::where('status',1)->get();
         $query = AccountHead::query();
+        $ledger = TransactionLog::query();
 
-        if ($request->search != '' && $request->account_head != ''){
+        if ($request->search != '' && $request->account_head != '' && $request->project != ''){
             $query->where('id',$request->account_head);
+            $ledger->where('project_id', $request->project);
         }
         $accountHeadsSearch = $query->orderBy('account_code')
                                 ->get();
 
         return view('report.ledger', compact('accountHeadsSearch','accountHeads','monthsArray','currentDate','projects'));
+    }
+    public function projectWiseLedger(Request $request)
+    {
+        // dd($request->all());
+        $startDate = date('Y-m-d', strtotime($request->start_date));
+        $endDate = date('Y-m-d', strtotime($request->end_date));
+        // dd($endDate);
+        $month = strtotime($startDate);
+        // dd($month);
+        $end = strtotime($endDate);
+        // dd($month);
+        $monthsArray = [];
+        while($month <= $end)
+        {
+            $monthGenerate = date('Y-m', $month);
+            // dd($monthGenerate);
+            array_push($monthsArray,$monthGenerate);
+            // dd(array_push($monthsArray,$monthGenerate));
+            $month = strtotime("+1 month", $month);
+            // dd($month);
+
+        }
+
+        $in_word = new DecimalToWords();
+
+        $currentMonth = date('m');
+        // dd($currentMonth);
+        if ($currentMonth < 7){
+            $currentYear = date('Y') - 1;
+            $currentDate = date($currentYear.'-07-01');
+        }else{
+            $currentDate = date('Y-07-01');
+        }
+
+        $accountHeads = AccountHead::orderBy('account_code')->get();
+        $projects = Project::where('status',1)->get();
+        $query = AccountHead::query();
+        $ledger = TransactionLog::where('project_id', $request->project);
+
+        if ($request->search != '' && $request->project != ''){
+            $query->where('id',$request->account_head);
+        }
+        $accountHeadsSearch = $query->orderBy('account_code')
+                                ->get();
+
+        return view('report.project_wise_ledger', compact('accountHeadsSearch','accountHeads','monthsArray','currentDate','projects','ledger'));
     }
 
     public function trailBalance(Request $request)

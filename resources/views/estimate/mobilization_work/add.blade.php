@@ -305,8 +305,8 @@
                 if (unit == '' || unit < 0 || !$.isNumeric(unit))
                     unit = 0;
 
-                $('.total-cost:eq('+i+')').html('৳ ' + parseFloat(cost_amount * quantity * unit).toFixed(2));
-                total += parseFloat(cost_amount * quantity * unit);
+                $('.total-cost:eq('+i+')').html('৳ ' + parseFloat(cost_amount * quantity).toFixed(2));
+                total += parseFloat(cost_amount * quantity);
             });
 
             $('#total-amount').html('৳ ' + total.toFixed(2));

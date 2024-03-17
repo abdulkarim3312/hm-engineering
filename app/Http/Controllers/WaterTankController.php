@@ -206,6 +206,7 @@ class WaterTankController extends Controller
         $totalTon = 0;
         $totalTonTwo = 0;
         $totalKg = 0;
+        $totalKg_two = 0;
         $totalKgTwo = 0;
         foreach ($request->product as $key => $reqProduct) {
 
@@ -235,6 +236,7 @@ class WaterTankController extends Controller
             ]);
 
             $totalKg +=$total_main_rod;
+            $totalKg_two +=$total_main_rod;
             $totalTon += ($total_main_rod / $request->kg_by_ton[$counter]);
 
             $counter++;
@@ -301,6 +303,7 @@ class WaterTankController extends Controller
             ]);
 
             $totalKg += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
+            $totalKg_two += (($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0);
             $totalTon += ((($request->extra_number_of_bar[$counter] * $request->extra_kg_by_rft[$counter]) * $request->extra_length[$counter]??0)/$request->extra_kg_by_ton[$counter]);
 
             $counter++;
@@ -339,7 +342,7 @@ class WaterTankController extends Controller
 
         $waterTank->total_ton = $totalTon * $request->costing_segment_quantity;
         $waterTank->total_kg = $totalKg * $request->costing_segment_quantity;
-        $waterTank->total_common_bar_price = ($totalKg * $request->costing_segment_quantity) * $request->common_bar_costing;
+        $waterTank->total_common_bar_price = ($totalKg_two * $request->costing_segment_quantity) * $request->common_bar_costing;
         $waterTank->total_common_bar_price_two = ($totalKgTwo * $request->costing_segment_quantity) * $request->common_bar_costing;
         $waterTank->total_re_wall_rod = $totalKgTwo;
         $waterTank->save();

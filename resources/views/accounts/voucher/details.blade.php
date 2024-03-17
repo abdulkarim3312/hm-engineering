@@ -101,7 +101,8 @@
                            <span><b>Payment Details:</b></span>
                            <table class="table body-table table-bordered">
                                <tr>
-                                   <th  class="text-center" width="55%">Brief Description</th>
+                                   <th  class="text-center" width="43%">Brief Description</th>
+                                   <th  class="text-center">Client Name</th>
                                    <th class="text-center">Project</th>
                                    <th class="text-center">Account Code</th>
                                    <th class="text-center"></th>
@@ -123,6 +124,7 @@
                                             ({{ $receiptPaymentDetail->narration }})
                                          @endif
                                        </td>
+                                       <td style="border-bottom: 1px solid transparent !important;">{{ $receiptPayment->client->name??'' }}</td>
                                        <td style="border-bottom: 1px solid transparent !important;">{{ $receiptPayment->project->name??'' }}</td>
                                        <td style="border-bottom: 1px solid transparent !important;" class="text-center">{{ $receiptPaymentDetail->accountHead->account_code ?? ''}}</td>
                                        <td style="border-bottom: 1px solid transparent !important;"></td>
@@ -131,6 +133,7 @@
                                @endforeach
 
                                <tr>
+                                   <td style="border-bottom: 1px solid transparent !important;"></td>
                                    <td style="border-bottom: 1px solid transparent !important;"></td>
                                    <td style="border-bottom: 1px solid transparent !important;"></td>
                                    <td style="border-bottom: 1px solid transparent !important;" class="text-center"></td>
@@ -173,6 +176,7 @@
                                <tr>
                                    <th class="text-left">Total(in word) = {{ $receiptPayment->amount_in_word }} Only.</th>
                                    <td></td>
+                                   <th class="text-center"></th>
                                    <th class="text-center"></th>
                                    <th class="text-center">CR.</th>
                                    <th class="text-right">{{ number_format($receiptPayment->net_amount,2) }}</th>

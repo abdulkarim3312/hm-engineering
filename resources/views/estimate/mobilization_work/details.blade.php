@@ -112,7 +112,7 @@
                 </div>
                 <div class="row" style="padding: 5px;border: 1px solid #000;">
                     <div class="col-xs-4 text-right"><strong>Total:</strong></div>
-                    <div class="col-xs-2 text-center"><strong>{{$mobilizationWork->products->sum('unit')}}</strong></div>
+                    <div class="col-xs-2 text-center"><strong></strong></div>
                     <div class="col-xs-2 text-center"><strong>{{$mobilizationWork->products->sum('quantity')}}</strong></div>
                     <div class="col-xs-2 text-center"><strong></strong></div>
                     <div class="col-xs-2 text-center"><strong>{{number_format($mobilizationWork->total,2)}}</strong></div>

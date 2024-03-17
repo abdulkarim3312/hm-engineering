@@ -658,24 +658,6 @@
             });
             $('#estimate_project').trigger('change');
 
-            // $('body').on('change','.product', function () {
-            //     var productID = $(this).val();
-            //     var itemproductID = $(this);
-            //     var barValue = itemproductID.closest('tr').find('.value_of_bar').val();
-            //     var kgTon = itemproductID.closest('tr').find('.kg_by_ton').val();
-            //     //var NumBar = itemproductID.closest('tr').find('.number_of_bar').val();
-            //
-            //
-            //     if (productID != '') {
-            //         itemproductID.closest('tr').find('.dia').val(productID);
-            //         itemproductID.closest('tr').find('.dia_square').val(productID * productID);
-            //         itemproductID.closest('tr').find('.kg_by_rft').val(((productID * productID) / barValue).toFixed(2));
-            //         //var kgRft = itemproductID.closest('tr').find('.kg_by_rft').val();
-            //         //itemproductID.closest('tr').find('.rft_by_ton').html((kgTon/kgRft).toFixed(0));
-            //         //itemproductID.closest('tr').find('.rft_by_ton').val((NumBar * ton).toFixed(0));
-            //     }
-            // })
-            // $('.product').trigger("change");
 
             $('body').on('keyup','#brick_size,#morter,#dry_morter,.length,.height,.wall_number,' +
                 '.deduction_length_one,.deduction_height_one,'+

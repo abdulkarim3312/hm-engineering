@@ -936,7 +936,7 @@
                     'journal_voucher', 'journal_voucher.create', 'journal_voucher.edit','journal_voucher_details',
                     'balance_transfer.add','balance_transfer','balance_transfer',
                     'balance_transfer_voucher_details','balance_transfer_receipt_details',
-                    'report.trail_balance','report.ledger','report.receive_and_payment'];
+                    'report.trail_balance','report.ledger','report.receive_and_payment','report.project_wise_ledger'];
                 ?>
                 @can('accounts_control')
                     <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
@@ -1007,6 +1007,11 @@
                             @can('ledger')
                                 <li class="{{ Route::currentRouteName() == 'report.ledger' ? 'active' : '' }}">
                                     <a href="{{ route('report.ledger') }}"><i class="fa {{ Route::currentRouteName() == 'report.ledger' ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Ledger</a>
+                                </li>
+                            @endcan
+                            @can('ledger')
+                                <li class="{{ Route::currentRouteName() == 'report.project_wise_ledger' ? 'active' : '' }}">
+                                    <a href="{{ route('report.project_wise_ledger') }}"><i class="fa {{ Route::currentRouteName() == 'report.ledger' ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Project Wise Ledger</a>
                                 </li>
                             @endcan
                             @can('trial_balance')

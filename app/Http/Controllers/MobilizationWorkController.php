@@ -58,7 +58,7 @@ class MobilizationWorkController extends Controller
             $mobilizationWorkDetails->remarks=$request->remark[$counter];
             $mobilizationWorkDetails->save();
 
-            $total += $request->cost_amount[$counter] * $request->unit[$counter] * $request->quantity[$counter];
+            $total += $request->cost_amount[$counter] * $request->quantity[$counter];
             $counter++;
         }
         $mobilizationWork->total = $total;

@@ -124,18 +124,18 @@
                                     </tr>
                                     <tr>
                                         <th class="text-center" width="20%">Date</th>
-                                        <th class="text-center" width="20%">Account Head</th>
+                                        <th class="text-center" width="20%">Client Name</th>
                                         <th class="text-center" width="15%">Receipt No</th>
                                         <th class="text-center" width="15%">Notes</th>
                                         <th class="text-center" width="15%">Receipt Type</th>
-                                        <th class="text-center" width="25%">Client Name</th>
+                                        <th class="text-center" width="25%">Account Head</th>
                                         <th class="text-center" width="25%">Amount</th>
                                     </tr>
 
                                     @foreach($receipts as $receipt)
                                         <tr>
                                             <td>{{ date('d-m-Y',strtotime($receipt->date)) }}</td>
-                                            <td>{{ $receipt->accountHead->name ?? ''}}</td>
+                                            <td class="text-center">{{ $receipt->client->name ?? ''}}</td>
                                             <td>{{ $receipt->receipt_payment_no ?? ''}}</td>
                                             <td>{{ $receipt->notes ?? ''}}</td>
                                             <td>
@@ -146,7 +146,7 @@
                                                 @endif
 
                                             </td>
-                                            <td class="text-center">{{ $receipt->client->name ?? ''}}</td>
+                                            <td>{{ $receipt->accountHead->name ?? ''}}</td>
                                             <td class="text-center">৳ {{ number_format($receipt->net_amount,2) }}</td>
                                         </tr>
                                     @endforeach
@@ -156,40 +156,6 @@
                                         <th class="text-center">৳ {{ number_format($receipts->sum('net_amount'),2) }}</th>
                                     </tr>
                                 </table>
-                                {{-- <table class="table table-bordered" style="width:50%; float:left">
-                                    <tr>
-                                        <th colspan="6" class="text-center">Payment</th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center" width="25%">Date</th>
-                                        <th class="text-center" width="25%">Account Head</th>
-                                        <th class="text-center" width="25%">Payment Type</th>
-                                        <th class="text-center" width="25%">Client Name</th>
-                                        <th class="text-center" width="10%">Amount</th>
-                                    </tr>
-
-                                    @foreach($payments as $payment)
-                                        <tr>
-                                            <td>{{ date('d-m-Y',strtotime($payment->date)) }}</td>
-                                            <td>{{ $payment->accountHead->name ?? ''}}</td>
-                                            <td>
-                                                @if($receipt->payment_type == 1)
-                                                    Bank
-                                                @else
-                                                    Cash
-                                                @endif
-
-                                            </td>
-                                            <td class="text-center">{{ $payment->client->name ?? '' }}</td>
-                                            <td class="text-center">৳ {{ number_format($payment->net_amount,2) }}</td>
-                                        </tr>
-                                    @endforeach
-
-                                    <tr>
-                                        <th colspan="4" class="text-right">Total</th>
-                                        <th class="text-center">৳ {{ number_format($payments->sum('net_amount'),2) }}</th>
-                                    </tr>
-                                </table> --}}
                             </div>
                         </div>
                     </div>
