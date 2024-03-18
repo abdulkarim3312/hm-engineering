@@ -25,7 +25,7 @@ class PaintConfigureController extends Controller
     }
 
     public function paintConfigureAddPost(Request $request) {
-
+        dd($request->all());
         $request->validate([
             'estimate_project' => 'required',
             'estimate_floor' => 'required',

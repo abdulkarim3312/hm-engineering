@@ -34,6 +34,7 @@
 
                             <tbody>
                             @foreach($suppliers as $supplier)
+                            {{-- {{ dd($supplier) }} --}}
                                 <tr>
                                     <td>{{ $supplier->name }}</td>
                                     <td>{{ $supplier->company_name }}</td>

@@ -5,6 +5,7 @@ use App\Http\Controllers\BalanceTransferController;
 use App\Http\Controllers\BricksConfigureController;
 use App\Http\Controllers\CommonConfigureController;
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\EarthWorkConfigureController;
 use App\Http\Controllers\EstimateFloorController;
 use App\Http\Controllers\EstimateTypeController;
@@ -493,6 +494,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('labour-designation/add', 'LabourDesignationController@addPost')->middleware('permission:labour_designation');
     Route::get('labour-designation/edit/{labourDesignation}', 'LabourDesignationController@edit')->name('labour_designation.edit')->middleware('permission:labour_designation');
     Route::post('labour-designation/edit/{labourDesignation}', 'LabourDesignationController@editPost')->middleware('permission:labour_designation');
+    // Contractor Route
+    Route::get('contractor-list', [ContractorController::class, 'contractorAll'])->name('contractor.all')->middleware('permission:labour_designation');
+    Route::get('contractor/add', [ContractorController::class, 'contractorAdd'])->name('contractor.add')->middleware('permission:labour_designation');
+    Route::post('contractor/add', [ContractorController::class, 'contractorAddPost'])->middleware('permission:labour_designation');
+    Route::get('contractor/edit/{contractor}', [ContractorController::class, 'contractorEdit'])->name('contractor.edit')->middleware('permission:labour_designation');
+    Route::post('contractor/edit/{contractor}', [ContractorController::class, 'contractorEditPost'])->middleware('permission:labour_designation');
+    Route::get('contractor/list/', [ContractorController::class, 'datatable'])->name('contractor.datatable');
 
 
     // Labour Department

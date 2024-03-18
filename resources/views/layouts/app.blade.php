@@ -518,7 +518,7 @@
                     'labour.attendance','labour_list','labour_designation.all','labour_designation.add',
                     'labour_designation.edit','labour_employee_attendance.report','labour.food_cost',
                     'labour.food_cost.add','labour.food_cost.edit','food_cost.details','labour.bill',
-                    'labour.bill.add','labour.bill.details'];
+                    'labour.bill.add','labour.bill.details','contractor.all'];
                 ?>
                 @can('labour_department')
                     <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
@@ -529,6 +529,11 @@
                        </span>
                         </a>
                         <ul class="treeview-menu {{ in_array(Route::currentRouteName(), $subMenu) ? 'active menu-open' : '' }}">
+                            @can('labour_designation')
+                                <li class="{{ Route::currentRouteName() == 'contractor.all' ? 'active' : '' }}">
+                                    <a href="{{ route('contractor.all') }}"><i class="fa fa-circle-o"></i>Contractor List</a>
+                                </li>
+                            @endcan
                             @can('labour_designation')
                                 <li class="{{ Route::currentRouteName() == 'labour_designation.all' ? 'active' : '' }}">
                                     <a href="{{ route('labour_designation.all') }}"><i class="fa fa-circle-o"></i> Labour Designation</a>

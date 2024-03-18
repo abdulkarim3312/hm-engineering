@@ -71,10 +71,10 @@ class PurchaseController extends Controller
             $productRequisition = ProductRequisition::where('requisition_id',$request->requisition)
                 ->where('purchase_product_id',$request->product[$counter])
                 ->first();
-                // dd($productRequisition);
+
                 if ($productRequisition){
                     $dueQuantity = $productRequisition->approved_quantity - $productRequisition->purchase_quantity;
-                    // dd($dueQuantity);
+
                     if ($dueQuantity < $request->quantity[$counter]){
                         $message = $productRequisition->product->name.' Requisition quantity exceeded, please create new requisition!';
                         return redirect()->back()

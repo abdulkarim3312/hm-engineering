@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('estimate_floor_unit') ? 'has-error' :'' }}">
                                     <label>Estimate Floor Unit</label>
 
@@ -115,10 +115,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Main Paint Type</label>
-                                    <select class="form-control select2 wall_direction" id="main_paint_type" name="main_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                    <select class="form-control main_paint_type" id="main_paint_type" name="main_paint_type[]" data-placeholder="Select WAll Direction" required>
                                         <option>Select Paint</option>
                                         <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Polish Work</option>
                                         <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Inside Paint Work</option>
@@ -127,12 +127,29 @@
                                     </select>
                                 </div>
                             </div>
-                            <div id="polish_work">
-                                <div class="col-md-2">
+
+                        </div>
+
+                        <div class="row">
+                            {{-- <div id="putty_paint_work">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Putty Paint Type</label>
+                                        <select class="form-control select2 putty_paint_type" id="putty_paint_type" name="putty_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                            <option value="null">Select Putty</option>
+                                            <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
+                                            <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                                            <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div id="polish_work">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Polish Paint Type</label>
-                                        <select class="form-control select2 wall_direction" id="sub_paint_type" name="sub_paint_type[]" data-placeholder="Select WAll Direction" required>
-                                            <option>Select Polish</option>
+                                        <select class="form-control select2 polish_paint_type" id="polish_paint_type" name="polish_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                            <option value="null">Select Polish</option>
                                             <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Spirit</option>
                                             <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Gala</option>
                                             <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Markin Cloth</option>
@@ -150,29 +167,29 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="inside_paint_work">
-                                <div class="col-md-2">
+                            </div> --}}
+                            {{-- <div id="inside_paint_work">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Inside Paint Type</label>
-                                        <select class="form-control select2 wall_direction" id="inside_work" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
-                                            <option>Select Inside</option>
+                                        <select class="form-control select2 inside_paint_type" id="inside_paint_type" name="inside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                            <option value="null">Select Inside</option>
                                             <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Plastic Paint</option>
                                             <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Enamel</option>
                                             <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Water Sealer</option>
                                             <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Snow Seen</option>
-                                           
-                                            
+
+
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div id="outside_paint_work">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Outside Paint Type</label>
-                                        <select class="form-control select2 wall_direction" id="outside_work" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
-                                            <option>Select Outside</option>
+                                        <select class="form-control select2 outside_paint_type" id="outside_paint_type" name="outside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                            <option value="null">Select Outside</option>
                                             <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Coat</option>
                                             <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
                                             <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>White Cement</option>
@@ -180,25 +197,8 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="putty_paint_work">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>Putty Paint Type</label>
-                                        <select class="form-control select2 wall_direction" id="putty_work" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
-                                            <option>Select Putty</option>
-                                            <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
-                                            <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
-                                            <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
+                            </div> --}}
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('floor_number') ? 'has-error' :'' }}">
                                     <label>Unit</label>
 
@@ -213,7 +213,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('floor_number') ? 'has-error' :'' }}">
                                     <label>Quantity</label>
 
@@ -224,38 +224,6 @@
                                     <!-- /.input group -->
 
                                     @error('floor_number')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group {{ $errors->has('color_paint_per_cft') ? 'has-error' :'' }}">
-                                    <label>Color Paint Per Cft</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="color_paint_per_cft" step="any" 
-                                               name="color_paint_per_cft" value="{{ old('color_paint_per_cft',0.01111) }}" readonly>
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('color_paint_per_cft')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group {{ $errors->has('seller_paint_per_cft') ? 'has-error' :'' }}">
-                                    <label>Seller Paint Per Cft</label>
-
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="seller_paint_per_cft" step="any"
-                                               name="seller_paint_per_cft" value="{{ old('seller_paint_per_cft',0.01111) }}" readonly>
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('seller_paint_per_cft')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -278,7 +246,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group {{ $errors->has('note') ? 'has-error' :'' }}">
                                     <label>Note</label>
 
@@ -319,7 +287,7 @@
                                         <input type="number" class="form-control" step="any"
                                                name="seller_costing"  placeholder="Enter Per Liter Costing">
                                     </div>
-                                
+
 
                                     @error('seller_costing')
                                     <span class="help-block">{{ $message }}</span>
@@ -332,9 +300,13 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th width="10%">Unit Section</th>
+                                    <th width="10%">Unit Section Area</th>
                                     <th width="10%">Wall Direction</th>
-                                    {{-- <th width="10%">Paint Type</th> --}}
+                                    <th width="10%">Main Paint</th>
+                                    <th id="polish_work_td" width="20%">Polish Paint Type</th>
+                                    <th id="inside_paint_work_td" width="20%">Inside Paint Type</th>
+                                    <th id="outside_paint_work_td" width="20%">Outside Paint Type</th>
+                                    <th id="putty_paint_work_td" width="20%">Putty Paint Type</th>
                                     <th width="10%">Length</th>
                                     <th width="10%">Height/Width</th>
                                     <th width="10%">Deduction Length(1)</th>
@@ -355,7 +327,7 @@
                                         <tr class="product-item">
                                             <td>
                                                 <div class="form-group {{ $errors->has('product.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <select class="form-control select2 product" name="product[]" data-placeholder="Select Unit Section" required>
+                                                    <select class="form-control product" name="product[]" data-placeholder="Select Unit Section" required>
                                                         @foreach($unitSections as $unitSection)
                                                             <option value="{{ $unitSection->id }}" {{ old('product.'.$loop->parent->index) == $unitSection->id ? 'selected' : '' }}>{{ $unitSection->name }}</option>
                                                         @endforeach
@@ -365,7 +337,7 @@
 
                                             <td>
                                                 <div class="form-group {{ $errors->has('wall_direction.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <select class="form-control select2 wall_direction" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
+                                                    <select class="form-control wall_direction" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
                                                         <option value="1" {{ old('wall_direction') == 1 ? 'selected' : '' }}>East</option>
                                                         <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
                                                         <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
@@ -373,7 +345,72 @@
                                                     </select>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control main_paint_type" id="main_paint_type" name="main_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                        <option>Select Paint</option>
+                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Polish Work</option>
+                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Inside Paint Work</option>
+                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Outside Paint Work</option>
+                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Putty Work</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td id="polish_work" style="display: none;">
+                                                <div class="form-group">
+                                                    <select class="form-control polish_paint_type" width="100%" id="polish_paint_type" name="polish_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                        <option value="null">Select Polish</option>
+                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Spirit</option>
+                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Gala</option>
+                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Markin Cloth</option>
+                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 Paper</option>
+                                                        <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>1.5 Paper</option>
+                                                        <option value="6" {{ old('paint_type') == 6 ? 'selected' : '' }}>Chalk Paper</option>
+                                                        <option value="7" {{ old('paint_type') == 7 ? 'selected' : '' }}>Candle</option>
+                                                        <option value="8" {{ old('paint_type') == 8 ? 'selected' : '' }}>Brown</option>
+                                                        <option value="9" {{ old('paint_type') == 9 ? 'selected' : '' }}>Sidur</option>
+                                                        <option value="10" {{ old('paint_type') == 10 ? 'selected' : '' }}>Elamati</option>
+                                                        <option value="11" {{ old('paint_type') == 11? 'selected' : '' }}>Zink Oxaid</option>
+                                                        <option value="12" {{ old('paint_type') == 12 ? 'selected' : '' }}>Woodkeeper</option>
+                                                        <option value="13" {{ old('paint_type') == 13 ?'selected' : '' }}>T6 Thiner</option>
+                                                        <option value="14" {{ old('paint_type') == 14 ? 'selected' : '' }}>NC Thiner</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td id="inside_paint_work" style="display: none;">
+                                                <div class="form-group">
+                                                    <select class="form-control inside_paint_type" id="inside_paint_type" name="inside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                        <option value="null">Select Inside</option>
+                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Plastic Paint</option>
+                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Enamel</option>
+                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Water Sealer</option>
+                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Snow Seen</option>
 
+
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td id="outside_paint_work" style="display: none;">
+                                                <div class="form-group">
+                                                    <select class="form-control outside_paint_type" id="outside_paint_type" name="outside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                        <option value="null">Select Outside</option>
+                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Coat</option>
+                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>White Cement</option>
+                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 no Paper</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td id="putty_paint_work" style="display: none;">
+                                                <div class="form-group">
+                                                    <select class="form-control putty_paint_type" id="putty_paint_type" name="putty_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                        <option value="null">Select Putty</option>
+                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
+                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
+                                                    </select>
+                                                </div>
+                                            </td>
                                             <td>
                                                 <div class="form-group {{ $errors->has('length.'.$loop->index) ? 'has-error' :'' }}">
                                                     <input type="number" step="any"  name="length[]" class="form-control length" value="{{ old('length.'.$loop->index) }}">
@@ -443,7 +480,7 @@
 
                                         <td>
                                             <div class="form-group">
-                                                <select class="form-control select2 wall_direction" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
+                                                <select class="form-control wall_direction" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
                                                     <option value="1" {{ old('wall_direction') == 1 ? 'selected' : '' }}>East</option>
                                                     <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
                                                     <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
@@ -451,9 +488,73 @@
                                                 </select>
                                             </div>
                                         </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select class="form-control main_paint_type" id="main_paint_type" name="main_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                    <option>Select Paint</option>
+                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Polish Work</option>
+                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Inside Paint Work</option>
+                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Outside Paint Work</option>
+                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Putty Work</option>
+                                                </select>
+                                            </div>
+                                        </td>
 
-                                       
+                                        <td id="polish_work" style="display: none;">
+                                            <div class="form-group">
+                                                <select class="form-control polish_paint_type" width="100%" id="polish_paint_type" name="polish_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                    <option value="null">Select Polish</option>
+                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Spirit</option>
+                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Gala</option>
+                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Markin Cloth</option>
+                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 Paper</option>
+                                                    <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>1.5 Paper</option>
+                                                    <option value="6" {{ old('paint_type') == 6 ? 'selected' : '' }}>Chalk Paper</option>
+                                                    <option value="7" {{ old('paint_type') == 7 ? 'selected' : '' }}>Candle</option>
+                                                    <option value="8" {{ old('paint_type') == 8 ? 'selected' : '' }}>Brown</option>
+                                                    <option value="9" {{ old('paint_type') == 9 ? 'selected' : '' }}>Sidur</option>
+                                                    <option value="10" {{ old('paint_type') == 10 ? 'selected' : '' }}>Elamati</option>
+                                                    <option value="11" {{ old('paint_type') == 11? 'selected' : '' }}>Zink Oxaid</option>
+                                                    <option value="12" {{ old('paint_type') == 12 ? 'selected' : '' }}>Woodkeeper</option>
+                                                    <option value="13" {{ old('paint_type') == 13 ?'selected' : '' }}>T6 Thiner</option>
+                                                    <option value="14" {{ old('paint_type') == 14 ? 'selected' : '' }}>NC Thiner</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td id="inside_paint_work" style="display: none;">
+                                            <div class="form-group">
+                                                <select class="form-control inside_paint_type" id="inside_paint_type" name="inside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                    <option value="null">Select Inside</option>
+                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Plastic Paint</option>
+                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Enamel</option>
+                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Water Sealer</option>
+                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Snow Seen</option>
 
+
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td id="outside_paint_work" style="display: none;">
+                                            <div class="form-group">
+                                                <select class="form-control outside_paint_type" id="outside_paint_type" name="outside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                    <option value="null">Select Outside</option>
+                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Coat</option>
+                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>White Cement</option>
+                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 no Paper</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td id="putty_paint_work" style="display: none;">
+                                            <div class="form-group">
+                                                <select class="form-control putty_paint_type" id="putty_paint_type" name="putty_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                                    <option value="null">Select Putty</option>
+                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
+                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
+                                                </select>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="form-group">
                                                 <input type="number" step="any"  name="length[]" class="form-control length">
@@ -539,7 +640,7 @@
         <tr class="product-item">
             <td>
                 <div class="form-group">
-                    <select class="form-control select2 product" name="product[]" data-placeholder="Select Unit Section" required>
+                    <select class="form-control product" name="product[]" data-placeholder="Select Unit Section" required>
                         @foreach($unitSections as $unitSection)
                             <option value="{{ $unitSection->id }}">{{ $unitSection->name }}</option>
                         @endforeach
@@ -549,7 +650,7 @@
 
             <td>
                 <div class="form-group">
-                    <select class="form-control select2 wall_direction" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
+                    <select class="form-control wall_direction" name="wall_direction[]" data-placeholder="Select WAll Direction" required>
                         <option value="1" {{ old('wall_direction') == 1 ? 'selected' : '' }}>East</option>
                         <option value="2" {{ old('wall_direction') == 2 ? 'selected' : '' }}>West</option>
                         <option value="3" {{ old('wall_direction') == 3 ? 'selected' : '' }}>North</option>
@@ -557,8 +658,72 @@
                     </select>
                 </div>
             </td>
+            <td>
+                <div class="form-group">
+                    <select class="form-control main_paint_type" id="main_paint_type" name="main_paint_type[]" data-placeholder="Select WAll Direction" required>
+                        <option>Select Paint</option>
+                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Polish Work</option>
+                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Inside Paint Work</option>
+                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Outside Paint Work</option>
+                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Putty Work</option>
+                    </select>
+                </div>
+            </td>
+            <td id="polish_work">
+                <div class="form-group">
+                    <select class="form-control select2 polish_paint_type" width="100%" id="polish_paint_type" name="polish_paint_type[]" data-placeholder="Select WAll Direction" required>
+                        <option value="null">Select Polish</option>
+                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Spirit</option>
+                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Gala</option>
+                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Markin Cloth</option>
+                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 Paper</option>
+                        <option value="5" {{ old('paint_type') == 5 ? 'selected' : '' }}>1.5 Paper</option>
+                        <option value="6" {{ old('paint_type') == 6 ? 'selected' : '' }}>Chalk Paper</option>
+                        <option value="7" {{ old('paint_type') == 7 ? 'selected' : '' }}>Candle</option>
+                        <option value="8" {{ old('paint_type') == 8 ? 'selected' : '' }}>Brown</option>
+                        <option value="9" {{ old('paint_type') == 9 ? 'selected' : '' }}>Sidur</option>
+                        <option value="10" {{ old('paint_type') == 10 ? 'selected' : '' }}>Elamati</option>
+                        <option value="11" {{ old('paint_type') == 11? 'selected' : '' }}>Zink Oxaid</option>
+                        <option value="12" {{ old('paint_type') == 12 ? 'selected' : '' }}>Woodkeeper</option>
+                        <option value="13" {{ old('paint_type') == 13 ?'selected' : '' }}>T6 Thiner</option>
+                        <option value="14" {{ old('paint_type') == 14 ? 'selected' : '' }}>NC Thiner</option>
+                    </select>
+                </div>
+            </td>
+            <td id="inside_paint_work">
+                <div class="form-group">
+                    <select class="form-control select2 inside_paint_type" width="100%" id="inside_paint_type" name="inside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                        <option value="null">Select Inside</option>
+                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Plastic Paint</option>
+                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Enamel</option>
+                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Water Sealer</option>
+                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Snow Seen</option>
 
 
+                    </select>
+                </div>
+            </td>
+            <td id="outside_paint_work">
+                <div class="form-group">
+                    <select class="form-control select2 outside_paint_type" id="outside_paint_type" name="outside_paint_type[]" data-placeholder="Select WAll Direction" required>
+                        <option value="null">Select Outside</option>
+                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Coat</option>
+                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>White Cement</option>
+                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 no Paper</option>
+                    </select>
+                </div>
+            </td>
+            <td id="putty_paint_work">
+                <div class="form-group">
+                    <select class="form-control select2 putty_paint_type" id="putty_paint_type" name="putty_paint_type[]" data-placeholder="Select WAll Direction" required>
+                        <option value="null">Select Putty</option>
+                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
+                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
+                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
+                    </select>
+                </div>
+            </td>
             <td>
                 <div class="form-group">
                     <input type="number" step="any"  name="length[]" class="form-control length">
@@ -635,34 +800,47 @@
 
             $('body').on('change','#main_paint_type', function () {
                 var paintType = $(this).val();
-                // alert(paintType);
                 if (paintType == 1) {
                     $('#inside_paint_work').hide();
+                    $('#inside_paint_work_td').hide();
                     $('#outside_paint_work').hide();
+                    $('#outside_paint_work_td').hide();
                     $('#putty_paint_work').hide();
+                    $('#putty_paint_work_td').hide();
                     $('#polish_work').show();
+                    $('#polish_work_td').show();
                 }else if(paintType == 2){
                     $('#inside_paint_work').show();
+                    $('#inside_paint_work_td').show();
                     $('#outside_paint_work').hide();
+                    $('#outside_paint_work_td').hide();
                     $('#putty_paint_work').hide();
+                    $('#putty_paint_work_td').hide();
                     $('#polish_work').hide();
+                    $('#polish_work_td').hide();
                 }else if(paintType == 3){
                     $('#outside_paint_work').show();
+                    $('#outside_paint_work_td').show();
                     $('#inside_paint_work').hide();
+                    $('#inside_paint_work_td').hide();
                     $('#putty_paint_work').hide();
+                    $('#putty_paint_work_td').hide();
                     $('#polish_work').hide();
-                }else if(paintType == 4){
-                    $('#putty_paint_work').show();
-                    $('#inside_paint_work').hide();
-                    $('#outside_paint_work').hide();
-                    $('#polish_work').hide();
+                    $('#polish_work_td').hide();
                 }else {
-                   
+                    $('#putty_paint_work').show();
+                    $('#putty_paint_work_td').show();
+                    $('#inside_paint_work').hide();
+                    $('#inside_paint_work_td').hide();
+                    $('#outside_paint_work').hide();
+                    $('#outside_paint_work_td').hide();
+                    $('#polish_work').hide();
+                    $('#polish_work_td').hide();
                 }
             })
             $('#main_paint_type').trigger("change");
 
-            $('body').on('change','#sub_paint_type', function () {
+            $('body').on('change','#polish_paint_type', function () {
                 var subPaintType = $(this).val();
                 var spirit_unit = 'ltr';
                 var galan_unit = 'gm';
@@ -692,11 +870,11 @@
                 var nc_thiner = 0.000375;
                 var zink = 2;
                 var woodkeeper = 0.005;
-               
+
                 if (subPaintType == 1) {
                     $('#polish_work_data').val(spirit);
                     $('#unit_spirit').val(spirit_unit);
-                   
+
                 }else if(subPaintType == 2){
                     $('#polish_work_data').val(gala);
                     $('#unit_spirit').val(galan_unit);
@@ -738,12 +916,11 @@
                     $('#unit_spirit').val(nc_unit);
                 }
             })
-            $('#sub_paint_type').trigger("change");
+            $('#polish_paint_type').trigger("change");
 
-            
-            $('body').on('change','#inside_work', function () {
+
+            $('body').on('change','#inside_paint_type', function () {
                 var insidePaintType = $(this).val();
-                // alert(insidePaintType);
                 var plastic_unit = 'galan';
                 var eanmel_unit = 'galan';
                 var water_unit = 'galan';
@@ -752,12 +929,12 @@
                 var eanmel = 0.00312;
                 var water = 0.002;
                 var snow = 0.002;
-             
-               
+
+
                 if (insidePaintType == 1) {
                     $('#polish_work_data').val(plastic);
                     $('#unit_spirit').val(plastic_unit);
-                   
+
                 }else if(insidePaintType == 2){
                     $('#polish_work_data').val(eanmel);
                     $('#unit_spirit').val(eanmel_unit);
@@ -769,11 +946,10 @@
                     $('#unit_spirit').val(snow_unit);
                 }
             })
-            $('#inside_work').trigger("change");
+            $('#inside_paint_type').trigger("change");
 
-            $('body').on('change','#outside_work', function () {
+            $('body').on('change','#outside_paint_type', function () {
                 var insidePaintType = $(this).val();
-                // alert(insidePaintType);
                 var wather_unit = 'galan';
                 var plastic_unit = 'galan';
                 var white_unit = 'kg';
@@ -782,40 +958,38 @@
                 var wather = 0.001;
                 var white = 0.0333;
                 var paper = 0.005;
-             
-               
+
                 if (insidePaintType == 1) {
                     $('#polish_work_data').val(plastic);
                     $('#unit_spirit').val(plastic_unit);
-                   
+
                 }else if(insidePaintType == 2){
                     $('#polish_work_data').val(wather);
                     $('#unit_spirit').val(wather_unit);
                 }else if(insidePaintType == 3){
                     $('#polish_work_data').val(white);
-                    $('#markin_unit').val(white_unit);
+                    $('#unit_spirit').val(white_unit);
                 }else {
                     $('#polish_work_data').val(paper);
                     $('#unit_spirit').val(paper_unit);
                 }
             })
-            $('#outside_work').trigger("change");
+            $('#outside_paint_type').trigger("change");
 
-            $('body').on('change','#putty_work', function () {
+            $('body').on('change','#putty_paint_type', function () {
                 var puttyPaintType = $(this).val();
-                // alert(insidePaintType);
                 var chalk_unit = 'bag';
                 var plastic_unit = 'liter';
                 var enamel_unit = 'liter';
                 var chalk = 0.00125;
                 var plastic = 0.00312;
                 var enamel = 0.00375;
-             
-               
+
+
                 if (puttyPaintType == 1) {
                     $('#polish_work_data').val(chalk);
                     $('#unit_spirit').val(chalk_unit);
-                   
+
                 }else if(puttyPaintType == 2){
                     $('#polish_work_data').val(plastic);
                     $('#unit_spirit').val(plastic_unit);
@@ -824,7 +998,7 @@
                     $('#unit_spirit').val(enamel_unit);
                 }
             })
-            $('#putty_work').trigger("change");
+            $('#putty_paint_type').trigger("change");
 
             $('#btn-add-product').click(function () {
                 var html = $('#template-product').html();
@@ -833,7 +1007,7 @@
                 $('#product-container').append(item);
 
                 initProduct();
-
+                calculate();
                 if ($('.product-item').length >= 1 ) {
                     $('.btn-remove').show();
                 }
@@ -891,7 +1065,7 @@
             var totalLiter = 0;
             var color_paint_per_cft = $('#color_paint_per_cft').val();
             var unit_spirit = $('#polish_work_data').val();
-            // alert(unit_spirit);
+
             if (unit_spirit == '' || unit_spirit < 0 || !$.isNumeric(unit_spirit))
                 unit_spirit = 0;
             $('.product-item').each(function(i, obj) {
@@ -934,7 +1108,6 @@
                 var deduction_two = parseFloat(deduction_length_two * deduction_height_two);
 
                 var totalDeduction = deduction_one + deduction_two;
-                // var val1 = unit_spirit / (length * height);
                 var item = unit_spirit * (length * height)
                 console.log(item);
 
