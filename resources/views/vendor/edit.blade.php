@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Contractor Add
+    Vendor Edit
 @endsection
 
 @section('content')
@@ -9,12 +9,11 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Contractor Information</h3>
+                    <h3 class="box-title">Vendor Information</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-            
-                <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{ route('contractor.add') }}">
+                <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{ route('vendor.edit', ['vendor' => $vendor->id]) }}">
                     @csrf
 
                     <div class="box-body">
@@ -24,72 +23,58 @@
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter Name"
-                                       name="name" value="{{ old('name') }}">
+                                       name="name" value="{{ old('name', $vendor->name ?? '') }}">
 
                                 @error('name')
                                 <span class="help-block">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 control-label">Contractor ID</label>
+                        <div class="form-group {{ $errors->has('vendor_id') ? 'has-error' :'' }}">
+                            <label class="col-sm-2 control-label">Vendor ID</label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter ID"
-                                       name="contractor_id" value="{{ old('contractor_id') }}">
+                                       name="vendor_id" value="{{ old('vendor_id', $vendor->vendor_id ?? '') }}">
 
-                                @error('contractor_id')
+                                @error('vendor_id')
                                 <span class="help-block">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="form-group {{ $errors->has('project_id') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 control-label">Project <span class="text-danger">*</span></label>
+                            <label class="col-sm-2 control-label">Purpose <span class="text-danger">*</span></label>
 
                             <div class="col-sm-10">
-                                <select name="project_id" class="form-control" >
-                                    <option value="">Select Project Type</option>
-                                    @foreach ($projects as $project)
-                                        <option value="{{ $project->id }}" {{ old('project_id') == 1 ? 'selected' : '' }}>{{ $project->name ?? '' }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" placeholder="Enter Purpose"
+                                       name="contractor_id" value="{{ old('contractor_id', $vendor->purpose ?? '') }}">
 
-                                @error('project_id')
+                                @error('contractor_id')
                                 <span class="help-block">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group {{ $errors->has('trade') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 control-label">Trade <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                                <select name="trade" class="form-control" >
-                                    <option>Select Trade</option>
-                                    <option value="1">Civil Contractor</option>
-                                    <option value="2">Paint Contractor</option>
-                                    <option value="3">Sanitary Contractor</option>
-                                    <option value="4">Tiles Contractor</option>
-                                    <option value="5">MS Contractor</option>
-                                    <option value="6">Wood Contractor</option>
-                                    <option value="7">Electric Contractor</option>
-                                    <option value="8">Thai Contractor</option>
-                                    <option value="8">Other Contractor</option>
-                                </select>
-
-                                @error('trade')
-                                <span class="help-block">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
                         <div class="form-group {{ $errors->has('mobile') ? 'has-error' :'' }}">
                             <label class="col-sm-2 control-label">Mobile No. *</label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter Mobile No."
-                                       name="mobile" value="{{ old('mobile') }}">
+                                       name="mobile" value="{{ old('mobile', $vendor->mobile ?? '') }}">
 
                                 @error('mobile')
+                                <span class="help-block">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
+                            <label class="col-sm-2 control-label">Email</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Mobile No."
+                                       name="email" value="{{ old('email', $vendor->email ?? '') }}">
+
+                                @error('email')
                                 <span class="help-block">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -99,7 +84,7 @@
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter NID"
-                                       name="nid" value="{{ old('nid') }}">
+                                       name="nid" value="{{ old('nid', $vendor->nid ?? '') }}">
 
                                 @error('nid')
                                 <span class="help-block">{{ $message }}</span>
@@ -111,7 +96,7 @@
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter Amount"
-                                       name="total" value="{{ old('total') }}">
+                                       name="total" value="{{ old('total', $vendor->total ?? '') }}">
 
                                 @error('total')
                                 <span class="help-block">{{ $message }}</span>
@@ -124,7 +109,7 @@
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" placeholder="Enter address"
-                                       name="address" value="{{ old('address') }}">
+                                       name="address" value="{{ old('address', $vendor->address ?? '') }}">
 
                                 @error('address')
                                 <span class="help-block">{{ $message }}</span>
@@ -148,14 +133,16 @@
 
                                 <div class="radio" style="display: inline">
                                     <label>
-                                        <input type="radio" name="status" value="1" {{ old('status') == '1' ? 'checked' : '' }}>
+                                        <input type="radio" name="status" value="1" {{ empty(old('status')) ? ($errors->has('status') ? '' : ($vendor->status == '1' ? 'checked' : '')) :
+                                        (old('status') == '1' ? 'checked' : '') }}>
                                         Active
                                     </label>
                                 </div>
 
                                 <div class="radio" style="display: inline">
                                     <label>
-                                        <input type="radio" name="status" value="0" {{ old('status') == '0' ? 'checked' : '' }}>
+                                        <input type="radio" name="status" value="0" {{ empty(old('status')) ? ($errors->has('status') ? '' : ($vendor->status == '0' ? 'checked' : '')) :
+                                        (old('status') == '0' ? 'checked' : '') }}>
                                         Inactive
                                     </label>
                                 </div>

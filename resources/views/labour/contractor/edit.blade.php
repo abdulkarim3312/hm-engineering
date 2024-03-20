@@ -104,7 +104,18 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group {{ $errors->has('total') ? 'has-error' :'' }}">
+                            <label class="col-sm-2 control-label">Contact Payment</label>
 
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                       name="total" value="{{ old('total',$contractor->total ?? '') }}">
+
+                                @error('total')
+                                <span class="help-block">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group {{ $errors->has('address') ? 'has-error' :'' }}">
                             <label class="col-sm-2 control-label">Address *</label>
 

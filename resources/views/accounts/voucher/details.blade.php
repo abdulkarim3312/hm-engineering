@@ -102,7 +102,15 @@
                            <table class="table body-table table-bordered">
                                <tr>
                                    <th  class="text-center" width="43%">Brief Description</th>
-                                   <th  class="text-center">Client Name</th>
+                                   @if ($receiptPayment->client_id != null)
+                                        <th  class="text-center">Client Name</th>
+                                   @endif
+                                   @if ($receiptPayment->vendor_id != null)
+                                        <th  class="text-center">Vendor Name</th>
+                                   @endif
+                                   @if ($receiptPayment->contractor_id != null)
+                                        <th  class="text-center">Contractor Name</th>
+                                   @endif
                                    <th class="text-center">Project</th>
                                    <th class="text-center">Account Code</th>
                                    <th class="text-center"></th>
@@ -117,14 +125,22 @@
                                    <td style="border-bottom: 1px solid transparent !important;" class="text-right"></td>
                                </tr>
                                @foreach($receiptPayment->receiptPaymentDetails as $key => $receiptPaymentDetail)
-
+                                {{-- {{ dd($receiptPaymentDetail) }} --}}
                                    <tr>
                                        <td style="border-bottom: 1px solid transparent !important;"> {{ $receiptPaymentDetail->accountHead->name ?? ''}}
                                         @if($receiptPaymentDetail->narration)
                                             ({{ $receiptPaymentDetail->narration }})
                                          @endif
                                        </td>
-                                       <td style="border-bottom: 1px solid transparent !important;">{{ $receiptPayment->client->name??'' }}</td>
+                                       @if ($receiptPayment->client_id != null)
+                                            <td style="border-bottom: 1px solid transparent !important; text-align: center;">{{ $receiptPayment->client->name??'' }}</td>
+                                       @endif
+                                       @if ($receiptPayment->vendor_id != null)
+                                            <td style="border-bottom: 1px solid transparent !important; text-align: center;">{{ $receiptPayment->vendor->name??'' }}</td>
+                                       @endif
+                                       @if ($receiptPayment->contractor_id != null)
+                                            <td style="border-bottom: 1px solid transparent !important; text-align: center;">{{ $receiptPayment->contractor->name??'' }}</td>
+                                       @endif
                                        <td style="border-bottom: 1px solid transparent !important;">{{ $receiptPayment->project->name??'' }}</td>
                                        <td style="border-bottom: 1px solid transparent !important;" class="text-center">{{ $receiptPaymentDetail->accountHead->account_code ?? ''}}</td>
                                        <td style="border-bottom: 1px solid transparent !important;"></td>

@@ -48,6 +48,8 @@ use App\Http\Controllers\InteriorDesignController;
 use App\Http\Controllers\SteelStructureController;
 use App\Http\Controllers\ChemicalTreatmentController;
 use App\Http\Controllers\WaterTankController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\BankCheckController;
 
 /*
 |--------------------------------------------------------------------------
@@ -284,6 +286,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('account-head/type/add', 'AccountsController@accountHeadTypeAddPost')->middleware('permission:type');
     Route::get('account-head/type/edit/{type}', 'AccountsController@accountHeadTypeEdit')->name('account_head.type.edit')->middleware('permission:type');
     Route::post('account-head/type/edit/{type}', 'AccountsController@accountHeadTypeEditPost')->middleware('permission:type');
+    // Payment Check
+    Route::get('payment-check', [BankCheckController::class,'index'])->name('payment_check')->middleware('permission:type');
+    Route::get('payment-check/add', [BankCheckController::class,'add'])->name('payment_check.add')->middleware('permission:type');
+    Route::post('payment-check/add', [BankCheckController::class,'addPost'])->middleware('permission:type');
+    Route::get('payment-check/edit/{cheque}', [BankCheckController::class,'edit'])->name('payment_check.edit')->middleware('permission:type');
+    Route::post('payment-check/edit/{cheque}', [BankCheckController::class,'editPost'])->middleware('permission:type');
 
     // Account Head Type
     Route::get('account-head', [AccountHeadController::class,'accountHead'])->name('account_head')->middleware('permission:account_head');
@@ -468,6 +476,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('designation/edit/{designation}', 'DesignationController@edit')->name('designation.edit')->middleware('permission:designation');
     Route::post('designation/edit/{designation}', 'DesignationController@editPost')->middleware('permission:designation');
 
+    // Vendor Route
+    Route::get('vendor/all', [VendorController::class,'index'])->name('vendor.all')->middleware('permission:designation');
+    Route::get('vendor/add', [VendorController::class,'add'])->name('vendor.add')->middleware('permission:designation');
+    Route::post('vendor/add', [VendorController::class,'addPost'])->middleware('permission:designation')->middleware('permission:designation');
+    Route::get('vendor/edit/{vendor}', [VendorController::class,'edit'])->name('vendor.edit')->middleware('permission:designation');
+    Route::post('vendor/edit/{vendor}', [VendorController::class,'editPost'])->middleware('permission:designation');
+    Route::get('vendor/delete/{vendor}', [VendorController::class, 'vendorDelete'])->name('vendor.delete');
+    Route::get('vendor/list/', [VendorController::class, 'datatable'])->name('vendor.datatable');
+    Route::get('vendor/list/show', [VendorController::class, 'vendorList'])->name('vendor.list');
+    Route::get('vendor/payment/', [VendorController::class, 'vendorPayment'])->name('vendor.payment');
+    Route::post('vendor/make/payment', [VendorController::class, 'makePayment'])->name('vendor_make_payment');
+    Route::get('vendor-payment-details/{vendor}', [VendorController::class,'vendorPaymentDetails'])->name('vendor_payment.details');
+    Route::get('vendor-datatable', [VendorController::class,'vendorPaymentDatatable'])->name('vendor_payment.datatable');
+
     // HR
     Route::get('employee', 'HRController@employeeIndex')->name('employee.all')->middleware('permission:employee');
     Route::get('employee/datatable', 'HRController@employeeDatatable')->name('employee.datatable');
@@ -500,7 +522,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('contractor/add', [ContractorController::class, 'contractorAddPost'])->middleware('permission:labour_designation');
     Route::get('contractor/edit/{contractor}', [ContractorController::class, 'contractorEdit'])->name('contractor.edit')->middleware('permission:labour_designation');
     Route::post('contractor/edit/{contractor}', [ContractorController::class, 'contractorEditPost'])->middleware('permission:labour_designation');
+    Route::get('contractor/delete/{contractor}', [ContractorController::class, 'contractorDelete'])->name('contractor.delete');
     Route::get('contractor/list/', [ContractorController::class, 'datatable'])->name('contractor.datatable');
+    Route::get('contractor/payment/', [ContractorController::class, 'supplierPayment'])->name('contractor.payment');
+    Route::post('contractor/make/payment', [ContractorController::class, 'makePayment'])->name('contractor_make_payment');
+    Route::get('contractor-payment-details/{contractor}', [ContractorController::class,'contractorPaymentDetails'])->name('contractor_payment.details');
+    Route::get('contractor-datatable', [ContractorController::class,'contractorPaymentDatatable'])->name('contractor_payment.datatable');
+    Route::get('contractor-list-view', [ContractorController::class,'contractorList'])->name('contractor.list');
 
 
     // Labour Department

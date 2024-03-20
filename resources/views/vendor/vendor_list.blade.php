@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Labour Employee List
+    Vendor List
 @endsection
 @section('style')
     <style>
@@ -56,7 +56,7 @@
                             <h4>{{\App\Enumeration\Text::$companyEmail}}</h4>
                             </div>
                             <div class="col-xs-12 text-center">
-                                <h3><u>Labour Employee List</u></h3>
+                                <h3><u>Vendor List</u></h3>
                             </div>
                         </div>
                         <table id="table" class="table table-bordered table-striped">
@@ -64,19 +64,19 @@
                             <tr >
                                 <th class="text-center">ID</th>
                                 <th class="text-center">Name</th>
-                                <th class="text-center">Designation</th>
-                                <th class="text-center">Project</th>
+                                <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
+                                <th class="text-center">Address</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($employees as $employee)
+                            @foreach($vendors as $vendor)
                                 <tr>
-                                    <td class="text-center">{{$employee->employee_id}}</td>
-                                    <td>{{$employee->name}}</td>
-                                    <td class="text-center">{{$employee->designation->name}}</td>
-                                    <td class="text-center">{{$employee->project->name}}</td>
-                                    <td class="text-center">{{$employee->mobile_no}}</td>
+                                    <td class="text-center">{{$vendor->vendor_id}}</td>
+                                    <td>{{$vendor->name}}</td>
+                                    <td class="text-center">{{$vendor->email ?? ''}}</td>
+                                    <td class="text-center">{{$vendor->mobile ?? ''}}</td>
+                                    <td class="text-center">{{$vendor->address}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

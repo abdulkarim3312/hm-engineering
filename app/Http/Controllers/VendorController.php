@@ -4,28 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Model\Project;
 use App\Model\TransactionLog;
-use App\Models\Contractor;
 use App\Models\ReceiptPayment;
 use App\Models\ReceiptPaymentDetail;
-use Carbon\Carbon;
+use App\Models\Vendor;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 
-class ContractorController extends Controller
+class VendorController extends Controller
 {
-    public function contractorAll() {
-        $contractors = Contractor::where('status', 1)->get();
-        return view('labour.contractor.all',compact('contractors'));
+    public function index() {
+        $contractors = Vendor::where('status', 1)->get();
+        return view('vendor.all',compact('contractors'));
     }
 
-    public function contractorAdd() {
+    public function add() {
         $projects = Project::where('status', 1)->get();
-        return view('labour.contractor.add', compact('projects'));
+        return view('vendor.add', compact('projects'));
     }
 
-    public function contractorAddPost(Request $request) {
+    public function addPost(Request $request) {
+    //    dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'project_id' => 'nullable',
@@ -46,29 +47,29 @@ class ContractorController extends Controller
             $imagePath = 'uploads/contractor/'.$filename;
         }
 
-        $contractor = new Contractor();
-        $contractor->name = $request->name;
-        $contractor->contractor_id = $request->contractor_id;
-        $contractor->project_id = $request->project_id;
-        $contractor->trade = $request->trade;
-        $contractor->image = $imagePath;
-        $contractor->mobile = $request->mobile;
-        $contractor->nid = $request->nid;
-        $contractor->total = $request->total;
-        $contractor->due = $request->total;
-        $contractor->address = $request->address;
-        $contractor->status = $request->status;
-        $contractor->save();
+        $vendor = new Vendor();
+        $vendor->name = $request->name;
+        $vendor->vendor_id = $request->vendor_id;
+        $vendor->purpose = $request->contractor_id;
+        $vendor->image = $imagePath;
+        $vendor->mobile = $request->mobile;
+        $vendor->email = $request->email;
+        $vendor->nid = $request->nid;
+        $vendor->total = $request->total;
+        $vendor->due = $request->total;
+        $vendor->address = $request->address;
+        $vendor->status = $request->status;
+        $vendor->save();
 
-        return redirect()->route('contractor.all')->with('message', 'Contractor add successfully.');
+        return redirect()->route('vendor.all')->with('message', 'Vendor add successfully.');
     }
 
-    public function contractorEdit(Contractor $contractor) {
+    public function edit(Vendor $vendor) {
         $projects = Project::where('status', 1)->get();
-        return view('labour.contractor.edit', compact('contractor','projects'));
+        return view('vendor.edit', compact('vendor','projects'));
     }
 
-    public function contractorEditPost(Contractor $contractor, Request $request) {
+    public function editPost(Vendor $vendor, Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
             'project_id' => 'nullable',
@@ -80,13 +81,13 @@ class ContractorController extends Controller
             'status' => 'required'
         ]);
 
-        $imagePath = $contractor->image;
+        $imagePath = $vendor->image;
 
         if ($request->image) {
 
-            if ($contractor->image){
+            if ($vendor->image){
                 // Previous Photo
-                $previousPhoto = public_path($contractor->image);
+                $previousPhoto = public_path($vendor->image);
                 unlink($previousPhoto);
             }
 
@@ -98,79 +99,58 @@ class ContractorController extends Controller
 
             $imagePath = 'uploads/contractor/'.$filename;
         }
-        $contractor->name = $request->name;
-        $contractor->contractor_id = $request->contractor_id;
-        $contractor->project_id = $request->project_id;
-        $contractor->trade = $request->trade;
-        $contractor->image = $imagePath;
-        $contractor->mobile = $request->mobile;
-        $contractor->nid = $request->nid;
-        $contractor->total = $request->total;
-        $contractor->due = $request->total;
-        $contractor->address = $request->address;
-        $contractor->status = $request->status;
-        $contractor->save();
+        $vendor->name = $request->name;
+        $vendor->vendor_id = $request->vendor_id;
+        $vendor->purpose = $request->contractor_id;
+        $vendor->image = $imagePath;
+        $vendor->mobile = $request->mobile;
+        $vendor->email = $request->email;
+        $vendor->nid = $request->nid;
+        $vendor->total = $request->total;
+        $vendor->due = $request->total;
+        $vendor->address = $request->address;
+        $vendor->status = $request->status;
+        $vendor->save();
 
 
-        return redirect()->route('contractor.all')->with('message', 'Contractor edit successfully.');
+        return redirect()->route('vendor.all')->with('message', 'Vendor edit successfully.');
     }
-    public function contractorDelete(Contractor $contractor){
-        Contractor::find($contractor->id)->delete();
-        return redirect()->route('contractor.all')->with('message', 'Contractor Info Deleted Successfully.');
+    public function vendorDelete(Vendor $vendor){
+        Vendor::find($vendor->id)->delete();
+        return redirect()->route('vendor.all')->with('message', 'Vendor Info Deleted Successfully.');
     }
 
-    public function contractorPaymentDetails(Contractor $contractor)
-    {
-        return view('labour.contractor.contractor_payment_details',compact('contractor'));
-    }
 
     public function datatable() {
-        $query = Contractor::with('projects');
+        $query = Vendor::with('projects');
 
         return DataTables::eloquent($query)
-            ->addColumn('project', function(Contractor $contractor) {
-                return $contractor->projects->name ?? '';
+            ->addColumn('project', function(Vendor $vendor) {
+                return $vendor->projects->name ?? '';
             })
-            ->addColumn('action', function(Contractor $contractor) {
+            ->addColumn('action', function(Vendor $vendor) {
                 $btn = '';
-                $btn = '<a class="btn btn-info btn-sm" href="'.route('contractor.edit', ['contractor' => $contractor->id]).'">Edit</a>';
-                $btn .= '<a href="'.route('contractor.delete', ['contractor' => $contractor->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
+                $btn = '<a class="btn btn-info btn-sm" href="'.route('vendor.edit', ['vendor' => $vendor->id]).'">Edit</a>';
+                $btn .= '<a href="'.route('vendor.delete', ['vendor' => $vendor->id]).'" onclick="return confirm(`Are you sure remove this item ?`)" class="btn btn-danger btn-sm btn_delete" style="margin-left: 3px;">Delete</a>';
                 return $btn;
             })
-            ->editColumn('image', function(Contractor $contractor) {
-                return '<img width="50px" heigh="50px" src="'.asset($contractor->image ?? 'img/no_image.png').'" />';
+            ->editColumn('image', function(Vendor $vendor) {
+                return '<img width="50px" heigh="50px" src="'.asset($vendor->image ?? 'img/no_image.png').'" />';
             })
-            ->editColumn('total', function(Contractor $contractor) {
-                return ' '.number_format($contractor->total, 2);
+            ->editColumn('total', function(Vendor $vendor) {
+                return ' '.number_format($vendor->total, 2);
             })
-            ->editColumn('paid', function(Contractor $contractor) {
-                return ' '.number_format($contractor->paid, 2);
+            ->editColumn('paid', function(Vendor $vendor) {
+                return ' '.number_format($vendor->paid, 2);
             })
-            ->editColumn('due', function(Contractor $contractor) {
-                return ' '.number_format($contractor->due, 2);
+            ->editColumn('due', function(Vendor $vendor) {
+                return ' '.number_format($vendor->due, 2);
             })
-            ->editColumn('trade', function (Contractor $contractor) {
-                if ($contractor->trade == 1)
-                    return '<span class="label label-success">Civil Contractor</span>';
-                elseif($contractor->trade == 2)
-                    return '<span class="label label-warning">Paint Contractor</span>';
-                elseif($contractor->trade == 3)
-                    return '<span class="label label-primary">Sanitary Contractor</span>';
-                elseif($contractor->trade == 4)
-                    return '<span class="label label-info">Tiles Contractor</span>';
-                elseif($contractor->trade == 5)
-                    return '<span class="label label-info">MS Contractor</span>';
-                elseif($contractor->trade == 6)
-                    return '<span class="label label-info">Wood Contractor</span>';
-                elseif($contractor->trade == 7)
-                    return '<span class="label label-info">Electric Contractor</span>';
-                elseif($contractor->trade == 8)
-                    return '<span class="label label-info">Thai Contractor</span>';
-                else
-                    return '<span class="label label-danger">Other Contractor</span>';
+            ->editColumn('trade', function (Vendor $vendor) {
+                return $vendor->purpose;
             })
-            ->editColumn('status', function(Contractor $contractor) {
-                if ($contractor->status == 1)
+            ->editColumn('status', function(Vendor $vendor) {
+                if ($vendor->status == 1)
                     return '<span class="label label-success">Active</span>';
                 else
                     return '<span class="label label-danger">Inactive</span>';
@@ -178,24 +158,18 @@ class ContractorController extends Controller
             ->rawColumns(['action', 'status','image','trade'])
             ->toJson();
     }
-    public function supplierPayment() {
-        $contractors = Contractor::where('status',1)->get();
+    public function vendorPayment() {
+        $vendors = Vendor::where('status',1)->get();
         $projects = Project::where('status', 1)->get();
-        return view('labour.supplier_payment.all', compact('contractors','projects'));
+        return view('vendor.payment_all', compact('vendors','projects'));
     }
-
-
-    public function contractorList() {
-        $contractors = Contractor::where('status',1)->get();
-        return view('labour.contractor.contractor_list', compact('contractors'));
+    public function vendorList() {
+        $vendors = Vendor::where('status',1)->get();
+        return view('vendor.vendor_list', compact('vendors'));
     }
-
     public function makePayment(Request $request) {
-        // dd($request->all());
-
         $rules = [
             'financial_year' => 'required',
-            // 'order' => 'required',
             'project' => 'nullable',
             'payment_type' => 'required',
             'account' => 'required',
@@ -214,23 +188,19 @@ class ContractorController extends Controller
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
-        $contractor =Contractor::find($request->supplier);
-        // dd($contractor);
-        $rules['amount'] = 'required|numeric|min:0|max:'.$contractor->due;
+        $vendor =Vendor::find($request->supplier);
+       
+        $rules['amount'] = 'required|numeric|min:0|max:'.$vendor->due;
 
 
         $validator = Validator::make($request->all(), $rules);
 
-        // if ($validator->fails()) {
-        //     return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
-        // }
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+        }
 
-        // $order = PurchaseOrder::find($request->order);
-
-        // $supplier->decrement('due', $request->amount);
-        // $supplier->decrement('paid', $request->amount);
-        $contractor->increment('paid', $request->amount);
-        $contractor->decrement('due', $request->amount);
+        $vendor->increment('paid', $request->amount);
+        $vendor->decrement('due', $request->amount);
 
         //create dynamic voucher no process start
         $transactionType = 2;
@@ -244,11 +214,7 @@ class ContractorController extends Controller
         $receiptPaymentNoSl = $receiptPaymentNoExplode[1];
         $receiptPayment = new ReceiptPayment();
 
-        if($request->project){
-            $receiptPayment->project_id = $request->project;
-        }else{
-            $receiptPayment->project_id = $contractor->project_id;
-        }
+        $receiptPayment->project_id = $request->project;
         $receiptPayment->receipt_payment_no = $voucherNo;
         $receiptPayment->financial_year = financialYear($request->financial_year);
         $receiptPayment->date = Carbon::parse($request->date)->format('Y-m-d');
@@ -261,16 +227,15 @@ class ContractorController extends Controller
             $receiptPayment->cheque_date = Carbon::parse($request->cheque_date)->format('Y-m-d');
         }
         $receiptPayment->client_id = null;
-        $receiptPayment->contractor_id = $contractor->id;
-        $receiptPayment->vendor_id = null;
-        $receiptPayment->customer_id = $contractor->contractor_id;
+        $receiptPayment->contractor_id = null;
+        $receiptPayment->vendor_id = $vendor->id;
+        $receiptPayment->customer_id = $vendor->vendor_id;
         $receiptPayment->sub_total = $request->amount;
         $receiptPayment->net_amount = $request->amount;
-        $receiptPayment->purchase_order_id = $contractor->id;
+        $receiptPayment->purchase_order_id = $vendor->id;
         $receiptPayment->notes = $request->note;
         $receiptPayment->save();
 
-    
         $receiptPaymentDetail = new ReceiptPaymentDetail();
         $receiptPaymentDetail->receipt_payment_id = $receiptPayment->id;
         $receiptPaymentDetail->narration = $request->note;
@@ -282,7 +247,7 @@ class ContractorController extends Controller
         //Debit Head Amount
         $log = new TransactionLog();
         $log->notes = $request->note;
-        $log->project_id = $contractor->project_id;
+        $log->project_id = $vendor->project_id;
         $log->receipt_payment_no = $voucherNo;
         $log->receipt_payment_sl = $receiptPaymentNoSl;
         $log->financial_year = financialYear($request->financial_year);
@@ -297,7 +262,7 @@ class ContractorController extends Controller
         }
         $log->transaction_type = 1;//Account Head Debit
         $log->account_head_id = $request->account;
-        $log->purchase_order_id = $contractor->id;
+        $log->purchase_order_id = $vendor->id;
         $log->amount = $request->amount;
         $log->notes = $request->note;
         $log->save();
@@ -306,10 +271,15 @@ class ContractorController extends Controller
         return response()->json(['success' => true, 'message' => 'Payment has been completed.', 'redirect_url' => route('voucher_details', ['receiptPayment' => $receiptPayment->id])]);
     }
 
-    public function contractorPaymentDatatable() {
-        $query = ReceiptPayment::with('accountHead','receiptPaymentDetails','contractor')
+    public function vendorPaymentDetails(Vendor $vendor)
+    {
+        return view('vendor.vendor_payment_details',compact('vendor'));
+    }
+
+    public function vendorPaymentDatatable() {
+        $query = ReceiptPayment::with('accountHead','receiptPaymentDetails','vendor')
             ->whereIn('transaction_type',[1,2])
-            ->where('contractor_id',request('contractor_id'))
+            ->where('vendor_id',request('vendor_id'))
             ->whereNotNull('purchase_order_id')
             ->orderBy('date');
             // dd($query);
@@ -340,8 +310,8 @@ class ContractorController extends Controller
             ->addColumn('account_head', function(ReceiptPayment $receiptPayment) {
                 return $receiptPayment->accountHead->name ?? '';
             })
-            ->addColumn('contractor_name', function(ReceiptPayment $receiptPayment) {
-                return $receiptPayment->contractor->name ?? '';
+            ->addColumn('vendor_name', function(ReceiptPayment $receiptPayment) {
+                return $receiptPayment->vendor->name ?? '';
             })
             ->addColumn('expenses_code', function(ReceiptPayment $receiptPayment) {
 

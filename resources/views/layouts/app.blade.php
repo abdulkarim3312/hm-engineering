@@ -459,13 +459,44 @@
                         </ul>
                     </li>
                 @endcan
+                
+                <?php
+                $subMenu = ['department', 'department.add', 'department.edit', 'vendor.all','vendor.add','vendor.edit','vendor.payment','vendor.list'];
+                ?>
 
-            <?php
+                @can('hr_department')
+                    <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
+                        <a href="#">
+                            <i class="fa fa-users text-info"></i> <span>Vendor</span>
+                            <span class="pull-right-container">
+                         <i class="fa fa-angle-left pull-right"></i>
+                       </span>
+                        </a>
+                        <ul class="treeview-menu {{ in_array(Route::currentRouteName(), $subMenu) ? 'active menu-open' : '' }}">
+                            @can('designation')
+                                <li class="{{ Route::currentRouteName() == 'vendor.all' ? 'active' : '' }}">
+                                    <a href="{{ route('vendor.all') }}"><i class="fa fa-circle-o"></i> Vendor</a>
+                                </li>
+                            @endcan
+                            @can('department')
+                                <li class="{{ Route::currentRouteName() == 'vendor.list' ? 'active' : '' }}">
+                                    <a href="{{ route('vendor.list') }}"><i class="fa fa-circle-o"></i> Vendor List</a>
+                                </li>
+                            @endcan
+                            @can('department')
+                                <li class="{{ Route::currentRouteName() == 'vendor.payment' ? 'active' : '' }}">
+                                    <a href="{{ route('vendor.payment') }}"><i class="fa fa-circle-o"></i> Vendor Payment</a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcan
+                <?php
                 $subMenu = ['department', 'department.add', 'department.edit', 'designation',
                     'designation.add', 'designation.edit','employee.all', 'employee.add', 'employee.edit', 'employee.details','employee.attendance','report.employee_list', 'job_confirm_letter', 'job_letter', 'job_promotion_letter'];
                 ?>
 
-               @can('hr_department')
+                @can('hr_department')
                     <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                         <a href="#">
                             <i class="fa fa-users text-info"></i> <span>HR Department</span>
@@ -518,8 +549,9 @@
                     'labour.attendance','labour_list','labour_designation.all','labour_designation.add',
                     'labour_designation.edit','labour_employee_attendance.report','labour.food_cost',
                     'labour.food_cost.add','labour.food_cost.edit','food_cost.details','labour.bill',
-                    'labour.bill.add','labour.bill.details','contractor.all'];
+                    'labour.bill.add','labour.bill.details','contractor.all','contractor.list','contractor.add','contractor.edit','contractor.payment'];
                 ?>
+
                 @can('labour_department')
                     <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
                         <a href="#">
@@ -531,7 +563,17 @@
                         <ul class="treeview-menu {{ in_array(Route::currentRouteName(), $subMenu) ? 'active menu-open' : '' }}">
                             @can('labour_designation')
                                 <li class="{{ Route::currentRouteName() == 'contractor.all' ? 'active' : '' }}">
-                                    <a href="{{ route('contractor.all') }}"><i class="fa fa-circle-o"></i>Contractor List</a>
+                                    <a href="{{ route('contractor.all') }}"><i class="fa fa-circle-o"></i>Contractor</a>
+                                </li>
+                            @endcan
+                            @can('labour_designation')
+                                <li class="{{ Route::currentRouteName() == 'contractor.list' ? 'active' : '' }}">
+                                    <a href="{{ route('contractor.list') }}"><i class="fa fa-circle-o"></i>Contractor List</a>
+                                </li>
+                            @endcan
+                            @can('labour_designation')
+                                <li class="{{ Route::currentRouteName() == 'contractor.payment' ? 'active' : '' }}">
+                                    <a href="{{ route('contractor.payment') }}"><i class="fa fa-circle-o"></i>Contractor Payment</a>
                                 </li>
                             @endcan
                             @can('labour_designation')
@@ -648,27 +690,27 @@
                     'requisition.details','requisition.approved'];
                 ?>
                 @can('requisition_area')
-                <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="fa fa-plug text-info"></i> <span>Requisition Area</span>
-                        <span class="pull-right-container">
-                     <i class="fa fa-angle-left pull-right"></i>
-                   </span>
-                    </a>
-                    <ul class="treeview-menu {{ in_array(Route::currentRouteName(), $subMenu) ? 'active menu-open' : '' }}">
-                        @can('create_requisition')
-                        <li class="{{ Route::currentRouteName() == 'requisition.add' ? 'active' : '' }}">
-                            <a href="{{ route('requisition.add') }}"><i class="fa fa-circle-o"></i>Create Requisition</a>
-                        </li>
-                        @endcan
-                        @can('requisition_lists')
-                        <li class="{{ Route::currentRouteName() == 'requisition' ? 'active' : '' }}">
-                            <a href="{{ route('requisition') }}"><i class="fa fa-circle-o"></i>Requisition Lists</a>
-                        </li>
+                    <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
+                        <a href="#">
+                            <i class="fa fa-plug text-info"></i> <span>Requisition Area</span>
+                            <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                        </a>
+                        <ul class="treeview-menu {{ in_array(Route::currentRouteName(), $subMenu) ? 'active menu-open' : '' }}">
+                            @can('create_requisition')
+                            <li class="{{ Route::currentRouteName() == 'requisition.add' ? 'active' : '' }}">
+                                <a href="{{ route('requisition.add') }}"><i class="fa fa-circle-o"></i>Create Requisition</a>
+                            </li>
                             @endcan
-                    </ul>
-                </li>
-                    @endcan
+                            @can('requisition_lists')
+                            <li class="{{ Route::currentRouteName() == 'requisition' ? 'active' : '' }}">
+                                <a href="{{ route('requisition') }}"><i class="fa fa-circle-o"></i>Requisition Lists</a>
+                            </li>
+                                @endcan
+                        </ul>
+                    </li>
+                @endcan
             <?php
                 $subMenu = ['supplier', 'supplier.add', 'supplier.edit', 'purchase_product',
                     'purchase_product.add', 'purchase_product.edit', 'purchase_order.create',
@@ -941,7 +983,7 @@
                     'journal_voucher', 'journal_voucher.create', 'journal_voucher.edit','journal_voucher_details',
                     'balance_transfer.add','balance_transfer','balance_transfer',
                     'balance_transfer_voucher_details','balance_transfer_receipt_details',
-                    'report.trail_balance','report.ledger','report.receive_and_payment','report.project_wise_ledger'];
+                    'report.trail_balance','report.ledger','report.receive_and_payment','report.project_wise_ledger','payment_check','payment_check.add','payment_check.edit'];
                 ?>
                 @can('accounts_control')
                     <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
@@ -1007,6 +1049,19 @@
                             @can('balance_transfer')
                                 <li class="{{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                     <a href="{{ route('balance_transfer') }}"><i class="fa {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Balance Transfer</a>
+                                </li>
+                            @endcan
+                            <?php
+                            $subSubMenu = ['payment_check']
+                            ?>
+                            @can('balance_transfer')
+                                <li class="{{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
+                                    <a href="{{ route('payment_check') }}"><i class="fa {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Payment Check</a>
+                                </li>
+                            @endcan
+                            @can('balance_transfer')
+                                <li class="{{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
+                                    <a href="{{ route('balance_transfer') }}"><i class="fa {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Receive Check</a>
                                 </li>
                             @endcan
                             @can('ledger')

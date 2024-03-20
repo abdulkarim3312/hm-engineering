@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Labour Employee List
+    Contractor List
 @endsection
 @section('style')
     <style>
@@ -49,14 +49,14 @@
                                     <img width="35%" src="{{ asset('img/head_logo.jpeg') }}">
                                 </div>
                             </div>
-                            <div class="col-xs-8 text-center">
-                                <h2>{{\App\Enumeration\Text::$companyName}}</h2>
+                            <div class="col-xs-8 text-center" style="margin-left: -123px;">
+                            <h2>{{\App\Enumeration\Text::$companyName}}</h2>
                             <h4>{{\App\Enumeration\Text::$companyAddress}}</h4>
                             <h4>{{\App\Enumeration\Text::$companyMobileNumber}}</h4>
                             <h4>{{\App\Enumeration\Text::$companyEmail}}</h4>
                             </div>
                             <div class="col-xs-12 text-center">
-                                <h3><u>Labour Employee List</u></h3>
+                                <h3><u>Contractor List</u></h3>
                             </div>
                         </div>
                         <table id="table" class="table table-bordered table-striped">
@@ -64,19 +64,19 @@
                             <tr >
                                 <th class="text-center">ID</th>
                                 <th class="text-center">Name</th>
-                                <th class="text-center">Designation</th>
-                                <th class="text-center">Project</th>
+                                <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
+                                <th class="text-center">Address</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($employees as $employee)
+                            @foreach($contractors as $contractor)
                                 <tr>
-                                    <td class="text-center">{{$employee->employee_id}}</td>
-                                    <td>{{$employee->name}}</td>
-                                    <td class="text-center">{{$employee->designation->name}}</td>
-                                    <td class="text-center">{{$employee->project->name}}</td>
-                                    <td class="text-center">{{$employee->mobile_no}}</td>
+                                    <td class="text-center">{{$contractor->contractor_id}}</td>
+                                    <td>{{$contractor->name}}</td>
+                                    <td class="text-center">{{$contractor->email ?? ''}}</td>
+                                    <td class="text-center">{{$contractor->mobile ?? ''}}</td>
+                                    <td class="text-center">{{$contractor->address}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

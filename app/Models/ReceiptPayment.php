@@ -78,6 +78,16 @@ class ReceiptPayment extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
+    public function contractor()
+    {
+        return $this->belongsTo(Contractor::class);
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);

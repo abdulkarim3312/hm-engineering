@@ -9,6 +9,33 @@
             .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
             white-space: nowrap;
         }
+        .row{
+            margin: 0;
+        }
+        hr {
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+            border: 0;
+            border-top: 1px solid black;
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+            vertical-align: middle;
+            border-bottom-width: 1px !important;
+            border-left-width: 1px !important;
+            text-align: center;
+            padding: 0.2rem !important;
+        }
+        @media print{
+            @page {
+                size: auto;
+                margin: 20px !important;
+            }
+        }
+        button, html input[type=button], input[type=reset], input[type=submit] {
+            background: #367FA9;
+            color: #fff;
+        }
         </style>
 
  @endsection
