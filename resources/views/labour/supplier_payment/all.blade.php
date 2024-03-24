@@ -43,6 +43,7 @@
                                     <td> {{ number_format($contractor->discount, 2) }}</td>
                                     <td>
                                         <a class="btn btn-success btn-sm btn-pay" role="button" data-id="{{ $contractor->id }}" data-name="{{ $contractor->name }}">Pay</a>
+                                        <a href="{{route('bill_statement',['contractor'=>$contractor->id])}}" class="btn btn-primary btn-sm" >Bill Statement</a>
                                         <a href="{{route('contractor_payment.details',['contractor'=>$contractor->id])}}" class="btn btn-primary btn-sm" >Details</a>
                                     </td>
                                 </tr>
@@ -92,6 +93,47 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Contractor Payment Type</label>
+                            <select class="form-control" id="contractor_payment" name="contractor_payment">
+                                <option value="">Select Payment Type</option>
+                                <option {{ old('contractor_payment') == 1 ? 'selected' : '' }} value="1">Advance Payment</option>
+                                <option {{ old('contractor_payment') == 2 ? 'selected' : '' }} value="2">Running Payment</option>
+                                <option {{ old('contractor_payment') == 3 ? 'selected' : '' }} value="3">Due Payment</option>
+                                <option {{ old('contractor_payment') == 4 ? 'selected' : '' }} value="4">Final Payment</option>
+                                <option {{ old('contractor_payment') == 5 ? 'selected' : '' }} value="5">SD Payment</option>
+                            </select>
+                        </div>
+                        <div id="advance_payment" style="display: none;">
+                            <div class="form-group">
+                                <label>Advance Amount</label>
+                                <input class="form-control" name="amount" placeholder="Enter Amount">
+                            </div>
+                        </div>
+                        <div id="running_payment" style="display: none;">
+                            <div class="form-group">
+                                <label>Running Amount</label>
+                                <input class="form-control" name="running_amount" placeholder="Enter Running Amount">
+                            </div>
+                        </div>
+                        <div id="due_payment" style="display: none;">
+                            <div class="form-group">
+                                <label>Due Amount</label>
+                                <input class="form-control" name="due_amount" placeholder="Enter Due Amount">
+                            </div>
+                        </div>
+                        <div id="final_payment" style="display: none;">
+                            <div class="form-group">
+                                <label>Final Amount</label>
+                                <input class="form-control" name="final_amount" placeholder="Enter Final Amount">
+                            </div>
+                        </div>
+                        <div id="sb_payment" style="display: none;">
+                            <div class="form-group">
+                                <label>SD Amount</label>
+                                <input class="form-control" name="sb_amount" placeholder="Enter sb Amount">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Payment Type</label>
                             <select class="form-control" id="payment_type" name="payment_type">
                                 <option value="">Select Payment Type</option>
@@ -125,11 +167,6 @@
                         <div class="form-group bank-area" style="display: none">
                             <label> Cheque image </label>
                             <input class="form-control" name="cheque_image" type="file">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Amount</label>
-                            <input class="form-control" name="amount" placeholder="Enter Amount">
                         </div>
 
                         <div class="form-group">
@@ -472,6 +509,49 @@
             })
 
             $("#payment_type").trigger("change");
+
+            $("#contractor_payment").change(function (){
+                var payType = $(this).val();
+                // alert(payType);
+                if(payType != ''){
+                    if(payType == 1){
+                        $("#advance_payment").show();
+                        $("#running_payment").hide();
+                        $("#due_payment").hide();
+                        $("#final_payment").hide();
+                        $("#sb_payment").hide();
+                    }else if(payType == 2){
+                        $("#running_payment").show();
+                        $("#advance_payment").hide();
+                        $("#due_payment").hide();
+                        $("#final_payment").hide();
+                        $("#sb_payment").hide();
+                    }else if(payType == 3){
+                        $("#due_payment").show();
+                        $("#advance_payment").hide();
+                        $("#running_payment").hide();
+                        $("#final_payment").hide();
+                        $("#sb_payment").hide();
+                    }else if(payType == 4){
+                        $("#final_payment").show();
+                        $("#advance_payment").hide();
+                        $("#running_payment").hide();
+                        $("#due_payment").hide();
+                        $("#sb_payment").hide();
+                    }else if(payType == 5){
+                        $("#sb_payment").show();
+                        $("#final_payment").hide();
+                        $("#advance_payment").hide();
+                        $("#running_payment").hide();
+                        $("#due_payment").hide();
+                    }else{
+
+                    }
+                }
+            })
+
+            $("#contractor_payment").trigger("change");
+
             $("#payment_type_refund").change(function (){
                 var payType = $(this).val();
 

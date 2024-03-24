@@ -98,30 +98,30 @@ class ReportController extends Controller
     }
     public function projectWiseLedger(Request $request)
     {
-        // dd($request->all());
+        
         $startDate = date('Y-m-d', strtotime($request->start_date));
         $endDate = date('Y-m-d', strtotime($request->end_date));
-        // dd($endDate);
+        
         $month = strtotime($startDate);
-        // dd($month);
+        
         $end = strtotime($endDate);
-        // dd($month);
+       
         $monthsArray = [];
         while($month <= $end)
         {
             $monthGenerate = date('Y-m', $month);
-            // dd($monthGenerate);
+            
             array_push($monthsArray,$monthGenerate);
-            // dd(array_push($monthsArray,$monthGenerate));
+            
             $month = strtotime("+1 month", $month);
-            // dd($month);
+            
 
         }
 
         $in_word = new DecimalToWords();
 
         $currentMonth = date('m');
-        // dd($currentMonth);
+        
         if ($currentMonth < 7){
             $currentYear = date('Y') - 1;
             $currentDate = date($currentYear.'-07-01');

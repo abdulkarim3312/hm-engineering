@@ -84,7 +84,7 @@
                             <select class="form-control" id="project" name="project">
                                 <option value="">Select Project</option>
                                 @foreach ($projects as $project)
-                                    <option value="{{ $project->id }}"{{ $project->id ==  }}>{{ $project->name }}</option>
+                                    <option value="{{ $project->id }}">{{ $project->name }}</option>
                                 @endforeach
                             </select>
                         </div>

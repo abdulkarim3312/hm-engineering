@@ -1134,7 +1134,6 @@
                 var barValue = itemproductID.closest('tr').find('.value_of_bar').val();
                 var kgTon = itemproductID.closest('tr').find('.kg_by_ton').val();
 
-
                 if (productID != '') {
                     itemproductID.closest('tr').find('.dia').val(productID);
                     itemproductID.closest('tr').find('.dia_square').val(productID * productID);
@@ -1199,7 +1198,7 @@
                 var lapping_nos = $('.lapping_nos:eq('+i+')').val();
                 var clear_cover = $('.clear_cover:eq('+i+')').val();
                 var layer = $('.layer:eq('+i+')').val();
-                // alert(clear_cover);
+                console.log(kg_by_rft);
                 if (kg_by_ton == '' || kg_by_ton < 0 || !$.isNumeric(kg_by_ton))
                     kg_by_ton = 0;
 

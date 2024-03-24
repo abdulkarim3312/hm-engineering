@@ -125,7 +125,7 @@
                                     </tr>
                                     <tr>
                                         <th class="text-center" width="15%">Date</th>
-                                        <th class="text-center" width="20%">Client Name</th>
+                                        <th class="text-center" width="20%">Name</th>
                                         <th class="text-center" width="15%">Receipt No</th>
                                         <th class="text-center" width="15%">Notes</th>
                                         <th class="text-center" width="25%">Payment Type</th>
@@ -136,7 +136,15 @@
                                     @foreach($payments as $payment)
                                         <tr>
                                             <td>{{ date('d-m-Y',strtotime($payment->date)) }}</td>
-                                            <td class="text-center">{{ $payment->client->name ?? '' }}</td>
+                                            @if ($payment->client_id != null)
+                                                <td class="text-center">{{ $payment->client->name ?? '' }}</td>
+                                            @endif
+                                            @if ($payment->vendor_id != null)
+                                                <td class="text-center">{{ $payment->vendor->name ?? '' }}</td>
+                                            @endif
+                                            @if ($payment->contractor_id != null)
+                                                <td class="text-center">{{ $payment->contractor->name ?? '' }}</td>
+                                            @endif
                                             <td>{{ $payment->receipt_payment_no ?? ''}}</td>
                                             <td>{{ $payment->notes ?? ''}}</td>
                                             <td>

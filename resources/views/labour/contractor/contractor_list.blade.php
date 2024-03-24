@@ -64,6 +64,7 @@
                             <tr >
                                 <th class="text-center">ID</th>
                                 <th class="text-center">Name</th>
+                                <th class="text-center">Trade</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Mobile</th>
                                 <th class="text-center">Address</th>
@@ -74,6 +75,25 @@
                                 <tr>
                                     <td class="text-center">{{$contractor->contractor_id}}</td>
                                     <td>{{$contractor->name}}</td>
+                                    @if ($contractor->trade == 1)
+                                        <td>Civil Engineering</td>
+                                    @elseif ($contractor->trade == 2)    
+                                        <td>Paint Contractor</td>
+                                    @elseif ($contractor->trade == 3)    
+                                        <td>Sanitary Contractor</td>
+                                    @elseif ($contractor->trade == 4)    
+                                        <td>Tiles Contractor</td>
+                                    @elseif ($contractor->trade == 5)    
+                                        <td>MS Contractor</td>
+                                    @elseif ($contractor->trade == 6)   
+                                        <td>Wood Contractor</td> 
+                                    @elseif ($contractor->trade == 7)  
+                                        <td>Electric Contractor</td>  
+                                    @elseif ($contractor->trade == 8)  
+                                        <td>Thai Contractor</td>  
+                                    @else
+                                        <td>Other Contractor</td>
+                                    @endif
                                     <td class="text-center">{{$contractor->email ?? ''}}</td>
                                     <td class="text-center">{{$contractor->mobile ?? ''}}</td>
                                     <td class="text-center">{{$contractor->address}}</td>

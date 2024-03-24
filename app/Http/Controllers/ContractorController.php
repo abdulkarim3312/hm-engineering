@@ -54,7 +54,7 @@ class ContractorController extends Controller
         $contractor->image = $imagePath;
         $contractor->mobile = $request->mobile;
         $contractor->nid = $request->nid;
-        $contractor->total = $request->total;
+        $contractor->email = $request->email;
         $contractor->due = $request->total;
         $contractor->address = $request->address;
         $contractor->status = $request->status;
@@ -104,8 +104,8 @@ class ContractorController extends Controller
         $contractor->trade = $request->trade;
         $contractor->image = $imagePath;
         $contractor->mobile = $request->mobile;
+        $contractor->email = $request->email;
         $contractor->nid = $request->nid;
-        $contractor->total = $request->total;
         $contractor->due = $request->total;
         $contractor->address = $request->address;
         $contractor->status = $request->status;
@@ -192,10 +192,8 @@ class ContractorController extends Controller
 
     public function makePayment(Request $request) {
         // dd($request->all());
-
         $rules = [
             'financial_year' => 'required',
-            // 'order' => 'required',
             'project' => 'nullable',
             'payment_type' => 'required',
             'account' => 'required',
@@ -215,7 +213,7 @@ class ContractorController extends Controller
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
         $contractor =Contractor::find($request->supplier);
-        // dd($contractor);
+       
         $rules['amount'] = 'required|numeric|min:0|max:'.$contractor->due;
 
 
@@ -224,11 +222,6 @@ class ContractorController extends Controller
         // if ($validator->fails()) {
         //     return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         // }
-
-        // $order = PurchaseOrder::find($request->order);
-
-        // $supplier->decrement('due', $request->amount);
-        // $supplier->decrement('paid', $request->amount);
         $contractor->increment('paid', $request->amount);
         $contractor->decrement('due', $request->amount);
 
@@ -286,7 +279,14 @@ class ContractorController extends Controller
         $log->receipt_payment_no = $voucherNo;
         $log->receipt_payment_sl = $receiptPaymentNoSl;
         $log->financial_year = financialYear($request->financial_year);
-        // $log->client_id = $supplier->id;
+        $log->client_id = null;
+        $receiptPayment->vendor_id = null;
+        if($request->project){
+            $receiptPayment->contractor_id = $request->project;
+        }else{
+            $receiptPayment->contractor_id = $contractor->id;
+        }
+        $receiptPayment->vendor_id = null;
         $log->date = Carbon::parse($request->date)->format('Y-m-d');
         $log->receipt_payment_id = $receiptPayment->id;
         $log->receipt_payment_detail_id = $receiptPaymentDetail->id;
@@ -327,7 +327,6 @@ class ContractorController extends Controller
 
                 }
 
-
                 return $btn;
             })
 
@@ -361,5 +360,16 @@ class ContractorController extends Controller
             })
             ->rawColumns(['action','expenses_code','transaction_type'])
             ->toJson();
+    }
+
+    public function billStatement(Contractor $contractor){
+        $projects = Project::where('status',1)->get();
+        return view('labour.contractor.bill_statement', compact('projects','contractor'));
+    }
+    public function billStatementPost(Request $request){
+        dd($request->all());
+        $projects = Project::where('status',1)->get();
+        // dd($projects);
+        return view('labour.contractor.bill_statement', compact('projects'));
     }
 }

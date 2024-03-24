@@ -225,10 +225,10 @@
                     'unit_section','unit_section.add','unit_section.edit', 'grade_beam_type_configure.add', 'grade_beam_configure.details', 'mat_configure.add', 'mat_configure.details', 'pile_cap_configure.add', 'pile_cap_configure.details',
                     'unit_section','unit_section.add','unit_section.edit','footing_configure.add', 'footing_configure.details',
                     'beam_type','beam_type.add','beam_type.edit','grade_of_concrete_type','grade_of_concrete_type.add',
-                    'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details',
+                    'grade_of_concrete_type.edit','extra_costing','extra_costing.add','extra_costing.details','tiles_configure.details','tiles_configure.add',
                     'batch','batch.add','batch.edit','grade_of_concrete','grade_of_concrete.add','grade_of_concrete.edit',
                     'costing_report','estimation_costing_summary','mobilization_work','mobilization_work.add','mobilization_work.details','mobilization_work_product', 'returning_wall_configure.add', 'returning_wall_configure.details',
-                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure', 'glass_configure','glass_configure.add','glass_configure.details', 'tiles_configure', 'bricks_soling_configure.add', 'bricks_soling_configure.details', 'sand_filling_configure.add', 'sand_filling_configure.details', 'electric_product', 'electric_product.add', 'electric_product.edit', 'electric_product.datatable', 'electric_costing', 'electric_costing.add', 'sanitary_product','sanitary_product.add','sanitary_product.edit', 'sanitary_costing','sanitary_costing.add','sanitary_costing.details'];
+                    'mobilization_work_product.add','mobilization_work_product.edit','mobilization_work.edit','report.employee_attendance_in_out','footing_configure','grade_beam_type_configure', 'estimate_floor_configure', 'extra_cost_product', 'sand_filling_configure', 'bricks_soling_configure', 'pile_cap_configure', 'mat_configure', 'returning_wall_configure', 'glass_configure','glass_configure.add','glass_configure.details', 'tiles_configure', 'bricks_soling_configure.add', 'bricks_soling_configure.details', 'sand_filling_configure.add', 'sand_filling_configure.details', 'electric_product', 'electric_product.add', 'electric_product.edit', 'electric_product.datatable', 'electric_costing', 'electric_costing.add', 'sanitary_product','sanitary_product.add','sanitary_product.edit', 'sanitary_costing','sanitary_costing.add','sanitary_costing.details','facing_bricks_work','facing_bricks_work.add','facing_bricks_work.details'];
                 ?>
 
                 @can('estimation_and_costing')
@@ -403,6 +403,11 @@
                                 <a href="{{ route('paint_configure') }}"><i class="fa fa-circle-o"></i>Paint Configure</a>
                             </li>
                                 @endcan
+                                @can('paint_configure')
+                            <li class="{{ Route::currentRouteName() == 'facing_bricks_work' ? 'active' : '' }}">
+                                <a href="{{ route('facing_bricks_work') }}"><i class="fa fa-circle-o"></i>Facing Bricks Work</a>
+                            </li>
+                                @endcan
                                 @can('earth_work_configure')
                             <li class="{{ Route::currentRouteName() == 'earth_work_configure' ? 'active' : '' }}">
                                 <a href="{{ route('earth_work_configure') }}"><i class="fa fa-circle-o"></i>Earth Work Configure</a>
@@ -459,7 +464,7 @@
                         </ul>
                     </li>
                 @endcan
-                
+
                 <?php
                 $subMenu = ['department', 'department.add', 'department.edit', 'vendor.all','vendor.add','vendor.edit','vendor.payment','vendor.list'];
                 ?>
@@ -983,7 +988,7 @@
                     'journal_voucher', 'journal_voucher.create', 'journal_voucher.edit','journal_voucher_details',
                     'balance_transfer.add','balance_transfer','balance_transfer',
                     'balance_transfer_voucher_details','balance_transfer_receipt_details',
-                    'report.trail_balance','report.ledger','report.receive_and_payment','report.project_wise_ledger','payment_check','payment_check.add','payment_check.edit'];
+                    'report.trail_balance','report.ledger','report.receive_and_payment','report.project_wise_ledger','payment_check','payment_check.add','payment_check.edit','receive_cheque','receive_cheque.add','receive_cheque.edit'];
                 ?>
                 @can('accounts_control')
                     <li class="treeview {{ in_array(Route::currentRouteName(), $subMenu) ? 'active' : '' }}">
@@ -1052,16 +1057,19 @@
                                 </li>
                             @endcan
                             <?php
-                            $subSubMenu = ['payment_check']
+                            $subSubMenu = ['payment_check','payment_check.add','payment_check.edit']
                             ?>
                             @can('balance_transfer')
                                 <li class="{{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
                                     <a href="{{ route('payment_check') }}"><i class="fa {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Payment Check</a>
                                 </li>
                             @endcan
+                            <?php
+                            $subSubMenu = ['receive_cheque','receive_cheque.add','receive_cheque.edit']
+                            ?>
                             @can('balance_transfer')
                                 <li class="{{ in_array(Route::currentRouteName(), $subSubMenu) ? 'active' : '' }}">
-                                    <a href="{{ route('balance_transfer') }}"><i class="fa {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Receive Check</a>
+                                    <a href="{{ route('receive_cheque') }}"><i class="fa {{ in_array(Route::currentRouteName(), $subSubMenu) ? 'fa-check-circle text-purple' : 'fa-circle-o' }}"></i> Receive Check</a>
                                 </li>
                             @endcan
                             @can('ledger')

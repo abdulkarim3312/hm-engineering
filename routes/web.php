@@ -50,6 +50,7 @@ use App\Http\Controllers\ChemicalTreatmentController;
 use App\Http\Controllers\WaterTankController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\BankCheckController;
+use App\Http\Controllers\FacingBricksWorkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -293,6 +294,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('payment-check/edit/{cheque}', [BankCheckController::class,'edit'])->name('payment_check.edit')->middleware('permission:type');
     Route::post('payment-check/edit/{cheque}', [BankCheckController::class,'editPost'])->middleware('permission:type');
 
+     // Receive Cheque
+    Route::get('receive-cheque', [BankCheckController::class,'receiveIndex'])->name('receive_cheque')->middleware('permission:type');
+    Route::get('receive-cheque/add', [BankCheckController::class,'receiveAdd'])->name('receive_cheque.add')->middleware('permission:type');
+    Route::post('receive-cheque/add', [BankCheckController::class,'receiveAddPost'])->middleware('permission:type');
+    Route::get('receive-cheque/edit/{cheque}', [BankCheckController::class,'receiveEdit'])->name('receive_cheque.edit')->middleware('permission:type');
+    Route::post('receive-cheque/edit/{cheque}', [BankCheckController::class,'receiveEditPost'])->middleware('permission:type');
+
     // Account Head Type
     Route::get('account-head', [AccountHeadController::class,'accountHead'])->name('account_head')->middleware('permission:account_head');
     Route::get('account-head-datatable', [AccountHeadController::class,'datatable'])->name('account_head.datatable');
@@ -529,6 +537,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('contractor-payment-details/{contractor}', [ContractorController::class,'contractorPaymentDetails'])->name('contractor_payment.details');
     Route::get('contractor-datatable', [ContractorController::class,'contractorPaymentDatatable'])->name('contractor_payment.datatable');
     Route::get('contractor-list-view', [ContractorController::class,'contractorList'])->name('contractor.list');
+    Route::get('contractor-bill-statement/{contractor}', [ContractorController::class,'billStatement'])->name('bill_statement');
+    Route::post('contractor-bill-statement/', [ContractorController::class,'billStatementPost'])->name('bill_statement.add');
 
 
     // Labour Department
@@ -818,6 +828,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('paint-configure/add', [PaintConfigureController::class, 'paintConfigureAddPost'])->middleware('permission:paint_configure');
     Route::get('paint-configure-details/{paintConfigure}', [PaintConfigureController::class, 'paintConfigureDetails'])->name('paint_configure.details')->middleware('permission:paint_configure');
     Route::get('paint-configure-print/{paintConfigure}', [PaintConfigureController::class, 'paintConfigurePrint'])->name('paint_configure.print')->middleware('permission:paint_configure');
+
+    //Facing Bricks Configure
+    Route::get('facing-bricks-work', [FacingBricksWorkController::class, 'facingBricksAll'])->name('facing_bricks_work')->middleware('permission:paint_configure');
+    Route::get('facing-bricks-work-datatable', [FacingBricksWorkController::class, 'facingBricksDatatable'])->name('facing_bricks_work.datatable');
+    Route::get('facing-bricks-work/add', [FacingBricksWorkController::class, 'facingBricksAdd'])->name('facing_bricks_work.add')->middleware('permission:paint_configure');
+    Route::post('facing-bricks-work/add', [FacingBricksWorkController::class, 'facingBricksAddPost'])->middleware('permission:paint_configure');
+    Route::get('facing-bricks-work-details/{facingBricks}', [FacingBricksWorkController::class, 'facingBricksDetails'])->name('facing_bricks_work.details')->middleware('permission:paint_configure');
+    Route::get('facing-bricks-work-print/{facingBricks}', [FacingBricksWorkController::class, 'facingBricksPrint'])->name('facing_bricks_work.print')->middleware('permission:paint_configure');
 
     //Plaster Configure
     Route::get('plaster-configure', [PlasterConfigureController::class, 'plasterConfigure'])->name('plaster_configure')->middleware('permission:plaster_configure');

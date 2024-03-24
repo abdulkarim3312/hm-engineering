@@ -251,7 +251,9 @@ class VendorController extends Controller
         $log->receipt_payment_no = $voucherNo;
         $log->receipt_payment_sl = $receiptPaymentNoSl;
         $log->financial_year = financialYear($request->financial_year);
-        // $log->client_id = $supplier->id;
+        $log->client_id = null;
+        $receiptPayment->contractor_id = null;
+        $receiptPayment->vendor_id = $vendor->id;
         $log->date = Carbon::parse($request->date)->format('Y-m-d');
         $log->receipt_payment_id = $receiptPayment->id;
         $log->receipt_payment_detail_id = $receiptPaymentDetail->id;

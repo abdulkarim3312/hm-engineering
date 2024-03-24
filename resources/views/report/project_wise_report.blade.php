@@ -164,7 +164,7 @@
                                         </tr>
                                         <tr>
                                             <th class="text-center">Date</th>
-                                            <th class="text-center">Client Name</th>
+                                            <th class="text-center">Name</th>
                                             <th class="text-center">Voucher No</th>
                                             <th class="text-center">Head of Expenditure</th>
                                             <th class="text-center">Debit (in BDT)</th>
@@ -179,11 +179,19 @@
                                                 {{-- <td class="text-center">{{ $row->date ?? '' }}</td> --}}
                                                 <td class="text-center">{{ date('Y-m-d',strtotime($row->date)) ?? '' }}</td>
                                                 <td class="text-center">{{ $row->client->name ?? ''}}</td>
+                                                {{-- @if($row->client_id != null)
+                                                    <td class="text-center">{{ $row->client->name ?? ''}}</td>
+                                                @endif
+                                                @if($row->vendor_id != null)
+                                                    <td class="text-center">{{ $row->vendor->name ?? ''}}</td>
+                                                @endif
+                                                @if($row->contractor_id != null)
+                                                    <td class="text-center">{{ $row->contractor->name ?? ''}}</td>
+                                                @endif --}}
                                                 <td class="text-center">{{ $row->receipt_payment_no ?? ''}}</td>
                                                 <td class="text-center">{{ $row->accountHead->name ?? ''}}</td>
                                                 <td class="text-center">{{ number_format($row->amount,2) }}</td>
-                                                {{-- <td class="text-center">{{ number_format($row->paid,2) }}</td>
-                                                <td class="text-center">{{ number_format($row->due,2) }}</td> --}}
+                                              
                                                 @php
                                                     $total += $row->amount;
                                                 @endphp

@@ -73,7 +73,7 @@
                                     <option value="6">Wood Contractor</option>
                                     <option value="7">Electric Contractor</option>
                                     <option value="8">Thai Contractor</option>
-                                    <option value="8">Other Contractor</option>
+                                    <option value="9">Other Contractor</option>
                                 </select>
 
                                 @error('trade')
@@ -94,6 +94,18 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group {{ $errors->has('email') ? 'has-error' :'' }}">
+                            <label class="col-sm-2 control-label">Email</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Mobile No."
+                                       name="email" value="{{ old('email') }}">
+
+                                @error('email')
+                                <span class="help-block">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group {{ $errors->has('nid') ? 'has-error' :'' }}">
                             <label class="col-sm-2 control-label">NID</label>
 
@@ -106,19 +118,6 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group {{ $errors->has('total') ? 'has-error' :'' }}">
-                            <label class="col-sm-2 control-label">Contact Payment</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" placeholder="Enter Amount"
-                                       name="total" value="{{ old('total') }}">
-
-                                @error('total')
-                                <span class="help-block">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
                         <div class="form-group {{ $errors->has('address') ? 'has-error' :'' }}">
                             <label class="col-sm-2 control-label">Address *</label>
 
