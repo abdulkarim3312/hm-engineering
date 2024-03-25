@@ -118,7 +118,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Main Paint Type</label>
-                                    <select class="form-control main_paint_type" id="main_paint_type" name="main_paint_type[]" data-placeholder="Select WAll Direction" required>
+                                    <select class="form-control main_paint_type" id="main_paint_type" name="main_paint_type" data-placeholder="Select WAll Direction" required>
                                         <option>Select Paint</option>
                                         <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Polish Work</option>
                                         <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Inside Paint Work</option>
@@ -235,40 +235,7 @@
                                                     </select>
                                                 </div>
                                             </td>
-                                            {{-- <td id="inside_paint_work" style="display: none;">
-                                                <div class="form-group">
-                                                    <select class="form-control inside_paint_type" id="inside_paint_type" name="inside_paint_type[]" data-placeholder="Select WAll Direction" required>
-                                                        <option value="null">Select Inside</option>
-                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Plastic Paint</option>
-                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Enamel</option>
-                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Water Sealer</option>
-                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Snow Seen</option>
 
-
-                                                    </select>
-                                                </div>
-                                            </td> --}}
-                                            {{-- <td id="outside_paint_work" style="display: none;">
-                                                <div class="form-group">
-                                                    <select class="form-control outside_paint_type" id="outside_paint_type" name="outside_paint_type[]" data-placeholder="Select WAll Direction" required>
-                                                        <option value="null">Select Outside</option>
-                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Coat</option>
-                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
-                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>White Cement</option>
-                                                        <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 no Paper</option>
-                                                    </select>
-                                                </div>
-                                            </td> --}}
-                                            {{-- <td id="putty_paint_work" style="display: none;">
-                                                <div class="form-group">
-                                                    <select class="form-control putty_paint_type" id="putty_paint_type" name="putty_paint_type[]" data-placeholder="Select WAll Direction" required>
-                                                        <option value="null">Select Putty</option>
-                                                        <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
-                                                        <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
-                                                        <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
-                                                    </select>
-                                                </div>
-                                            </td> --}}
                                             <td>
                                                 <div class="form-group" {{ $errors->has('unit.'.$loop->index) ? 'has-error' :'' }}>
                                                     <input style="width: 50px;" readonly type="text" step="any"  name="unit[]" class="form-control unit" value="{{ old('unit.'.$loop->index) }}">
@@ -382,40 +349,7 @@
                                                 </select>
                                             </div>
                                         </td>
-                                        {{-- <td id="inside_paint_work" style="display: none;">
-                                            <div class="form-group">
-                                                <select class="form-control inside_paint_type" id="inside_paint_type" name="inside_paint_type[]" data-placeholder="Select WAll Direction" required>
-                                                    <option value="null">Select Inside</option>
-                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Plastic Paint</option>
-                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Enamel</option>
-                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Water Sealer</option>
-                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>Snow Seen</option>
 
-
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td id="outside_paint_work" style="display: none;">
-                                            <div class="form-group">
-                                                <select class="form-control outside_paint_type" id="outside_paint_type" name="outside_paint_type[]" data-placeholder="Select WAll Direction" required>
-                                                    <option value="null">Select Outside</option>
-                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Weather Coat</option>
-                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
-                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>White Cement</option>
-                                                    <option value="4" {{ old('paint_type') == 4 ? 'selected' : '' }}>120 no Paper</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td id="putty_paint_work" style="display: none;">
-                                            <div class="form-group">
-                                                <select class="form-control putty_paint_type" id="putty_paint_type" name="putty_paint_type[]" data-placeholder="Select WAll Direction" required>
-                                                    <option value="null">Select Putty</option>
-                                                    <option value="1" {{ old('paint_type') == 1 ? 'selected' : '' }}>Chack Powder</option>
-                                                    <option value="2" {{ old('paint_type') == 2 ? 'selected' : '' }}>Plastic Paint</option>
-                                                    <option value="3" {{ old('paint_type') == 3 ? 'selected' : '' }}>Enamel Paint</option>
-                                                </select>
-                                            </div>
-                                        </td> --}}
                                         <td>
                                             <div class="form-group">
                                                 <input  style="width: 50px;" readonly type="text" step="any"  name="unit[]" class="form-control unit">
@@ -493,9 +427,9 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product">Add More</a>
                                     </td>
-                                    <th colspan="10" class="text-right">Total Area</th>
+                                    {{-- <th colspan="10" class="text-right">Total Area</th>
                                     <th id="total-area"> 0.00 </th>
-                                    <th id="total-liter"> 0.00 </th>
+                                    <th id="total-liter"> 0.00 </th> --}}
                                     <td></td>
                                 </tr>
                                 </tfoot>
@@ -747,9 +681,9 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product-inside">Add More</a>
                                     </td>
-                                    <th colspan="10" class="text-right">Total Area</th>
+                                    {{-- <th colspan="10" class="text-right">Total Area</th>
                                     <th id="total-area"> 0.00 </th>
-                                    <th id="total-liter"> 0.00 </th>
+                                    <th id="total-liter"> 0.00 </th> --}}
                                     <td></td>
                                 </tr>
                                 </tfoot>
@@ -998,9 +932,9 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product-outside">Add More</a>
                                     </td>
-                                    <th colspan="10" class="text-right">Total Area</th>
+                                    {{-- <th colspan="10" class="text-right">Total Area</th>
                                     <th id="total-area"> 0.00 </th>
-                                    <th id="total-liter"> 0.00 </th>
+                                    <th id="total-liter"> 0.00 </th> --}}
                                     <td></td>
                                 </tr>
                                 </tfoot>
@@ -1729,11 +1663,16 @@
                     $('#inside_paint_work').hide();
                     $('#putty_paint_work').hide();
                     $('#polish_work').hide();
-                }else {
+                }else if(paintType == 4){
                     $('#putty_paint_work').show();
                     $('#inside_paint_work').hide();
                     $('#outside_paint_work').hide();
                     $('#polish_work').hide();
+                }else {
+                    $('#putty_paint_work').show();
+                    $('#inside_paint_work').show();
+                    $('#outside_paint_work').show();
+                    $('#polish_work').show();
                 }
             })
             $('#main_paint_type').trigger("change");
@@ -1920,9 +1859,11 @@
                 }else if(productID == 13){
                     var barValue = itemproductID.closest('tr').find('.unit').val(t6_unit);
                     var barValue = itemproductID.closest('tr').find('.quantity').val(t6_thiner);
-                }else {
+                }else if(productID == 14){
                     var barValue = itemproductID.closest('tr').find('.unit').val(nc_unit);
                     var barValue = itemproductID.closest('tr').find('.quantity').val(nc_thiner);
+                }else {
+
                 }
             })
             $('.polish_paint_type').trigger("change");
@@ -1949,9 +1890,11 @@
                 }else if(productID == 3){
                     var barValue = itemproductID.closest('tr').find('.unit').val(water_unit);
                     var barValue = itemproductID.closest('tr').find('.quantity').val(water);
-                }else {
+                }else if(productID == 4){
                     var barValue = itemproductID.closest('tr').find('.unit').val(snow_unit);
                     var barValue = itemproductID.closest('tr').find('.quantity').val(snow);
+                }else {
+
                 }
             })
             $('.inside_paint_type').trigger("change");
@@ -1977,9 +1920,11 @@
                 }else if(productID == 3){
                     var barValue = itemproductID.closest('tr').find('.unit').val(white_unit);
                     var barValue = itemproductID.closest('tr').find('.quantity').val(white);
-                }else {
+                }else if(productID == 4){
                     var barValue = itemproductID.closest('tr').find('.unit').val(paper_unit);
                     var barValue = itemproductID.closest('tr').find('.quantity').val(paper);
+                }else {
+
                 }
             })
             $('.outside_paint_type').trigger("change");
@@ -2000,9 +1945,11 @@
                 }else if(productID == 2){
                     var barValue = itemproductID.closest('tr').find('.unit').val(plastic_unit);
                     var barValue = itemproductID.closest('tr').find('.quantity').val(plastic);
+                }else if(productID == 3){
+                    var barValue = itemproductID.closest('tr').find('.unit').val(plastic_unit);
+                    var barValue = itemproductID.closest('tr').find('.quantity').val(plastic);
                 }else {
-                    var barValue = itemproductID.closest('tr').find('.unit').val(enamel_unit);
-                    var barValue = itemproductID.closest('tr').find('.quantity').val(enamel);
+
                 }
             })
             $('.putty_paint_type').trigger("change");

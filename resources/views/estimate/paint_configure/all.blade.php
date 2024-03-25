@@ -31,11 +31,10 @@
                         <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Configure No</th>
+                            <th>Main Paint Type</th>
                             <th>Project Name</th>
                             <th>Estimate Floor</th>
                             <th>Estimate Floor Unit</th>
-                            <th>Floor Quantity</th>
                             <th>Total Area</th>
                             <th>Action</th>
                         </tr>
@@ -67,12 +66,11 @@
                 ajax: '{{ route('paint_configure.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
-                    {data: 'paint_configure_no', name: 'paint_configure_no'},
+                    {data: 'main_paint_type', name: 'main_paint_type'},
                     {data: 'project_name', name: 'project.name'},
                     {data: 'estimate_floor', name: 'estimateFloor.name'},
                     {data: 'estimate_floor_unit', name: 'estimateFloorUnit.name'},
-                    {data: 'floor_number', name: 'floor_number'},
-                    {data: 'total_area_with_floor', name: 'total_area_with_floor'},
+                    {data: 'total_area', name: 'total_area'},
                     {data: 'action', name: 'action'},
                 ],
                 //order: [[ 0, "desc" ]],
