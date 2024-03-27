@@ -539,6 +539,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('contractor-list-view', [ContractorController::class,'contractorList'])->name('contractor.list');
     Route::get('contractor-bill-statement/{contractor}', [ContractorController::class,'billStatement'])->name('bill_statement');
     Route::post('contractor-bill-statement/', [ContractorController::class,'billStatementPost'])->name('bill_statement.add');
+    Route::get('contractor-bill-statement-list', [ContractorController::class,'billStatementList'])->name('bill_statement.list');
+    Route::get('contractor-bill-statement-datatable', [ContractorController::class,'billStatementDataTable'])->name('bill_statement.datatable');
+    Route::get('contractor-bill-statement-details/{billStatement}', [ContractorController::class,'billStatementDetails'])->name('bill_statement.details');
+    Route::get('contractor-bill-statement-approval/{billStatement}', [ContractorController::class,'billStatementApproval'])->name('bill.approved');
+    Route::post('contractor-bill-approval/{billStatement}', [ContractorController::class,'billStatementApprovalPost'])->name('bill.approved_store');
+    Route::get('contractor-bill-print/{billStatement}', [ContractorController::class,'billStatementPrint'])->name('bill.print');
 
 
     // Labour Department

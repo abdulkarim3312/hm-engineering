@@ -45,9 +45,6 @@ class RequisitionController extends Controller
         $warehouses = Warehouse::where('status', 1)->orderBy('name')->get();
         $projects = Project::where('status', 1)->get();
         $products = PurchaseProduct::where('status', 1)->get();
-       
-
-
         return view('requisition.create_requisition.create', compact(
             'warehouses',  'projects', 'products'));
     }
@@ -129,14 +126,11 @@ class RequisitionController extends Controller
         $first_counter = 0;
         // $requisitionQuantity = Requisition::where('project_id', $request->id)
         // ->first();
-        // $requisitionQuantity->requisition_status = 1; 
+        // $requisitionQuantity->requisition_status = 1;
          foreach ($requisition->requisitionProducts as $requisitionProduct) {
 
                 $requisitionQuantity = ProductRequisition::where('id', $requisitionProduct->id)
                     ->first();
-               
-                    // dd($requisitionQuantity);
-
                 if ($request->approved_quantity[$first_counter] > $requisitionQuantity->quantity) {
                     $available = false;
                     $message = 'Approved Quantity Not Greater Than Requisition Quantity ' . $requisitionQuantity->name;
@@ -195,7 +189,6 @@ class RequisitionController extends Controller
                 }else{
                     return '<a href="' . route('requisition.details', ['requisition' => $requisition->id]) . '" class="btn btn-primary btn-sm">Details</a>';
                 }
-
 
             })
 

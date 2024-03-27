@@ -43,12 +43,10 @@
 
                                     <select class="form-control select2" style="width: 100%;" id="estimate_project" name="estimate_project" data-placeholder="Select Project">
                                         <option value="">Select Project</option>
-
                                         @foreach($projects as $project)
                                             <option value="{{ $project->id }}" {{ old('estimate_project') == $project->id ? 'selected' : '' }}>{{ $project->name }}</option>
                                         @endforeach
                                     </select>
-
                                     @error('estimate_project')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
@@ -56,11 +54,11 @@
                             </div>
 
                             <div class="col-md-4">
-                                <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
+                                <div class="form-group {{ $errors->has('trade') ? 'has-error' :'' }}">
                                     <label>Type Of Work(Trade)</label>
 
                                     <select name="trade" class="form-control" >
-                                        <option>Select Trade</option>
+                                        <option value="">Select Trade</option>
                                         <option value="1">Civil Contractor</option>
                                         <option value="2">Paint Contractor</option>
                                         <option value="3">Sanitary Contractor</option>
@@ -72,13 +70,13 @@
                                         <option value="9">Other Contractor</option>
                                     </select>
 
-                                    @error('estimate_floor')
+                                    @error('trade')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
+                                <div class="form-group {{ $errors->has('contractor') ? 'has-error' :'' }}">
                                     <label>Contractor Name</label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="contractor" name="contractor" readonly value="{{ $contractor->name ?? '' }}">
@@ -87,36 +85,53 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('estimate_project') ? 'has-error' :'' }}">
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('address') ? 'has-error' :'' }}">
                                     <label>Address</label>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="note" name="note" value="{{ old('note') }}">
+                                        <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}">
                                     </div>
                                     <!-- /.input group -->
 
-                                    @error('estimate_project')
+                                    @error('address')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('date') ? 'has-error' :'' }}">
+                                    <label>Date</label>
 
-                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('estimate_floor') ? 'has-error' :'' }}">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id="date" name="date" value="{{ empty(old('date')) ? ($errors->has('date') ? '' : date('Y-m-d')) : old('date') }}" autocomplete="off">
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    @error('date')
+                                    <span class="help-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('cheque_holder_name') ? 'has-error' :'' }}">
                                     <label>Cheque Holder Name</label>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="note" name="note" value="{{ old('note') }}">
+                                        <input type="text" class="form-control" id="cheque_holder_name" name="cheque_holder_name" value="{{ old('cheque_holder_name') }}">
                                     </div>
 
-                                    @error('estimate_floor')
+                                    @error('cheque_holder_name')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive">
+                            <h3>Contractor Bill Statement</h3>
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -138,31 +153,29 @@
                                 </thead>
 
                                 <tbody id="product-container">
-                                @if (old('product') != null && sizeof(old('product')) > 0)
-                                    @foreach(old('product') as $item)
+                                @if (old('item_code') != null && sizeof(old('item_code')) > 0)
+                                    @foreach(old('item_code') as $item)
                                         <tr class="product-item">
                                             <td class="col-md-3">
-                                                <div class="form-group {{ $errors->has('item_code') ? 'has-error' :'' }}">
-                                                    <div class="form-group {{ $errors->has('item_code') ? 'has-error' :'' }}">
-                                                        <input type="text"  name="item_code[]" class="form-control item_code" value="{{ old('item_code') }}">
-                                                    </div>
+                                                <div class="form-group {{ $errors->has('item_code.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text"  name="item_code[]" class="form-control item_code" value="{{ old('item_code.'.$loop->index) }}">
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="form-group {{ $errors->has('work_description') ? 'has-error' :'' }}">
-                                                    <input style="width: 220px;" type="text" step="any"  name="work_description[]" class="form-control work_description" value="{{ old('work_description') }}">
-                                                
+                                                <div class="form-group {{ $errors->has('work_description.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input style="width: 220px;" type="text"  name="work_description[]" class="form-control work_description" value="{{ old('work_description.'.$loop->index) }}">
+
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group {{ $errors->has('bill_no.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input style="width:70px;" type="text" step="any"  name="bill_no[]" class="form-control bill_no" value="{{ old('bill_no.'.$loop->index) }}">
+                                                    <input style="width:70px;" type="text"  name="bill_no[]" class="form-control bill_no" value="{{ old('bill_no.'.$loop->index) }}">
                                                 </div>
                                             </td>
 
                                             <td>
                                                 <div class="form-group {{ $errors->has('quantity.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" step="any" class="form-control quantity" name="quantity[]" value="{{ old('quantity.'.$loop->index) }}">
+                                                    <input type="text" class="form-control quantity" name="quantity[]" value="{{ old('quantity.'.$loop->index) }}">
                                                 </div>
                                             </td>
                                             <td>
@@ -575,7 +588,7 @@
                 if (deduction_height_three == '' || deduction_height_three < 0 || !$.isNumeric(deduction_height_three))
                     deduction_height_three = 0;
 
-             
+
 
                 //console.log(totalDeduction);
                 var total_amount = quantity * rate;

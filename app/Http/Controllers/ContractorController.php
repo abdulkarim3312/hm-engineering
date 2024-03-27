@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Project;
 use App\Model\TransactionLog;
+use App\Models\BillStatement;
+use App\Models\BillStatementDescription;
 use App\Models\Contractor;
 use App\Models\ReceiptPayment;
 use App\Models\ReceiptPaymentDetail;
@@ -213,7 +215,7 @@ class ContractorController extends Controller
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
         $contractor =Contractor::find($request->supplier);
-       
+
         $rules['amount'] = 'required|numeric|min:0|max:'.$contractor->due;
 
 
@@ -263,7 +265,7 @@ class ContractorController extends Controller
         $receiptPayment->notes = $request->note;
         $receiptPayment->save();
 
-    
+
         $receiptPaymentDetail = new ReceiptPaymentDetail();
         $receiptPaymentDetail->receipt_payment_id = $receiptPayment->id;
         $receiptPaymentDetail->narration = $request->note;
@@ -367,9 +369,184 @@ class ContractorController extends Controller
         return view('labour.contractor.bill_statement', compact('projects','contractor'));
     }
     public function billStatementPost(Request $request){
-        dd($request->all());
+        // dd($request->all());
+        $request->validate([
+            'estimate_project' => 'required',
+        ]);
+
+        $billStatement = new BillStatement();
+        $billStatement->estimate_project = $request->estimate_project;
+        $billStatement->trade = $request->trade;
+        $billStatement->contractor = $request->contractor;
+        $billStatement->address = $request->address;
+        $billStatement->cheque_holder_name = $request->cheque_holder_name;
+        $billStatement->date = $request->date;
+        // dd($billStatement->date);
+        // $billStatement->total_putty_area = 0;
+        // $billStatement->total_outside_area = 0;
+        // $billStatement->total_inside_area = 0;
+        // $billStatement->total_polish_area = 0;
+        $billStatement->save();
+
+
+
+        $counter = 0;
+        $totalPolishArea = 0;
+        $totalPolishLiter = 0;
+        foreach ($request->item_code as $key => $reqProduct) {
+            // dd($request->item_code);
+            BillStatementDescription::create([
+                'bill_statements_id' => $billStatement->id,
+                'estimate_project_id' => $request->estimate_project,
+                'item_code' => $reqProduct,
+                'work_description' => $request->work_description[$counter],
+                'bill_no' =>  $request->bill_no[$counter],
+                'quantity' => $request->quantity[$counter],
+                'unit' => $request->unit[$counter],
+                'rate' => $request->rate[$counter],
+                't_amount' => $request->t_amount[$counter],
+                'payable' => $request->payable[$counter],
+                'payable_a' => $request->payable_a[$counter],
+                'deduct_money' => $request->deduct_money[$counter],
+                'n_amount' => $request->n_amount[$counter],
+                'advance_amount' => 0,
+                'approve_amount' => $request->approve_amount[$counter],
+            ]);
+
+            $totalPolishArea += $request->t_amount[$counter];
+            $counter++;
+        }
+        return redirect()->route('bill_statement.details', ['billStatement' => $billStatement->id]);
+    }
+
+    public function billStatementList(BillStatement $billStatement){
+        return view('labour.contractor.bill_list', compact('billStatement'));
+    }
+    public function billStatementDetails(BillStatement $billStatement){
+        return view('labour.contractor.details',compact('billStatement'));
+    }
+
+    public function billStatementDataTable() {
+        $query = BillStatement::with('project');
+
+        return DataTables::eloquent($query)
+            ->addColumn('project', function(BillStatement $billStatement) {
+                return $billStatement->project->name ?? '';
+            })
+            ->addColumn('action', function(BillStatement $billStatement) {
+                if ($billStatement->status == 0){
+                    return '<a href="' . route('bill_statement.details', ['billStatement' => $billStatement->id]) . '" class="btn btn-primary btn-sm">Details</a>
+                     <a href="' . route('bill.approved', ['billStatement' => $billStatement->id]) . '" class="btn btn-warning btn-sm">Approve</a>';
+                }else{
+                    return '<a href="' . route('bill_statement.details', ['billStatement' => $billStatement->id]) . '" class="btn btn-primary btn-sm">Details</a>';
+                }
+            })
+
+            // ->editColumn('trade', function (BillStatement $contractor) {
+            //     if ($contractor->trade == 1)
+            //         return '<span class="label label-success">Civil Contractor</span>';
+            //     elseif($contractor->trade == 2)
+            //         return '<span class="label label-warning">Paint Contractor</span>';
+            //     elseif($contractor->trade == 3)
+            //         return '<span class="label label-primary">Sanitary Contractor</span>';
+            //     elseif($contractor->trade == 4)
+            //         return '<span class="label label-info">Tiles Contractor</span>';
+            //     elseif($contractor->trade == 5)
+            //         return '<span class="label label-info">MS Contractor</span>';
+            //     elseif($contractor->trade == 6)
+            //         return '<span class="label label-info">Wood Contractor</span>';
+            //     elseif($contractor->trade == 7)
+            //         return '<span class="label label-info">Electric Contractor</span>';
+            //     elseif($contractor->trade == 8)
+            //         return '<span class="label label-info">Thai Contractor</span>';
+            //     else
+            //         return '<span class="label label-danger">Other Contractor</span>';
+            // })
+            ->editColumn('status', function(BillStatement $billStatement) {
+                if ($billStatement->status == 0)
+                    return '<span class="badge badge-warning" style="background: #FFC107; color:#000000;">Pending</span>';
+                else
+                    return '<span class="badge badge-success" style="background: #04D89D;">Approved</span>';
+            })
+            ->rawColumns(['action', 'status','image','trade'])
+            ->toJson();
+    }
+
+    public function billStatementApproval(BillStatement $billStatement){
         $projects = Project::where('status',1)->get();
-        // dd($projects);
-        return view('labour.contractor.bill_statement', compact('projects'));
+        return view('labour.contractor.bill_approval',compact('billStatement','projects'));
+    }
+    public function billStatementApprovalPost(BillStatement $billStatement, Request $request){
+        // dd($request->all());
+        $rules = [
+            'approved_quantity.*' => 'required|numeric|min:.0',
+        ];
+        $request->validate($rules);
+
+        $available = true;
+        $message = '';
+        $first_counter = 0;
+       
+         foreach ($billStatement->billStatementDescription as $requisitionProduct) {
+            
+                $requisitionQuantity = BillStatementDescription::where('id', $requisitionProduct->id)
+                    ->first();
+                    
+                if ($request->approved_quantity[$first_counter] > $requisitionQuantity->quantity) {
+                    $available = false;
+                    $message = 'Approved Quantity Not Greater Than Requisition Quantity ' . $requisitionQuantity->quantity;
+                    break;
+                }
+                if ($request->app_payable[$first_counter] > $requisitionQuantity->payable) {
+                    $available = false;
+                    $message = 'Approved Quantity Not Greater Than Requisition Quantity ' . $requisitionQuantity->quantity;
+                    break;
+                }
+
+             $first_counter++;
+            }
+
+        if (!$available) {
+            return redirect()->back()->withInput()->with('message', $message);
+        }
+
+        $counter = 0;
+        $totalApprovedQuantity = 0;
+
+        foreach ($billStatement->billStatementDescription as $requisitionProduct) {
+
+            $requisitionProduct->increment('app_quantity', $request->approved_quantity[$counter]);
+            $requisitionProduct->increment('app_t_amount', $request->approved_quantity[$counter] * $request->rate[$counter]);
+            $requisitionProduct->increment('app_payable_a', $request->t_amount[$counter] * ($request->app_payable[$counter] / 100));
+            $requisitionProduct->increment('app_deduct_money', $request->payable_a[$counter] * (5/100));
+            $requisitionProduct->increment('app_n_amount', $request->payable_a[$counter] - $request->deduct_money[$counter]);
+           
+            $requisitionProduct->increment('app_payable', $request->app_payable[$counter]);
+
+            if ($requisitionProduct->approved_quantity > 0){
+                $requisitionProduct->status = 1;
+                $requisitionProduct->save();
+            }
+            if ($requisitionProduct->app_payable > 0){
+                $requisitionProduct->status = 1;
+                $requisitionProduct->save();
+            }
+            $counter++;
+            $requisitionProduct->advance_amount = $request->advance_amount[$counter];
+        }
+
+        $billStatement->update([
+            'approved_note' => $request->approved_note,
+        ]);
+
+        $billStatement->approved_date = $request->approved_date;
+        $billStatement->status = 1;
+        $billStatement->save();
+
+        return redirect()->route('bill_statement.details', ['billStatement' => $billStatement->id]);
+    }
+
+    public function billStatementPrint(BillStatement $billStatement){
+        return view('labour.contractor.print',compact('billStatement'));
     }
 }

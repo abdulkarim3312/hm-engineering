@@ -38,6 +38,7 @@
             padding: 2px 2px !important;
             font-size: 13px;
         }
+        
     </style>
 </head>
 <body>
@@ -61,38 +62,42 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th>Paint Configure No.</th>
-                        <td>{{ $paintConfigure->paint_configure_no }}</td>
-                    </tr>
-                    <tr>
-                        <th>Paint Floor Quantity</th>
-                        <td>{{ $paintConfigure->floor_number }}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Total Paint Liter Without Floor</th>
-                        <td>{{ $paintConfigure->total_paint_liter_without_floor }} Liter</td>
-                    </tr>
-
-                    <tr>
-                        <th>Total Paint Liter With Floor</th>
-                        <td>{{ $paintConfigure->total_paint_liter_with_floor }} Liter</td>
-                    </tr>
-                    <tr>
-                        <th>Total Seller Liter Without Floor</th>
-                        <td>{{ $paintConfigure->total_seller_liter_without_floor }} Liter</td>
-                    </tr>
-
-                    <tr>
-                        <th>Total Seller Liter With Floor</th>
-                        <td>{{ $paintConfigure->total_seller_liter_with_floor }} Liter</td>
+                        <th>Paint Category:</th>
+                        <td>
+                            @if($paintConfigure->main_paint_type == 1)
+                                <b>Polish Work</b>
+                            @elseif($paintConfigure->main_paint_type == 2)
+                                <b>Inside Work</b>
+                            @elseif($paintConfigure->main_paint_type == 3)
+                                <b>Outside Weather Coad Work</b>
+                            @elseif($paintConfigure->main_paint_type == 4)
+                                <b>Putty Work</b>
+                            @else
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th>Paint Configure Date</th>
                         <td>{{ $paintConfigure->date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Paint Total Area:</th>
+                        <td>
+                            @if($paintConfigure->main_paint_type == 1)
+                                <b>{{ $paintConfigure->total_polish_area }}</b>
+                            @elseif($paintConfigure->main_paint_type == 2)
+                                <b>{{ $paintConfigure->total_inside_area }}</b>
+                            @elseif($paintConfigure->main_paint_type == 3)
+                                <b>{{ $paintConfigure->total_outside_area }}</b>
+                            @elseif($paintConfigure->main_paint_type == 4)
+                                <b>{{ $paintConfigure->total_putty_area }}</b>
+                            @else
+                            @endif
+
+                        </td>
                     </tr>
                     <tr>
                         <th>Note </th>
@@ -101,7 +106,7 @@
                 </table>
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-md-6">
                 <table class="table table-bordered">
                     <tr>
                         <th colspan="2" class="text-center">Paint Info</th>
@@ -118,14 +123,7 @@
                         <th>Estimate Floor Unit</th>
                         <td>{{ $paintConfigure->estimateFloorUnit->name }}</td>
                     </tr>
-                    <tr>
-                        <th>Total Paint Area(Single Floor)</th>
-                        <td>{{ $paintConfigure->total_area_without_floor }} Cft</td>
-                    </tr>
-                    <tr>
-                        <th>Total Paint Area(All Floor)</th>
-                        <td>{{ $paintConfigure->total_area_with_floor }} Cft</td>
-                    </tr>
+
                 </table>
             </div>
         </div>
@@ -135,22 +133,23 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Unit Section Name</th>
+                        <th>Unit Section</th>
                         <th>Wall Direction</th>
                         <th>Paint Type</th>
+                        <th>Unit</th>
+                        <th>Quantity</th>
                         <th>Length</th>
                         <th>Height/Width</th>
                         <th>Side</th>
                         <th>Code Nos</th>
                         <th>Sub Total Deduction</th>
                         <th>Sub Total Area</th>
-                        <th>Sub Total Paint Liter</th>
-                        <th>Sub Total Seller Liter</th>
-
+                        <th>Sub Total Paint</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($paintConfigure->paintConfigureProducts as $product)
+                    @if ($paintConfigure->main_paint_type == 1)
+                        @foreach($paintConfigure->paintConfigureProducts as $product)
                         <tr>
                             <td>{{ $product->unitSection->name }}</td>
                             <td>
@@ -167,18 +166,38 @@
                             </td>
 
                             <td>
-                                @if($product->paint_type == 1)
-                                    Wheathar Code
-                                @elseif($product->paint_type == 2)    
-                                    Dis-Temper
-                                @elseif($product->paint_type == 3)    
-                                    Plastic
-                                @elseif($product->paint_type == 4)    
-                                    Enamel
+                                @if($product->polish_type == 1)
+                                    Spirit
+                                @elseif($product->polish_type == 2)
+                                    Gala
+                                @elseif($product->polish_type == 3)
+                                    Markin Cloth
+                                @elseif($product->polish_type == 4)
+                                    120 Paper
+                                @elseif($product->polish_type == 5)
+                                    1.5 Paper
+                                @elseif($product->polish_type == 6)
+                                    Chalk Paper
+                                @elseif($product->polish_type == 7)
+                                    Candle
+                                @elseif($product->polish_type == 8)
+                                    Brown
+                                @elseif($product->polish_type == 9)
+                                    Sidur
+                                @elseif($product->polish_type == 10)
+                                    Elamati
+                                @elseif($product->polish_type == 11)
+                                    Zink Oxaid
+                                @elseif($product->polish_type == 12)
+                                    Woodkeeper
+                                @elseif($product->polish_type == 13)
+                                    T6 Thiner
                                 @else
-                                    Polish
+                                    NC Thiner
                                 @endif
                             </td>
+                            <td>{{ $product->unit }}</td>
+                            <td>{{ $product->quantity }}</td>
                             <td>{{ $product->length }}</td>
                             <td> {{ $product->height }}</td>
                             <td> {{ $product->side }}</td>
@@ -186,27 +205,130 @@
                             <td> {{ number_format($product->sub_total_deduction, 2) }} Sft</td>
                             <td> {{ number_format($product->sub_total_area, 2) }} Sft</td>
                             <td> {{ number_format($product->sub_total_paint_liter, 2) }} Liter</td>
-                            <td> {{ number_format($product->sub_total_seller_liter, 2) }} Liter</td>
                         </tr>
-                    @endforeach
+                        @endforeach
+                    @elseif ($paintConfigure->main_paint_type == 2)
+                        @foreach($paintConfigure->paintConfigureProducts as $product)
+                        <tr>
+                            <td>{{ $product->unitSection->name }}</td>
+                            <td>
+                                @if($product->wall_direction == 1)
+                                    East
+                                @elseif($product->wall_direction == 2)
+                                    West
+                                @elseif($product->wall_direction == 3)
+                                    North
+                                @elseif($product->wall_direction == 4)
+                                    South
+                                @else
+                                @endif
+                            </td>
+
+                            <td>
+                                @if($product->inside_type == 1)
+                                    Plastic Paint
+                                @elseif($product->inside_type == 2)
+                                    Enamel
+                                @elseif($product->inside_type == 3)
+                                    Water Sealer
+                                @else
+                                    Snow Seen
+                                @endif
+                            </td>
+                            <td>{{ $product->unit }}</td>
+                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->length }}</td>
+                            <td> {{ $product->height }}</td>
+                            <td> {{ $product->side }}</td>
+                            <td> {{ $product->code_nos }}</td>
+                            <td> {{ number_format($product->sub_total_deduction, 2) }} Sft</td>
+                            <td> {{ number_format($product->sub_total_area, 2) }} Sft</td>
+                            <td> {{ number_format($product->sub_total_paint_liter, 2) }} Liter</td>
+                        </tr>
+                        @endforeach
+                    @elseif ($paintConfigure->main_paint_type == 3)
+                        @foreach($paintConfigure->paintConfigureProducts as $product)
+                        <tr>
+                            <td>{{ $product->unitSection->name }}</td>
+                            <td>
+                                @if($product->wall_direction == 1)
+                                    East
+                                @elseif($product->wall_direction == 2)
+                                    West
+                                @elseif($product->wall_direction == 3)
+                                    North
+                                @elseif($product->wall_direction == 4)
+                                    South
+                                @else
+                                @endif
+                            </td>
+
+                            <td>
+                                @if($product->outside_type == 1)
+                                    Weather Coat
+                                @elseif($product->outside_type == 2)
+                                    Plastic Paint
+                                @elseif($product->outside_type == 3)
+                                    White Cement
+                                @else
+                                    120 no Paper
+                                @endif
+                            </td>
+                            <td>{{ $product->unit }}</td>
+                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->length }}</td>
+                            <td> {{ $product->height }}</td>
+                            <td> {{ $product->side }}</td>
+                            <td> {{ $product->code_nos }}</td>
+                            <td> {{ number_format($product->sub_total_deduction, 2) }} Sft</td>
+                            <td> {{ number_format($product->sub_total_area, 2) }} Sft</td>
+                            <td> {{ number_format($product->sub_total_paint_liter, 2) }} Liter</td>
+                        </tr>
+                        @endforeach
+                    @else
+                        @foreach($paintConfigure->paintConfigureProducts as $product)
+                        <tr>
+                            <td>{{ $product->unitSection->name }}</td>
+                            <td>
+                                @if($product->wall_direction == 1)
+                                    East
+                                @elseif($product->wall_direction == 2)
+                                    West
+                                @elseif($product->wall_direction == 3)
+                                    North
+                                @elseif($product->wall_direction == 4)
+                                    South
+                                @else
+                                @endif
+                            </td>
+
+                            <td>
+                                @if($product->putty_type == 1)
+                                    Chack Powder
+                                @elseif($product->putty_type == 2)
+                                    Plastic Paint
+                                @else
+                                    Enamel Paint
+                                @endif
+                            </td>
+                            <td>{{ $product->unit }}</td>
+                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->length }}</td>
+                            <td>{{ $product->height }}</td>
+                            <td>{{ $product->side }}</td>
+                            <td>{{ $product->code_nos }}</td>
+                            <td>{{ number_format($product->sub_total_deduction, 2) }} Sft</td>
+                            <td>{{ number_format($product->sub_total_area, 2) }} Sft</td>
+                            <td>{{ number_format($product->sub_total_paint_liter, 2) }}</td>
+                        </tr>
+                        @endforeach
+                    @endif
                     </tbody>
-                    <tr>
+                    {{-- <tr>
                         <th class="text-right" colspan="8">Single Floor Total</th>
                         <td> {{ number_format($paintConfigure->total_area_without_floor, 2) }} Sft</td>
                         <td> {{ number_format($paintConfigure->total_paint_liter_without_floor, 2) }} Liter</td>
-                        <td> {{ number_format($paintConfigure->total_seller_liter_without_floor, 2) }} Liter</td>
-                    </tr>
-                    <tr>
-                        <th class="text-right" colspan="8">All Floor Total</th>
-                        <td> {{ number_format($paintConfigure->total_area_with_floor, 2) }} Sft</td>
-                        <td> {{ number_format($paintConfigure->total_paint_liter_with_floor, 2) }} Liter</td>
-                        <td> {{ number_format($paintConfigure->total_seller_liter_with_floor, 2) }} Liter</td>
-                    </tr>
-                    <tr>
-                        <th class="text-right" colspan="9">Total Cost Paint/Seller</th>
-                        <td>৳ {{ number_format($paintConfigure->total_paint_cost, 2) }} Taka</td>
-                        <td>৳ {{ number_format($paintConfigure->total_seller_cost, 2) }} Taka</td>
-                    </tr>
+                    </tr> --}}
                 </table>
             </div>
         </div>
