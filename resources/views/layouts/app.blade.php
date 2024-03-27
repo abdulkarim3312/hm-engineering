@@ -143,7 +143,7 @@
         <section class="sidebar">
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">MAIN NAVIGATION</li>
+                {{-- <li class="header">MAIN NAVIGATION</li> --}}
                 @if(auth()->user()->role == 2)
                     <?php
                     $subMenu = ['employees.attendance', 'employee_password_change'];

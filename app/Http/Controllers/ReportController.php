@@ -98,30 +98,30 @@ class ReportController extends Controller
     }
     public function projectWiseLedger(Request $request)
     {
-        
+
         $startDate = date('Y-m-d', strtotime($request->start_date));
         $endDate = date('Y-m-d', strtotime($request->end_date));
-        
+
         $month = strtotime($startDate);
-        
+
         $end = strtotime($endDate);
-       
+
         $monthsArray = [];
         while($month <= $end)
         {
             $monthGenerate = date('Y-m', $month);
-            
+
             array_push($monthsArray,$monthGenerate);
-            
+
             $month = strtotime("+1 month", $month);
-            
+
 
         }
 
         $in_word = new DecimalToWords();
 
         $currentMonth = date('m');
-        
+
         if ($currentMonth < 7){
             $currentYear = date('Y') - 1;
             $currentDate = date($currentYear.'-07-01');
@@ -1086,11 +1086,11 @@ class ReportController extends Controller
 
         if ($request->project !=null && $request->start !=null && $request->end !=null) {
             $project_single = Project::find($request->project);
-            $customers= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',1)->whereBetween('date', [$request->start, $request->end])->get();
-            $credits= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',2)->whereBetween('date', [$request->start, $request->end])->get();
+            $customers= TransactionLog::with('project', 'accountHead','contractor','vendor')->where('project_id',$request->project)->where('transaction_type',1)->whereBetween('date', [$request->start, $request->end])->get();
+            $credits= TransactionLog::with('project', 'accountHead','contractor','vendor')->where('project_id',$request->project)->where('transaction_type',2)->whereBetween('date', [$request->start, $request->end])->get();
         }elseif($request->project != null && $request->start == null && $request->end ==null) {
-            $customers= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',1)->whereBetween('date', [$request->start, $request->end])->get();
-            $credits= TransactionLog::with('project', 'accountHead',)->where('project_id',$request->project)->where('transaction_type',2)->whereBetween('date', [$request->start, $request->end])->get();
+            $customers= TransactionLog::with('project', 'accountHead','contractor','vendor')->where('project_id',$request->project)->where('transaction_type',1)->whereBetween('date', [$request->start, $request->end])->get();
+            $credits= TransactionLog::with('project', 'accountHead','contractor','vendor')->where('project_id',$request->project)->where('transaction_type',2)->whereBetween('date', [$request->start, $request->end])->get();
 
         }
 

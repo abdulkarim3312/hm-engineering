@@ -158,9 +158,6 @@
                                 <div class="col-md-6">
                                     <table class="table table-bordered" style="width:100%;">
                                         <tr>
-                                            {{-- <th rowspan="2" colspan="2" class="text-center">Particular</th> --}}
-                                            {{-- <th colspan="2" class="text-center">Transaction</th>
-                                            <th colspan="2" class="text-center">Closing</th> --}}
                                         </tr>
                                         <tr>
                                             <th class="text-center">Date</th>
@@ -168,18 +165,14 @@
                                             <th class="text-center">Voucher No</th>
                                             <th class="text-center">Head of Expenditure</th>
                                             <th class="text-center">Debit (in BDT)</th>
-                                            {{-- <th class="text-center" width="20%">Debit (in BDT)</th>
-                                            <th class="text-center" width="10%">Credit (in BDT)</th> --}}
                                         </tr>
                                         @php
                                             $total=0;
                                         @endphp
                                         @foreach($customers as $row)
                                             <tr>
-                                                {{-- <td class="text-center">{{ $row->date ?? '' }}</td> --}}
                                                 <td class="text-center">{{ date('Y-m-d',strtotime($row->date)) ?? '' }}</td>
-                                                <td class="text-center">{{ $row->client->name ?? ''}}</td>
-                                                {{-- @if($row->client_id != null)
+                                                @if($row->client_id != null)
                                                     <td class="text-center">{{ $row->client->name ?? ''}}</td>
                                                 @endif
                                                 @if($row->vendor_id != null)
@@ -187,11 +180,11 @@
                                                 @endif
                                                 @if($row->contractor_id != null)
                                                     <td class="text-center">{{ $row->contractor->name ?? ''}}</td>
-                                                @endif --}}
+                                                @endif
                                                 <td class="text-center">{{ $row->receipt_payment_no ?? ''}}</td>
                                                 <td class="text-center">{{ $row->accountHead->name ?? ''}}</td>
                                                 <td class="text-center">{{ number_format($row->amount,2) }}</td>
-                                              
+
                                                 @php
                                                     $total += $row->amount;
                                                 @endphp
@@ -201,8 +194,6 @@
                                             <th  colspan="2">Total</th>
                                             <th class="text-center"></th>
                                             <th class="text-center"></th>
-                                            {{-- <th class="text-center"> {{ number_format($customers->sum('paid'),2) }}</th>
-                                            <th class="text-center"> {{ number_format($customers->sum('due'),2) }}</th> --}}
                                             <th class="text-center"> {{ number_format($total,2) }}</th>
                                         </tr>
                                     </table>
@@ -210,9 +201,7 @@
                                 <div class="col-md-6">
                                     <table class="table table-bordered" style="width:100%;">
                                         <tr>
-                                            {{-- <th rowspan="2" colspan="2" class="text-center">Particular</th> --}}
-                                            {{-- <th colspan="2" class="text-center">Transaction</th>
-                                            <th colspan="2" class="text-center">Closing</th> --}}
+
                                         </tr>
                                         <tr>
                                             <th class="text-center">Date</th>
@@ -220,8 +209,7 @@
                                             <th class="text-center">Voucher No</th>
                                             <th class="text-center">Head of Expenditure</th>
                                             <th class="text-center">Credit (in BDT)</th>
-                                            {{-- <th class="text-center" width="20%">Debit (in BDT)</th>
-                                            <th class="text-center" width="10%">Credit (in BDT)</th> --}}
+                                           
                                         </tr>
                                         @php
                                             $totalCredit=0;

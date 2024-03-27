@@ -4,8 +4,10 @@ namespace App\Model;
 
 use App\Models\AccountHead;
 use App\Models\BalanceTransfer;
+use App\Models\Contractor;
 use App\Models\ReceiptPayment;
 use App\Models\ReceiptPaymentDetail;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Model;
 
 class TransactionLog extends Model
@@ -31,6 +33,12 @@ class TransactionLog extends Model
     }
     public function client(){
         return $this->belongsTo(Client::class);
+    }
+    public function vendor(){
+        return $this->belongsTo(Vendor::class);
+    }
+    public function contractor(){
+        return $this->belongsTo(Contractor::class);
     }
     public function accountSubHead(){
         return $this->belongsTo(AccountHeadSubType::class,'account_head_sub_type_id','id');

@@ -168,6 +168,7 @@ class VendorController extends Controller
         return view('vendor.vendor_list', compact('vendors'));
     }
     public function makePayment(Request $request) {
+        // dd($request->all());
         $rules = [
             'financial_year' => 'required',
             'project' => 'nullable',
@@ -189,7 +190,7 @@ class VendorController extends Controller
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
         $vendor =Vendor::find($request->supplier);
-       
+
         $rules['amount'] = 'required|numeric|min:0|max:'.$vendor->due;
 
 
@@ -247,13 +248,14 @@ class VendorController extends Controller
         //Debit Head Amount
         $log = new TransactionLog();
         $log->notes = $request->note;
-        $log->project_id = $vendor->project_id;
+        $log->project_id = $request->project;
         $log->receipt_payment_no = $voucherNo;
         $log->receipt_payment_sl = $receiptPaymentNoSl;
         $log->financial_year = financialYear($request->financial_year);
         $log->client_id = null;
-        $receiptPayment->contractor_id = null;
-        $receiptPayment->vendor_id = $vendor->id;
+        $log->contractor_id = null;
+        $log->vendor_id = $vendor->id;
+        // dd($receiptPayment->vendor_id);
         $log->date = Carbon::parse($request->date)->format('Y-m-d');
         $log->receipt_payment_id = $receiptPayment->id;
         $log->receipt_payment_detail_id = $receiptPaymentDetail->id;
@@ -264,7 +266,6 @@ class VendorController extends Controller
         }
         $log->transaction_type = 1;//Account Head Debit
         $log->account_head_id = $request->account;
-        $log->purchase_order_id = $vendor->id;
         $log->amount = $request->amount;
         $log->notes = $request->note;
         $log->save();

@@ -486,12 +486,12 @@ class ContractorController extends Controller
         $available = true;
         $message = '';
         $first_counter = 0;
-       
+
          foreach ($billStatement->billStatementDescription as $requisitionProduct) {
-            
+
                 $requisitionQuantity = BillStatementDescription::where('id', $requisitionProduct->id)
                     ->first();
-                    
+
                 if ($request->approved_quantity[$first_counter] > $requisitionQuantity->quantity) {
                     $available = false;
                     $message = 'Approved Quantity Not Greater Than Requisition Quantity ' . $requisitionQuantity->quantity;
@@ -520,7 +520,9 @@ class ContractorController extends Controller
             $requisitionProduct->increment('app_payable_a', $request->t_amount[$counter] * ($request->app_payable[$counter] / 100));
             $requisitionProduct->increment('app_deduct_money', $request->payable_a[$counter] * (5/100));
             $requisitionProduct->increment('app_n_amount', $request->payable_a[$counter] - $request->deduct_money[$counter]);
-           
+            $requisitionProduct->increment('advance_amount', $request->advance_amount[$counter]);
+            $requisitionProduct->increment('approve_amount', $request->n_amount[$counter] - $request->advance_amount[$counter]);
+
             $requisitionProduct->increment('app_payable', $request->app_payable[$counter]);
 
             if ($requisitionProduct->approved_quantity > 0){
@@ -532,7 +534,6 @@ class ContractorController extends Controller
                 $requisitionProduct->save();
             }
             $counter++;
-            $requisitionProduct->advance_amount = $request->advance_amount[$counter];
         }
 
         $billStatement->update([
