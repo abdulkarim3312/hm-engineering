@@ -372,6 +372,9 @@ class ContractorController extends Controller
         // dd($request->all());
         $request->validate([
             'estimate_project' => 'required',
+            'cheque_holder_name' => 'required',
+            'address' => 'required',
+            'trade' => 'required',
         ]);
 
         $billStatement = new BillStatement();
@@ -425,6 +428,9 @@ class ContractorController extends Controller
     public function billStatementDetails(BillStatement $billStatement){
         return view('labour.contractor.details',compact('billStatement'));
     }
+    public function billStatementDetail(BillStatement $billStatement){
+        return view('labour.contractor.detail',compact('billStatement'));
+    }
 
     public function billStatementDataTable() {
         $query = BillStatement::with('project');
@@ -438,30 +444,30 @@ class ContractorController extends Controller
                     return '<a href="' . route('bill_statement.details', ['billStatement' => $billStatement->id]) . '" class="btn btn-primary btn-sm">Details</a>
                      <a href="' . route('bill.approved', ['billStatement' => $billStatement->id]) . '" class="btn btn-warning btn-sm">Approve</a>';
                 }else{
-                    return '<a href="' . route('bill_statement.details', ['billStatement' => $billStatement->id]) . '" class="btn btn-primary btn-sm">Details</a>';
+                    return '<a href="' . route('bill_statement.details', ['billStatement' => $billStatement->id]) . '" class="btn btn-primary btn-sm">Details</a> <a href="' . route('bill_statement.detail', ['billStatement' => $billStatement->id]) . '" class="btn btn-primary btn-sm">View</a>';
                 }
             })
 
-            // ->editColumn('trade', function (BillStatement $contractor) {
-            //     if ($contractor->trade == 1)
-            //         return '<span class="label label-success">Civil Contractor</span>';
-            //     elseif($contractor->trade == 2)
-            //         return '<span class="label label-warning">Paint Contractor</span>';
-            //     elseif($contractor->trade == 3)
-            //         return '<span class="label label-primary">Sanitary Contractor</span>';
-            //     elseif($contractor->trade == 4)
-            //         return '<span class="label label-info">Tiles Contractor</span>';
-            //     elseif($contractor->trade == 5)
-            //         return '<span class="label label-info">MS Contractor</span>';
-            //     elseif($contractor->trade == 6)
-            //         return '<span class="label label-info">Wood Contractor</span>';
-            //     elseif($contractor->trade == 7)
-            //         return '<span class="label label-info">Electric Contractor</span>';
-            //     elseif($contractor->trade == 8)
-            //         return '<span class="label label-info">Thai Contractor</span>';
-            //     else
-            //         return '<span class="label label-danger">Other Contractor</span>';
-            // })
+            ->editColumn('trade', function (BillStatement $contractor) {
+                if ($contractor->trade == 1)
+                    return '<span class="label label-success">Civil Contractor</span>';
+                elseif($contractor->trade == 2)
+                    return '<span class="label label-warning">Paint Contractor</span>';
+                elseif($contractor->trade == 3)
+                    return '<span class="label label-primary">Sanitary Contractor</span>';
+                elseif($contractor->trade == 4)
+                    return '<span class="label label-info">Tiles Contractor</span>';
+                elseif($contractor->trade == 5)
+                    return '<span class="label label-info">MS Contractor</span>';
+                elseif($contractor->trade == 6)
+                    return '<span class="label label-info">Wood Contractor</span>';
+                elseif($contractor->trade == 7)
+                    return '<span class="label label-info">Electric Contractor</span>';
+                elseif($contractor->trade == 8)
+                    return '<span class="label label-info">Thai Contractor</span>';
+                else
+                    return '<span class="label label-danger">Other Contractor</span>';
+            })
             ->editColumn('status', function(BillStatement $billStatement) {
                 if ($billStatement->status == 0)
                     return '<span class="badge badge-warning" style="background: #FFC107; color:#000000;">Pending</span>';

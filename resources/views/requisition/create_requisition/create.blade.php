@@ -94,7 +94,6 @@
                                 <thead>
                                 <tr>
                                     <th>Product Name</th>
-{{--                                    <th width="15%">Available</th>--}}
                                     <th width="15%">Product Unit</th>
                                     <th width="15%">Quantity</th>
                                     <th></th>
@@ -116,11 +115,6 @@
                                                     </select>
                                                 </div>
                                             </td>
-{{--                                            <td>--}}
-{{--                                                <div class="form-group {{ $errors->has('available.'.$loop->index) ? 'has-error' :'' }}">--}}
-{{--                                                    <input type="text"  name="available[]" class="form-control available" value="{{ old('available.'.$loop->index) }}" readonly>--}}
-{{--                                                </div>--}}
-{{--                                            </td>--}}
                                             <td>
                                                 <div class="form-group {{ $errors->has('unit.'.$loop->index) ? 'has-error' :'' }}">
                                                     <input type="text"  name="unit[]" class="form-control unit" value="{{ old('unit.'.$loop->index) }}" readonly>
@@ -151,12 +145,6 @@
                                                 </select>
                                             </div>
                                         </td>
-
-{{--                                        <td>--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" name="available[]" class="form-control available" readonly>--}}
-{{--                                            </div>--}}
-{{--                                        </td>--}}
                                         <td>
                                             <div class="form-group">
                                                 <input type="text" name="unit[]" class="form-control unit" readonly>
@@ -181,9 +169,6 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product">Add More</a>
                                     </td>
-{{--                                    <th colspan="1">Total Quantity</th>--}}
-{{--                                    <th id="total-quantity"> ৳ 0.00 </th>--}}
-{{--                                    <td></td>--}}
                                 </tr>
                                 </tfoot>
                             </table>
@@ -212,11 +197,6 @@
                     </select>
                 </div>
             </td>
-{{--            <td>--}}
-{{--                <div class="form-group">--}}
-{{--                    <input type="text" name="available[]" class="form-control available" readonly>--}}
-{{--                </div>--}}
-{{--            </td>--}}
             <td>
                 <div class="form-group">
                     <input type="text" name="unit[]" class="form-control unit" readonly>

@@ -79,7 +79,7 @@
 @endsection
 
 @section('title')
-   Bill Statement Details
+   Bill Statement Without Approve
 @endsection
 
 @section('content')
@@ -161,12 +161,8 @@
                             <div class="col-md-6">
                                 <table class="table">
                                     <tr>
-                                        <th style="float:left;">Approval Date:</th>
+                                        <th style="float:left;">Date:</th>
                                         <td style="float:left">{{ $billStatement->approved_date }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="float:left;">Approval Note:</th>
-                                        <td style="float:left">{{ $billStatement->approved_note }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -181,14 +177,14 @@
                                         <th>Item Code</th>
                                         <th width="15%">Description of Work</th>
                                         <th width="5%">Bill No</th>
-                                        <th>Approval Quantity</th>
+                                        <th>Quantity</th>
                                         <th width="7%">Unit</th>
                                         <th width="7%">Rate</th>
-                                        <th>Approval T. Amount</th>
-                                        <th>Approval Payable(%)</th>
-                                        <th>Approval Payable Amount</th>
-                                        <th>Approval Deduct SD Money</th>
-                                        <th>Approval Net Amoount</th>
+                                        <th>T. Amount</th>
+                                        <th>Payable(%)</th>
+                                        <th>Payable Amount</th>
+                                        <th>Deduct SD Money</th>
+                                        <th>Net Amoount</th>
                                         <th>Advanced Amoount</th>
                                         <th>Approval Amoount</th>
                                     </tr>
@@ -200,14 +196,14 @@
                                             <td>{{ $product->item_code ?? ''}}</td>
                                             <td>{{ $product->work_description ?? ''}}</td>
                                             <td>{{ $product->bill_no ?? ''}}</td>
-                                            <td>{{ $product->app_quantity }}</td>
+                                            <td>{{ $product->quantity }}</td>
                                             <td>{{ $product->unit }}</td>
                                             <td>{{ $product->rate }}</td>
-                                            <td> {{ number_format($product->app_t_amount,2) }}</td>
-                                            <td> {{ $product->app_payable }} %</td>
-                                            <td> {{ number_format($product->app_payable_a,2) }}</td>
-                                            <td> {{ number_format($product->app_deduct_money, 2) }}</td>
-                                            <td> {{ number_format($product->app_n_amount, 2) }}</td>
+                                            <td> {{ number_format($product->t_amount,2) }}</td>
+                                            <td> {{ $product->payable }} %</td>
+                                            <td> {{ number_format($product->payable_a,2) }}</td>
+                                            <td> {{ number_format($product->deduct_money, 2) }}</td>
+                                            <td> {{ number_format($product->n_amount, 2) }}</td>
                                             <td> {{ number_format($product->advance_amount, 2) }}</td>
                                             <td> {{ number_format($product->approve_amount, 2) }}</td>
                                         </tr>

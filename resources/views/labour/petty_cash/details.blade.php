@@ -79,7 +79,7 @@
 @endsection
 
 @section('title')
-   Bill Statement Details
+   Petty Cash Details
 @endsection
 
 @section('content')
@@ -90,7 +90,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a target="_blank" href="{{ route('bill.print', ['billStatement' => $billStatement->id]) }}" class="btn btn-primary">Print</a>
+                            {{-- <a target="_blank" href="{{ route('bill.print', ['pettyCash' => $pettyCash->id]) }}" class="btn btn-primary">Print</a> --}}
                         </div>
                     </div>
                     <div id="prinarea">
@@ -117,56 +117,28 @@
                                     <tr>
                                         <th style="float:left">Project Name:</th>
                                         <td style="float:left">
-                                            {{ $billStatement->project->name ?? '' }}
+                                            {{ $pettyCash->project->name ?? '' }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <th style="float:left">Project Address:</th>
-                                        <td style="float:left">{{ $billStatement->address }}</td>
+                                        <td style="float:left">{{ $pettyCash->address }}</td>
                                     </tr>
                                     <tr>
 
                                     </tr>
                                     <tr>
                                         <th style="float:left">Cheque Holder Name: </th>
-                                        <td style="float:left">{{ $billStatement->cheque_holder_name??'' }}</td>
+                                        <td style="float:left">{{ $pettyCash->acc_holder_name??'' }}</td>
                                     </tr>
-                                    <tr>
-                                        <th style="float:left">Type Of Work (Trade): </th>
-                                        <td style="float:left">
-                                            @if ($billStatement->trade == 1)
-                                                Civil Contractor
-                                            @elseif ($billStatement->trade == 2)
-                                                Paint Contractor
-                                            @elseif ($billStatement->trade == 3)
-                                                Sanitary Contractor
-                                            @elseif ($billStatement->trade == 4)
-                                                Tiles Contractor
-                                            @elseif ($billStatement->trade == 5)
-                                                MS Contractor
-                                            @elseif ($billStatement->trade == 6)
-                                                Wood Contractor
-                                            @elseif ($billStatement->trade == 7)
-                                                Electric Contractor
-                                            @elseif ($billStatement->trade == 8)
-                                                Thai Contractor
-                                            @elseif ($billStatement->trade == 9)
-                                                Other Contractor
-                                            @else
-                                            @endif
-                                        </td>
-                                    </tr>
+
                                 </table>
                             </div>
                             <div class="col-md-6">
                                 <table class="table">
                                     <tr>
-                                        <th style="float:left;">Approval Date:</th>
-                                        <td style="float:left">{{ $billStatement->approved_date }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="float:left;">Approval Note:</th>
-                                        <td style="float:left">{{ $billStatement->approved_note }}</td>
+                                        <th style="float:left;">Date:</th>
+                                        <td style="float:left">{{ $pettyCash->date }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -177,39 +149,25 @@
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Sl No</th>
-                                        <th>Item Code</th>
-                                        <th width="15%">Description of Work</th>
-                                        <th width="5%">Bill No</th>
-                                        <th>Approval Quantity</th>
-                                        <th width="7%">Unit</th>
-                                        <th width="7%">Rate</th>
-                                        <th>Approval T. Amount</th>
-                                        <th>Approval Payable(%)</th>
-                                        <th>Approval Payable Amount</th>
-                                        <th>Approval Deduct SD Money</th>
-                                        <th>Approval Net Amoount</th>
-                                        <th>Advanced Amoount</th>
-                                        <th>Approval Amoount</th>
+                                        <th style="font-size: 13px;">Sl No</th>
+                                        <th style="font-size: 13px;" width="30%">Particulars</th>
+                                        <th style="font-size: 13px;">Previous Balance(Tk)</th>
+                                        <th style="font-size: 13px;">Budget Amount(Tk)</th>
+                                        <th style="font-size: 13px;">Required Amount(Tk)</th>
+                                        <th style="font-size: 13px;">Recommended Amount(Tk)</th>
+                                        <th>Remarks</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($billStatement->billStatementDescription as $product)
+                                        @foreach($pettyCash->pettyCashProduct as $product)
                                         <tr>
                                             <td>{{ $loop->iteration}}</td>
-                                            <td>{{ $product->item_code ?? ''}}</td>
-                                            <td>{{ $product->work_description ?? ''}}</td>
-                                            <td>{{ $product->bill_no ?? ''}}</td>
-                                            <td>{{ $product->app_quantity }}</td>
-                                            <td>{{ $product->unit }}</td>
-                                            <td>{{ $product->rate }}</td>
-                                            <td> {{ number_format($product->app_t_amount,2) }}</td>
-                                            <td> {{ $product->app_payable }} %</td>
-                                            <td> {{ number_format($product->app_payable_a,2) }}</td>
-                                            <td> {{ number_format($product->app_deduct_money, 2) }}</td>
-                                            <td> {{ number_format($product->app_n_amount, 2) }}</td>
-                                            <td> {{ number_format($product->advance_amount, 2) }}</td>
-                                            <td> {{ number_format($product->approve_amount, 2) }}</td>
+                                            <td>{{ $product->product ?? ''}}</td>
+                                            <td> {{ number_format($product->previous_balance,2) }}</td>
+                                            <td> {{ number_format($product->budget_amount,2) }}</td>
+                                            <td> {{ number_format($product->required_amount, 2) }}</td>
+                                            <td> {{ number_format($product->recommended_amount, 2) }}</td>
+                                            <td> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

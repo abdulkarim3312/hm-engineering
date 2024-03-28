@@ -119,11 +119,7 @@
                             <div class="col-md-4">
                                 <div class="form-group {{ $errors->has('cheque_holder_name') ? 'has-error' :'' }}">
                                     <label>Cheque Holder Name</label>
-
-                                    <div class="form-group">
                                         <input type="text" class="form-control" id="cheque_holder_name" name="cheque_holder_name" value="{{ old('cheque_holder_name') }}">
-                                    </div>
-
                                     @error('cheque_holder_name')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
@@ -350,15 +346,13 @@
     <template id="template-product">
         <tr class="product-item">
             <td>
-                <div class="form-group {{ $errors->has('item_code') ? 'has-error' :'' }}">
-                    <input type="text" step="any"  name="item_code[]" class="form-control item_code" value="{{ old('item_code') }}">
+                <div class="form-group">
+                    <input type="text" step="any"  name="item_code[]" class="form-control item_code" value="">
                 </div>
             </td>
             <td>
                 <div class="form-group">
-                    <div class="form-group {{ $errors->has('work_description.') ? 'has-error' :'' }}">
-                        <input style="width: 220px;" type="text" step="any"  name="work_description[]" class="form-control work_description" value="{{ old('work_description') }}">
-                    </div>
+                    <input style="width: 220px;" type="text" step="any"  name="work_description[]" class="form-control work_description" value="">
                 </div>
             </td>
             <td>

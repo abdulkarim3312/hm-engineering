@@ -51,6 +51,7 @@ use App\Http\Controllers\WaterTankController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\BankCheckController;
 use App\Http\Controllers\FacingBricksWorkController;
+use App\Http\Controllers\PettyCashController;
 
 /*
 |--------------------------------------------------------------------------
@@ -542,10 +543,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('contractor-bill-statement-list', [ContractorController::class,'billStatementList'])->name('bill_statement.list');
     Route::get('contractor-bill-statement-datatable', [ContractorController::class,'billStatementDataTable'])->name('bill_statement.datatable');
     Route::get('contractor-bill-statement-details/{billStatement}', [ContractorController::class,'billStatementDetails'])->name('bill_statement.details');
+    Route::get('contractor-bill-statement-detail/{billStatement}', [ContractorController::class,'billStatementDetail'])->name('bill_statement.detail');
     Route::get('contractor-bill-statement-approval/{billStatement}', [ContractorController::class,'billStatementApproval'])->name('bill.approved');
     Route::post('contractor-bill-approval/{billStatement}', [ContractorController::class,'billStatementApprovalPost'])->name('bill.approved_store');
     Route::get('contractor-bill-print/{billStatement}', [ContractorController::class,'billStatementPrint'])->name('bill.print');
 
+    Route::get('petty-cash-list', [PettyCashController::class, 'pettyCashAll'])->name('petty_cash.list')->middleware('permission:labour_designation');
+    Route::get('petty-cash/add', [PettyCashController::class, 'pettyCashAdd'])->name('petty_cash.add')->middleware('permission:labour_designation');
+    Route::post('petty-cash/add', [PettyCashController::class, 'pettyCashAddPost'])->middleware('permission:labour_designation');
+    Route::get('petty-cash-datatable', [PettyCashController::class, 'pettyCashDataTable'])->name('petty_cash.datatable')->middleware('permission:labour_designation');
+    Route::get('petty-cash/details/{pettyCash}', [PettyCashController::class, 'pettyCashDetails'])->name('petty_cash.details');
+    Route::post('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApprovalPost'])->name('petty_cash.approval')->middleware('permission:labour_designation');
+    Route::get('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApproval'])->name('petty_cash.approval');
 
     // Labour Department
     Route::get('labour', 'LabourController@labourIndex')->name('labour.all')->middleware('permission:labour');

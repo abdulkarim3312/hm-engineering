@@ -31,8 +31,9 @@
                         <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Contractor Name</th>
                             <th>Project Name</th>
+                            <th>Contractor Name</th>
+                            <th>Trade</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -64,8 +65,9 @@
                 ajax: '{{ route('bill_statement.datatable') }}',
                 columns: [
                     {data: 'date', name: 'date'},
-                    {data: 'contractor', name: 'contractor'},
                     {data: 'project', name: 'project.name'},
+                    {data: 'contractor', name: 'contractor'},
+                    {data: 'trade', name: 'trade'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
                 ],
