@@ -194,7 +194,6 @@ class MatConfigureController extends Controller
             ]);
 
             $totalKg +=$total_main_rod;
-            // dd($totalKg);
             $totalTon += ($total_main_rod / $request->kg_by_ton[$counter]);
 
             $counter++;

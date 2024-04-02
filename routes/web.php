@@ -52,6 +52,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\BankCheckController;
 use App\Http\Controllers\FacingBricksWorkController;
 use App\Http\Controllers\PettyCashController;
+use App\Http\Controllers\BillAdjustmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -555,6 +556,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('petty-cash/details/{pettyCash}', [PettyCashController::class, 'pettyCashDetails'])->name('petty_cash.details');
     Route::post('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApprovalPost'])->name('petty_cash.approval')->middleware('permission:labour_designation');
     Route::get('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApproval'])->name('petty_cash.approval');
+    // Bill Adjustment
+    Route::get('bill-adjustment-list', [BillAdjustmentController::class, 'billAdjustmentAll'])->name('bill_adjustment.list')->middleware('permission:labour_designation');
+    Route::get('bill-adjustment/add', [BillAdjustmentController::class, 'billAdjustmentAdd'])->name('bill_adjustment.add')->middleware('permission:labour_designation');
+    Route::post('bill-adjustment/add', [BillAdjustmentController::class, 'billAdjustmentAddPost'])->middleware('permission:labour_designation');
+    Route::get('bill-adjustment-datatable', [BillAdjustmentController::class, 'billAdjustmentDataTable'])->name('bill_adjustment.datatable')->middleware('permission:labour_designation');
+    Route::get('bill-adjustment/details/{billAdjustment}', [BillAdjustmentController::class, 'billAdjustmentDetails'])->name('bill_adjustment.details');
+    Route::get('bill-adjustment/print/{billAdjustment}', [BillAdjustmentController::class, 'billAdjustmentPrint'])->name('bill_adjustment.print');
 
     // Labour Department
     Route::get('labour', 'LabourController@labourIndex')->name('labour.all')->middleware('permission:labour');
