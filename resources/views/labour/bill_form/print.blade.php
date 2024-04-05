@@ -60,47 +60,48 @@
             </div>
         </div>
 
+        <h2 class="text-center"><u>Bill Form</u></h2>
         <div class="row">
             <div class="col-md-6">
-                <table class="table table-bordered">
+                <table class="table">
                     <tr>
                         <th style="float:left">Project Name:</th>
                         <td style="text-decoration:underline dotted;text-underline-position:under;float:left">
-                            {{ $billAdjustment->project->name ?? '' }}
+                            {{ $billForm->project->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th style="float:left">Project Address:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->address }}</td>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->address }}</td>
                     </tr>
                     <tr>
                         <th style="float:left">Cheque Holder Name: </th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->acc_holder_name??'' }}</td>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->acc_holder_name??'' }}</td>
                     </tr>
                     <tr>
                         <th style="float:left">Duration: </th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->duration??'' }}</td>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->duration??'' }}</td>
                     </tr>
 
                 </table>
             </div>
             <div class="col-md-6">
-                <table class="table table-bordered">
+                <table class="table">
                     <tr>
                         <th style="float:left;">For The Month:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->for_the_month }}</td>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->for_the_month }}</td>
                     </tr>
                     <tr>
                         <th style="float:left;">Trade:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->trade }}</td>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->trade }}</td>
                     </tr>
                     <tr>
                         <th style="float:left;">Bill No:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->bill_no }}</td>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->bill_no }}</td>
                     </tr>
                     <tr>
                         <th style="float:left;">Date:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->date }}</td>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->date }}</td>
                     </tr>
                 </table>
             </div>
@@ -118,7 +119,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($billAdjustment->billAdjustmentProduct as $product)
+                        @foreach($billForm->billFormProduct as $product)
                         <tr>
                             <td>{{ $loop->iteration}}</td>
                             <td>{{ $product->product ?? ''}}</td>
@@ -129,7 +130,7 @@
                         <tr>
                             <td></td>
                             <th>Total</th>
-                            <td>{{ $billAdjustment->total_amount ?? ''}}</td>
+                            <td>{{ $billForm->total_amount ?? ''}}</td>
                             <td> </td>
                         </tr>
                     </tbody>

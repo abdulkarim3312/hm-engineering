@@ -79,7 +79,7 @@
 @endsection
 
 @section('title')
-   Bill Adjuestment Form Details
+   Bill Form Details
 @endsection
 
 @section('content')
@@ -90,7 +90,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a target="_blank" href="{{ route('bill_adjustment.print', ['billAdjustment' => $billAdjustment->id]) }}" class="btn btn-primary">Print</a>
+                            <a target="_blank" href="{{ route('bill_form.print', ['billForm' => $billForm->id]) }}" class="btn btn-primary">Print</a>
                         </div>
                     </div>
                     <div id="prinarea">
@@ -111,27 +111,27 @@
                             </div>
                         </div>
                         <hr>
-                        <h2 class="text-center"><u>Bill Adjustment Form</u></h2>
+                        <h2 class="text-center"><u>Bill Form</u></h2>
                         <div class="row">
                             <div class="col-md-6">
                                 <table class="table">
                                     <tr>
                                         <th style="float:left">Project Name:</th>
                                         <td style="text-decoration:underline dotted;text-underline-position:under;float:left">
-                                            {{ $billAdjustment->project->name ?? '' }}
+                                            {{ $billForm->project->name ?? '' }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <th style="float:left">Project Address:</th>
-                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->address }}</td>
+                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->address }}</td>
                                     </tr>
                                     <tr>
                                         <th style="float:left">Cheque Holder Name: </th>
-                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->acc_holder_name??'' }}</td>
+                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->acc_holder_name??'' }}</td>
                                     </tr>
                                     <tr>
                                         <th style="float:left">Duration: </th>
-                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->duration??'' }}</td>
+                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->duration??'' }}</td>
                                     </tr>
 
                                 </table>
@@ -140,19 +140,19 @@
                                 <table class="table">
                                     <tr>
                                         <th style="float:left;">For The Month:</th>
-                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->for_the_month }}</td>
+                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->for_the_month }}</td>
                                     </tr>
                                     <tr>
                                         <th style="float:left;">Trade:</th>
-                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->trade }}</td>
+                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->trade }}</td>
                                     </tr>
                                     <tr>
                                         <th style="float:left;">Bill No:</th>
-                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->bill_no }}</td>
+                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->bill_no }}</td>
                                     </tr>
                                     <tr>
                                         <th style="float:left;">Date:</th>
-                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billAdjustment->date }}</td>
+                                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->date }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -170,7 +170,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($billAdjustment->billAdjustmentProduct as $product)
+                                        @foreach($billForm->billFormProduct as $product)
                                         <tr>
                                             <td>{{ $loop->iteration}}</td>
                                             <td>{{ $product->product ?? ''}}</td>
@@ -181,7 +181,7 @@
                                         <tr>
                                             <td></td>
                                             <th>Total</th>
-                                            <td>{{ $billAdjustment->total_amount ?? ''}}</td>
+                                            <td>{{ $billForm->total_amount ?? ''}}</td>
                                             <td> </td>
                                         </tr>
                                     </tbody>

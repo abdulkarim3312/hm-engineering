@@ -563,6 +563,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('bill-adjustment-datatable', [BillAdjustmentController::class, 'billAdjustmentDataTable'])->name('bill_adjustment.datatable')->middleware('permission:labour_designation');
     Route::get('bill-adjustment/details/{billAdjustment}', [BillAdjustmentController::class, 'billAdjustmentDetails'])->name('bill_adjustment.details');
     Route::get('bill-adjustment/print/{billAdjustment}', [BillAdjustmentController::class, 'billAdjustmentPrint'])->name('bill_adjustment.print');
+    // Bill Form
+    Route::get('bill-form-list', [BillAdjustmentController::class, 'billFormAll'])->name('bill_form.list')->middleware('permission:labour_designation');
+    Route::get('bill-form/add', [BillAdjustmentController::class, 'billFormAdd'])->name('bill_form.add')->middleware('permission:labour_designation');
+    Route::post('bill-form/add', [BillAdjustmentController::class, 'billFormAddPost'])->middleware('permission:labour_designation');
+    Route::get('bill-form-datatable', [BillAdjustmentController::class, 'billFormDataTable'])->name('bill_form.datatable')->middleware('permission:labour_designation');
+    Route::get('bill-form/details/{billForm}', [BillAdjustmentController::class, 'billFormDetails'])->name('bill_form.details');
+    Route::get('bill-form/print/{billForm}', [BillAdjustmentController::class, 'billFormPrint'])->name('bill_form.print');
 
     // Labour Department
     Route::get('labour', 'LabourController@labourIndex')->name('labour.all')->middleware('permission:labour');
