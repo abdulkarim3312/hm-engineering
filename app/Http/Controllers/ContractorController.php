@@ -199,7 +199,7 @@ class ContractorController extends Controller
             'project' => 'nullable',
             'payment_type' => 'required',
             'account' => 'required',
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'nullable|numeric|min:1',
             'date' => 'required|date',
             'note' => 'nullable|string|max:255',
         ];
@@ -216,7 +216,7 @@ class ContractorController extends Controller
         }
         $contractor =Contractor::find($request->supplier);
 
-        $rules['amount'] = 'required|numeric|min:0|max:'.$contractor->due;
+        // $rules['amount'] = 'required|nullable|numeric|min:0|max:'.$contractor->due;
 
 
         $validator = Validator::make($request->all(), $rules);
@@ -224,8 +224,20 @@ class ContractorController extends Controller
         // if ($validator->fails()) {
         //     return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         // }
-        $contractor->increment('paid', $request->amount);
-        $contractor->decrement('due', $request->amount);
+
+        if($request->contractor_payment == 1){
+            $contractor->increment('total', $request->amount);
+        }else if($request->contractor_payment == 2){
+            $contractor->increment('ra_bill', $request->running_amount);
+        }else if($request->contractor_payment == 3){
+            $contractor->increment('due', $request->due_amount);
+        }else if($request->contractor_payment == 4){
+            $contractor->increment('final_bill', $request->final_amount);
+        }else if($request->contractor_payment == 5){
+            $contractor->increment('paid', $request->sb_amount);
+        }else{
+
+        }
 
         //create dynamic voucher no process start
         $transactionType = 2;
@@ -259,8 +271,33 @@ class ContractorController extends Controller
         $receiptPayment->contractor_id = $contractor->id;
         $receiptPayment->vendor_id = null;
         $receiptPayment->customer_id = $contractor->contractor_id;
-        $receiptPayment->sub_total = $request->amount;
-        $receiptPayment->net_amount = $request->amount;
+        if($request->contractor_payment == 1){
+            $receiptPayment->sub_total = $request->amount;
+        }else if($request->contractor_payment == 2){
+            $receiptPayment->sub_total = $request->running_amount;
+        }else if($request->contractor_payment == 3){
+            $receiptPayment->sub_total = $request->due_amount;
+        }else if($request->contractor_payment == 4){
+            $receiptPayment->sub_total = $request->final_amount;
+        }else if($request->contractor_payment == 5){
+            $receiptPayment->sub_total = $request->sb_amount;
+        }else{
+
+        }
+        if($request->contractor_payment == 1){
+            $receiptPayment->net_amount = $request->amount;
+        }else if($request->contractor_payment == 2){
+            $receiptPayment->net_amount = $request->running_amount;
+        }else if($request->contractor_payment == 3){
+            $receiptPayment->net_amount = $request->due_amount;
+        }else if($request->contractor_payment == 4){
+            $receiptPayment->net_amount = $request->final_amount;
+        }else if($request->contractor_payment == 5){
+            $receiptPayment->net_amount = $request->sb_amount;
+        }else{
+
+        }
+        // $receiptPayment->net_amount = $request->amount;
         $receiptPayment->purchase_order_id = $contractor->id;
         $receiptPayment->notes = $request->note;
         $receiptPayment->save();
@@ -270,8 +307,34 @@ class ContractorController extends Controller
         $receiptPaymentDetail->receipt_payment_id = $receiptPayment->id;
         $receiptPaymentDetail->narration = $request->note;
         $receiptPaymentDetail->account_head_id = $request->account;
-        $receiptPaymentDetail->amount = $request->amount;
-        $receiptPaymentDetail->net_amount = $request->amount;
+        if($request->contractor_payment == 1){
+            $receiptPaymentDetail->amount = $request->amount;
+        }else if($request->contractor_payment == 2){
+            $receiptPaymentDetail->amount = $request->running_amount;
+        }else if($request->contractor_payment == 3){
+            $receiptPaymentDetail->amount = $request->due_amount;
+        }else if($request->contractor_payment == 4){
+            $receiptPaymentDetail->amount = $request->final_amount;
+        }else if($request->contractor_payment == 5){
+            $receiptPaymentDetail->amount = $request->sb_amount;
+        }else{
+
+        }
+        // $receiptPaymentDetail->amount = $request->amount;
+        if($request->contractor_payment == 1){
+            $receiptPaymentDetail->net_amount = $request->amount;
+        }else if($request->contractor_payment == 2){
+            $receiptPaymentDetail->net_amount = $request->running_amount;
+        }else if($request->contractor_payment == 3){
+            $receiptPaymentDetail->net_amount = $request->due_amount;
+        }else if($request->contractor_payment == 4){
+            $receiptPaymentDetail->net_amount = $request->final_amount;
+        }else if($request->contractor_payment == 5){
+            $receiptPaymentDetail->net_amount = $request->sb_amount;
+        }else{
+
+        }
+        // $receiptPaymentDetail->net_amount = $request->amount;
         $receiptPaymentDetail->save();
 
         //Debit Head Amount
@@ -282,13 +345,13 @@ class ContractorController extends Controller
         $log->receipt_payment_sl = $receiptPaymentNoSl;
         $log->financial_year = financialYear($request->financial_year);
         $log->client_id = null;
-        $receiptPayment->vendor_id = null;
+        $log->vendor_id = null;
         if($request->project){
-            $receiptPayment->contractor_id = $request->project;
+            $log->project_id = $request->project;
         }else{
-            $receiptPayment->contractor_id = $contractor->id;
+            $log->project_id = $contractor->project_id;
         }
-        $receiptPayment->vendor_id = null;
+        $log->contractor_id = $contractor->id;
         $log->date = Carbon::parse($request->date)->format('Y-m-d');
         $log->receipt_payment_id = $receiptPayment->id;
         $log->receipt_payment_detail_id = $receiptPaymentDetail->id;
@@ -300,7 +363,20 @@ class ContractorController extends Controller
         $log->transaction_type = 1;//Account Head Debit
         $log->account_head_id = $request->account;
         $log->purchase_order_id = $contractor->id;
-        $log->amount = $request->amount;
+        if($request->contractor_payment == 1){
+            $log->amount = $request->amount;
+        }else if($request->contractor_payment == 2){
+            $log->amount = $request->running_amount;
+        }else if($request->contractor_payment == 3){
+            $log->amount = $request->due_amount;
+        }else if($request->contractor_payment == 4){
+            $log->amount = $request->final_amount;
+        }else if($request->contractor_payment == 5){
+            $log->amount = $request->sb_amount;
+        }else{
+
+        }
+        // $log->amount = $request->amount;
         $log->notes = $request->note;
         $log->save();
 

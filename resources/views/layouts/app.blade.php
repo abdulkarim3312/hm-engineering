@@ -552,7 +552,7 @@
                 <?php
                 $subMenu = ['labour.all', 'labour.add', 'labour.edit', 'labour.details',
                     'labour.attendance','labour_list','labour_designation.all','labour_designation.add',
-                    'labour_designation.edit','labour_employee_attendance.report','labour.food_cost',
+                    'labour_designation.edit','labour_employee_attendance.report','labour.food_cost','conveyance.list','conveyance.add',
                     'labour.food_cost.add','labour.food_cost.edit','food_cost.details','labour.bill','bill_adjustment.list','bill_adjustment.add','bill_form.list','bill_form.add','bill_form.details',
                     'labour.bill.add','labour.bill.details','contractor.all','contractor.list','contractor.add','contractor.edit','contractor.payment','bill_statement.list','petty_cash.list','petty_cash.add','bill_statement'];
                 ?>
@@ -599,6 +599,11 @@
                             @can('labour_designation')
                                 <li class="{{ Route::currentRouteName() == 'bill_adjustment.list' ? 'active' : '' }}">
                                     <a href="{{ route('bill_adjustment.list') }}"><i class="fa fa-circle-o"></i>Bill Adjustment</a>
+                                </li>
+                            @endcan
+                            @can('labour_designation')
+                                <li class="{{ Route::currentRouteName() == 'conveyance.list' ? 'active' : '' }}">
+                                    <a href="{{ route('conveyance.list') }}"><i class="fa fa-circle-o"></i>Conveyance Bill</a>
                                 </li>
                             @endcan
                             @can('labour_designation')

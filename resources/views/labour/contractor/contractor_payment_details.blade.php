@@ -19,7 +19,7 @@
                                         <th>Type</th>
                                         <th>Voucher/Receipt No</th>
                                         <th>Cash/Bank Account</th>
-                                        <th>Vendor name</th>
+                                        <th>Contractor name</th>
                                         {{-- <th>Incomes Code</th> --}}
                                         <th>Net Amount</th>
                                         <th width="14%">Action</th>

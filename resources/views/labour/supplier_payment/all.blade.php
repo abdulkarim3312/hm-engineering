@@ -23,10 +23,11 @@
                                 <th>Name</th>
                                 <th>Project</th>
                                 <th>Mobile</th>
+                                <th>Advance Bill</th>
                                 <th>Running Bill</th>
-                                <th>Paid</th>
-                                <th>Due</th>
-                                <th>Discount</th>
+                                <th>SD Money</th>
+                                {{-- <th>Due</th> --}}
+                                <th>Final</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -38,8 +39,9 @@
                                     <td>{{ $contractor->projects->name ?? '' }}</td>
                                     <td>{{ $contractor->mobile }}</td>
                                     <td> {{ number_format($contractor->total, 2) }}</td>
+                                    <td> {{ number_format($contractor->ra_bill, 2) }}</td>
                                     <td> {{ number_format($contractor->paid, 2) }}</td>
-                                    <td> {{ number_format($contractor->due, 2) }}</td>
+                                    {{-- <td> {{ number_format($contractor->due, 2) }}</td> --}}
                                     <td> {{ number_format($contractor->discount, 2) }}</td>
                                     <td>
                                         <a class="btn btn-success btn-sm btn-pay" role="button" data-id="{{ $contractor->id }}" data-name="{{ $contractor->name }}">Pay</a>
