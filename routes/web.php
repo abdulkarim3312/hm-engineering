@@ -575,9 +575,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('conveyance-form-list', [ConveyanceController::class, 'conveyanceFormAll'])->name('conveyance.list')->middleware('permission:labour_designation');
     Route::get('conveyance-form/add', [ConveyanceController::class, 'conveyanceFormAdd'])->name('conveyance.add')->middleware('permission:labour_designation');
     Route::post('conveyance-form/add', [ConveyanceController::class, 'conveyanceFormAddPost'])->middleware('permission:labour_designation');
-    Route::get('conveyance-form-datatable', [ConveyanceController::class, 'billFormDataTable'])->name('bill_form.datatable')->middleware('permission:labour_designation');
-    Route::get('conveyance-form/details/{billForm}', [ConveyanceController::class, 'billFormDetails'])->name('bill_form.details');
-    Route::get('conveyance-form/print/{billForm}', [ConveyanceController::class, 'billFormPrint'])->name('bill_form.print');
+    Route::get('conveyance-form-datatable', [ConveyanceController::class, 'billFormDataTable'])->name('conveyance.datatable')->middleware('permission:labour_designation');
+    Route::get('conveyance-form/details/{conveyance}', [ConveyanceController::class, 'conveyanceDetails'])->name('conveyance.details');
+    Route::get('conveyance-form/print/{conveyance}', [ConveyanceController::class, 'conveyancePrint'])->name('conveyance.print');
 
     // Labour Department
     Route::get('labour', 'LabourController@labourIndex')->name('labour.all')->middleware('permission:labour');

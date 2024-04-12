@@ -25,7 +25,7 @@
 
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group {{ $errors->has('project_id') ? 'has-error' :'' }}">
                                     <label>Projects</label>
 
@@ -42,24 +42,25 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('address') ? 'has-error' :'' }}">
-                                    <label>Project Address</label>
+
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('name') ? 'has-error' :'' }}">
+                                    <label>Name</label>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="address" step="any"
-                                               name="address" value="" placeholder="Enter Address">
+                                        <input type="text" class="form-control" id="name" step="any"
+                                               name="name" value="" placeholder="Enter Name">
                                     </div>
                                     <!-- /.input group -->
 
-                                    @error('address')
+                                    @error('name')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group {{ $errors->has('month') ? 'has-error' :'' }}">
-                                    <label>For The Month</label>
+                                    <label>Month</label>
 
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="month" step="any"
@@ -72,39 +73,10 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('bill_no') ? 'has-error' :'' }}">
-                                    <label>Bill No</label>
 
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="bill_no" step="any"
-                                               name="bill_no" value="" placeholder="Enter Bill No">
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('bill_no')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('acc_holder_name') ? 'has-error' :'' }}">
-                                    <label>Account Holder Name</label>
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="address" step="any"
-                                               name="acc_holder_name" value="" placeholder="Enter Account Holder Name">
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('acc_holder_name')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('date') ? 'has-error' :'' }}">
                                     <label>Date</label>
 
@@ -121,30 +93,17 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('trade') ? 'has-error' :'' }}">
-                                    <label>Trade</label>
+
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('designation') ? 'has-error' :'' }}">
+                                    <label>Designation</label>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Enter trade" id="trade" name="trade" value="{{ old('trade') }}">
+                                        <input type="text" class="form-control" placeholder="Enter Designation" id="designation" name="designation" value="{{ old('designation') }}">
                                     </div>
                                     <!-- /.input group -->
 
-                                    @error('trade')
-                                    <span class="help-block">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group {{ $errors->has('duration') ? 'has-error' :'' }}">
-                                    <label>Duration</label>
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Enter Duration" id="duration" name="duration" value="{{ old('duration') }}">
-                                    </div>
-                                    <!-- /.input group -->
-
-                                    @error('trade')
+                                    @error('designation')
                                     <span class="help-block">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -156,8 +115,12 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th width="60%">Particulars</th>
-                                    <th width="30%">Amount(Tk)</th>
+                                    <th>Date</th>
+                                    <th>Start From</th>
+                                    <th>End To</th>
+                                    <th>Media</th>
+                                    <th>Purpose</th>
+                                    <th>Amount(Tk)</th>
                                     <th width="10%"></th>
                                 </tr>
                                 </thead>
@@ -168,12 +131,32 @@
                                         <tr class="product-item">
                                             <td>
                                                 <div class="form-group {{ $errors->has('product.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="text" class="form-control product" name="product[]" value="{{ old('product.'.$loop->index) }}">
+                                                    <input type="date" class="form-control product" name="product[]" value="{{ old('product.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('start_from.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="date" step="any" class="form-control" name="start_from[]" value="{{ old('start_from.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('end_to.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="date" step="any" class="form-control" name="end_to[]" value="{{ old('end_to.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('media.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="text" step="any" class="form-control" name="media[]" value="{{ old('media.'.$loop->index) }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group {{ $errors->has('amount.'.$loop->index) ? 'has-error' :'' }}">
-                                                    <input type="number" step="any" class="form-control previous_balance" name="amount[]" value="{{ old('amount.'.$loop->index) }}">
+                                                    <input type="text" step="any" class="form-control" name="purpose[]" value="{{ old('amount.'.$loop->index) }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group {{ $errors->has('amount.'.$loop->index) ? 'has-error' :'' }}">
+                                                    <input type="number" step="any" class="form-control amount" name="amount[]" value="{{ old('amount.'.$loop->index) }}">
                                                 </div>
                                             </td>
 
@@ -186,13 +169,33 @@
                                 @else
                                     <tr class="product-item">
                                         <td>
-                                            <div class="form-group">
-                                                <input type="text" step="any"  name="product[]" class="form-control product">
+                                            <div class="form-group input-group date">
+                                                <input type="date" step="any"  name="product[]" class="form-control product">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="number" step="any"  name="amount[]" class="form-control previous_balance" value="0">
+                                                <input type="date" step="any"  name="start_from[]" class="form-control">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="date" step="any"  name="end_to[]" class="form-control">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" step="any"  name="media[]" class="form-control">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" step="any"  name="purpose[]" class="form-control">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" step="any"  name="amount[]" class="form-control amount">
                                             </div>
                                         </td>
 
@@ -209,7 +212,7 @@
                                     <td>
                                         <a role="button" class="btn btn-info btn-sm" id="btn-add-product">Add More</a>
                                     </td>
-                                    <th colspan="1" class="text-right">Total Amount</th>
+                                    <th colspan="5" class="text-right">Total Amount</th>
                                     <th id="total-one"> 0.00 </th>
                                     <td></td>
                                 </tr>
@@ -231,12 +234,32 @@
         <tr class="product-item">
             <td>
                 <div class="form-group">
-                    <input type="text" step="any"  name="product[]" class="form-control product">
+                    <input type="date" name="product[]" class="form-control product">
                 </div>
             </td>
             <td>
                 <div class="form-group">
-                    <input type="number" step="any"  name="amount[]" class="form-control previous_balance" value="0">
+                    <input type="date" name="start_from[]" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="date" name="end_to[]" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="media[]" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="purpose[]" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" step="any"  name="amount[]" class="form-control amount">
                 </div>
             </td>
             <td class="sub-total-amount">0.00</td>
@@ -323,7 +346,7 @@
             });
             $('#estimate_project').trigger('change');
 
-            $('body').on('keyup','.previous_balance', function () {
+            $('body').on('keyup','.amount', function () {
                 calculate();
             });
 
@@ -341,15 +364,15 @@
             var totalAmount = 0;
 
             $('.product-item').each(function(i, obj) {
-                var previous_balance = $('.previous_balance:eq('+i+')').val();
+                var amount = $('.amount:eq('+i+')').val();
+                // alert(amount);
+                if (amount == '' || amount < 0 || !$.isNumeric(amount))
+                    amount = 0;
 
-                if (previous_balance == '' || previous_balance < 0 || !$.isNumeric(previous_balance))
-                    previous_balance = 0;
 
+                $('.sub-total-amount:eq('+i+')').html(parseFloat(amount));
 
-                $('.sub-total-amount:eq('+i+')').html(parseFloat(previous_balance));
-
-                totalAmount += parseFloat(previous_balance);
+                totalAmount += parseFloat(amount);
             });
 
             $('#total-one').html(parseFloat(totalAmount).toFixed(2));

@@ -27,25 +27,25 @@
                                 <th>SL No</th>
                                 <th>Date</th>
                                 <th>Project Name</th>
+                                <th>Name</th>
                                 <th>Month</th>
-                                <th>Bill No</th>
-                                <th>Trade</th>
-                                <th>Acc Holder Name</th>
+                                <th>Designation</th>
+                                <th>Total Amount</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($billAdjustment as $item)
+                                @foreach($conveyances as $item)
                                     <tr>
                                         <td>{{$loop->iteration }}</td>
                                         <td>{{$item->date ?? ''}}</td>
                                         <td>{{$item->project->name ?? ''}}</td>
-                                        <td>{{$item->for_the_month}}</td>
-                                        <td>{{$item->trade}}</td>
-                                        <td>{{$item->bill_no}}</td>
-                                        <td>{{$item->acc_holder_name ?? ''}}</td>
+                                        <td>{{$item->name}}</td>
+                                        <td>{{$item->month}}</td>
+                                        <td>{{$item->designation}}</td>
+                                        <td>{{$item->total_amount}}</td>
                                         <td>
-                                            <a href="{{ route('bill_adjustment.details', $item->id) }}" class="btn btn-primary btn-sm">Details</a>
+                                            <a href="{{ route('conveyance.details', $item->id) }}" class="btn btn-primary btn-sm">Details</a>
                                         </td>
                                     </tr>
                                 @endforeach

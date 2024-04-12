@@ -33,6 +33,12 @@
             width: 300px;
             height: auto;
         }
+        @media print{
+            @page {
+                size: auto;
+                margin: 20px !important;
+            }
+        }
         .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
             border: 1px solid #000000 !important;
             padding: 2px 2px !important;
@@ -60,27 +66,23 @@
             </div>
         </div>
 
-        <h2 class="text-center"><u>Bill Form</u></h2>
+        <h2 class="text-center"><u>Conveyance Form</u></h2>
         <div class="row">
             <div class="col-md-6">
                 <table class="table">
                     <tr>
                         <th style="float:left">Project Name:</th>
                         <td style="text-decoration:underline dotted;text-underline-position:under;float:left">
-                            {{ $billForm->project->name ?? '' }}
+                            {{ $conveyance->project->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
-                        <th style="float:left">Project Address:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->address }}</td>
+                        <th style="float:left">Name:</th>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $conveyance->name }}</td>
                     </tr>
                     <tr>
-                        <th style="float:left">Cheque Holder Name: </th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->acc_holder_name??'' }}</td>
-                    </tr>
-                    <tr>
-                        <th style="float:left">Duration: </th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->duration??'' }}</td>
+                        <th style="float:left">Designation:</th>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $conveyance->designation }}</td>
                     </tr>
 
                 </table>
@@ -88,20 +90,12 @@
             <div class="col-md-6">
                 <table class="table">
                     <tr>
-                        <th style="float:left;">For The Month:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->for_the_month }}</td>
+                        <th style="float:left;">Month:</th>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $conveyance->month }}</td>
                     </tr>
                     <tr>
-                        <th style="float:left;">Trade:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->trade }}</td>
-                    </tr>
-                    <tr>
-                        <th style="float:left;">Bill No:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->bill_no }}</td>
-                    </tr>
-                    <tr>
-                        <th style="float:left;">Date:</th>
-                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $billForm->date }}</td>
+                        <th style="float:left;">date:</th>
+                        <td style="text-decoration:underline dotted;text-underline-position:under;float:left">{{ $conveyance->date }}</td>
                     </tr>
                 </table>
             </div>
@@ -113,24 +107,32 @@
                     <thead>
                     <tr>
                         <th>Sl No</th>
-                        <th width="60%">Particulars</th>
+                        <th>Date</th>
+                        <th>Start From</th>
+                        <th>End To</th>
+                        <th>Media</th>
+                        <th>Purpose</th>
                         <th>Amount(Tk)</th>
                         <th>Remarks</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($billForm->billFormProduct as $product)
+                        @foreach($conveyance->conveyanceDetails as $product)
                         <tr>
                             <td>{{ $loop->iteration}}</td>
                             <td>{{ $product->product ?? ''}}</td>
+                            <td>{{ $product->start_from ?? ''}}</td>
+                            <td>{{ $product->end_to ?? ''}}</td>
+                            <td>{{ $product->media ?? ''}}</td>
+                            <td>{{ $product->purpose ?? ''}}</td>
                             <td> {{ number_format($product->amount,2) }}</td>
                             <td> </td>
                         </tr>
                         @endforeach
                         <tr>
                             <td></td>
-                            <th>Total</th>
-                            <td>{{ $billForm->total_amount ?? ''}}</td>
+                            <th colspan="5">Total</th>
+                            <td>{{ $conveyance->total_amount ?? ''}}</td>
                             <td> </td>
                         </tr>
                     </tbody>
