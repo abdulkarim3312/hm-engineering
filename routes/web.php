@@ -549,12 +549,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('contractor-bill-statement-approval/{billStatement}', [ContractorController::class,'billStatementApproval'])->name('bill.approved');
     Route::post('contractor-bill-approval/{billStatement}', [ContractorController::class,'billStatementApprovalPost'])->name('bill.approved_store');
     Route::get('contractor-bill-print/{billStatement}', [ContractorController::class,'billStatementPrint'])->name('bill.print');
-
+    // Petty Cash Requisition
     Route::get('petty-cash-list', [PettyCashController::class, 'pettyCashAll'])->name('petty_cash.list')->middleware('permission:labour_designation');
     Route::get('petty-cash/add', [PettyCashController::class, 'pettyCashAdd'])->name('petty_cash.add')->middleware('permission:labour_designation');
     Route::post('petty-cash/add', [PettyCashController::class, 'pettyCashAddPost'])->middleware('permission:labour_designation');
     Route::get('petty-cash-datatable', [PettyCashController::class, 'pettyCashDataTable'])->name('petty_cash.datatable')->middleware('permission:labour_designation');
     Route::get('petty-cash/details/{pettyCash}', [PettyCashController::class, 'pettyCashDetails'])->name('petty_cash.details');
+    Route::get('petty-cash/print/{pettyCash}', [PettyCashController::class, 'pettyCashPrint'])->name('petty_cash.print');
+    Route::post('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApprovalPost'])->name('petty_cash.approval')->middleware('permission:labour_designation');
+    Route::get('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApproval'])->name('petty_cash.approval');
+    // Petty Cash Adjustment
+    Route::get('petty-cash-adjustment', [PettyCashController::class, 'pettyCashAdjustmentAll'])->name('petty_cash_adjustment.list')->middleware('permission:labour_designation');
+    Route::get('petty-cash-adjustment/add', [PettyCashController::class, 'pettyCashAdjustmentAdd'])->name('petty_cash_adjustment.add')->middleware('permission:labour_designation');
+    Route::post('petty-cash-adjustment/add', [PettyCashController::class, 'pettyCashAddAdjustmentPost'])->middleware('permission:labour_designation');
+    Route::get('petty-cash-datatable-adjustment', [PettyCashController::class, 'pettyCashAdjustmentDataTable'])->name('petty_cash_adjustment.datatable')->middleware('permission:labour_designation');
+    Route::get('petty-cash-adjustment/details/{pettyCash}', [PettyCashController::class, 'pettyCashAdjustmentDetails'])->name('petty_cash_adjustment.details');
+    Route::get('petty-cash-adjustment/print/{pettyCash}', [PettyCashController::class, 'pettyCashAdjustmentPrint'])->name('petty_cash_adjustment.print');
     Route::post('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApprovalPost'])->name('petty_cash.approval')->middleware('permission:labour_designation');
     Route::get('petty-cash-approval/{pettyCash}', [PettyCashController::class, 'pettyCashApproval'])->name('petty_cash.approval');
     // Bill Adjustment

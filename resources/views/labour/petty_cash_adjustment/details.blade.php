@@ -79,7 +79,7 @@
 @endsection
 
 @section('title')
-   Petty Cash Details
+   Petty Cash Adjustment Details
 @endsection
 
 @section('content')
@@ -90,7 +90,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a target="_blank" href="{{ route('petty_cash.print', ['pettyCash' => $pettyCash->id]) }}" class="btn btn-primary">Print</a>
+                            <a target="_blank" href="{{ route('petty_cash_adjustment.print', ['pettyCash' => $pettyCash->id]) }}" class="btn btn-primary">Print</a>
                         </div>
                     </div>
                     <div id="prinarea">
@@ -131,6 +131,10 @@
                                         <th style="float:left">Cheque Holder Name: </th>
                                         <td style="float:left">{{ $pettyCash->acc_holder_name??'' }}</td>
                                     </tr>
+                                    <tr>
+                                        <th style="float:left">Month: </th>
+                                        <td style="float:left">{{ $pettyCash->month??'' }}</td>
+                                    </tr>
 
                                 </table>
                             </div>
@@ -151,10 +155,9 @@
                                     <tr>
                                         <th style="font-size: 13px;">Sl No</th>
                                         <th style="font-size: 13px;" width="30%">Particulars</th>
-                                        <th style="font-size: 13px;">Previous Balance(Tk)</th>
-                                        <th style="font-size: 13px;">Budget Amount(Tk)</th>
-                                        <th style="font-size: 13px;">Required Amount(Tk)</th>
-                                        <th style="font-size: 13px;">Recommended Amount(Tk)</th>
+                                        <th style="font-size: 13px;">Receive Amount(Tk)</th>
+                                        <th style="font-size: 13px;">Expense Amount(Tk)</th>
+                                        <th style="font-size: 13px;">Balance Amount(Tk)</th>
                                         <th>Remarks</th>
                                     </tr>
                                     </thead>
@@ -163,10 +166,9 @@
                                         <tr>
                                             <td>{{ $loop->iteration}}</td>
                                             <td>{{ $product->product ?? ''}}</td>
-                                            <td> {{ number_format($product->previous_balance,2) }}</td>
-                                            <td> {{ number_format($product->budget_amount,2) }}</td>
-                                            <td> {{ number_format($product->required_amount, 2) }}</td>
-                                            <td> {{ number_format($product->recommended_amount, 2) }}</td>
+                                            <td> {{ number_format($product->receive_amount,2) }}</td>
+                                            <td> {{ number_format($product->expense_amount,2) }}</td>
+                                            <td> {{ number_format($product->balance_amount, 2) }}</td>
                                             <td> </td>
                                         </tr>
                                         @endforeach

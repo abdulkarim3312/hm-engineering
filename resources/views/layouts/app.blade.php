@@ -552,8 +552,8 @@
                 <?php
                 $subMenu = ['labour.all', 'labour.add', 'labour.edit', 'labour.details',
                     'labour.attendance','labour_list','labour_designation.all','labour_designation.add',
-                    'labour_designation.edit','labour_employee_attendance.report','labour.food_cost','conveyance.list','conveyance.add',
-                    'labour.food_cost.add','labour.food_cost.edit','food_cost.details','labour.bill','bill_adjustment.list','bill_adjustment.add','bill_form.list','bill_form.add','bill_form.details',
+                    'labour_designation.edit','labour_employee_attendance.report','labour.food_cost','conveyance.list','conveyance.add','petty_cash_adjustment.list','petty_cash_adjustment.add','petty_cash_adjustment.details',
+                    'labour.food_cost.add','labour.food_cost.edit','food_cost.details','labour.bill','bill_adjustment.list','bill_adjustment.add','bill_form.list','bill_form.add','bill_form.details','petty_cash.details',
                     'labour.bill.add','labour.bill.details','contractor.all','contractor.list','contractor.add','contractor.edit','contractor.payment','bill_statement.list','petty_cash.list','petty_cash.add','bill_statement'];
                 ?>
 
@@ -588,7 +588,12 @@
                             @endcan
                             @can('labour_designation')
                                 <li class="{{ Route::currentRouteName() == 'petty_cash.list' ? 'active' : '' }}">
-                                    <a href="{{ route('petty_cash.list') }}"><i class="fa fa-circle-o"></i>Petty Cash</a>
+                                    <a href="{{ route('petty_cash.list') }}"><i class="fa fa-circle-o"></i>Petty Cash Requisiton</a>
+                                </li>
+                            @endcan
+                            @can('labour_designation')
+                                <li class="{{ Route::currentRouteName() == 'petty_cash_adjustment.list' ? 'active' : '' }}">
+                                    <a href="{{ route('petty_cash_adjustment.list') }}"><i class="fa fa-circle-o"></i>Petty Cash Adjustment</a>
                                 </li>
                             @endcan
                             @can('labour_designation')
